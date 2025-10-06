@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, Link, Navigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -38,7 +38,7 @@ type ResetData = z.infer<typeof resetSchema>;
 
 export default function AdminLogin() {
   const navigate = useNavigate();
-  const { signIn, signUp, resetPassword, user, isAdmin, loading, profile } = useAuth();
+  const { signIn, signUp, resetPassword, user, isAdmin, loading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [activeTab, setActiveTab] = useState('signin');
 
@@ -68,21 +68,17 @@ export default function AdminLogin() {
   });
 
   useEffect(() => {
-    // Only redirect if we have complete profile information
-    if (user && profile) {
-      if (isAdmin) {
-        navigate('/admin', { replace: true });
-      } else {
-        navigate('/', { replace: true });
-      }
+    if (user && isAdmin) {
+      navigate('/admin');
+    } else if (user && !isAdmin) {
+      navigate('/');
     }
-  }, [user, profile, isAdmin, navigate]);
+  }, [user, isAdmin, navigate]);
 
   const handleSignIn = async (data: SignInData) => {
     const { error } = await signIn(data.email, data.password);
-    // Don't manually navigate here - let the useEffect handle it after profile loads
-    if (error) {
-      console.error('Sign in error:', error);
+    if (!error && user && isAdmin) {
+      navigate('/admin');
     }
   };
 
@@ -111,11 +107,6 @@ export default function AdminLogin() {
         </motion.div>
       </div>
     );
-  }
-
-  // If user is already logged in and has profile, redirect immediately
-  if (user && profile && isAdmin) {
-    return <Navigate to="/admin" replace />;
   }
 
   return (

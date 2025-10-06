@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Menu } from 'lucide-react';
 
 export function AdminLayout() {
-  const { user, isAdmin, loading, profile } = useAuth();
+  const { user, isAdmin, loading } = useAuth();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -31,8 +31,7 @@ export function AdminLayout() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Show loading while auth is loading OR while we have a user but no profile yet
-  if (loading || (user && !profile)) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <motion.div
@@ -51,8 +50,7 @@ export function AdminLayout() {
     return <Navigate to="/admin/login" replace />;
   }
 
-  // Only show access denied if we have profile data and user is not admin
-  if (profile && !isAdmin) {
+  if (!isAdmin) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <motion.div
