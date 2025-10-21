@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, ArrowRight, Shield, Award, Factory, ShoppingCart, Banknote, HeartPulse, CheckCircle } from 'lucide-react';
+import { ArrowUpRight, ArrowRight, Shield, Award, Factory, ShoppingCart, Banknote, HeartPulse, CheckCircle, Cloud, Settings, FileText, Users, Database, Headphones, GraduationCap, Clipboard } from 'lucide-react';
+import Carousel from '../components/ui/carousel';
 
 const Services = () => {
   return (
@@ -22,7 +23,7 @@ const Services = () => {
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <Link
                     to="/contact"
-                    className="group inline-flex items-center gap-2 hover:shadow-[0_0_0_5px_rgba(212,160,23,0.25)] hover:brightness-105 transition text-sm font-medium text-slate-50 bg-primary border-slate-200 border rounded-full px-5 py-3"
+                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-medium text-slate-50 bg-primary border-slate-200 border rounded-full px-5 py-3 focus:outline-none"
                   >
                     Start Your Project
                     <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-black/5">
@@ -41,7 +42,7 @@ const Services = () => {
               {/* Services Illustration */}
               <div className="w-full md:w-[440px] shrink-0 space-y-3">
                 <img
-                  src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=900&q=60&auto=format&fit=crop"
+                  src="https://i.pinimg.com/736x/96/9d/14/969d14e99603860237ae3526342f47c7.jpg"
                   alt="SAP services overview"
                   loading="lazy"
                   className="backdrop-blur-[10px] bg-white/70 w-full border-slate-200 border rounded-2xl pt-2 pr-2 pb-2 pl-2"
@@ -50,89 +51,152 @@ const Services = () => {
             </div>
           </div>
           <div className="h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
-          <div className="px-6 sm:px-8 md:px-12 py-4 flex items-center gap-4">
-            <div className="inline-flex items-center gap-2 text-xs text-slate-600/80">
-              <Shield className="h-4 w-4 text-primary" />
-              <span>GDPR compliant • SAP Partner aligned</span>
-            </div>
-            <div className="h-4 w-px bg-slate-200"></div>
-            <div className="inline-flex items-center gap-2 text-xs text-slate-600/80">
-              <Award className="h-4 w-4 text-primary" />
-              <span>Trusted by mid‑market enterprises</span>
-            </div>
+        </div>
+      </section>
+
+      {/* Clients Section */}
+      <section className="max-w-7xl mx-auto px-5 md:px-8 pt-8 md:pt-12" aria-labelledby="partners-title">
+        <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 transition duration-500 ease-in">
+          <div className="flex items-center justify-between gap-3">
+            <h2 id="partners-title" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">
+            Clients We've Served
+            </h2>
+          </div>
+          <div className="mt-5">
+            <Carousel speed="very-slow" className="py-4">
+              {[
+                { name: 'HITACHI', logoFile: 'hitachi logo.png' },
+                { name: 'CARGILL', logoFile: 'cargill logo.jpg' },
+                { name: 'DELOITTE', logoFile: 'deloitte logo.svg' },
+                { name: 'KPMG', logoFile: 'kpmg logo.png' },
+                { name: 'SUCAFINA', logoFile: 'sucafina logo.svg' },
+                { name: 'GREENWORKS', logoFile: 'greenworks logo.jpg' },
+                { name: 'SEGWAY-NINEBOT', logoFile: 'segway-ninebot logo.jpg' }
+              ].map((client, index) => (
+                <div key={index} className="flex-shrink-0 mx-6 flex items-center justify-center h-20 w-48">
+                  <div className="flex items-center justify-center h-16 w-44 bg-white border border-slate-200 rounded-lg px-4 hover:bg-slate-50 transition-colors">
+                    <img 
+                      src={`/src/assets/logos/${client.logoFile}`}
+                      alt={`${client.name} logo`}
+                      className="max-h-12 max-w-32 object-contain"
+                    />
+                  </div>
+                </div>
+              ))}
+            </Carousel>
           </div>
         </div>
       </section>
 
-      {/* Core Services Section */}
-      <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="core-services">
+      {/* Our Services Section */}
+      <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="our-services">
         <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 transition duration-500 ease-in">
-          <h2 id="core-services" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">
-            Core Services
+          <h2 id="our-services" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">
+            Our Services
           </h2>
           <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
               {
-                title: 'SAP Advisory & Strategy',
-                description: 'Transform your business with strategic SAP roadmaps that align technology with measurable outcomes.',
+                title: 'SAP Public Cloud',
+                description: 'Deploy secure, scalable SAP cloud solutions for streamlined operations and agility.',
                 features: [
-                  'Digital transformation strategy',
-                  'SAP landscape assessment',
-                  'Business case development',
-                  'Change management planning',
-                  'Vendor selection support'
+                  'Rapid deployment with minimal disruption to ongoing operations.',
+                  'Flexible, scalable infrastructure to support growing business needs.',
+                  'Integration with existing systems for seamless data flow.'
                 ],
-                image: 'https://images.unsplash.com/photo-1483478550801-ceba5fe50e8e?w=480&q=60&auto=format&fit=crop',
-                alt: 'Strategy planning'
+                logo: 'Cloud',
+                alt: 'SAP Public Cloud'
               },
               {
-                title: 'Implementation & Migration',
-                description: 'Seamless SAP implementations and migrations with proven methodologies and best practices.',
+                title: 'SAP Implementations and Rollouts',
+                description: 'Execute tailored SAP deployments with proven Greenfield, Brownfield, or Bluefield strategies.',
                 features: [
-                  'S/4HANA implementations',
-                  'ERP system migrations',
-                  'Cloud and hybrid deployments',
-                  'Data migration and cleansing',
-                  'Integration and testing'
+                  'Full lifecycle management from planning to go-live.',
+                  'Customization to match specific business processes and reporting requirements.',
+                  'Risk mitigation and quality assurance throughout the deployment.'
                 ],
-                image: 'https://images.unsplash.com/photo-1621619856624-42fd193a0661?w=1080&q=80',
-                alt: 'Implementation process'
+                logo: 'Settings',
+                alt: 'SAP Implementations and Rollouts'
               },
               {
-                title: 'Optimization & Support',
-                description: 'Maximize your SAP investment with ongoing optimization and expert support services.',
+                title: 'SAP Document and Reporting Compliance',
+                description: 'Simplify e-Invoicing and tax reporting with seamless, compliant SAP solutions.',
                 features: [
-                  'Performance tuning',
-                  'Process optimization',
-                  'User training and adoption',
-                  'System monitoring',
-                  'Maintenance and updates'
+                  'Automate invoicing and reporting to reduce errors and delays.',
+                  'Ensure compliance with local and international regulations.',
+                  'Provide audit-ready documentation and reporting capabilities.'
                 ],
-                image: 'https://images.unsplash.com/photo-1557800636-894a64c1696f?w=480&q=60&auto=format&fit=crop',
-                alt: 'System optimization'
+                logo: 'FileText',
+                alt: 'SAP Document and Reporting Compliance'
               },
               {
-                title: 'Industry Solutions',
-                description: 'Tailored SAP solutions for specific industries with deep domain expertise.',
+                title: 'SAP Consulting & Advisory',
+                description: 'Unlock strategic value with expert SAP guidance tailored to your business goals.',
                 features: [
-                  'Manufacturing solutions',
-                  'Retail and commerce',
-                  'Financial services',
-                  'Healthcare systems',
-                  'Composable architecture'
+                  'Process analysis to identify bottlenecks and optimization opportunities.',
+                  'Recommendations on system enhancements and best practices.',
+                  'Strategic planning for SAP adoption, upgrades, and transformation.'
                 ],
-                image: 'https://images.unsplash.com/photo-1642615835477-d303d7dc9ee9?w=1080&q=80',
-                alt: 'Industry solutions'
+                logo: 'Users',
+                alt: 'SAP Consulting & Advisory'
+              },
+              {
+                title: 'Data & Migration Services',
+                description: 'Ensure smooth, secure data migration for optimized SAP performance.',
+                features: [
+                  'Data cleansing, validation, and mapping for accuracy.',
+                  'Minimized downtime during migration with phased approaches.',
+                  'Integration with legacy systems and new SAP modules.'
+                ],
+                logo: 'Database',
+                alt: 'Data & Migration Services'
+              },
+              {
+                title: 'Support & Managed Services',
+                description: 'Maintain peak SAP performance with proactive support and management.',
+                features: [
+                  '24/7 monitoring and issue resolution to avoid disruptions.',
+                  'System optimization to maintain efficiency and reliability.',
+                  'Regular updates, patches, and preventive maintenance.'
+                ],
+                logo: 'Headphones',
+                alt: 'Support & Managed Services'
+              },
+              {
+                title: 'Training & Change Management',
+                description: 'Empower teams with targeted training for seamless SAP adoption.',
+                features: [
+                  'Customized training sessions for different user roles.',
+                  'Support for change adoption and process standardization.',
+                  'Documentation and resources to ensure long-term proficiency.'
+                ],
+                logo: 'GraduationCap',
+                alt: 'Training & Change Management'
+              },
+              {
+                title: 'SAP Project Management & Governance',
+                description: 'Drive project success with expert oversight and disciplined governance.',
+                features: [
+                  'Clear project planning, timelines, and milestone tracking.',
+                  'Risk management and mitigation throughout the project lifecycle.',
+                  'Stakeholder communication and reporting for transparency and accountability.'
+                ],
+                logo: 'Clipboard',
+                alt: 'SAP Project Management & Governance'
               }
             ].map((service, index) => (
               <article key={index} className="rounded-2xl border border-slate-200 bg-white/70 backdrop-blur-[10px] p-6 hover:shadow-md transition">
                 <div className="flex items-start gap-4">
-                  <img
-                    src={service.image}
-                    alt={service.alt}
-                    loading="lazy"
-                    className="bg-white/70 w-24 h-16 object-cover border-slate-200 border rounded-lg pt-1 pr-1 pb-1 pl-1"
-                  />
+                  <div className="bg-primary/10 w-16 h-16 rounded-lg flex items-center justify-center flex-shrink-0">
+                    {service.logo === 'Cloud' && <Cloud className="h-8 w-8 text-primary" />}
+                    {service.logo === 'Settings' && <Settings className="h-8 w-8 text-primary" />}
+                    {service.logo === 'FileText' && <FileText className="h-8 w-8 text-primary" />}
+                    {service.logo === 'Users' && <Users className="h-8 w-8 text-primary" />}
+                    {service.logo === 'Database' && <Database className="h-8 w-8 text-primary" />}
+                    {service.logo === 'Headphones' && <Headphones className="h-8 w-8 text-primary" />}
+                    {service.logo === 'GraduationCap' && <GraduationCap className="h-8 w-8 text-primary" />}
+                    {service.logo === 'Clipboard' && <Clipboard className="h-8 w-8 text-primary" />}
+                  </div>
                   <div className="flex-1">
                     <h3 className="text-lg tracking-tight font-light text-slate-900">{service.title}</h3>
                     <p className="mt-2 text-slate-700/80 text-sm">{service.description}</p>
@@ -152,50 +216,6 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Service Process Section */}
-      <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="process">
-        <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 transition duration-500 ease-in">
-          <h2 id="process" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">
-            Our Process
-          </h2>
-          <p className="mt-2 text-slate-700/80">
-            We follow a proven methodology that ensures successful project delivery and maximum business value.
-          </p>
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-4 gap-6">
-            {[
-              {
-                step: '01',
-                title: 'Discovery',
-                description: 'We start by understanding your business goals, current systems, and challenges to create a comprehensive transformation roadmap.'
-              },
-              {
-                step: '02',
-                title: 'Design',
-                description: 'Our team designs a tailored solution architecture that aligns with your business processes and technical requirements.'
-              },
-              {
-                step: '03',
-                title: 'Implement',
-                description: 'We execute the implementation using agile methodologies, ensuring minimal disruption to your business operations.'
-              },
-              {
-                step: '04',
-                title: 'Optimize',
-                description: 'We provide ongoing support and optimization to ensure your SAP system continues to deliver value and grow with your business.'
-              }
-            ].map((phase, index) => (
-              <div key={index} className="text-center">
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary text-white text-lg font-medium mb-4">
-                  {phase.step}
-                </div>
-                <h3 className="text-lg font-medium text-slate-900 mb-2">{phase.title}</h3>
-                <p className="text-slate-700/80 text-sm">{phase.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Technology Stack Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="technology">
         <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 transition duration-500 ease-in">
@@ -205,21 +225,59 @@ const Services = () => {
           <p className="mt-2 text-slate-700/80">
             We work with the latest SAP technologies and complementary solutions to deliver comprehensive business value.
           </p>
-          <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-4">
             {[
-              'SAP S/4HANA',
-              'SAP Fiori',
-              'SAP Analytics Cloud',
-              'SAP SuccessFactors',
-              'SAP Ariba',
-              'SAP Concur',
-              'SAP Integration Suite',
-              'SAP Business Technology Platform'
+              { name: 'SAP S/4HANA', logo: 'SAP S4HANA.png' },
+              { name: 'SAP Fiori', logo: 'SAP Fiori.png' },
+              { name: 'SAP Analytics Cloud', logo: 'SAP Analytics Cloud.png' },
+              { name: 'SAP Ariba', logo: 'SAP Ariba.png' },
+              { name: 'SAP Integration Suite', logo: 'SAP Integration Suite.png' },
+              { name: 'SAP Business Technology Platform', logo: 'SAP Business Technology Platform.png' }
             ].map((tech, index) => (
-              <div key={index} className="flex items-center justify-center h-16 border border-slate-200 rounded-xl bg-white hover:bg-slate-50 transition">
-                <span className="text-slate-600 text-sm font-medium">{tech}</span>
+              <div key={index} className="flex flex-col items-center justify-center p-4 border border-slate-200 rounded-xl bg-white hover:bg-slate-50 transition">
+                <div className="w-full h-16 mb-3 flex items-center justify-center bg-slate-50 border border-slate-200 rounded-lg">
+                  <img
+                    src={`/src/assets/logos/${tech.logo}`}
+                    alt={`${tech.name} logo`}
+                    className="max-h-12 max-w-full object-contain"
+                    loading="lazy"
+                  />
+                </div>
+                <span className="text-slate-600 text-sm font-medium text-center">{tech.name}</span>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* What Clients Say Section */}
+      <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="testimonials-title">
+        <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 transition duration-500 ease-in">
+          <h2 id="testimonials-title" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">What Clients Say</h2>
+          <div className="mt-5">
+            <Carousel speed="very-slow" className="py-4">
+              {[
+                { quote: '"Their SAP expertise transformed our processes, efficient, reliable, and seamless implementation!" – Cargill Corporation', logoFile: 'cargill logo.jpg' },
+                { quote: '"A trusted partner for SAP solutions. They understood our business needs perfectly." – Hitachi Energy', logoFile: 'hitachi logo.png' },
+                { quote: '"Professional, proactive, and results-driven. Our SAP system has never run smoother." – Sucafina', logoFile: 'sucafina logo.svg' },
+                { quote: '"Exceptional support and guidance throughout our SAP journey. Highly recommended!" – Johnson & Johnson', logoFile: 'johnson and johnson logo.png' }
+              ].map((testimonial, idx) => (
+                <div key={idx} className="flex-shrink-0 mx-4 w-96">
+                  <div className="rounded-2xl border border-slate-200 bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6">
+                    <div className="flex-shrink-0 w-24 h-20 bg-white border border-slate-200 rounded-lg flex items-center justify-center p-3">
+                      <img 
+                        src={`/src/assets/logos/${testimonial.logoFile}`}
+                        alt={`${testimonial.logoFile.split(' ')[0]} logo`}
+                        className="max-h-16 max-w-20 object-contain"
+                      />
+                    </div>
+                    <blockquote className="text-slate-700/90 text-sm leading-relaxed flex-1">
+                      {testimonial.quote}
+                    </blockquote>
+                  </div>
+                </div>
+              ))}
+            </Carousel>
           </div>
         </div>
       </section>

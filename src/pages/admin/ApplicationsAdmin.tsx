@@ -291,8 +291,8 @@ export default function ApplicationsAdmin() {
                       >
                         <TableCell>
                           <div className="flex items-center gap-2">
-                            <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
-                              <Users className="h-4 w-4 text-primary" />
+                            <div className="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center">
+                              <Users className="h-4 w-4 text-slate-600" />
                             </div>
                             <div className="font-medium">{application.candidate_name}</div>
                           </div>
@@ -437,7 +437,7 @@ export default function ApplicationsAdmin() {
                     <div>
                       <Label className="font-medium">Email</Label>
                       <p className="text-muted-foreground">
-                        <a href={`mailto:${selectedApplication.email}`} className="underline hover:text-primary">
+                        <a href={`mailto:${selectedApplication.email}`} className="underline hover:text-slate-800">
                           {selectedApplication.email}
                         </a>
                       </p>
@@ -446,7 +446,7 @@ export default function ApplicationsAdmin() {
                       <div>
                         <Label className="font-medium">Phone</Label>
                         <p className="text-muted-foreground">
-                          <a href={`tel:${selectedApplication.phone}`} className="underline hover:text-primary">
+                          <a href={`tel:${selectedApplication.phone}`} className="underline hover:text-slate-800">
                             {selectedApplication.phone}
                           </a>
                         </p>

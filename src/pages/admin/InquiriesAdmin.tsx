@@ -40,6 +40,7 @@ interface Inquiry {
   email: string;
   phone: string | null;
   company: string | null;
+  location: string | null;
   subject: string | null;
   message: string;
   status: string | null;
@@ -95,6 +96,7 @@ export default function InquiriesAdmin() {
       inquiry.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       inquiry.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
       inquiry.company?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      inquiry.location?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       inquiry.subject?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       inquiry.message.toLowerCase().includes(searchTerm.toLowerCase());
     
@@ -149,17 +151,17 @@ export default function InquiriesAdmin() {
   };
 
   const getStatusBadge = (status: string | null) => {
-    const colors: Record<string, string> = {
-      'new': 'bg-blue-100 text-blue-800 border-blue-300',
-      'in-progress': 'bg-yellow-100 text-yellow-800 border-yellow-300',
-      'resolved': 'bg-green-100 text-green-800 border-green-300',
-      'closed': 'bg-gray-100 text-gray-800 border-gray-300',
+    const variants: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
+      'new': 'default',
+      'in-progress': 'secondary',
+      'resolved': 'outline',
+      'closed': 'destructive',
     };
 
     return (
       <Badge 
-        variant="outline"
-        className={colors[status || 'new']}
+        variant={variants[status || 'new']}
+        className="text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200"
       >
         {status || 'new'}
       </Badge>
@@ -192,18 +194,16 @@ export default function InquiriesAdmin() {
           className="flex items-center justify-between"
         >
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Inquiries Management</h1>
-            <p className="text-muted-foreground">
+            <h1 className="text-3xl font-bold tracking-tight text-slate-900">Inquiries Management</h1>
+            <p className="text-slate-600 mt-1">
               Review and respond to customer inquiries
             </p>
           </div>
-          <div className="flex items-center gap-2">
-            <Badge variant="outline" className="text-sm">
-              {filteredInquiries.length} Total
-            </Badge>
-            <Badge variant="default" className="text-sm bg-blue-600">
-              {inquiries.filter(i => i.status === 'new').length} New
-            </Badge>
+          <div className="flex items-center gap-3">
+            <div className="text-right">
+              <div className="text-2xl font-bold text-slate-900">{filteredInquiries.length}</div>
+              <div className="text-sm text-slate-500">Total Inquiries</div>
+            </div>
           </div>
         </motion.div>
 
@@ -217,7 +217,7 @@ export default function InquiriesAdmin() {
           <div className="relative flex-1">
             <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search by name, email, company, or message..."
+              placeholder="Search by name, email, company, location, or message..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-10"
@@ -243,24 +243,25 @@ export default function InquiriesAdmin() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <Card>
-            <CardHeader>
-              <CardTitle>Inquiries ({filteredInquiries.length})</CardTitle>
-              <CardDescription>
+          <Card className="border-slate-200 shadow-sm">
+            <CardHeader className="bg-slate-50/50 border-b border-slate-200">
+              <CardTitle className="text-slate-900">Inquiries ({filteredInquiries.length})</CardTitle>
+              <CardDescription className="text-slate-600">
                 All customer inquiries and contact requests
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-0">
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
-                    <TableRow>
-                      <TableHead>Contact</TableHead>
-                      <TableHead>Company</TableHead>
-                      <TableHead>Subject</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Submitted</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
+                    <TableRow className="bg-slate-50/50">
+                      <TableHead className="text-slate-700 font-semibold">Contact</TableHead>
+                      <TableHead className="text-slate-700 font-semibold">Company</TableHead>
+                      <TableHead className="text-slate-700 font-semibold">Location</TableHead>
+                      <TableHead className="text-slate-700 font-semibold">Subject</TableHead>
+                      <TableHead className="text-slate-700 font-semibold">Status</TableHead>
+                      <TableHead className="text-slate-700 font-semibold">Submitted</TableHead>
+                      <TableHead className="text-right text-slate-700 font-semibold">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -270,52 +271,65 @@ export default function InquiriesAdmin() {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.3 + index * 0.05 }}
-                        className="hover:bg-muted/50"
+                        className="hover:bg-slate-50/50 border-b border-slate-100"
                       >
-                        <TableCell>
+                        <TableCell className="py-4">
                           <div>
-                            <div className="font-medium">{inquiry.name}</div>
-                            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                            <div className="font-semibold text-slate-900">{inquiry.name}</div>
+                            <div className="flex items-center gap-1 text-sm text-slate-600 mt-1">
                               <Mail className="h-3 w-3" />
                               {inquiry.email}
                             </div>
                             {inquiry.phone && (
-                              <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                              <div className="flex items-center gap-1 text-sm text-slate-600 mt-1">
                                 <Phone className="h-3 w-3" />
                                 {inquiry.phone}
                               </div>
                             )}
                           </div>
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="py-4">
                           {inquiry.company ? (
                             <div className="flex items-center gap-1">
-                              <Building className="h-3 w-3 text-muted-foreground" />
-                              {inquiry.company}
+                              <Building className="h-3 w-3 text-slate-500" />
+                              <span className="text-slate-700">{inquiry.company}</span>
                             </div>
                           ) : (
-                            <span className="text-muted-foreground">-</span>
+                            <span className="text-slate-400">-</span>
                           )}
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="py-4">
+                          {inquiry.location ? (
+                            <div className="flex items-center gap-1">
+                              <MapPin className="h-3 w-3 text-slate-500" />
+                              <span className="text-slate-700">{inquiry.location}</span>
+                            </div>
+                          ) : (
+                            <span className="text-slate-400">-</span>
+                          )}
+                        </TableCell>
+                        <TableCell className="py-4">
                           <div className="max-w-xs truncate">
-                            {inquiry.subject || (
-                              <span className="text-muted-foreground italic">No subject</span>
+                            {inquiry.subject ? (
+                              <span className="text-slate-700">{inquiry.subject}</span>
+                            ) : (
+                              <span className="text-slate-400 italic">No subject</span>
                             )}
                           </div>
                         </TableCell>
-                        <TableCell>{getStatusBadge(inquiry.status)}</TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                        <TableCell className="py-4">{getStatusBadge(inquiry.status)}</TableCell>
+                        <TableCell className="py-4">
+                          <div className="flex items-center gap-1 text-sm text-slate-600">
                             <Calendar className="h-3 w-3" />
                             {new Date(inquiry.submitted_at).toLocaleDateString()}
                           </div>
                         </TableCell>
-                        <TableCell className="text-right">
+                        <TableCell className="text-right py-4">
                           <div className="flex items-center justify-end gap-2">
                             <Button
                               variant="ghost"
                               size="icon"
+                              className="hover:bg-slate-100 text-slate-500 hover:text-slate-700"
                               onClick={() => {
                                 setSelectedInquiry(inquiry);
                                 setViewDialogOpen(true);
@@ -328,6 +342,7 @@ export default function InquiriesAdmin() {
                                 <Button
                                   variant="ghost"
                                   size="icon"
+                                  className="hover:bg-red-50 text-slate-500 hover:text-red-600"
                                   onClick={() => setSelectedInquiry(inquiry)}
                                 >
                                   <Trash2 className="h-4 w-4" />
@@ -438,6 +453,12 @@ export default function InquiriesAdmin() {
                       <div>
                         <Label className="font-medium">Company</Label>
                         <p className="text-muted-foreground">{selectedInquiry.company}</p>
+                      </div>
+                    )}
+                    {selectedInquiry.location && (
+                      <div>
+                        <Label className="font-medium">Location</Label>
+                        <p className="text-muted-foreground">{selectedInquiry.location}</p>
                       </div>
                     )}
                   </div>

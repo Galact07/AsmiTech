@@ -170,18 +170,18 @@ const Careers = () => {
             <div className="flex items-start md:items-center gap-6 md:gap-10 flex-col md:flex-row">
               <div className="flex-1">
                 <p className="text-[11px] uppercase font-light text-slate-500 tracking-[0.18em]">
-                  Join Our Team
+                  Careers
                 </p>
                 <h1 id="careers-title" className="sm:text-5xl md:text-6xl text-4xl font-light text-slate-900 tracking-tight mt-2">
-                  Build the future of SAP consulting.
+                  Join Us at ASMI
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
-                  Join our growing team of SAP experts and help mid-market enterprises transform their business with cutting-edge technology solutions.
+                  We understand the unique challenges and opportunities in each industry. Our solutions are designed to address specific sector requirements while delivering measurable business value.
                 </p>
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <Link
                     to="/jobs"
-                    className="group inline-flex items-center gap-2 hover:shadow-[0_0_0_5px_rgba(212,160,23,0.25)] hover:brightness-105 transition text-sm font-medium text-slate-50 bg-primary border-slate-200 border rounded-full px-5 py-3"
+                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-medium text-slate-50 bg-primary border-slate-200 border rounded-full px-5 py-3 focus:outline-none"
                   >
                     View Open Positions
                     <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-black/5">
@@ -211,58 +211,6 @@ const Careers = () => {
         </div>
       </section>
 
-      {/* Why Join Us Section */}
-      <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="why-join">
-        <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 transition duration-500 ease-in">
-          <h2 id="why-join" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">
-            Why Join Asmi?
-          </h2>
-          <p className="mt-2 text-slate-700/80">
-            We offer a unique opportunity to work with cutting-edge SAP technology while making a real impact on mid-market businesses.
-          </p>
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                title: 'Growth Opportunities',
-                description: 'Continuous learning and career development with access to the latest SAP certifications and training.',
-                icon: '📈'
-              },
-              {
-                title: 'Flexible Work',
-                description: 'Hybrid work model with flexible hours and remote work options to support work-life balance.',
-                icon: '🏠'
-              },
-              {
-                title: 'Competitive Benefits',
-                description: 'Attractive salary packages, health insurance, and performance-based bonuses.',
-                icon: '💰'
-              },
-              {
-                title: 'Innovation Focus',
-                description: 'Work with the latest SAP technologies and contribute to innovative solutions for our clients.',
-                icon: '🚀'
-              },
-              {
-                title: 'Team Culture',
-                description: 'Collaborative environment with experienced professionals who are passionate about SAP excellence.',
-                icon: '🤝'
-              },
-              {
-                title: 'Client Impact',
-                description: 'Make a real difference by helping mid-market companies transform their business processes.',
-                icon: '💼'
-              }
-            ].map((benefit, index) => (
-              <div key={index} className="rounded-xl border border-slate-200 bg-white p-6 text-center">
-                <div className="text-3xl mb-4">{benefit.icon}</div>
-                <h3 className="text-lg font-medium text-slate-900 mb-2">{benefit.title}</h3>
-                <p className="text-slate-700/80 text-sm">{benefit.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Open Positions Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="positions">
         <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 transition duration-500 ease-in">
@@ -278,7 +226,7 @@ const Careers = () => {
             {!loadingJobs && parsedJobs.length > 0 && (
               <Link
                 to="/jobs"
-                className="group inline-flex items-center gap-2 bg-primary text-white hover:shadow-[0_0_0_5px_rgba(212,160,23,0.25)] hover:brightness-105 transition px-5 py-3 rounded-full font-medium text-sm whitespace-nowrap"
+                className="group inline-flex items-center gap-2 bg-primary text-white hover:brightness-110 transition px-5 py-3 rounded-full font-medium text-sm whitespace-nowrap focus:outline-none"
               >
                 View All Jobs
                 <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-white/20 group-hover:bg-white/30 transition">
@@ -315,9 +263,6 @@ const Careers = () => {
                   <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between mb-4">
                     <div className="space-y-2">
                       <h3 className="text-lg font-medium text-slate-900">{job.title}</h3>
-                      {job.specialization && (
-                        <p className="text-sm text-primary/80 font-medium">{job.specialization}</p>
-                      )}
                       <div className="flex flex-wrap items-center gap-4 text-sm text-slate-600">
                         {job.location && (
                           <div className="flex items-center gap-1">
@@ -331,12 +276,6 @@ const Careers = () => {
                             {formatEmploymentType(job.type)}
                           </div>
                         )}
-                        {job.salary_range && (
-                          <div className="flex items-center gap-1">
-                            <DollarSign className="h-4 w-4" />
-                            {job.salary_range}
-                          </div>
-                        )}
                         <div className="flex items-center gap-1">
                           <Calendar className="h-4 w-4" />
                           Posted {new Date(job.created_at).toLocaleDateString()}
@@ -345,7 +284,7 @@ const Careers = () => {
                     </div>
                     <Button
                       variant="ghost"
-                      className="inline-flex items-center gap-2 text-primary hover:text-primary/80 text-sm font-medium"
+                      className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 text-sm font-medium"
                       onClick={() => openApplyDialog(job)}
                     >
                       Apply Now
@@ -353,7 +292,17 @@ const Careers = () => {
                     </Button>
                   </div>
                   {job.description && (
-                    <p className="text-slate-700/80 mb-4 whitespace-pre-line">{job.description}</p>
+                    <div className="mb-4">
+                      <h4 className="text-sm font-medium text-slate-900 mb-2">Responsibilities:</h4>
+                      <ul className="space-y-1">
+                        {parseRequirements(job.description).map((responsibility, respIndex) => (
+                          <li key={respIndex} className="flex items-start gap-2 text-sm text-slate-700/80">
+                            <CheckCircle className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
+                            {responsibility}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   )}
                   {job.requirementList.length > 0 && (
                     <div>
@@ -375,7 +324,7 @@ const Careers = () => {
               <div className="pt-6 text-center border-t border-slate-200">
                 <Link
                   to="/jobs"
-                  className="inline-flex items-center gap-2 bg-primary text-white hover:shadow-[0_0_0_5px_rgba(212,160,23,0.25)] hover:brightness-105 transition px-6 py-3 rounded-full font-medium"
+                  className="inline-flex items-center gap-2 bg-primary text-white hover:brightness-110 transition px-6 py-3 rounded-full font-medium focus:outline-none"
                 >
                   View All {parsedJobs.length} Open Positions
                   <ArrowRight className="h-4 w-4" />
@@ -393,32 +342,42 @@ const Careers = () => {
             Application Process
           </h2>
           <p className="mt-2 text-slate-700/80">
-            Our streamlined application process ensures a smooth experience for all candidates.
+          Join Our Global Team at ASMI Technologies
           </p>
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6 gap-y-8">
             {[
               {
                 step: '01',
-                title: 'Apply Online',
-                description: 'Submit your application through our online portal with your resume and cover letter.'
+                title: 'Find a Job',
+                description: 'Explore current openings on our ASMI Careers Page and find roles that match your skills and interests.'
               },
               {
                 step: '02',
-                title: 'Initial Screening',
-                description: 'Our HR team will review your application and conduct an initial phone screening.'
+                title: 'Apply',
+                description: 'Submit your online application and receive instant confirmation.'
               },
               {
                 step: '03',
-                title: 'Technical Interview',
-                description: 'Meet with our technical team to discuss your SAP experience and problem-solving approach.'
+                title: 'Pre-Selection',
+                description: 'We review your skills and experience to determine fit and may consider you for other relevant positions.'
               },
               {
                 step: '04',
-                title: 'Final Interview',
-                description: 'Final interview with leadership team to discuss culture fit and career aspirations.'
+                title: 'Interview',
+                description: 'Shortlisted candidates meet the recruiting manager and HR. Additional rounds or assessments may apply. Virtual or in-person interviews available.'
+              },
+              {
+                step: '05',
+                title: 'Selection',
+                description: 'References may be checked. If selected, you\'ll receive an offer with a competitive package. All other applicants are notified.'
+              },
+              {
+                step: '06',
+                title: 'Onboarding',
+                description: 'New hires undergo an introduction program to integrate quickly and start contributing effectively.'
               }
             ].map((phase, index) => (
-              <div key={index} className="text-center">
+              <div key={index} className="rounded-xl border border-slate-200 bg-white p-6 text-center hover:shadow-md transition">
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary text-white text-lg font-medium mb-4">
                   {phase.step}
                 </div>
@@ -434,10 +393,10 @@ const Careers = () => {
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="cta">
         <div className="rounded-2xl bg-primary text-white p-8 md:p-12 text-center">
           <h2 id="cta" className="text-2xl md:text-3xl font-light tracking-tight">
-            Ready to join our team?
+          Ready to join our team?
           </h2>
           <p className="mt-4 text-white/80 max-w-2xl mx-auto">
-            Don't see the perfect role? We're always looking for talented SAP professionals. Send us your resume and let's start a conversation.
+          Don't see the perfect role? We're always looking for talented SAP professionals. Send us your resume and let's start a conversation.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -483,22 +442,11 @@ const Careers = () => {
                     {formatEmploymentType(selectedJob.type)}
                   </span>
                 )}
-                {selectedJob.salary_range && (
-                  <span className="inline-flex items-center gap-2">
-                    <DollarSign className="h-4 w-4" />
-                    {selectedJob.salary_range}
-                  </span>
-                )}
                 <span className="inline-flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
                   Posted {new Date(selectedJob.created_at).toLocaleDateString()}
                 </span>
               </div>
-              {selectedJob.specialization && (
-                <p className="text-sm text-slate-600">
-                  Specialization: <span className="font-medium text-slate-800">{selectedJob.specialization}</span>
-                </p>
-              )}
             </div>
 
             <form onSubmit={handleSubmitApplication} className="space-y-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">

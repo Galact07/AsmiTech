@@ -17,7 +17,7 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center gap-2 hover:shadow-[0_0_0_5px_rgba(212,160,23,0.25)] hover:brightness-105 transition text-sm font-medium text-slate-50 bg-primary border-slate-200 border rounded-full px-4 py-2 shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.08),0_8px_24px_rgba(2,6,23,0.06)];
+    @apply inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-medium text-slate-50 bg-primary border-slate-200 border rounded-full px-4 py-2 shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.08),0_8px_24px_rgba(2,6,23,0.06)] focus:outline-none;
   }
   
   .btn-secondary {

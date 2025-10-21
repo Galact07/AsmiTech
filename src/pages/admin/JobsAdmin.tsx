@@ -55,7 +55,6 @@ interface Application {
 interface Job {
   id: string;
   title: string;
-  specialization: string | null;
   description: string | null;
   location: string | null;
   type: string;
@@ -69,7 +68,6 @@ interface Job {
 
 const jobSchema = z.object({
   title: z.string().min(1, 'Title is required'),
-  specialization: z.string().optional(),
   description: z.string().optional(),
   location: z.string().optional(),
   type: z.enum(['full-time', 'part-time', 'contract', 'internship']),
@@ -93,7 +91,6 @@ export default function JobsAdmin() {
     resolver: zodResolver(jobSchema),
     defaultValues: {
       title: '',
-      specialization: '',
       description: '',
       location: '',
       type: 'full-time',
@@ -163,7 +160,6 @@ export default function JobsAdmin() {
 
   const filteredJobs = jobs.filter(job => {
     const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      job.specialization?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       job.location?.toLowerCase().includes(searchTerm.toLowerCase());
     
     const matchesStatus = statusFilter === 'all' || job.status === statusFilter;
@@ -222,7 +218,6 @@ export default function JobsAdmin() {
     setSelectedJob(job);
     form.reset({
       title: job.title,
-      specialization: job.specialization || '',
       description: job.description || '',
       location: job.location || '',
       type: job.type as any,
@@ -315,7 +310,10 @@ export default function JobsAdmin() {
               Create and manage job listings for your company
             </p>
           </div>
-          <Button onClick={openCreateDialog} className="flex items-center gap-2">
+          <Button 
+            onClick={openCreateDialog} 
+            className="flex items-center gap-2 bg-primary text-white hover:bg-primary/90 focus:bg-primary/90"
+          >
             <Plus className="h-4 w-4" />
             Add Job
           </Button>
@@ -387,14 +385,7 @@ export default function JobsAdmin() {
                         className="hover:bg-muted/50"
                       >
                         <TableCell>
-                          <div>
-                            <div className="font-medium">{job.title}</div>
-                            {job.specialization && (
-                              <div className="text-sm text-muted-foreground">
-                                {job.specialization}
-                              </div>
-                            )}
-                          </div>
+                          <div className="font-medium">{job.title}</div>
                         </TableCell>
                         <TableCell>{getTypeBadge(job.type)}</TableCell>
                         <TableCell>
@@ -513,35 +504,19 @@ export default function JobsAdmin() {
                     )}
                   />
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <FormField
-                      control={form.control}
-                      name="specialization"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Specialization</FormLabel>
-                          <FormControl>
-                            <Input {...field} placeholder="e.g. SAP S/4HANA" />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="location"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Location</FormLabel>
-                          <FormControl>
-                            <Input {...field} placeholder="e.g. Amsterdam, Netherlands" />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+                  <FormField
+                    control={form.control}
+                    name="location"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Location</FormLabel>
+                        <FormControl>
+                          <Input {...field} placeholder="e.g. Amsterdam, Netherlands" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <FormField
@@ -588,11 +563,11 @@ export default function JobsAdmin() {
                     name="description"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Job Description</FormLabel>
+                        <FormLabel>Responsibilities</FormLabel>
                         <FormControl>
                           <Textarea
                             {...field}
-                            placeholder="Describe the role, responsibilities, and what you're looking for..."
+                            placeholder="List the key responsibilities and duties (one per line or separated by commas)..."
                             rows={4}
                           />
                         </FormControl>
@@ -650,7 +625,11 @@ export default function JobsAdmin() {
                     >
                       Cancel
                     </Button>
-                    <Button type="submit" disabled={form.formState.isSubmitting}>
+                    <Button 
+                      type="submit" 
+                      disabled={form.formState.isSubmitting}
+                      className="bg-primary text-white hover:bg-primary/90 focus:bg-primary/90"
+                    >
                       {form.formState.isSubmitting ? (
                         <div className="flex items-center">
                           <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
@@ -689,27 +668,28 @@ export default function JobsAdmin() {
                   )}
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                  <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
-                    <Label className="font-medium">Specialization</Label>
-                    <p className="text-muted-foreground">
-                      {selectedJob.specialization || 'Not specified'}
-                    </p>
-                  </div>
-                  <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
-                    <Label className="font-medium">Location</Label>
-                    <p className="text-muted-foreground">
-                      {selectedJob.location || 'Not specified'}
-                    </p>
-                  </div>
+                <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
+                  <Label className="font-medium">Location</Label>
+                  <p className="text-muted-foreground">
+                    {selectedJob.location || 'Not specified'}
+                  </p>
                 </div>
 
                 {selectedJob.description && (
                   <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
-                    <Label className="font-medium">Description</Label>
-                    <p className="text-muted-foreground mt-1 whitespace-pre-wrap">
-                      {selectedJob.description}
-                    </p>
+                    <Label className="font-medium">Responsibilities</Label>
+                    <ul className="mt-2 space-y-1">
+                      {selectedJob.description.split(/\r?\n/).map((line, index) => {
+                        const cleanLine = line.replace(/^[-•]\s*/, '').trim();
+                        if (!cleanLine) return null;
+                        return (
+                          <li key={index} className="flex items-start gap-2 text-sm text-muted-foreground">
+                            <span className="text-slate-500 mt-1">•</span>
+                            {cleanLine}
+                          </li>
+                        );
+                      })}
+                    </ul>
                   </div>
                 )}
 
@@ -759,7 +739,7 @@ export default function JobsAdmin() {
                             )}
                             {application.resume_url && (
                               <span className="sm:col-span-2">
-                                Resume: <a className="text-primary underline" href={application.resume_url} target="_blank" rel="noopener noreferrer">View</a>
+                                Resume: <a className="text-slate-600 underline hover:text-slate-800" href={application.resume_url} target="_blank" rel="noopener noreferrer">View</a>
                               </span>
                             )}
                           </div>

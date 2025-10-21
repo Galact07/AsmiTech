@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, ArrowRight, Shield, Award, Factory, ShoppingCart, Banknote, HeartPulse } from 'lucide-react';
+import { ArrowUpRight, ArrowRight } from 'lucide-react';
+import Carousel from '../components/ui/carousel';
 
 const About = () => {
   return (
@@ -11,18 +12,18 @@ const About = () => {
             <div className="flex items-start md:items-center gap-6 md:gap-10 flex-col md:flex-row">
               <div className="flex-1">
                 <p className="text-[11px] uppercase font-light text-slate-500 tracking-[0.18em]">
-                  About Asmi Technology Consulting BV
+                About ASMI Technology Consulting B.V.
                 </p>
                 <h1 id="about-title" className="sm:text-5xl md:text-6xl text-4xl font-light text-slate-900 tracking-tight mt-2">
-                  Your trusted SAP transformation partner.
+                Your Trusted SAP Transformation Partner.
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
-                  We are a boutique SAP consulting firm based in Utrecht, Netherlands, specializing in mid-market enterprise transformations. Our team combines deep SAP expertise with industry knowledge to deliver measurable business outcomes.
+                Discover how ASMI makes SAP transformations simple and effective. We deliver end-to-end solutions that streamline processes, connect systems seamlessly, and generate measurable business results.
                 </p>
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <Link
                     to="/contact"
-                    className="group inline-flex items-center gap-2 hover:shadow-[0_0_0_5px_rgba(212,160,23,0.25)] hover:brightness-105 transition text-sm font-medium text-slate-50 bg-primary border-slate-200 border rounded-full px-5 py-3"
+                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-medium text-slate-50 bg-primary border-slate-200 border rounded-full px-5 py-3 focus:outline-none"
                   >
                     Get in Touch
                     <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-black/5">
@@ -41,24 +42,12 @@ const About = () => {
               {/* Team Image */}
               <div className="w-full md:w-[440px] shrink-0 space-y-3">
                 <img
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=60&auto=format&fit=crop"
+                  src="https://i.pinimg.com/1200x/b1/4c/c1/b14cc161cce4383a47cfaebca0af04cb.jpg"
                   alt="Asmi team collaboration"
                   loading="lazy"
                   className="backdrop-blur-[10px] bg-white/70 w-full border-slate-200 border rounded-2xl pt-2 pr-2 pb-2 pl-2"
                 />
               </div>
-            </div>
-          </div>
-          <div className="h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
-          <div className="px-6 sm:px-8 md:px-12 py-4 flex items-center gap-4">
-            <div className="inline-flex items-center gap-2 text-xs text-slate-600/80">
-              <Shield className="h-4 w-4 text-primary" />
-              <span>GDPR compliant • SAP Partner aligned</span>
-            </div>
-            <div className="h-4 w-px bg-slate-200"></div>
-            <div className="inline-flex items-center gap-2 text-xs text-slate-600/80">
-              <Award className="h-4 w-4 text-primary" />
-              <span>Trusted by mid‑market enterprises</span>
             </div>
           </div>
         </div>
@@ -73,72 +62,58 @@ const About = () => {
           <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <p className="text-slate-700/80">
-                Founded in 2020, Asmi Technology Consulting BV emerged from a simple observation: mid-market enterprises were being underserved by traditional SAP consulting approaches. We saw an opportunity to bridge the gap between enterprise-scale solutions and the unique needs of growing businesses.
+                At ASMI, we help businesses get the most out of SAP. Based in Utrecht, Netherlands, our team combines technical expertise with hands-on experience to simplify complex processes and deliver solutions that truly make a difference. From implementation and integration to process optimization, data migration, training, and ongoing support, we focus on solutions that align technology with your business goals and make daily workflows smoother.
               </p>
               <p className="mt-4 text-slate-700/80">
-                Our founders, with over 20 years of combined SAP experience, recognized that successful transformations require more than technical expertise—they demand deep understanding of business processes, industry challenges, and the human side of change management.
+                What makes us different is our practical, collaborative approach. We value problem-solving, innovation, and doing things right, not just fast. Trusted by organizations like Hitachi, Cargill, and Deloitte, we work closely with our clients to optimize operations and support growth that lasts.
               </p>
             </div>
             <div>
-              <p className="text-slate-700/80">
-                Today, we're proud to be a trusted partner for mid-market leaders across manufacturing, retail, finance, and healthcare sectors. Our boutique approach allows us to provide personalized attention and flexible solutions that scale with our clients' growth.
-              </p>
-              <p className="mt-4 text-slate-700/80">
-                Based in Utrecht, we serve clients across the Netherlands and beyond, bringing global SAP expertise with local market understanding and regulatory compliance.
-              </p>
+              <img
+                src="https://i.pinimg.com/1200x/db/e6/14/dbe61467598a34dc1b363374526dcad8.jpg"
+                alt="ASMI team collaboration and SAP consulting"
+                loading="lazy"
+                className="w-full h-80 object-cover rounded-2xl border border-slate-200"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Values Section */}
-      <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="values">
+      {/* Trusted by Leading Organizations Worldwide Section */}
+      <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="trusted-title">
         <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 transition duration-500 ease-in">
-          <h2 id="values" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">
-            Our Values
-          </h2>
-          <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                title: 'Client-Centric',
-                description: 'We prioritize our clients\' success above all else, ensuring every solution is tailored to their unique needs and constraints.',
-                icon: '🎯'
-              },
-              {
-                title: 'Excellence',
-                description: 'We maintain the highest standards in everything we do, from technical implementation to project management and client communication.',
-                icon: '⭐'
-              },
-              {
-                title: 'Innovation',
-                description: 'We stay at the forefront of SAP technology and best practices, bringing fresh perspectives to solve complex business challenges.',
-                icon: '🚀'
-              },
-              {
-                title: 'Integrity',
-                description: 'We build trust through transparency, honest communication, and ethical business practices in all our interactions.',
-                icon: '🤝'
-              },
-              {
-                title: 'Collaboration',
-                description: 'We work as an extension of our clients\' teams, fostering strong partnerships that drive mutual success.',
-                icon: '🤝'
-              },
-              {
-                title: 'Continuous Learning',
-                description: 'We invest in our team\'s growth and stay current with evolving technologies to deliver cutting-edge solutions.',
-                icon: '📚'
-              }
-            ].map((value, index) => (
-              <div key={index} className="rounded-xl border border-slate-200 bg-white p-5">
-                <div className="text-2xl mb-3">{value.icon}</div>
-                <h3 className="text-lg font-medium text-slate-900 mb-2">{value.title}</h3>
-                <p className="text-slate-700/80 text-sm">{value.description}</p>
-              </div>
-            ))}
+          <div className="flex items-center justify-between gap-3">
+            <h2 id="trusted-title" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">
+              Trusted by Leading Organizations Worldwide
+            </h2>
+          </div>
+          <div className="mt-5">
+            <Carousel speed="slow" className="py-4">
+              {[
+                { name: 'HITACHI', logoFile: 'hitachi logo.png' },
+                { name: 'CARGILL', logoFile: 'cargill logo.jpg' },
+                { name: 'DELOITTE', logoFile: 'deloitte logo.svg' },
+                { name: 'KPMG', logoFile: 'kpmg logo.png' },
+                { name: 'SUCAFINA', logoFile: 'sucafina logo.svg' },
+                { name: 'GREENWORKS', logoFile: 'greenworks logo.jpg' },
+                { name: 'SEGWAY-NINEBOT', logoFile: 'segway-ninebot logo.jpg' }
+              ].map((client, index) => (
+                <div key={index} className="flex-shrink-0 mx-6 flex items-center justify-center h-20 w-48">
+                  <div className="flex items-center justify-center h-16 w-44 bg-white border border-slate-200 rounded-lg px-4 hover:bg-slate-50 transition-colors">
+                    <img 
+                      src={`/src/assets/logos/${client.logoFile}`}
+                      alt={`${client.name} logo`}
+                      className="max-h-12 max-w-32 object-contain"
+                    />
+                  </div>
+                </div>
+              ))}
+            </Carousel>
           </div>
         </div>
       </section>
+
 
       {/* Team Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="team">
@@ -149,69 +124,144 @@ const About = () => {
           <p className="mt-2 text-slate-700/80">
             Our diverse team brings together deep SAP expertise, industry knowledge, and a passion for delivering exceptional results.
           </p>
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="mt-6 flex justify-center">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
+              {[
+                {
+                  name: 'Basavaraj K M',
+                  role: 'Managing Director',
+                  bio: 'With 20+ years in SAP consulting, he specializes in S/4HANA Finance, Central Finance, and Group Reporting. He has led multiple global implementations and migrations with proven results. A certified S/4HANA expert, he focuses on delivering practical, high-impact digital transformation solutions.',
+                  image: '/src/assets/logos/basavaraj.jpg',
+                  initials: 'BK'
+                },
+                {
+                  name: 'Asha M',
+                  role: 'Managing Partner',
+                  bio: 'As Managing Partner, she leads the firm’s strategy and operations. She focuses on delivering measurable results and building strong client relationships. Her leadership combines vision, accountability, and a commitment to excellence.',
+                  image: '/src/assets/logos/asha.jpg',
+                  initials: 'AM'
+                }
+              ].map((member, index) => (
+                <div key={index} className="rounded-xl border border-slate-200 bg-white p-6 text-center">
+                  <div className="relative inline-block mb-4">
+                    <img
+                      src={member.image}
+                      alt={`${member.name} headshot`}
+                      className="w-24 h-24 rounded-full object-cover mx-auto"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'flex';
+                      }}
+                    />
+                    <div 
+                      className="w-24 h-24 rounded-full bg-primary text-white flex items-center justify-center mx-auto text-lg font-semibold"
+                      style={{ display: 'none' }}
+                    >
+                      {member.initials}
+                    </div>
+                  </div>
+                  <h3 className="text-lg font-medium text-slate-900 mb-1">{member.name}</h3>
+                  <p className="text-primary text-sm font-medium mb-3">{member.role}</p>
+                  <p className="text-slate-700/80 text-sm leading-relaxed">{member.bio}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Mission Section */}
+      <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="mission-title">
+        <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 transition duration-500 ease-in">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div className="order-2 md:order-1">
+              <h2 id="mission-title" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">Our Mission</h2>
+              <p className="mt-3 text-slate-700/90">
+                At ASMI, we create SAP solutions that make a real difference. We simplify complex processes, unlock new opportunities, and deliver results you can measure. Our goal is to help businesses work smarter, innovate faster, and achieve more with every solution we implement.
+              </p>
+            </div>
+            <div className="order-1 md:order-2">
+              <img
+                src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&q=80&auto=format&fit=crop"
+                alt="Our Mission - SAP Solutions"
+                loading="lazy"
+                className="aspect-square w-full object-cover rounded-2xl border border-slate-200"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Core Values Section */}
+      <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="core-values">
+        <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 transition duration-500 ease-in">
+          <h2 id="core-values" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">
+            Our Core Values
+          </h2>
+          <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
-                name: 'Sarah van der Berg',
-                role: 'Founder & Managing Director',
-                bio: '20+ years SAP experience, former SAP SE consultant. Specializes in S/4HANA transformations and change management.',
-                image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&q=80&auto=format&fit=crop'
+                title: 'Integrity',
+                description: 'We uphold transparency and ethical practices in all our projects, building lasting relationships based on trust.',
+                image: 'https://i.pinimg.com/736x/0e/81/16/0e81165b627a9b29bc38498d8313527a.jpg',
+                alt: 'Handshake representing integrity and trust'
               },
               {
-                name: 'Michael Chen',
-                role: 'Technical Director',
-                bio: 'SAP certified architect with expertise in cloud migrations, integration, and DevOps. Former Accenture senior manager.',
-                image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80&auto=format&fit=crop'
+                title: 'Innovation',
+                description: 'We challenge the status quo with curiosity and new ideas, continuously improving our solutions to meet evolving business needs.',
+                image: 'https://i.pinimg.com/1200x/4d/1a/60/4d1a60bb13a96a176b8b703d2ebeac1d.jpg',
+                alt: 'Innovation and technology advancement'
               },
               {
-                name: 'Elena Rodriguez',
-                role: 'Industry Solutions Lead',
-                bio: 'Manufacturing and retail specialist with deep process knowledge. 15+ years implementing SAP in mid-market companies.',
-                image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80&auto=format&fit=crop'
+                title: 'Collaboration',
+                description: 'We work closely with our clients and partners, fostering a culture of teamwork to achieve shared success.',
+                image: 'https://i.pinimg.com/1200x/db/6d/fc/db6dfc1494fdd8cbae6d8a09feea549f.jpg',
+                alt: 'Team collaboration and partnership'
               }
-            ].map((member, index) => (
-              <div key={index} className="rounded-xl border border-slate-200 bg-white p-5">
+            ].map((value, index) => (
+              <div key={index} className="rounded-xl border border-slate-200 bg-white p-6 text-center">
                 <img
-                  src={member.image}
-                  alt={`${member.name} headshot`}
-                  className="w-20 h-20 rounded-full object-cover mb-4"
+                  src={value.image}
+                  alt={value.alt}
+                  loading="lazy"
+                  className="w-full h-48 object-cover rounded-lg mb-4"
                 />
-                <h3 className="text-lg font-medium text-slate-900">{member.name}</h3>
-                <p className="text-primary text-sm font-medium mb-2">{member.role}</p>
-                <p className="text-slate-700/80 text-sm">{member.bio}</p>
+                <h3 className="text-lg font-medium text-slate-900 mb-3">{value.title}</h3>
+                <p className="text-slate-700/80 text-sm leading-relaxed">{value.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Certifications Section */}
-      <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="certifications">
-        <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 transition duration-500 ease-in">
-          <h2 id="certifications" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">
-            Certifications & Partnerships
+      {/* CTA Section */}
+      <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="cta-title">
+        <div className="rounded-2xl bg-primary text-white p-8 md:p-12 text-center">
+          <h2 id="cta-title" className="text-2xl md:text-3xl font-light tracking-tight">
+            Drive better SAP results with ASMI.
           </h2>
-          <p className="mt-2 text-slate-700/80">
-            We maintain the highest standards of professional certification and strategic partnerships.
+          <p className="mt-4 text-white/80 max-w-2xl mx-auto">
+            Request your consultation today.
           </p>
-          <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              'SAP Partner',
-              'ISO/IEC 27001',
-              'GDPR Certified',
-              'NEN 7510',
-              'ISAE 3402',
-              'EuroCloud',
-              'DSAG Member',
-              'SAP Certified'
-            ].map((cert, index) => (
-              <div key={index} className="flex items-center justify-center h-16 border border-slate-200 rounded-xl bg-white hover:bg-slate-50 transition">
-                <span className="text-slate-600 text-sm font-medium">{cert}</span>
-              </div>
-            ))}
+          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 bg-white text-primary hover:bg-slate-50 transition px-6 py-3 rounded-full font-medium"
+            >
+              Get In Touch
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
+            <Link
+              to="/services"
+              className="inline-flex items-center gap-2 border border-white/20 text-white hover:bg-white/10 transition px-6 py-3 rounded-full font-medium"
+            >
+              Our Services
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>
+
     </div>
   );
 };

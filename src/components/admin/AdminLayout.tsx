@@ -63,7 +63,10 @@ export function AdminLayout() {
           <p className="text-muted-foreground mb-4">
             You don't have administrator privileges to access this area.
           </p>
-          <Button onClick={() => window.history.back()}>
+          <Button 
+            onClick={() => window.history.back()}
+            className="bg-primary text-white hover:bg-primary/90 focus:bg-primary/90"
+          >
             Go Back
           </Button>
         </motion.div>

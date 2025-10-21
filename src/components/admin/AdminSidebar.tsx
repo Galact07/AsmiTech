@@ -40,11 +40,12 @@ const sidebarItems = [
     href: '/admin/inquiries',
     icon: MessageSquare,
   },
-  {
-    title: 'Case Studies',
-    href: '/admin/case-studies',
-    icon: BookOpen,
-  },
+  // Case Studies hidden as requested
+  // {
+  //   title: 'Case Studies',
+  //   href: '/admin/case-studies',
+  //   icon: BookOpen,
+  // },
 ];
 
 export function AdminSidebar({ collapsed, onToggle }: AdminSidebarProps) {
@@ -57,7 +58,7 @@ export function AdminSidebar({ collapsed, onToggle }: AdminSidebarProps) {
       animate={{ x: 0, width: collapsed ? 80 : 280 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
       className={cn(
-        "bg-card border-r border-border h-full flex flex-col shadow-lg",
+        "bg-card border-r border-border h-screen flex flex-col shadow-lg sticky top-0",
         collapsed ? "w-20" : "w-70"
       )}
     >
@@ -79,7 +80,7 @@ export function AdminSidebar({ collapsed, onToggle }: AdminSidebarProps) {
           variant="ghost"
           size="icon"
           onClick={onToggle}
-          className="h-8 w-8 hover:bg-accent"
+          className="h-8 w-8 hover:bg-slate-100"
         >
           {collapsed ? (
             <Menu className="h-4 w-4" />
@@ -90,7 +91,7 @@ export function AdminSidebar({ collapsed, onToggle }: AdminSidebarProps) {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 p-2">
+      <nav className="flex-1 p-2 overflow-y-auto">
         <ul className="space-y-1">
           {sidebarItems.map((item) => {
             const isActive = location.pathname === item.href || 
@@ -103,8 +104,8 @@ export function AdminSidebar({ collapsed, onToggle }: AdminSidebarProps) {
                   className={cn(
                     "flex items-center rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 group",
                     isActive
-                      ? "bg-primary text-primary-foreground shadow-sm"
-                      : "text-muted-foreground hover:bg-accent hover:text-foreground"
+                      ? "bg-primary text-white shadow-sm"
+                      : "text-muted-foreground hover:bg-slate-100 hover:text-slate-900"
                   )}
                 >
                   <item.icon 
@@ -127,7 +128,7 @@ export function AdminSidebar({ collapsed, onToggle }: AdminSidebarProps) {
                   {isActive && (
                     <motion.div
                       layoutId="activeTab"
-                      className="absolute right-0 w-1 bg-primary-foreground rounded-l-full h-8"
+                      className="absolute right-0 w-1 bg-white rounded-l-full h-8"
                     />
                   )}
                 </Link>
@@ -138,13 +139,13 @@ export function AdminSidebar({ collapsed, onToggle }: AdminSidebarProps) {
       </nav>
 
       {/* User Info & Logout */}
-      <div className="p-4 border-t border-border">
+      <div className="p-4 border-t border-border mt-auto">
         {!collapsed && profile && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="mb-4 p-3 bg-accent/50 rounded-lg"
+            className="mb-4 p-3 bg-white border border-slate-200 rounded-lg"
           >
             <p className="text-sm font-medium truncate">{profile.full_name || profile.email}</p>
             <p className="text-xs text-muted-foreground capitalize">{profile.role}</p>

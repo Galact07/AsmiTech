@@ -286,7 +286,10 @@ export default function CaseStudiesAdmin() {
               Create and manage case studies and project showcases
             </p>
           </div>
-          <Button onClick={openCreateDialog} className="flex items-center gap-2">
+          <Button 
+            onClick={openCreateDialog} 
+            className="flex items-center gap-2 bg-primary text-white hover:bg-primary/90 focus:bg-primary/90"
+          >
             <Plus className="h-4 w-4" />
             Add Case Study
           </Button>
@@ -617,7 +620,11 @@ export default function CaseStudiesAdmin() {
                   >
                     Cancel
                   </Button>
-                  <Button type="submit" disabled={form.formState.isSubmitting}>
+                  <Button 
+                    type="submit" 
+                    disabled={form.formState.isSubmitting}
+                    className="bg-primary text-white hover:bg-primary/90 focus:bg-primary/90"
+                  >
                     {form.formState.isSubmitting ? (
                       <div className="flex items-center">
                         <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>

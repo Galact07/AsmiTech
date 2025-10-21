@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, ArrowRight, Factory, ShoppingCart, Banknote, HeartPulse, CheckCircle } from 'lucide-react';
+import { ArrowUpRight, ArrowRight, ShoppingCart, Flame, Pill, FlaskConical, Landmark, Truck, CheckCircle } from 'lucide-react';
+import Carousel from '../components/ui/carousel';
 
 const Industries = () => {
   return (
@@ -14,7 +15,7 @@ const Industries = () => {
                   Industry Solutions
                 </p>
                 <h1 id="industries-title" className="sm:text-5xl md:text-6xl text-4xl font-light text-slate-900 tracking-tight mt-2">
-                  Tailored SAP solutions for your industry.
+                  SAP Solutions That Fit Your Industry Needs
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
                   We understand the unique challenges and opportunities in each industry. Our solutions are designed to address specific sector requirements while delivering measurable business value.
@@ -22,7 +23,7 @@ const Industries = () => {
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <Link
                     to="/contact"
-                    className="group inline-flex items-center gap-2 hover:shadow-[0_0_0_5px_rgba(212,160,23,0.25)] hover:brightness-105 transition text-sm font-medium text-slate-50 bg-primary border-slate-200 border rounded-full px-5 py-3"
+                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-medium text-slate-50 bg-primary border-slate-200 border rounded-full px-5 py-3 focus:outline-none"
                   >
                     Discuss Your Industry Needs
                     <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-black/5">
@@ -41,13 +42,47 @@ const Industries = () => {
               {/* Industry Illustration */}
               <div className="w-full md:w-[440px] shrink-0 space-y-3">
                 <img
-                  src="https://images.unsplash.com/photo-1621619856624-42fd193a0661?w=900&q=60&auto=format&fit=crop"
+                  src="https://images.pexels.com/photos/7433827/pexels-photo-7433827.jpeg?_gl=1*1xxunhd*_ga*MTU5Njc0NzgwOS4xNzU5ODE5NDIw*_ga_8JE65Q40S6*czE3NjEwNTc3MDYkbzMkZzEkdDE3NjEwNTkwMzIkajMxJGwwJGgw"
                   alt="Industry solutions overview"
                   loading="lazy"
                   className="backdrop-blur-[10px] bg-white/70 w-full border-slate-200 border rounded-2xl pt-2 pr-2 pb-2 pl-2"
                 />
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Clients Section */}
+      <section className="max-w-7xl mx-auto px-5 md:px-8 pt-8 md:pt-12" aria-labelledby="partners-title">
+        <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 transition duration-500 ease-in">
+          <div className="flex items-center justify-between gap-3">
+            <h2 id="partners-title" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">
+            Clients We've Served
+            </h2>
+          </div>
+          <div className="mt-5">
+            <Carousel speed="very-slow" className="py-4">
+              {[
+                { name: 'HITACHI', logoFile: 'hitachi logo.png' },
+                { name: 'CARGILL', logoFile: 'cargill logo.jpg' },
+                { name: 'DELOITTE', logoFile: 'deloitte logo.svg' },
+                { name: 'KPMG', logoFile: 'kpmg logo.png' },
+                { name: 'SUCAFINA', logoFile: 'sucafina logo.svg' },
+                { name: 'GREENWORKS', logoFile: 'greenworks logo.jpg' },
+                { name: 'SEGWAY-NINEBOT', logoFile: 'segway-ninebot logo.jpg' }
+              ].map((client, index) => (
+                <div key={index} className="flex-shrink-0 mx-6 flex items-center justify-center h-20 w-48">
+                  <div className="flex items-center justify-center h-16 w-44 bg-white border border-slate-200 rounded-lg px-4 hover:bg-slate-50 transition-colors">
+                    <img 
+                      src={`/src/assets/logos/${client.logoFile}`}
+                      alt={`${client.name} logo`}
+                      className="max-h-12 max-w-32 object-contain"
+                    />
+                  </div>
+                </div>
+              ))}
+            </Carousel>
           </div>
         </div>
       </section>
@@ -61,66 +96,81 @@ const Industries = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5 gap-x-6 gap-y-6">
             {[
               {
-                icon: Factory,
-                title: 'Manufacturing',
-                description: 'From plan‑to‑produce to EWM, we optimize production and logistics with real‑time visibility.',
-                features: [
-                  'MES & IoT telemetry for predictive maintenance',
-                  'Advanced ATP and supply planning',
-                  'Quality management automation',
-                  'Production scheduling optimization',
-                  'Inventory management and tracking'
-                ],
-                image: 'https://images.unsplash.com/photo-1621619856624-42fd193a0661?w=1080&q=80',
-                alt: 'Manufacturing floor with SAP integration'
-              },
-              {
                 icon: ShoppingCart,
-                title: 'Retail',
-                description: 'Unify channels and inventory while improving forecast accuracy and margin.',
+                title: 'Retail & Consumer Goods',
+                description: 'Integrate sales, inventory, and customer insights to make smarter decisions and deliver a seamless shopping experience across all channels.',
                 features: [
-                  'Omni‑channel stock and fulfillment',
-                  'Demand sensing and promotions',
-                  'Loyalty and customer insights',
-                  'Point of sale integration',
-                  'Supply chain visibility'
+                  'Cut inventory waste and stockouts with smarter SAP planning.',
+                  'Accelerate supply chain processes to get products to customers faster.',
+                  'Use real-time data to improve sales decisions and customer satisfaction.'
                 ],
-                image: 'https://images.unsplash.com/photo-1642615835477-d303d7dc9ee9?w=1080&q=80',
-                alt: 'Retail analytics dashboard'
+                image: 'https://i.pinimg.com/736x/ec/be/ba/ecbeba29212ecb314faf2760a9b200a3.jpg',
+                alt: 'Retail & Consumer Goods'
               },
               {
-                icon: Banknote,
-                title: 'Finance',
-                description: 'Shorten time‑to‑close, increase transparency, and ensure regulatory compliance.',
+                icon: Flame,
+                title: 'Oil, Gas & Energy',
+                description: 'Connect operations, maintenance, and compliance systems to improve efficiency, reduce downtime, and maintain the highest safety standards.',
                 features: [
-                  'Blackline‑style reconciliations',
-                  'Profitability and cost analytics',
-                  'IFRS and local GAAP reporting',
-                  'Risk management and compliance',
-                  'Financial planning and analysis'
+                  'Keep critical equipment running longer with predictive maintenance.',
+                  'Stay fully compliant with safety and environmental regulations.',
+                  'Turn operational data into cost-saving, actionable insights.'
                 ],
-                image: 'https://images.unsplash.com/photo-1635151227785-429f420c6b9d?w=1080&q=80',
-                alt: 'Financial dashboards and reporting'
+                image: 'https://i.pinimg.com/736x/56/c4/ec/56c4ec50629e9b8c7082b86bd1fe5332.jpg',
+                alt: 'Oil, Gas & Energy'
               },
               {
-                icon: HeartPulse,
-                title: 'Healthcare',
-                description: 'Protect patient data and streamline clinical supply while meeting regulations.',
+                icon: Pill,
+                title: 'Pharmaceuticals & Life Sciences',
+                description: 'Link research, production, and regulatory processes to ensure product quality, accelerate delivery, and stay fully compliant.',
                 features: [
-                  'Patient data governance and interoperability',
-                  'Procurement and device tracking',
-                  'Costing and reimbursement management',
-                  'Clinical trial management',
-                  'Regulatory compliance automation'
+                  'Speed up manufacturing without compromising quality or compliance.',
+                  'Track every batch to ensure regulatory standards are met.',
+                  'Coordinate distribution to meet demand efficiently and reliably.'
                 ],
-                image: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=1600&q=80',
-                alt: 'Healthcare system interface'
+                image: 'https://i.pinimg.com/1200x/b7/56/19/b7561971cb6257a1e6b99b1c1fdf795d.jpg',
+                alt: 'Pharmaceuticals & Life Sciences'
+              },
+              {
+                icon: FlaskConical,
+                title: 'Chemicals & Petrochemicals',
+                description: 'Coordinate production, safety, and supply chain operations to boost efficiency, minimize risks, and respond quickly to market demands.',
+                features: [
+                  'Optimize production to reduce waste and energy usage.',
+                  'Simplify compliance reporting with automated SAP processes.',
+                  'Respond quickly to supply chain disruptions or market changes.'
+                ],
+                image: 'https://images.unsplash.com/photo-1757912666361-8c226b7279b9?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=870',
+                alt: 'Chemicals & Petrochemicals'
+              },
+              {
+                icon: Landmark,
+                title: 'Public Sector & Government',
+                description: 'Streamline financial, operational, and citizen services to improve transparency, accountability, and service delivery across departments.',
+                features: [
+                  'Automate budgeting and fund management for clarity and control.',
+                  'Increase transparency across departments and operations.',
+                  'Deliver citizen services more efficiently using real-time insights.'
+                ],
+                image: 'https://images.pexels.com/photos/20432166/pexels-photo-20432166.jpeg?_gl=1*ydoi7k*_ga*MTU5Njc0NzgwOS4xNzU5ODE5NDIw*_ga_8JE65Q40S6*czE3NjEwNTc3MDYkbzMkZzEkdDE3NjEwNTgyNzEkajQzJGwwJGgw',
+                alt: 'Public Sector & Government'
+              },
+              {
+                icon: Truck,
+                title: 'Logistics & Supply Chain',
+                description: 'Unify procurement, warehousing, and distribution with real-time insights to ensure faster, more reliable, and cost-effective operations.',
+                features: [
+                  'Streamline warehousing, shipping, and inventory tracking.',
+                  'Get full visibility across suppliers and deliveries.',
+                  'Resolve bottlenecks quickly to maintain smooth operations.'
+                ],
+                image: 'https://i.pinimg.com/736x/94/b0/ed/94b0ed2a49f4452f0b4930f7c9ef09c1.jpg',
+                alt: 'Logistics & Supply Chain'
               }
             ].map((industry, index) => (
               <article key={index} className="rounded-2xl border border-slate-200 bg-white p-6 hover:shadow-md transition">
                 <div className="flex text-sm text-slate-700/80 gap-x-2 gap-y-2 items-center mb-4">
                   <industry.icon className="h-6 w-6 text-primary" />
-                  <span className="font-medium">{industry.title}</span>
                 </div>
                 <h3 className="text-xl tracking-tight font-light text-slate-900 mb-3">
                   {industry.title}
@@ -143,53 +193,37 @@ const Industries = () => {
               </article>
             ))}
           </div>
-          <div className="mt-8 rounded-xl border border-slate-200 bg-white px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <p className="text-slate-700/80">
-              Need a tailored blueprint? We assemble composable modules to fit your constraints.
-            </p>
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-primary bg-white border border-secondary hover:bg-slate-50"
-            >
-              Request a blueprint
-            </Link>
-          </div>
         </div>
       </section>
 
-      {/* Industry Expertise Section */}
-      <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="expertise">
+      {/* What Clients Say Section */}
+      <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="testimonials-title">
         <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 transition duration-500 ease-in">
-          <h2 id="expertise" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">
-            Industry Expertise
-          </h2>
-          <p className="mt-2 text-slate-700/80">
-            Our team brings deep industry knowledge and SAP expertise to deliver solutions that address your specific business challenges.
-          </p>
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                title: 'Regulatory Compliance',
-                description: 'We ensure your SAP implementation meets industry-specific regulations and standards.',
-                icon: '🛡️'
-              },
-              {
-                title: 'Best Practices',
-                description: 'We apply industry best practices and proven methodologies to every project.',
-                icon: '⭐'
-              },
-              {
-                title: 'Scalable Solutions',
-                description: 'Our solutions grow with your business and adapt to changing industry requirements.',
-                icon: '📈'
-              }
-            ].map((expertise, index) => (
-              <div key={index} className="text-center p-6 rounded-xl border border-slate-200 bg-white">
-                <div className="text-3xl mb-4">{expertise.icon}</div>
-                <h3 className="text-lg font-medium text-slate-900 mb-2">{expertise.title}</h3>
-                <p className="text-slate-700/80 text-sm">{expertise.description}</p>
-              </div>
-            ))}
+          <h2 id="testimonials-title" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">What Clients Say</h2>
+          <div className="mt-5">
+            <Carousel speed="very-slow" className="py-4">
+              {[
+                { quote: '"Their SAP expertise transformed our processes, efficient, reliable, and seamless implementation!" – Cargill Corporation', logoFile: 'cargill logo.jpg' },
+                { quote: '"A trusted partner for SAP solutions. They understood our business needs perfectly." – Hitachi Energy', logoFile: 'hitachi logo.png' },
+                { quote: '"Professional, proactive, and results-driven. Our SAP system has never run smoother." – Sucafina', logoFile: 'sucafina logo.svg' },
+                { quote: '"Exceptional support and guidance throughout our SAP journey. Highly recommended!" – Johnson & Johnson', logoFile: 'johnson and johnson logo.png' }
+              ].map((testimonial, idx) => (
+                <div key={idx} className="flex-shrink-0 mx-4 w-96">
+                  <div className="rounded-2xl border border-slate-200 bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6">
+                    <div className="flex-shrink-0 w-24 h-20 bg-white border border-slate-200 rounded-lg flex items-center justify-center p-3">
+                      <img 
+                        src={`/src/assets/logos/${testimonial.logoFile}`}
+                        alt={`${testimonial.logoFile.split(' ')[0]} logo`}
+                        className="max-h-16 max-w-20 object-contain"
+                      />
+                    </div>
+                    <blockquote className="text-slate-700/90 text-sm leading-relaxed flex-1">
+                      {testimonial.quote}
+                    </blockquote>
+                  </div>
+                </div>
+              ))}
+            </Carousel>
           </div>
         </div>
       </section>

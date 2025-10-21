@@ -22,8 +22,6 @@ interface DashboardStats {
   pendingApplications: number;
   totalInquiries: number;
   newInquiries: number;
-  totalCaseStudies: number;
-  publishedCaseStudies: number;
 }
 
 interface RecentActivity {
@@ -59,14 +57,6 @@ const statCards = [
     color: 'text-orange-600',
     bgColor: 'bg-orange-50',
   },
-  {
-    title: 'Case Studies',
-    key: 'totalCaseStudies' as keyof DashboardStats,
-    activeKey: 'publishedCaseStudies' as keyof DashboardStats,
-    icon: BookOpen,
-    color: 'text-purple-600',
-    bgColor: 'bg-purple-50',
-  },
 ];
 
 export default function AdminDashboard() {
@@ -77,8 +67,6 @@ export default function AdminDashboard() {
     pendingApplications: 0,
     totalInquiries: 0,
     newInquiries: 0,
-    totalCaseStudies: 0,
-    publishedCaseStudies: 0,
   });
   
   const [recentActivity, setRecentActivity] = useState<RecentActivity[]>([]);
@@ -92,19 +80,16 @@ export default function AdminDashboard() {
           jobsResult,
           applicationsResult,
           inquiriesResult,
-          caseStudiesResult,
         ] = await Promise.all([
           supabase.from('jobs').select('status'),
           supabase.from('applications').select('status'),
           supabase.from('inquiries').select('status'),
-          supabase.from('case_studies').select('status'),
         ]);
 
         // Calculate stats
         const jobs = jobsResult.data || [];
         const applications = applicationsResult.data || [];
         const inquiries = inquiriesResult.data || [];
-        const caseStudies = caseStudiesResult.data || [];
 
         setStats({
           totalJobs: jobs.length,
@@ -113,16 +98,13 @@ export default function AdminDashboard() {
           pendingApplications: applications.filter(a => a.status === 'pending').length,
           totalInquiries: inquiries.length,
           newInquiries: inquiries.filter(i => i.status === 'new').length,
-          totalCaseStudies: caseStudies.length,
-          publishedCaseStudies: caseStudies.filter(c => c.status === 'published').length,
         });
 
         // Fetch recent activity
-        const [recentJobs, recentApplications, recentInquiries, recentCaseStudies] = await Promise.all([
+        const [recentJobs, recentApplications, recentInquiries] = await Promise.all([
           supabase.from('jobs').select('id, title, created_at').order('created_at', { ascending: false }).limit(3),
           supabase.from('applications').select('id, candidate_name, submitted_at, status').order('submitted_at', { ascending: false }).limit(3),
           supabase.from('inquiries').select('id, name, submitted_at, status').order('submitted_at', { ascending: false }).limit(3),
-          supabase.from('case_studies').select('id, title, created_at').order('created_at', { ascending: false }).limit(2),
         ]);
 
         const activity: RecentActivity[] = [
@@ -146,12 +128,6 @@ export default function AdminDashboard() {
             time: new Date(item.submitted_at).toLocaleDateString(),
             status: item.status,
           })),
-          ...(recentCaseStudies.data || []).map(item => ({
-            id: item.id,
-            type: 'case_study' as const,
-            title: `Case study: ${item.title}`,
-            time: new Date(item.created_at).toLocaleDateString(),
-          })),
         ].sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()).slice(0, 8);
 
         setRecentActivity(activity);
@@ -169,7 +145,6 @@ export default function AdminDashboard() {
       supabase.channel('jobs-changes').on('postgres_changes', { event: '*', schema: 'public', table: 'jobs' }, fetchDashboardData),
       supabase.channel('applications-changes').on('postgres_changes', { event: '*', schema: 'public', table: 'applications' }, fetchDashboardData),
       supabase.channel('inquiries-changes').on('postgres_changes', { event: '*', schema: 'public', table: 'inquiries' }, fetchDashboardData),
-      supabase.channel('case-studies-changes').on('postgres_changes', { event: '*', schema: 'public', table: 'case_studies' }, fetchDashboardData),
     ];
 
     channels.forEach(channel => channel.subscribe());
@@ -192,17 +167,22 @@ export default function AdminDashboard() {
   const getStatusBadge = (status?: string) => {
     if (!status) return null;
     
-    const variants: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
-      'pending': 'outline',
-      'new': 'secondary',
-      'active': 'default',
-      'published': 'default',
+    const getStatusColor = (status: string) => {
+      switch (status) {
+        case 'new': return 'bg-green-100 text-green-800 border-green-200';
+        case 'pending': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+        case 'active': return 'bg-blue-100 text-blue-800 border-blue-200';
+        case 'published': return 'bg-blue-100 text-blue-800 border-blue-200';
+        case 'resolved': return 'bg-gray-100 text-gray-800 border-gray-200';
+        case 'closed': return 'bg-red-100 text-red-800 border-red-200';
+        default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      }
     };
 
     return (
-      <Badge variant={variants[status] || 'outline'} className="ml-2 text-xs">
+      <span className={`ml-2 px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(status)}`}>
         {status}
-      </Badge>
+      </span>
     );
   };
 
@@ -242,10 +222,6 @@ export default function AdminDashboard() {
             <p className="text-muted-foreground">
               Welcome back! Here's what's happening with your business.
             </p>
-          </div>
-          <div className="flex items-center space-x-2">
-            <TrendingUp className="h-5 w-5 text-green-600" />
-            <span className="text-sm font-medium">All systems operational</span>
           </div>
         </motion.div>
 
@@ -316,10 +292,10 @@ export default function AdminDashboard() {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.5 + index * 0.05 }}
-                        className="flex items-center space-x-3 p-3 rounded-lg hover:bg-accent/50 transition-colors"
+                        className="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-100 transition-colors"
                       >
-                        <div className="p-2 rounded-full bg-primary/10">
-                          <Icon className="h-4 w-4 text-primary" />
+                        <div className="p-2 rounded-full bg-slate-100">
+                          <Icon className="h-4 w-4 text-slate-600" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium truncate">

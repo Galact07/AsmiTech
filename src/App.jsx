@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
@@ -22,6 +23,7 @@ import CaseStudiesAdmin from './pages/admin/CaseStudiesAdmin';
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         {/* Main Website Routes - Existing UI preserved 100% */}
         <Route path="/" element={
