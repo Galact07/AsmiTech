@@ -102,7 +102,7 @@ const About = () => {
                 <div key={index} className="flex-shrink-0 mx-6 flex items-center justify-center h-20 w-48">
                   <div className="flex items-center justify-center h-16 w-44 bg-white border border-slate-200 rounded-lg px-4 hover:bg-slate-50 transition-colors">
                     <img 
-                      src={`/src/assets/logos/${client.logoFile}`}
+                      src={`/logos/${client.logoFile}`}
                       alt={`${client.name} logo`}
                       className="max-h-12 max-w-32 object-contain"
                     />
@@ -131,14 +131,14 @@ const About = () => {
                   name: 'Basavaraj K M',
                   role: 'Managing Director',
                   bio: 'With 20+ years in SAP consulting, he specializes in S/4HANA Finance, Central Finance, and Group Reporting. He has led multiple global implementations and migrations with proven results. A certified S/4HANA expert, he focuses on delivering practical, high-impact digital transformation solutions.',
-                  image: '/src/assets/logos/basavaraj.jpg',
+                  image: '/logos/basavaraj.jpg',
                   initials: 'BK'
                 },
                 {
                   name: 'Asha M',
                   role: 'Managing Partner',
                   bio: 'As Managing Partner, she leads the firm’s strategy and operations. She focuses on delivering measurable results and building strong client relationships. Her leadership combines vision, accountability, and a commitment to excellence.',
-                  image: '/src/assets/logos/asha.jpg',
+                  image: '/logos/asha.jpg',
                   initials: 'AM'
                 }
               ].map((member, index) => (

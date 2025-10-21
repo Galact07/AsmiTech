@@ -75,7 +75,7 @@ const Industries = () => {
                 <div key={index} className="flex-shrink-0 mx-6 flex items-center justify-center h-20 w-48">
                   <div className="flex items-center justify-center h-16 w-44 bg-white border border-slate-200 rounded-lg px-4 hover:bg-slate-50 transition-colors">
                     <img 
-                      src={`/src/assets/logos/${client.logoFile}`}
+                      src={`/logos/${client.logoFile}`}
                       alt={`${client.name} logo`}
                       className="max-h-12 max-w-32 object-contain"
                     />
@@ -212,7 +212,7 @@ const Industries = () => {
                   <div className="rounded-2xl border border-slate-200 bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6">
                     <div className="flex-shrink-0 w-24 h-20 bg-white border border-slate-200 rounded-lg flex items-center justify-center p-3">
                       <img 
-                        src={`/src/assets/logos/${testimonial.logoFile}`}
+                        src={`/logos/${testimonial.logoFile}`}
                         alt={`${testimonial.logoFile.split(' ')[0]} logo`}
                         className="max-h-16 max-w-20 object-contain"
                       />

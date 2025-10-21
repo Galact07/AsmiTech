@@ -25,7 +25,7 @@ const Header = () => {
           <Link to="/" className="inline-flex items-center gap-3" aria-label="Asmi Home">
             <div className="flex items-center justify-center h-16 w-20 rounded-lg bg-white border border-slate-200">
               <img 
-                src="/src/assets/logos/asmi logo.jpeg"
+                src="/logos/asmi logo.jpeg"
                 alt="ASMI Technology Consulting logo"
                 className="h-14 w-18 object-contain"
               />
