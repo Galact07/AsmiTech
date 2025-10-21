@@ -6,10 +6,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-5 md:px-8 py-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <div className="inline-flex items-center gap-2">
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-primary text-white text-sm font-medium tracking-tight">
-                AT
-              </span>
+            <div>
               <span className="text-base font-light">ASMI Technology Consulting B.V.</span>
             </div>
             <div className="mt-4 text-base text-slate-700/70">
