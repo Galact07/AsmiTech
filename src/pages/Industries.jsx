@@ -7,14 +7,14 @@ const Industries = () => {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="md:px-8 md:pt-16 max-w-7xl mr-auto ml-auto pt-10 pr-5 pl-5" aria-labelledby="industries-title">
-        <div className="rounded-3xl bg-white/70 backdrop-blur-[10px] border border-slate-200 shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] overflow-hidden transition duration-500 ease-in">
+        <div className="bg-white/70 backdrop-blur-[10px] shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] transition duration-500 ease-in">
           <div className="sm:p-8 md:p-12 pt-6 pr-6 pb-6 pl-6">
             <div className="flex items-start md:items-center gap-6 md:gap-10 flex-col md:flex-row">
               <div className="flex-1">
-                <p className="text-[11px] uppercase font-light text-slate-500 tracking-[0.18em]">
+                <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em]">
                   Industry Solutions
                 </p>
-                <h1 id="industries-title" className="sm:text-5xl md:text-6xl text-4xl font-light text-slate-900 tracking-tight mt-2">
+                <h1 id="industries-title" className="sm:text-5xl md:text-6xl text-4xl font-bold text-slate-700 tracking-tight mt-2">
                   SAP Solutions That Fit Your Industry Needs
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
@@ -23,7 +23,7 @@ const Industries = () => {
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <Link
                     to="/contact"
-                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-medium text-slate-50 bg-primary border-slate-200 border rounded-full px-5 py-3 focus:outline-none"
+                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-full px-5 py-3 focus:outline-none"
                   >
                     Discuss Your Industry Needs
                     <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-black/5">
@@ -32,7 +32,7 @@ const Industries = () => {
                   </Link>
                   <Link
                     to="/services"
-                    className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-medium text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition"
+                    className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition"
                   >
                     View All Services
                     <ArrowRight className="h-4 w-4" />
@@ -45,7 +45,7 @@ const Industries = () => {
                   src="https://images.pexels.com/photos/7433827/pexels-photo-7433827.jpeg?_gl=1*1xxunhd*_ga*MTU5Njc0NzgwOS4xNzU5ODE5NDIw*_ga_8JE65Q40S6*czE3NjEwNTc3MDYkbzMkZzEkdDE3NjEwNTkwMzIkajMxJGwwJGgw"
                   alt="Industry solutions overview"
                   loading="lazy"
-                  className="backdrop-blur-[10px] bg-white/70 w-full border-slate-200 border rounded-2xl pt-2 pr-2 pb-2 pl-2"
+                  className="w-full rounded-2xl pt-2 pr-2 pb-2 pl-2"
                 />
               </div>
             </div>
@@ -55,9 +55,9 @@ const Industries = () => {
 
       {/* Clients Section */}
       <section className="max-w-7xl mx-auto px-5 md:px-8 pt-8 md:pt-12" aria-labelledby="partners-title">
-        <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 transition duration-500 ease-in">
+        <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
           <div className="flex items-center justify-between gap-3">
-            <h2 id="partners-title" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">
+            <h2 id="partners-title" className="text-xl md:text-2xl tracking-tight font-bold text-slate-700">
             Clients We've Served
             </h2>
           </div>
@@ -72,12 +72,12 @@ const Industries = () => {
                 { name: 'GREENWORKS', logoFile: 'greenworks logo.jpg' },
                 { name: 'SEGWAY-NINEBOT', logoFile: 'segway-ninebot logo.jpg' }
               ].map((client, index) => (
-                <div key={index} className="flex-shrink-0 mx-6 flex items-center justify-center h-20 w-48">
-                  <div className="flex items-center justify-center h-16 w-44 bg-white border border-slate-200 rounded-lg px-4 hover:bg-slate-50 transition-colors">
+                <div key={index} className="flex-shrink-0 mx-6 flex items-center justify-center h-28 w-64">
+                  <div className="flex items-center justify-center h-24 w-60 bg-white rounded-lg px-4 hover:bg-slate-50 transition-colors">
                     <img 
                       src={`/logos/${client.logoFile}`}
                       alt={`${client.name} logo`}
-                      className="max-h-12 max-w-32 object-contain"
+                      className="max-h-20 max-w-48 object-contain"
                     />
                   </div>
                 </div>
@@ -89,8 +89,8 @@ const Industries = () => {
 
       {/* Industries Grid Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="industries">
-        <div className="backdrop-blur-[10px] md:p-8 transition duration-500 ease-in bg-white/60 border-slate-200 border rounded-2xl pt-6 pr-6 pb-6 pl-6">
-          <h2 className="md:text-2xl text-xl font-light text-slate-900 tracking-tight" id="industries">
+        <div className="bg-dark-blue p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
+          <h2 className="md:text-2xl text-xl font-bold text-white tracking-tight" id="industries">
             Industries We Serve
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5 gap-x-6 gap-y-6">
@@ -168,11 +168,11 @@ const Industries = () => {
                 alt: 'Logistics & Supply Chain'
               }
             ].map((industry, index) => (
-              <article key={index} className="rounded-2xl border border-slate-200 bg-white p-6 hover:shadow-md transition">
+              <article key={index} className="bg-blue-50 p-6 hover:shadow-md transition rounded-2xl">
                 <div className="flex text-sm text-slate-700/80 gap-x-2 gap-y-2 items-center mb-4">
                   <industry.icon className="h-6 w-6 text-primary" />
                 </div>
-                <h3 className="text-xl tracking-tight font-light text-slate-900 mb-3">
+                <h3 className="text-xl tracking-tight font-bold text-slate-700 mb-3">
                   {industry.title}
                 </h3>
                 <p className="text-slate-700/90 mb-4">{industry.description}</p>
@@ -188,7 +188,7 @@ const Industries = () => {
                   src={industry.image}
                   alt={industry.alt}
                   loading="lazy"
-                  className="w-full rounded-lg border border-slate-200"
+                  className="w-full rounded-2xl"
                 />
               </article>
             ))}
@@ -198,8 +198,8 @@ const Industries = () => {
 
       {/* What Clients Say Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="testimonials-title">
-        <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 transition duration-500 ease-in">
-          <h2 id="testimonials-title" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">What Clients Say</h2>
+        <div className="bg-blue-100 p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
+          <h2 id="testimonials-title" className="text-xl md:text-2xl tracking-tight font-bold text-slate-700">What Clients Say</h2>
           <div className="mt-5">
             <Carousel speed="very-slow" className="py-4">
               {[
@@ -209,12 +209,12 @@ const Industries = () => {
                 { quote: '"Exceptional support and guidance throughout our SAP journey. Highly recommended!" – Johnson & Johnson', logoFile: 'johnson and johnson logo.png' }
               ].map((testimonial, idx) => (
                 <div key={idx} className="flex-shrink-0 mx-4 w-96">
-                  <div className="rounded-2xl border border-slate-200 bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6">
-                    <div className="flex-shrink-0 w-24 h-20 bg-white border border-slate-200 rounded-lg flex items-center justify-center p-3">
+                  <div className="bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6 rounded-2xl">
+                    <div className="flex-shrink-0 w-32 h-28 bg-white rounded-lg flex items-center justify-center p-3">
                       <img 
                         src={`/logos/${testimonial.logoFile}`}
                         alt={`${testimonial.logoFile.split(' ')[0]} logo`}
-                        className="max-h-16 max-w-20 object-contain"
+                        className="max-h-24 max-w-28 object-contain"
                       />
                     </div>
                     <blockquote className="text-slate-700/90 text-sm leading-relaxed flex-1">
@@ -230,24 +230,24 @@ const Industries = () => {
 
       {/* CTA Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="cta">
-        <div className="rounded-2xl bg-primary text-white p-8 md:p-12 text-center">
-          <h2 id="cta" className="text-2xl md:text-3xl font-light tracking-tight">
+        <div className="rounded-2xl bg-blue-100 text-slate-700 p-8 md:p-12 text-center">
+          <h2 id="cta" className="text-2xl md:text-3xl font-bold tracking-tight">
             Ready to transform your industry with SAP?
           </h2>
-          <p className="mt-4 text-white/80 max-w-2xl mx-auto">
+          <p className="mt-4 text-slate-600 max-w-2xl mx-auto">
             Let's discuss how our industry expertise can help you achieve your business goals and stay ahead of the competition.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 bg-white text-primary hover:bg-slate-50 transition px-6 py-3 rounded-full font-medium"
+              className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition px-6 py-3 rounded-full font-bold"
             >
               Start Your Industry Transformation
               <ArrowUpRight className="h-4 w-4" />
             </Link>
             <Link
               to="/services"
-              className="inline-flex items-center gap-2 border border-white/20 text-white hover:bg-white/10 transition px-6 py-3 rounded-full font-medium"
+              className="inline-flex items-center gap-2 border border-primary text-primary hover:bg-primary hover:text-white transition px-6 py-3 rounded-full font-bold"
             >
               Explore Our Services
               <ArrowRight className="h-4 w-4" />

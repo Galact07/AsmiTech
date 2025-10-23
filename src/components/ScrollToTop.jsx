@@ -5,12 +5,26 @@ const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // Instantly scroll to top when pathname changes (no visible scrolling)
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'instant'
-    });
+    // Immediately scroll to the very top when pathname changes
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'instant'
+      });
+      
+      // Also ensure the document element is at the top
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    // Scroll immediately
+    scrollToTop();
+    
+    // Also scroll after a small delay to handle any dynamic content
+    const timeoutId = setTimeout(scrollToTop, 0);
+    
+    return () => clearTimeout(timeoutId);
   }, [pathname]);
 
   return null;

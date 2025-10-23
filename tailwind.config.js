@@ -7,12 +7,14 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        'poppins': ['Poppins', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial'],
         'inter': ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial'],
       },
       colors: {
         primary: '#1E3A8A',
         secondary: '#4B5EAA',
         accent: '#D4A017',
+        'dark-blue': '#1E2A5E',
       },
       animation: {
         'fade-in-up': 'fadeInUp 0.5s ease-in-out',

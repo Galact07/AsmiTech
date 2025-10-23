@@ -8,15 +8,15 @@ const Home = () => {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="md:px-8 md:pt-16 max-w-7xl mr-auto ml-auto pt-10 pr-5 pl-5" aria-labelledby="home-title">
-        <div className="rounded-3xl bg-white/70 backdrop-blur-[10px] border border-slate-200 shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] overflow-hidden transition duration-500 ease-in">
+        <div className="bg-white/70 backdrop-blur-[10px] shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] transition duration-500 ease-in">
           <div className="sm:p-8 md:p-12 pt-6 pr-6 pb-6 pl-6">
             <div className="flex items-start md:items-center gap-6 md:gap-10 flex-col md:flex-row">
               <div className="flex-1">
-                <p className="text-[11px] uppercase font-light text-slate-500 tracking-[0.18em]">
+                <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em]">
                 Premier SAP Consulting — Utrecht, Netherlands
                 </p>
-                <h1 id="home-title" className="sm:text-5xl md:text-6xl text-4xl font-light text-slate-900 tracking-tight mt-2">
-                Simplifying SAP, Amplifying Success.
+                <h1 id="home-title" className="sm:text-5xl md:text-6xl text-4xl font-bold text-slate-700 tracking-tight mt-2">
+                ASMI: Your SAP Success Partner
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
                 At ASMI, we deliver end-to-end SAP consulting to enhance efficiency, innovation, and growth. Our experts manage implementation, integration, and optimization, aligning your SAP systems with business goals for reliable, future-proof results.
@@ -24,7 +24,7 @@ const Home = () => {
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <Link
                     to="/contact"
-                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-medium text-slate-50 bg-primary border-slate-200 border rounded-full px-5 py-3 focus:outline-none"
+                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-full px-5 py-3 focus:outline-none"
                   >
                     Request Consultation
                     <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-black/5">
@@ -33,7 +33,7 @@ const Home = () => {
                   </Link>
                   <Link
                     to="/services"
-                    className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-medium text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition"
+                    className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition"
                   >
                     Explore Services
                     <ArrowRight className="h-4 w-4" />
@@ -46,7 +46,7 @@ const Home = () => {
                   src="https://i.pinimg.com/736x/e6/ac/b8/e6acb84a0f96a818e0700c7d4b3e1c97.jpg"
                   alt="SAP workflow visual"
                   loading="lazy"
-                  className="backdrop-blur-[10px] bg-white/70 w-full border-slate-200 border rounded-2xl pt-2 pr-2 pb-2 pl-2"
+                  className="w-full rounded-2xl pt-2 pr-2 pb-2 pl-2"
                 />
               </div>
             </div>
@@ -57,9 +57,9 @@ const Home = () => {
 
       {/* Clients Section */}
       <section className="max-w-7xl mx-auto px-5 md:px-8 pt-8 md:pt-12" aria-labelledby="partners-title">
-        <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 transition duration-500 ease-in">
+        <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
           <div className="flex items-center justify-between gap-3">
-            <h2 id="partners-title" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">
+            <h2 id="partners-title" className="text-xl md:text-2xl tracking-tight font-bold text-slate-700">
             Clients We've Served
             </h2>
           </div>
@@ -74,12 +74,12 @@ const Home = () => {
                 { name: 'GREENWORKS', logoFile: 'greenworks logo.jpg' },
                 { name: 'SEGWAY-NINEBOT', logoFile: 'segway-ninebot logo.jpg' }
               ].map((client, index) => (
-                <div key={index} className="flex-shrink-0 mx-6 flex items-center justify-center h-20 w-48">
-                  <div className="flex items-center justify-center h-16 w-44 bg-white border border-slate-200 rounded-lg px-4 hover:bg-slate-50 transition-colors">
+                <div key={index} className="flex-shrink-0 mx-6 flex items-center justify-center h-28 w-64">
+                  <div className="flex items-center justify-center h-24 w-60 bg-white rounded-lg px-4 hover:bg-slate-50 transition-colors">
                     <img 
                       src={`/logos/${client.logoFile}`}
                       alt={`${client.name} logo`}
-                      className="max-h-12 max-w-32 object-contain"
+                      className="max-h-20 max-w-48 object-contain"
                     />
           </div>
               </div>
@@ -91,11 +91,11 @@ const Home = () => {
 
       {/* Our Mission Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="mission-title">
-        <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 transition duration-500 ease-in">
+        <div className="bg-dark-blue p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div className="order-2 md:order-1">
-              <h2 id="mission-title" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">Our Mission</h2>
-              <p className="mt-3 text-slate-700/90">
+              <h2 id="mission-title" className="text-xl md:text-2xl tracking-tight font-bold text-white">Our Mission</h2>
+              <p className="mt-3 text-white/90">
                 At ASMI, we create SAP solutions that make a real difference. We simplify complex processes, unlock new opportunities, and deliver results you can measure. Our goal is to help businesses work smarter, innovate faster, and achieve more with every solution we implement.
               </p>
             </div>
@@ -104,7 +104,7 @@ const Home = () => {
                 src="https://i.pinimg.com/1200x/4e/36/82/4e368242894207ed5bcda793b443f050.jpg"
                 alt="Our Mission - SAP Solutions"
                 loading="lazy"
-                className="aspect-square w-full object-cover rounded-2xl border border-slate-200"
+                className="aspect-square w-full object-cover rounded-2xl"
               />
             </div>
           </div>
@@ -113,14 +113,14 @@ const Home = () => {
 
       {/* Key Services Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="services-title">
-        <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 transition duration-500 ease-in">
+        <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
           <div className="flex items-center justify-between">
-            <h2 id="services-title" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">
+            <h2 id="services-title" className="text-xl md:text-2xl tracking-tight font-bold text-slate-700">
               Our Services
             </h2>
             <Link
               to="/services"
-              className="inline-flex items-center gap-2 hover:bg-slate-50 transition text-sm font-medium text-primary bg-white border-secondary border rounded-full pt-2 pr-4 pb-2 pl-4"
+              className="inline-flex items-center gap-2 hover:bg-slate-50 transition text-sm font-bold text-primary bg-white border-secondary border rounded-full pt-2 pr-4 pb-2 pl-4"
             >
               Learn more
               <ArrowRight className="h-4 w-4" />
@@ -177,7 +177,7 @@ const Home = () => {
                 alt: 'SAP Project Management & Governance'
               }
             ].map((service, index) => (
-              <article key={index} className="rounded-2xl border border-slate-200 bg-white/70 backdrop-blur-[10px] p-5 hover:shadow-md transition h-full">
+              <article key={index} className="bg-white/70 backdrop-blur-[10px] p-5 hover:shadow-md transition h-full rounded-2xl">
                 <div className="flex items-start gap-4 h-full">
                   <div className="bg-primary/10 w-16 h-16 rounded-lg flex items-center justify-center flex-shrink-0">
                     {service.logo === 'Cloud' && <Cloud className="h-8 w-8 text-primary" />}
@@ -190,7 +190,7 @@ const Home = () => {
                     {service.logo === 'Clipboard' && <Clipboard className="h-8 w-8 text-primary" />}
                   </div>
                   <div className="flex flex-col justify-between">
-                    <h3 className="mt-2 text-lg tracking-tight font-light">{service.title}</h3>
+                    <h3 className="mt-2 text-lg tracking-tight font-bold">{service.title}</h3>
                     <p className="mt-2 text-slate-700/80">{service.description}</p>
                   </div>
                 </div>
@@ -202,10 +202,19 @@ const Home = () => {
 
       {/* Sectors Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="sectors">
-        <div className="backdrop-blur-[10px] md:p-8 transition duration-500 ease-in bg-white/60 border-slate-200 border rounded-2xl pt-6 pr-6 pb-6 pl-6">
-          <h2 className="md:text-2xl text-xl font-light text-slate-900 tracking-tight" id="sectors">
-          Industries We Serve
-          </h2>
+        <div className="bg-blue-100 p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
+          <div className="flex items-center justify-between">
+            <h2 className="md:text-2xl text-xl font-bold text-slate-700 tracking-tight" id="sectors">
+            Industries We Serve
+            </h2>
+            <Link
+              to="/industries"
+              className="inline-flex items-center gap-2 hover:bg-slate-50 transition text-sm font-bold text-primary bg-white border-secondary border rounded-full pt-2 pr-4 pb-2 pl-4"
+            >
+              Learn more
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5 gap-x-6 gap-y-6">
             {[
               {
@@ -281,24 +290,19 @@ const Home = () => {
                 alt: 'Logistics & Supply Chain'
               }
             ].map((sector, index) => (
-              <article key={index} className="rounded-2xl border border-slate-200 bg-white p-5">
+              <article key={index} className="bg-white p-5 rounded-2xl">
                 <div className="flex text-sm text-slate-700/80 gap-x-2 gap-y-2 items-center">
                   <sector.icon className="h-5 w-5 text-primary" />
                 </div>
-                <h3 className="mt-3 text-base md:text-lg tracking-tight font-light text-slate-900">
+                <h3 className="mt-3 text-base md:text-lg tracking-tight font-bold text-slate-700">
                   {sector.title}
                 </h3>
                 <p className="mt-2 text-sm text-slate-700/90">{sector.description}</p>
-                <ul className="mt-3 text-sm text-slate-700/80 list-disc list-inside space-y-1">
-                  {sector.features.map((feature, featureIndex) => (
-                    <li key={featureIndex}>{feature}</li>
-                  ))}
-                </ul>
                 <img
                   src={sector.image}
                   alt={sector.alt}
                   loading="lazy"
-                  className="mt-4 w-full rounded-lg border border-slate-200"
+                  className="mt-4 w-full rounded-2xl"
                 />
               </article>
             ))}
@@ -308,8 +312,8 @@ const Home = () => {
 
       {/* What Clients Say Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="testimonials-title">
-        <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 transition duration-500 ease-in">
-          <h2 id="testimonials-title" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">What Clients Say</h2>
+        <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
+          <h2 id="testimonials-title" className="text-xl md:text-2xl tracking-tight font-bold text-slate-700">What Clients Say</h2>
           <div className="mt-5">
             <Carousel speed="slow" className="py-4">
               {[
@@ -319,12 +323,12 @@ const Home = () => {
                 { quote: '"Exceptional support and guidance throughout our SAP journey. Highly recommended!" – Johnson & Johnson', logoFile: 'johnson and johnson logo.png' }
               ].map((testimonial, idx) => (
                 <div key={idx} className="flex-shrink-0 mx-4 w-96">
-                  <div className="rounded-2xl border border-slate-200 bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6">
-                    <div className="flex-shrink-0 w-24 h-20 bg-white border border-slate-200 rounded-lg flex items-center justify-center p-3">
+                  <div className="bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6 rounded-2xl">
+                    <div className="flex-shrink-0 w-32 h-28 bg-white rounded-lg flex items-center justify-center p-3">
                       <img 
                         src={`/logos/${testimonial.logoFile}`}
                         alt={`${testimonial.logoFile.split(' ')[0]} logo`}
-                        className="max-h-16 max-w-20 object-contain"
+                        className="max-h-24 max-w-28 object-contain"
                       />
                     </div>
                     <blockquote className="text-slate-700/90 text-sm leading-relaxed flex-1">
@@ -340,32 +344,32 @@ const Home = () => {
 
       {/* Frequently Asked Questions Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="faq-title">
-        <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 transition duration-500 ease-in">
-          <h2 id="faq-title" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">Frequently Asked Questions</h2>
+        <div className="bg-dark-blue p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
+          <h2 id="faq-title" className="text-xl md:text-2xl tracking-tight font-bold text-white">Frequently Asked Questions</h2>
           <FAQ />
         </div>
       </section>
 
       {/* Final CTA Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="final-cta-title">
-        <div className="rounded-2xl bg-primary text-white p-8 md:p-12 text-center">
-          <h2 id="final-cta-title" className="text-2xl md:text-3xl font-light tracking-tight">
+        <div className="rounded-2xl bg-blue-100 text-slate-700 p-8 md:p-12 text-center">
+          <h2 id="final-cta-title" className="text-2xl md:text-3xl font-bold tracking-tight">
             Transform your SAP operations with ASMI.
           </h2>
-          <p className="mt-4 text-white/80 max-w-2xl mx-auto">
+          <p className="mt-4 text-slate-600 max-w-2xl mx-auto">
             Streamline your systems, improve reporting, and get results that matter.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 bg-white text-primary hover:bg-slate-50 transition px-6 py-3 rounded-full font-medium"
+              className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition px-6 py-3 rounded-full font-bold"
             >
               Request a consultation
               <ArrowUpRight className="h-4 w-4" />
             </Link>
             <Link
               to="/services"
-              className="inline-flex items-center gap-2 border border-white/20 text-white hover:bg-white/10 transition px-6 py-3 rounded-full font-medium"
+              className="inline-flex items-center gap-2 border border-primary text-primary hover:bg-primary hover:text-white transition px-6 py-3 rounded-full font-bold"
             >
               Explore Our Services
               <ArrowRight className="h-4 w-4" />
@@ -407,7 +411,7 @@ function FAQ() {
   const [openIndex, setOpenIndex] = useState(null);
 
   return (
-    <div className="mt-4 divide-y divide-slate-200 border border-slate-200 rounded-2xl bg-white/70">
+    <div className="mt-4 divide-y divide-blue-200 rounded-2xl bg-blue-50">
       {items.map((item, index) => {
         const isOpen = openIndex === index;
         const panelId = `faq-panel-${index}`;
@@ -422,7 +426,7 @@ function FAQ() {
                 aria-controls={panelId}
                 onClick={() => setOpenIndex(isOpen ? null : index)}
               >
-                <span className="text-slate-900">{item.q}</span>
+                <span className="text-slate-700 font-bold">{item.q}</span>
                 <span className="ml-4 text-slate-600 transition-transform duration-300 ease-in-out" aria-hidden="true">
                   {isOpen ? '−' : '+'}
                 </span>
@@ -436,7 +440,7 @@ function FAQ() {
                 isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
               }`}
             >
-              <div className="px-5 pb-4 text-slate-700/90">
+              <div className="px-5 pb-4 text-slate-600">
                 {item.a}
               </div>
             </div>

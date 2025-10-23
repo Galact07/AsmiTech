@@ -165,14 +165,14 @@ const Careers = () => {
       <div className="min-h-screen">
       {/* Hero Section */}
       <section className="md:px-8 md:pt-16 max-w-7xl mr-auto ml-auto pt-10 pr-5 pl-5" aria-labelledby="careers-title">
-        <div className="rounded-3xl bg-white/70 backdrop-blur-[10px] border border-slate-200 shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] overflow-hidden transition duration-500 ease-in">
+        <div className="bg-white/70 backdrop-blur-[10px] shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] transition duration-500 ease-in">
           <div className="sm:p-8 md:p-12 pt-6 pr-6 pb-6 pl-6">
             <div className="flex items-start md:items-center gap-6 md:gap-10 flex-col md:flex-row">
               <div className="flex-1">
-                <p className="text-[11px] uppercase font-light text-slate-500 tracking-[0.18em]">
+                <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em]">
                   Careers
                 </p>
-                <h1 id="careers-title" className="sm:text-5xl md:text-6xl text-4xl font-light text-slate-900 tracking-tight mt-2">
+                <h1 id="careers-title" className="sm:text-5xl md:text-6xl text-4xl font-bold text-slate-700 tracking-tight mt-2">
                   Join Us at ASMI
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
@@ -181,7 +181,7 @@ const Careers = () => {
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <Link
                     to="/jobs"
-                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-medium text-slate-50 bg-primary border-slate-200 border rounded-full px-5 py-3 focus:outline-none"
+                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-full px-5 py-3 focus:outline-none"
                   >
                     View Open Positions
                     <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-black/5">
@@ -190,7 +190,7 @@ const Careers = () => {
                   </Link>
                   <Link
                     to="/about"
-                    className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-medium text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition"
+                    className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition"
                   >
                     Learn About Us
                     <ArrowRight className="h-4 w-4" />
@@ -203,7 +203,7 @@ const Careers = () => {
                   src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=60&auto=format&fit=crop"
                   alt="Our team collaboration"
                   loading="lazy"
-                  className="backdrop-blur-[10px] bg-white/70 w-full border-slate-200 border rounded-2xl pt-2 pr-2 pb-2 pl-2"
+                  className="w-full rounded-2xl pt-2 pr-2 pb-2 pl-2"
                 />
               </div>
             </div>
@@ -213,10 +213,10 @@ const Careers = () => {
 
       {/* Open Positions Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="positions">
-        <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 transition duration-500 ease-in">
+        <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
             <div className="flex-1">
-              <h2 id="positions" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">
+              <h2 id="positions" className="text-xl md:text-2xl tracking-tight font-bold text-slate-700">
                 Open Positions
               </h2>
               <p className="mt-2 text-slate-700/80">
@@ -243,7 +243,7 @@ const Careers = () => {
               </div>
             ) : parsedJobs.length === 0 ? (
               <div className="rounded-xl border border-dashed border-slate-300 bg-white/60 p-10 text-center">
-                <h3 className="text-lg font-medium text-slate-900">No open positions right now</h3>
+                <h3 className="text-lg font-medium text-slate-700">No open positions right now</h3>
                 <p className="mt-2 text-sm text-slate-600 max-w-xl mx-auto">
                   We&apos;re not actively hiring for new roles at the moment. Please check back soon or send us your resume so we can reach out when a matching opportunity opens up.
                 </p>
@@ -262,7 +262,7 @@ const Careers = () => {
                 <div key={job.id} className="rounded-xl border border-slate-200 bg-white p-6 hover:shadow-md transition">
                   <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between mb-4">
                     <div className="space-y-2">
-                      <h3 className="text-lg font-medium text-slate-900">{job.title}</h3>
+                      <h3 className="text-lg font-medium text-slate-700">{job.title}</h3>
                       <div className="flex flex-wrap items-center gap-4 text-sm text-slate-600">
                         {job.location && (
                           <div className="flex items-center gap-1">
@@ -293,7 +293,7 @@ const Careers = () => {
                   </div>
                   {job.description && (
                     <div className="mb-4">
-                      <h4 className="text-sm font-medium text-slate-900 mb-2">Responsibilities:</h4>
+                      <h4 className="text-sm font-medium text-slate-700 mb-2">Responsibilities:</h4>
                       <ul className="space-y-1">
                         {parseRequirements(job.description).map((responsibility, respIndex) => (
                           <li key={respIndex} className="flex items-start gap-2 text-sm text-slate-700/80">
@@ -306,7 +306,7 @@ const Careers = () => {
                   )}
                   {job.requirementList.length > 0 && (
                     <div>
-                      <h4 className="text-sm font-medium text-slate-900 mb-2">Requirements:</h4>
+                      <h4 className="text-sm font-medium text-slate-700 mb-2">Requirements:</h4>
                       <ul className="space-y-1">
                         {job.requirementList.map((req, reqIndex) => (
                           <li key={reqIndex} className="flex items-start gap-2 text-sm text-slate-700/80">
@@ -337,11 +337,11 @@ const Careers = () => {
 
       {/* Application Process Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="process">
-        <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 transition duration-500 ease-in">
-          <h2 id="process" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">
+        <div className="bg-dark-blue p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
+          <h2 id="process" className="text-xl md:text-2xl tracking-tight font-bold text-white">
             Application Process
           </h2>
-          <p className="mt-2 text-slate-700/80">
+          <p className="mt-2 text-white/80">
           Join Our Global Team at ASMI Technologies
           </p>
           <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6 gap-y-8">
@@ -377,11 +377,11 @@ const Careers = () => {
                 description: 'New hires undergo an introduction program to integrate quickly and start contributing effectively.'
               }
             ].map((phase, index) => (
-              <div key={index} className="rounded-xl border border-slate-200 bg-white p-6 text-center hover:shadow-md transition">
+              <div key={index} className="rounded-xl bg-blue-50 p-6 text-center hover:shadow-md transition">
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary text-white text-lg font-medium mb-4">
                   {phase.step}
                 </div>
-                <h3 className="text-lg font-medium text-slate-900 mb-2">{phase.title}</h3>
+                <h3 className="text-lg font-medium text-slate-700 mb-2">{phase.title}</h3>
                 <p className="text-slate-700/80 text-sm">{phase.description}</p>
               </div>
             ))}
@@ -391,24 +391,24 @@ const Careers = () => {
 
       {/* CTA Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="cta">
-        <div className="rounded-2xl bg-primary text-white p-8 md:p-12 text-center">
-          <h2 id="cta" className="text-2xl md:text-3xl font-light tracking-tight">
+        <div className="rounded-2xl bg-blue-100 text-slate-700 p-8 md:p-12 text-center">
+          <h2 id="cta" className="text-2xl md:text-3xl font-bold tracking-tight">
           Ready to join our team?
           </h2>
-          <p className="mt-4 text-white/80 max-w-2xl mx-auto">
+          <p className="mt-4 text-slate-600 max-w-2xl mx-auto">
           Don't see the perfect role? We're always looking for talented SAP professionals. Send us your resume and let's start a conversation.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/jobs"
-              className="inline-flex items-center gap-2 bg-white text-primary hover:bg-slate-50 transition px-6 py-3 rounded-full font-medium"
+              className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition px-6 py-3 rounded-full font-bold"
             >
               Browse All Jobs
               <ArrowUpRight className="h-4 w-4" />
             </Link>
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 border border-white/20 text-white hover:bg-white/10 transition px-6 py-3 rounded-full font-medium"
+              className="inline-flex items-center gap-2 border border-primary text-primary hover:bg-primary hover:text-white transition px-6 py-3 rounded-full font-bold"
             >
               Send Your Resume
               <ArrowRight className="h-4 w-4" />

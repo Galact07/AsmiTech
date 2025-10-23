@@ -114,6 +114,7 @@ const JobsListing = () => {
     return parsedJobs.filter(job => {
       const matchesSearch = searchTerm === '' || 
         job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        job.specialization?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         job.description?.toLowerCase().includes(searchTerm.toLowerCase());
       
       const matchesType = typeFilter === 'all' || job.type === typeFilter;
@@ -220,7 +221,7 @@ const JobsListing = () => {
 
         {/* Search and Filters */}
         <section className="md:px-8 md:pt-8 max-w-7xl mr-auto ml-auto pt-6 pr-5 pl-5">
-          <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 transition duration-500 ease-in">
+          <div className="rounded-2xl bg-slate-100 p-6 transition duration-500 ease-in">
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1 relative">
                 <Search className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
@@ -286,14 +287,14 @@ const JobsListing = () => {
         <section className="md:px-8 md:pt-8 max-w-7xl mr-auto ml-auto pt-6 pr-5 pl-5 pb-12">
           <div className="space-y-4">
             {loadingJobs ? (
-              <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-12">
+              <div className="rounded-2xl bg-slate-800 p-12">
                 <div className="flex flex-col items-center justify-center text-muted-foreground gap-3">
                   <Loader2 className="h-8 w-8 animate-spin" />
                   <p>Loading open positions...</p>
                 </div>
               </div>
             ) : filteredJobs.length === 0 ? (
-              <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-12">
+              <div className="rounded-2xl bg-slate-800 p-12">
                 <div className="text-center">
                   <h3 className="text-lg font-medium text-slate-900">
                     {searchTerm || typeFilter !== 'all' || locationFilter !== 'all' 
@@ -340,6 +341,9 @@ const JobsListing = () => {
                     <div className="flex-1 space-y-4">
                       <div>
                         <h3 className="text-2xl font-medium text-slate-900 mb-2">{job.title}</h3>
+                        {job.specialization && (
+                          <p className="text-base text-primary/90 font-medium">{job.specialization}</p>
+                        )}
                       </div>
                       
                       <div className="flex flex-wrap items-center gap-4 text-sm text-slate-600">
@@ -355,6 +359,12 @@ const JobsListing = () => {
                             <span>{formatEmploymentType(job.type)}</span>
                           </div>
                         )}
+                        {job.salary_range && (
+                          <div className="flex items-center gap-1.5">
+                            <DollarSign className="h-4 w-4" />
+                            <span>{job.salary_range}</span>
+                          </div>
+                        )}
                         <div className="flex items-center gap-1.5">
                           <Calendar className="h-4 w-4" />
                           <span>Posted {new Date(job.created_at).toLocaleDateString()}</span>
@@ -362,17 +372,9 @@ const JobsListing = () => {
                       </div>
 
                       {job.description && (
-                        <div>
-                          <h4 className="text-sm font-semibold text-slate-900 mb-3">Responsibilities:</h4>
-                          <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                            {parseRequirements(job.description).map((responsibility, respIndex) => (
-                              <li key={respIndex} className="flex items-start gap-2 text-sm text-slate-700/80">
-                                <CheckCircle className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
-                                <span>{responsibility}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
+                        <p className="text-slate-700/80 leading-relaxed whitespace-pre-line">
+                          {job.description}
+                        </p>
                       )}
 
                       {job.requirementList.length > 0 && (
@@ -432,11 +434,22 @@ const JobsListing = () => {
                       {formatEmploymentType(selectedJob.type)}
                     </span>
                   )}
+                  {selectedJob.salary_range && (
+                    <span className="inline-flex items-center gap-2">
+                      <DollarSign className="h-4 w-4" />
+                      {selectedJob.salary_range}
+                    </span>
+                  )}
                   <span className="inline-flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
                     Posted {new Date(selectedJob.created_at).toLocaleDateString()}
                   </span>
                 </div>
+                {selectedJob.specialization && (
+                  <p className="text-sm text-slate-600">
+                    Specialization: <span className="font-medium text-slate-800">{selectedJob.specialization}</span>
+                  </p>
+                )}
               </div>
 
               <form onSubmit={handleSubmitApplication} className="space-y-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">

@@ -6,14 +6,14 @@ const Resources = () => {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="md:px-8 md:pt-16 max-w-7xl mr-auto ml-auto pt-10 pr-5 pl-5" aria-labelledby="resources-title">
-        <div className="rounded-3xl bg-white/70 backdrop-blur-[10px] border border-slate-200 shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] overflow-hidden transition duration-500 ease-in">
+        <div className="bg-white/70 backdrop-blur-[10px] shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] transition duration-500 ease-in">
           <div className="sm:p-8 md:p-12 pt-6 pr-6 pb-6 pl-6">
             <div className="flex items-start md:items-center gap-6 md:gap-10 flex-col md:flex-row">
               <div className="flex-1">
-                <p className="text-[11px] uppercase font-light text-slate-500 tracking-[0.18em]">
+                <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em]">
                   Resources & Insights
                 </p>
-                <h1 id="resources-title" className="sm:text-5xl md:text-6xl text-4xl font-light text-slate-900 tracking-tight mt-2">
+                <h1 id="resources-title" className="sm:text-5xl md:text-6xl text-4xl font-bold text-slate-700 tracking-tight mt-2">
                   Knowledge hub for SAP excellence.
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
@@ -22,7 +22,7 @@ const Resources = () => {
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <Link
                     to="/contact"
-                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-medium text-slate-50 bg-primary border-slate-200 border rounded-full px-5 py-3 focus:outline-none"
+                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-full px-5 py-3 focus:outline-none"
                   >
                     Subscribe to Updates
                     <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-black/5">
@@ -31,7 +31,7 @@ const Resources = () => {
                   </Link>
                   <Link
                     to="/services"
-                    className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-medium text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition"
+                    className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition"
                   >
                     Our Services
                     <ArrowRight className="h-4 w-4" />
@@ -54,8 +54,8 @@ const Resources = () => {
 
       {/* Featured Resources Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="featured">
-        <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 transition duration-500 ease-in">
-          <h2 id="featured" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">
+        <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
+          <h2 id="featured" className="text-xl md:text-2xl tracking-tight font-bold text-slate-700">
             Featured Resources
           </h2>
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -114,7 +114,7 @@ const Resources = () => {
                     {resource.type}
                   </span>
                 </div>
-                <h3 className="text-lg font-medium text-slate-900 mb-2">{resource.title}</h3>
+                <h3 className="text-lg font-medium text-slate-700 mb-2">{resource.title}</h3>
                 <p className="text-slate-700/80 text-sm mb-4">{resource.description}</p>
                 <div className="flex items-center gap-2">
                   <button className="inline-flex items-center gap-2 text-primary hover:text-primary/80 text-sm font-medium">
@@ -134,11 +134,11 @@ const Resources = () => {
 
       {/* Webinars Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="webinars">
-        <div className="rounded-2xl bg-white/60 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 transition duration-500 ease-in">
-          <h2 id="webinars" className="text-xl md:text-2xl tracking-tight font-light text-slate-900">
+        <div className="bg-dark-blue p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
+          <h2 id="webinars" className="text-xl md:text-2xl tracking-tight font-bold text-white">
             Upcoming Webinars
           </h2>
-          <p className="mt-2 text-slate-700/80">
+          <p className="mt-2 text-white/80">
             Join our experts for live sessions on the latest SAP trends, best practices, and industry insights.
           </p>
           <div className="mt-6 space-y-4">
@@ -175,7 +175,7 @@ const Resources = () => {
                   className="w-16 h-16 rounded-full object-cover"
                 />
                 <div className="flex-1">
-                  <h3 className="text-lg font-medium text-slate-900 mb-1">{webinar.title}</h3>
+                  <h3 className="text-lg font-medium text-slate-700 mb-1">{webinar.title}</h3>
                   <div className="flex items-center gap-4 text-sm text-slate-600 mb-2">
                     <div className="flex items-center gap-1">
                       <Calendar className="h-4 w-4" />
@@ -212,7 +212,7 @@ const Resources = () => {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-full text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-white/20"
+                className="flex-1 px-4 py-3 rounded-full text-slate-700 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-white/20"
               />
               <button className="px-6 py-3 bg-white text-primary rounded-full font-medium hover:bg-slate-50 transition">
                 Subscribe
