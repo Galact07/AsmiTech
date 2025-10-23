@@ -9,7 +9,7 @@ const Footer = () => {
             <div className="flex items-center gap-3 mb-4">
               <div className="flex items-center justify-center h-12 w-16 rounded-lg bg-white p-2">
                 <img 
-                  src="/src/assets/logos/asmi logo.png"
+                  src="/logos/asmi logo.png"
                   alt="ASMI Technology Consulting logo"
                   className="h-8 w-12 object-contain"
                 />

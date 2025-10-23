@@ -131,7 +131,7 @@ const About = () => {
                   name: 'Basavaraj K M',
                   role: 'Managing Director',
                   bio: 'With 20+ years in SAP consulting, he specializes in S/4HANA Finance, Central Finance, and Group Reporting. He has led multiple global implementations and migrations with proven results. A certified S/4HANA expert, he focuses on delivering practical, high-impact digital transformation solutions.',
-                  image: '/src/assets/logos/Basavaraj.jpg',
+                  image: '/logos/Basavaraj.jpg',
                   initials: 'BK'
                 },
                 {
