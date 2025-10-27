@@ -12,8 +12,8 @@ const SapImplementationsAndRollouts = () => {
                 <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em]">
                   Our Services
                 </p>
-                <h1 id="service-title" className="sm:text-5xl md:text-6xl text-4xl font-bold text-slate-700 tracking-tight mt-2 leading-tight md:leading-tight">
-                  <span>SAP Implement-</span><span className="md:hidden"><br /></span><span>ations and Rollouts</span>
+                <h1 id="service-title" className="sm:text-5xl md:text-6xl text-4xl font-bold text-slate-700 tracking-tight mt-2 leading-tight md:leading-tight break-words">
+                  <span className="md:block">SAP <span className="md:hidden">Implement-<br />ations</span><span className="hidden md:inline">Implementations</span> and Rollouts</span>
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
                   Execute tailored SAP deployments with proven Greenfield, Brownfield, or Bluefield strategies.
