@@ -147,15 +147,23 @@ const Home = () => {
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="who-we-are-title">
         <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div className="order-1 md:order-2">
+            <div className="order-1">
               <h2 id="who-we-are-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">Who We Are</h2>
-              <p className="mt-3 text-slate-700/90">
+              <div className="md:block order-2 mt-4 md:mt-0">
+                <img
+                  src="https://i.pinimg.com/1200x/4e/36/82/4e368242894207ed5bcda793b443f050.jpg"
+                  alt="Who We Are - ASMI Team"
+                  loading="lazy"
+                  className="aspect-square w-full object-cover rounded-none md:hidden"
+                />
+              </div>
+              <p className="mt-3 md:mt-3 text-slate-700/90">
                 At ASMI, we are a premier SAP consulting firm dedicated to transforming how businesses operate. Our experienced team of SAP experts brings deep technical knowledge and industry insights to every project. We believe in creating solutions that not only meet today's needs but also position your business for future growth.
               </p>
               <p className="mt-4 text-slate-700/90">
                 With offices in the Netherlands and India, we serve clients across the globe, delivering tailored SAP solutions that drive efficiency, innovation, and measurable results. Our commitment to excellence and client success sets us apart in the SAP consulting landscape.
               </p>
-              <div className="mt-6">
+              <div className="mt-6 md:hidden">
                 <Link
                   to="/about"
                   className="inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3"
@@ -167,7 +175,7 @@ const Home = () => {
                 </Link>
               </div>
             </div>
-            <div className="order-2 md:order-1">
+            <div className="order-2 hidden md:block">
               <img
                 src="https://i.pinimg.com/1200x/4e/36/82/4e368242894207ed5bcda793b443f050.jpg"
                 alt="Who We Are - ASMI Team"
@@ -175,6 +183,17 @@ const Home = () => {
                 className="aspect-square w-full object-cover rounded-none"
               />
             </div>
+          </div>
+          <div className="hidden md:flex mt-6">
+            <Link
+              to="/about"
+              className="inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3"
+            >
+              Learn More
+              <span className="inline-flex h-6 w-6 items-center justify-center rounded-none bg-black/5">
+                <ArrowUpRight className="h-4 w-4" />
+              </span>
+            </Link>
           </div>
         </div>
       </section>
@@ -188,7 +207,7 @@ const Home = () => {
             </h2>
           </div>
           <div className="mt-5">
-            <Carousel speed="very-slow" className="py-4">
+            <Carousel speed="fast" className="py-4">
               {[
                 { name: 'HITACHI', logoFile: 'hitachi logo.png' },
                 { name: 'CARGILL', logoFile: 'cargill logo.jpg' },
@@ -216,12 +235,12 @@ const Home = () => {
       {/* Key Services Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="services-title">
         <div className="bg-dark-blue p-6 md:p-8 transition duration-500 ease-in rounded-none">
-          <div className="flex items-start justify-between mb-6">
+          <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-6">
             <div className="flex-1">
-              <div className="flex items-center justify-between mb-3">
-                <h2 id="services-title" className="text-3xl md:text-4xl tracking-tight font-bold text-white">
-                  Our Services
-                </h2>
+              <h2 id="services-title" className="text-3xl md:text-4xl tracking-tight font-bold text-white">
+                Our Services
+              </h2>
+              <div className="mt-3 md:hidden mb-3">
                 <Link
                   to="/services"
                   className="inline-flex items-center gap-2 hover:bg-slate-50 transition text-sm font-bold text-primary bg-white border-secondary border rounded-none pt-2 pr-4 pb-2 pl-4"
@@ -233,6 +252,15 @@ const Home = () => {
               <p className="text-white/90 text-lg max-w-3xl">
                 Comprehensive SAP solutions tailored to your business needs. From cloud deployment to ongoing support, we deliver end-to-end services that drive efficiency and innovation.
               </p>
+            </div>
+            <div className="hidden md:block">
+              <Link
+                to="/services"
+                className="inline-flex items-center gap-2 hover:bg-slate-50 transition text-sm font-bold text-primary bg-white border-secondary border rounded-none pt-2 pr-4 pb-2 pl-4"
+              >
+                Learn more
+                <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
           </div>
           <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
@@ -313,19 +341,31 @@ const Home = () => {
       {/* Sectors Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="sectors">
         <div className="bg-blue-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between">
             <h2 className="md:text-4xl text-3xl font-bold text-slate-700 tracking-tight" id="sectors">
             Industries We Serve
             </h2>
-            <Link
-              to="/industries"
-              className="inline-flex items-center gap-2 hover:bg-slate-50 transition text-sm font-bold text-primary bg-white border-secondary border rounded-none pt-2 pr-4 pb-2 pl-4"
-            >
-              Learn more
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+            <div className="mt-3 md:hidden">
+              <Link
+                to="/industries"
+                className="inline-flex items-center gap-2 hover:bg-slate-50 transition text-sm font-bold text-primary bg-white border-secondary border rounded-none pt-2 pr-4 pb-2 pl-4"
+              >
+                Learn more
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+            <div className="hidden md:block">
+              <Link
+                to="/industries"
+                className="inline-flex items-center gap-2 hover:bg-slate-50 transition text-sm font-bold text-primary bg-white border-secondary border rounded-none pt-2 pr-4 pb-2 pl-4"
+              >
+                Learn more
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
           </div>
-          <div className="mt-5 relative py-4">
+          {/* Desktop carousel */}
+          <div className="mt-5 relative py-4 hidden md:block">
             {canGoPrev && (
               <button
                 onClick={prevIndustry}
@@ -336,7 +376,7 @@ const Home = () => {
               </button>
             )}
             
-            <div className="overflow-hidden mx-4 md:mx-16">
+            <div className="overflow-hidden mx-16">
               <div 
                 className="flex gap-6 transition-transform duration-300 ease-in-out"
                 style={{ transform: `translateX(calc(-${industryIndex} * (50% + 12px)))` }}
@@ -376,6 +416,30 @@ const Home = () => {
               </button>
             )}
           </div>
+          
+          {/* Mobile vertical list */}
+          <div className="mt-5 block md:hidden space-y-4">
+            {industriesData.map((sector, index) => {
+              const IconComponent = sector.icon;
+              return (
+                <article key={index} className="bg-white p-5 rounded-none flex flex-col">
+                  <div className="flex text-sm text-slate-700/80 gap-x-2 gap-y-2 items-center">
+                    <IconComponent className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="mt-3 text-base tracking-tight font-bold text-slate-700">
+                    {sector.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-slate-700/90">{sector.description}</p>
+                  <img
+                    src={sector.image}
+                    alt={sector.alt}
+                    loading="lazy"
+                    className="mt-4 w-full h-64 object-cover rounded-none"
+                  />
+                </article>
+              );
+            })}
+          </div>
         </div>
       </section>
 
@@ -384,7 +448,7 @@ const Home = () => {
         <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <h2 id="testimonials-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">What Clients Say</h2>
           <div className="mt-5">
-            <Carousel speed="slow" className="py-4">
+            <Carousel speed="fast" className="py-4">
               {[
                 { quote: '"Their SAP expertise transformed our processes, efficient, reliable, and seamless implementation!" – Cargill Corporation', logoFile: 'cargill logo.jpg' },
                 { quote: '"A trusted partner for SAP solutions. They understood our business needs perfectly." – Hitachi Energy', logoFile: 'hitachi logo.png' },
