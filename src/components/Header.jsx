@@ -168,21 +168,85 @@ const Header = () => {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden border-t border-primary/20 bg-white">
+          {/* Mobile Get in Touch */}
+          <div className="max-w-7xl mx-auto px-5 md:px-8 py-3 border-b border-slate-200">
+            <Link
+              to="/contact"
+              className="flex items-center gap-3 hover:bg-slate-50 transition-all px-3 py-2"
+            >
+              <Phone className="h-5 w-5 text-primary" />
+              <div className="flex flex-col">
+                <span className="text-sm font-bold text-slate-900">Get in Touch</span>
+                <span className="text-sm font-bold text-primary">+31 6 2209 8973</span>
+              </div>
+            </Link>
+          </div>
+          
           <nav className="max-w-7xl mx-auto px-5 md:px-8 py-3 grid grid-cols-1 gap-1" aria-label="Mobile navigation">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`px-3 py-2 text-lg font-normal transition-all duration-200 border-b-[3px] ${
-                  isActive(item.href)
-                    ? 'text-primary border-primary'
-                    : 'text-slate-600 border-transparent hover:text-primary hover:border-primary'
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navigation.map((item) => {
+              if (item.hasDropdown) {
+                return (
+                  <div key={item.name} className="border-b border-slate-200 pb-1">
+                    <button
+                      onClick={() => setShowServicesDropdown(!showServicesDropdown)}
+                      className={`w-full text-left px-3 py-2 text-lg font-normal transition-all duration-200 flex items-center justify-between ${
+                        isActive(item.href) || location.pathname.startsWith('/services/')
+                          ? 'text-primary'
+                          : 'text-slate-600'
+                      }`}
+                    >
+                      <span className="inline-block">{item.name}</span>
+                      <ChevronDown className={`h-4 w-4 transition-transform ${showServicesDropdown ? 'rotate-180' : ''}`} />
+                    </button>
+                    {showServicesDropdown && (
+                      <div className="mt-2 space-y-2 pl-4">
+                        {services.map((service, index) => (
+                          <Link
+                            key={index}
+                            to={service.href}
+                            onClick={() => {
+                              setIsMobileMenuOpen(false);
+                              setShowServicesDropdown(false);
+                            }}
+                            className="block px-3 py-2 text-base text-slate-600 hover:text-primary hover:bg-slate-50 rounded-none"
+                          >
+                            {service.name}
+                          </Link>
+                        ))}
+                        <Link
+                          to="/services"
+                          onClick={() => {
+                            setIsMobileMenuOpen(false);
+                            setShowServicesDropdown(false);
+                          }}
+                          className="block px-3 py-2 text-sm font-bold text-primary hover:bg-slate-50 rounded-none"
+                        >
+                          View all services →
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+              return (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-3 py-2 text-lg font-normal inline-block ${
+                    isActive(item.href)
+                      ? 'text-primary'
+                      : 'text-slate-600'
+                  }`}
+                  style={{
+                    borderBottom: isActive(item.href) ? '3px solid #1E3A8A' : '3px solid transparent',
+                    paddingBottom: isActive(item.href) ? '0.4rem' : '0.5rem'
+                  }}
+                >
+                  {item.name}
+                </Link>
+              );
+            })}
           </nav>
         </div>
       )}

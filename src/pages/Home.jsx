@@ -240,7 +240,10 @@ const Home = () => {
               <h2 id="services-title" className="text-3xl md:text-4xl tracking-tight font-bold text-white">
                 Our Services
               </h2>
-              <div className="mt-3 md:hidden mb-3">
+              <p className="text-white/90 text-lg max-w-3xl">
+                Comprehensive SAP solutions tailored to your business needs. From cloud deployment to ongoing support, we deliver end-to-end services that drive efficiency and innovation.
+              </p>
+              <div className="mt-4 md:hidden">
                 <Link
                   to="/services"
                   className="inline-flex items-center gap-2 hover:bg-slate-50 transition text-sm font-bold text-primary bg-white border-secondary border rounded-none pt-2 pr-4 pb-2 pl-4"
@@ -249,9 +252,6 @@ const Home = () => {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
-              <p className="text-white/90 text-lg max-w-3xl">
-                Comprehensive SAP solutions tailored to your business needs. From cloud deployment to ongoing support, we deliver end-to-end services that drive efficiency and innovation.
-              </p>
             </div>
             <div className="hidden md:block">
               <Link
