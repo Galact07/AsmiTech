@@ -342,7 +342,7 @@ const Home = () => {
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="sectors">
         <div className="bg-blue-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-            <h2 className="md:text-4xl text-3xl font-bold text-slate-700 tracking-tight" id="sectors">
+            <h2 className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700" id="sectors">
             Industries We Serve
             </h2>
             <div className="mt-3 md:hidden">

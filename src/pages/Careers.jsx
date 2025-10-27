@@ -340,14 +340,16 @@ const Careers = () => {
                         </div>
                       </div>
                     </div>
-                    <Button
-                      variant="ghost"
-                      className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 text-sm font-medium rounded-none"
-                      onClick={() => openApplyDialog(job)}
-                    >
-                      Apply Now
-                      <ArrowUpRight className="h-4 w-4" />
-                    </Button>
+                    <div className="hidden md:block">
+                      <Button
+                        variant="ghost"
+                        className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 text-sm font-medium rounded-none"
+                        onClick={() => openApplyDialog(job)}
+                      >
+                        Apply Now
+                        <ArrowUpRight className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </div>
                   {job.description && (
                     <div className="mb-4">
@@ -363,7 +365,7 @@ const Careers = () => {
                     </div>
                   )}
                   {job.requirementList.length > 0 && (
-                    <div>
+                    <div className="mb-4">
                       <h4 className="text-sm font-medium text-slate-700 mb-2">Requirements:</h4>
                       <ul className="space-y-1">
                         {job.requirementList.map((req, reqIndex) => (
@@ -375,6 +377,16 @@ const Careers = () => {
                       </ul>
                     </div>
                   )}
+                  <div className="block md:hidden pt-4 border-t border-slate-200">
+                    <Button
+                      variant="ghost"
+                      className="w-full inline-flex items-center justify-center gap-2 bg-primary text-white hover:bg-primary/90 text-sm font-medium rounded-none"
+                      onClick={() => openApplyDialog(job)}
+                    >
+                      Apply Now
+                      <ArrowUpRight className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </div>
               ))
             )}
