@@ -12,8 +12,8 @@ const SapImplementationsAndRollouts = () => {
                 <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em]">
                   Our Services
                 </p>
-                <h1 id="service-title" className="sm:text-5xl md:text-6xl text-4xl font-bold text-slate-700 tracking-tight mt-2 break-words">
-                  SAP Implementations and Rollouts
+                <h1 id="service-title" className="sm:text-5xl md:text-6xl text-4xl font-bold text-slate-700 tracking-tight mt-2 leading-tight md:leading-relaxed">
+                  <span>SAP Implement-</span><span className="md:hidden"><br /></span><span>ations and Rollouts</span>
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
                   Execute tailored SAP deployments with proven Greenfield, Brownfield, or Bluefield strategies.
@@ -21,7 +21,7 @@ const SapImplementationsAndRollouts = () => {
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <Link
                     to="/contact"
-                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3 focus:outline-none"
+                    className="group inline-flex items-center justify-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3 focus:outline-none"
                   >
                     Get Started
                     <span className="inline-flex h-6 w-6 items-center justify-center rounded-none bg-black/5">
