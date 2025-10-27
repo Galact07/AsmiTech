@@ -250,10 +250,6 @@ const Header = () => {
                       ? 'text-primary'
                       : 'text-slate-600'
                   }`}
-                  style={{
-                    borderBottom: isActive(item.href) ? '3px solid #1E3A8A' : '3px solid transparent',
-                    paddingBottom: isActive(item.href) ? '0.4rem' : '0.5rem'
-                  }}
                 >
                   {item.name}
                 </Link>
