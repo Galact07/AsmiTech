@@ -17,8 +17,7 @@ const Footer = () => {
                   Asmi Technology Consulting B.V<br />
                   #10, Boudewijn Buchstraat<br />
                   3544HJ Utrecht<br />
-                  Ph No: +31-622098973<br />
-                  <a href="mailto:info@asmitechconsulting.com" className="text-blue-400 hover:text-blue-300 transition break-all">info@asmitechconsulting.com</a>
+                  Ph No: +31-622098973
                 </address>
               </div>
 
@@ -29,8 +28,7 @@ const Footer = () => {
                   #136, Meenakshi Layout,<br />
                   Kalena Agrahara, Bannerghatta Main Road,<br />
                   Bengaluru - 560076<br />
-                  Ph No: +91 98862 00035<br />
-                  <a href="mailto:info@asmitechconsulting.com" className="text-blue-400 hover:text-blue-300 transition break-all">info@asmitechconsulting.com</a>
+                  Ph No: +91 98862 00035
                 </address>
               </div>
             </div>
