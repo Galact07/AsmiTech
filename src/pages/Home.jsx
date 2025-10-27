@@ -131,7 +131,7 @@ const Home = () => {
               {/* Vector Illustration + image placeholder */}
               <div className="w-full md:w-[440px] shrink-0 space-y-3">
                 <img
-                  src="/logos/sap logo.png"
+                  src="/logos/sap logo.jpg"
                   alt="SAP Technology Logo"
                   loading="lazy"
                   className="w-full rounded-none pt-2 pr-2 pb-2 pl-2"

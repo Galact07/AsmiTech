@@ -42,7 +42,7 @@ const Services = () => {
               {/* Services Illustration */}
               <div className="w-full md:w-[440px] shrink-0 space-y-3">
                 <img
-                  src="https://i.pinimg.com/736x/96/9d/14/969d14e99603860237ae3526342f47c7.jpg"
+                  src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&auto=format&fit=crop"
                   alt="SAP services overview"
                   loading="lazy"
                   className="w-full rounded-none pt-2 pr-2 pb-2 pl-2"
