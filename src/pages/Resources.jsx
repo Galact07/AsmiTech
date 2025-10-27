@@ -22,16 +22,16 @@ const Resources = () => {
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <Link
                     to="/contact"
-                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-full px-5 py-3 focus:outline-none"
+                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3 focus:outline-none"
                   >
                     Subscribe to Updates
-                    <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-black/5">
+                    <span className="inline-flex h-6 w-6 items-center justify-center rounded-none bg-black/5">
                       <ArrowUpRight className="h-4 w-4" />
                     </span>
                   </Link>
                   <Link
                     to="/services"
-                    className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition"
+                    className="inline-flex items-center gap-2 rounded-none px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition"
                   >
                     Our Services
                     <ArrowRight className="h-4 w-4" />
@@ -44,7 +44,7 @@ const Resources = () => {
                   src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=900&q=60&auto=format&fit=crop"
                   alt="Knowledge and resources"
                   loading="lazy"
-                  className="backdrop-blur-[10px] bg-white/70 w-full border-slate-200 border rounded-2xl pt-2 pr-2 pb-2 pl-2"
+                  className="backdrop-blur-[10px] bg-white/70 w-full border-slate-200 border rounded-none pt-2 pr-2 pb-2 pl-2"
                 />
               </div>
             </div>
@@ -54,8 +54,8 @@ const Resources = () => {
 
       {/* Featured Resources Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="featured">
-        <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
-          <h2 id="featured" className="text-xl md:text-2xl tracking-tight font-bold text-slate-700">
+        <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
+          <h2 id="featured" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">
             Featured Resources
           </h2>
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -103,14 +103,14 @@ const Resources = () => {
                 alt: 'Business intelligence dashboard'
               }
             ].map((resource, index) => (
-              <article key={index} className="rounded-xl border border-slate-200 bg-white p-5 hover:shadow-md transition">
+              <article key={index} className="rounded-none border border-slate-200 bg-white p-5 hover:shadow-md transition">
                 <img
                   src={resource.image}
                   alt={resource.alt}
-                  className="w-full h-32 object-cover rounded-lg mb-4"
+                  className="w-full h-32 object-cover rounded-none mb-4"
                 />
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">
+                  <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-none">
                     {resource.type}
                   </span>
                 </div>
@@ -134,8 +134,8 @@ const Resources = () => {
 
       {/* Webinars Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="webinars">
-        <div className="bg-dark-blue p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
-          <h2 id="webinars" className="text-xl md:text-2xl tracking-tight font-bold text-white">
+        <div className="bg-dark-blue p-6 md:p-8 transition duration-500 ease-in rounded-none">
+          <h2 id="webinars" className="text-3xl md:text-4xl tracking-tight font-bold text-white">
             Upcoming Webinars
           </h2>
           <p className="mt-2 text-white/80">
@@ -168,11 +168,11 @@ const Resources = () => {
                 image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80&auto=format&fit=crop'
               }
             ].map((webinar, index) => (
-              <div key={index} className="flex items-start gap-4 p-4 rounded-xl border border-slate-200 bg-white hover:shadow-md transition">
+              <div key={index} className="flex items-start gap-4 p-4 rounded-none border border-slate-200 bg-white hover:shadow-md transition">
                 <img
                   src={webinar.image}
                   alt={`${webinar.speaker} headshot`}
-                  className="w-16 h-16 rounded-full object-cover"
+                  className="w-16 h-16 rounded-none object-cover"
                 />
                 <div className="flex-1">
                   <h3 className="text-lg font-medium text-slate-700 mb-1">{webinar.title}</h3>
@@ -200,7 +200,7 @@ const Resources = () => {
 
       {/* Newsletter Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="newsletter">
-        <div className="rounded-2xl bg-primary text-white p-8 md:p-12 text-center">
+        <div className="rounded-none bg-primary text-white p-8 md:p-12 text-center">
           <h2 id="newsletter" className="text-2xl md:text-3xl font-light tracking-tight">
             Stay Updated with SAP Insights
           </h2>
@@ -212,9 +212,9 @@ const Resources = () => {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-full text-slate-700 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-white/20"
+                className="flex-1 px-4 py-3 rounded-none text-slate-700 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-white/20"
               />
-              <button className="px-6 py-3 bg-white text-primary rounded-full font-medium hover:bg-slate-50 transition">
+              <button className="px-6 py-3 bg-white text-primary rounded-none font-medium hover:bg-slate-50 transition">
                 Subscribe
               </button>
             </div>

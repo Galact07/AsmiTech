@@ -431,7 +431,7 @@ export default function CaseStudiesAdmin() {
                                   <Trash2 className="h-4 w-4" />
                                 </Button>
                               </AlertDialogTrigger>
-                              <AlertDialogContent className="max-w-md rounded-2xl border border-slate-200 bg-white shadow-2xl p-6">
+                              <AlertDialogContent className="max-w-md rounded-none border border-slate-200 bg-white shadow-2xl p-6">
                                 <AlertDialogHeader>
                                   <AlertDialogTitle>Delete Case Study</AlertDialogTitle>
                                   <AlertDialogDescription>
@@ -469,7 +469,7 @@ export default function CaseStudiesAdmin() {
 
         {/* Create/Edit Dialog */}
         <Dialog open={dialogOpen} onOpenChange={handleFormDialogChange}>
-          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl border border-slate-200 bg-white shadow-2xl p-6">
+          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto rounded-none border border-slate-200 bg-white shadow-2xl p-6">
             <DialogHeader>
               <DialogTitle>
                 {selectedCaseStudy ? 'Edit Case Study' : 'Create New Case Study'}
@@ -642,7 +642,7 @@ export default function CaseStudiesAdmin() {
 
         {/* View Case Study Dialog */}
         <Dialog open={viewDialogOpen} onOpenChange={handleViewDialogChange}>
-          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl border border-slate-200 bg-white shadow-2xl p-6">
+          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto rounded-none border border-slate-200 bg-white shadow-2xl p-6">
             <DialogHeader>
               <DialogTitle>{selectedCaseStudy?.title}</DialogTitle>
               <DialogDescription>
@@ -654,7 +654,7 @@ export default function CaseStudiesAdmin() {
               <div className="space-y-6">
                 {/* Image */}
                 {selectedCaseStudy.image_url && (
-                  <div className="rounded-xl overflow-hidden border border-slate-200">
+                  <div className="rounded-none overflow-hidden border border-slate-200">
                     <img 
                       src={selectedCaseStudy.image_url} 
                       alt={selectedCaseStudy.title}
@@ -664,7 +664,7 @@ export default function CaseStudiesAdmin() {
                 )}
 
                 {/* Status and Meta */}
-                <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm flex flex-wrap gap-2">
+                <div className="rounded-none border border-slate-200 bg-slate-50 p-4 shadow-sm flex flex-wrap gap-2">
                   {getStatusBadge(selectedCaseStudy.status)}
                   <Badge variant="outline" className="capitalize">
                     Created {new Date(selectedCaseStudy.created_at).toLocaleDateString()}
@@ -683,13 +683,13 @@ export default function CaseStudiesAdmin() {
 
                 {/* Client and Industry */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                  <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
+                  <div className="rounded-none border border-slate-200 bg-slate-50 p-4 shadow-sm">
                     <Label className="font-medium">Client</Label>
                     <p className="text-muted-foreground">
                       {selectedCaseStudy.client_name || 'Not specified'}
                     </p>
                   </div>
-                  <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
+                  <div className="rounded-none border border-slate-200 bg-slate-50 p-4 shadow-sm">
                     <Label className="font-medium">Industry</Label>
                     <p className="text-muted-foreground">
                       {selectedCaseStudy.industry || 'Not specified'}
@@ -699,7 +699,7 @@ export default function CaseStudiesAdmin() {
 
                 {/* Summary */}
                 {selectedCaseStudy.summary && (
-                  <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
+                  <div className="rounded-none border border-slate-200 bg-slate-50 p-4 shadow-sm">
                     <Label className="font-medium">Summary</Label>
                     <p className="text-muted-foreground mt-1 whitespace-pre-wrap">
                       {selectedCaseStudy.summary}
@@ -709,7 +709,7 @@ export default function CaseStudiesAdmin() {
 
                 {/* Content */}
                 {selectedCaseStudy.content && (
-                  <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
+                  <div className="rounded-none border border-slate-200 bg-slate-50 p-4 shadow-sm">
                     <Label className="font-medium">Full Content</Label>
                     <p className="text-muted-foreground mt-1 whitespace-pre-wrap">
                       {selectedCaseStudy.content}

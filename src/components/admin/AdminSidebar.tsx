@@ -102,7 +102,7 @@ export function AdminSidebar({ collapsed, onToggle }: AdminSidebarProps) {
                 <Link
                   to={item.href}
                   className={cn(
-                    "flex items-center rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 group",
+                    "flex items-center rounded-none px-3 py-2.5 text-sm font-medium transition-all duration-200 group",
                     isActive
                       ? "bg-primary text-white shadow-sm"
                       : "text-muted-foreground hover:bg-slate-100 hover:text-slate-900"
@@ -145,7 +145,7 @@ export function AdminSidebar({ collapsed, onToggle }: AdminSidebarProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="mb-4 p-3 bg-white border border-slate-200 rounded-lg"
+            className="mb-4 p-3 bg-white border border-slate-200 rounded-none"
           >
             <p className="text-sm font-medium truncate">{profile.full_name || profile.email}</p>
             <p className="text-xs text-muted-foreground capitalize">{profile.role}</p>

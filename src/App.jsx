@@ -10,6 +10,14 @@ import Careers from './pages/Careers';
 import JobsListing from './pages/JobsListing';
 import Contact from './pages/Contact';
 import Resources from './pages/Resources';
+import SapPublicCloud from './pages/SapPublicCloud';
+import SapImplementationsAndRollouts from './pages/SapImplementationsAndRollouts';
+import SapDocumentAndReportingCompliance from './pages/SapDocumentAndReportingCompliance';
+import SapConsultingAdvisory from './pages/SapConsultingAdvisory';
+import DataMigrationServices from './pages/DataMigrationServices';
+import SupportManagedServices from './pages/SupportManagedServices';
+import TrainingChangeManagement from './pages/TrainingChangeManagement';
+import SapProjectManagementGovernance from './pages/SapProjectManagementGovernance';
 
 // Admin imports
 import AdminLogin from './pages/AdminLogin';
@@ -79,6 +87,62 @@ function App() {
           <div className="min-h-screen bg-white">
             <Header />
             <main><Resources /></main>
+            <Footer />
+          </div>
+        } />
+        <Route path="/services/sap-public-cloud" element={
+          <div className="min-h-screen bg-white">
+            <Header />
+            <main><SapPublicCloud /></main>
+            <Footer />
+          </div>
+        } />
+        <Route path="/services/sap-implementations-and-rollouts" element={
+          <div className="min-h-screen bg-white">
+            <Header />
+            <main><SapImplementationsAndRollouts /></main>
+            <Footer />
+          </div>
+        } />
+        <Route path="/services/sap-document-and-reporting-compliance" element={
+          <div className="min-h-screen bg-white">
+            <Header />
+            <main><SapDocumentAndReportingCompliance /></main>
+            <Footer />
+          </div>
+        } />
+        <Route path="/services/sap-consulting-advisory" element={
+          <div className="min-h-screen bg-white">
+            <Header />
+            <main><SapConsultingAdvisory /></main>
+            <Footer />
+          </div>
+        } />
+        <Route path="/services/data-migration-services" element={
+          <div className="min-h-screen bg-white">
+            <Header />
+            <main><DataMigrationServices /></main>
+            <Footer />
+          </div>
+        } />
+        <Route path="/services/support-managed-services" element={
+          <div className="min-h-screen bg-white">
+            <Header />
+            <main><SupportManagedServices /></main>
+            <Footer />
+          </div>
+        } />
+        <Route path="/services/training-change-management" element={
+          <div className="min-h-screen bg-white">
+            <Header />
+            <main><TrainingChangeManagement /></main>
+            <Footer />
+          </div>
+        } />
+        <Route path="/services/sap-project-management-governance" element={
+          <div className="min-h-screen bg-white">
+            <Header />
+            <main><SapProjectManagementGovernance /></main>
             <Footer />
           </div>
         } />

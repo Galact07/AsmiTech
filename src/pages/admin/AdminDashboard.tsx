@@ -180,7 +180,7 @@ export default function AdminDashboard() {
     };
 
     return (
-      <span className={`ml-2 px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(status)}`}>
+      <span className={`ml-2 px-2 py-1 rounded-none text-xs font-medium border ${getStatusColor(status)}`}>
         {status}
       </span>
     );
@@ -244,7 +244,7 @@ export default function AdminDashboard() {
                     <CardTitle className="text-sm font-medium">
                       {card.title}
                     </CardTitle>
-                    <div className={`p-2 rounded-lg ${card.bgColor}`}>
+                    <div className={`p-2 rounded-none ${card.bgColor}`}>
                       <Icon className={`h-4 w-4 ${card.color}`} />
                     </div>
                   </CardHeader>
@@ -292,7 +292,7 @@ export default function AdminDashboard() {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.5 + index * 0.05 }}
-                        className="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-100 transition-colors"
+                        className="flex items-center space-x-3 p-3 rounded-none hover:bg-slate-100 transition-colors"
                       >
                         <div className="p-2 rounded-full bg-slate-100">
                           <Icon className="h-4 w-4 text-slate-600" />

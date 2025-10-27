@@ -273,7 +273,7 @@ export default function JobsAdmin() {
     };
 
     return (
-      <span className={`px-2 py-1 rounded-full text-xs font-medium ${colors[type] || 'bg-gray-100 text-gray-800'}`}>
+      <span className={`px-2 py-1 rounded-none text-xs font-medium ${colors[type] || 'bg-gray-100 text-gray-800'}`}>
         {type.replace('-', ' ')}
       </span>
     );
@@ -440,7 +440,7 @@ export default function JobsAdmin() {
                                   <Trash2 className="h-4 w-4" />
                                 </Button>
                               </AlertDialogTrigger>
-                              <AlertDialogContent className="max-w-md rounded-2xl border border-slate-200 bg-white shadow-2xl p-6">
+                              <AlertDialogContent className="max-w-md rounded-none border border-slate-200 bg-white shadow-2xl p-6">
                                 <AlertDialogHeader>
                                   <AlertDialogTitle>Delete Job</AlertDialogTitle>
                                   <AlertDialogDescription>
@@ -478,7 +478,7 @@ export default function JobsAdmin() {
 
         {/* Create/Edit Dialog */}
         <Dialog open={dialogOpen} onOpenChange={handleFormDialogChange}>
-          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl border border-slate-200 bg-white shadow-2xl p-6">
+          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto rounded-none border border-slate-200 bg-white shadow-2xl p-6">
             <DialogHeader>
               <DialogTitle>
                 {selectedJob ? 'Edit Job' : 'Create New Job'}
@@ -647,7 +647,7 @@ export default function JobsAdmin() {
 
         {/* View Job Dialog */}
         <Dialog open={viewDialogOpen} onOpenChange={handleViewDialogChange}>
-          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl border border-slate-200 bg-white shadow-2xl p-6">
+          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto rounded-none border border-slate-200 bg-white shadow-2xl p-6">
             <DialogHeader>
               <DialogTitle>{selectedJob?.title}</DialogTitle>
               <DialogDescription>
@@ -657,7 +657,7 @@ export default function JobsAdmin() {
 
             {selectedJob && (
               <div className="space-y-6">
-                <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm flex flex-wrap gap-2">
+                <div className="rounded-none border border-slate-200 bg-slate-50 p-4 shadow-sm flex flex-wrap gap-2">
                   {getStatusBadge(selectedJob.status)}
                   {getTypeBadge(selectedJob.type)}
                   <Badge variant="outline" className="capitalize">
@@ -668,7 +668,7 @@ export default function JobsAdmin() {
                   )}
                 </div>
 
-                <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
+                <div className="rounded-none border border-slate-200 bg-slate-50 p-4 shadow-sm">
                   <Label className="font-medium">Location</Label>
                   <p className="text-muted-foreground">
                     {selectedJob.location || 'Not specified'}
@@ -676,7 +676,7 @@ export default function JobsAdmin() {
                 </div>
 
                 {selectedJob.description && (
-                  <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
+                  <div className="rounded-none border border-slate-200 bg-slate-50 p-4 shadow-sm">
                     <Label className="font-medium">Responsibilities</Label>
                     <ul className="mt-2 space-y-1">
                       {selectedJob.description.split(/\r?\n/).map((line, index) => {
@@ -694,7 +694,7 @@ export default function JobsAdmin() {
                 )}
 
                 {selectedJob.requirements && (
-                  <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
+                  <div className="rounded-none border border-slate-200 bg-slate-50 p-4 shadow-sm">
                     <Label className="font-medium">Requirements</Label>
                     <p className="text-muted-foreground mt-1 whitespace-pre-wrap">
                       {selectedJob.requirements}
@@ -702,7 +702,7 @@ export default function JobsAdmin() {
                   </div>
                 )}
 
-                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
+                <div className="rounded-none border border-slate-200 bg-slate-50 p-4 shadow-sm">
                   <Label className="font-medium flex items-center gap-2">
                     Applications
                     <Badge variant="outline">{selectedJob.applications?.length ?? 0}</Badge>
@@ -714,7 +714,7 @@ export default function JobsAdmin() {
                   ) : (
                     <div className="mt-4 grid gap-4">
                       {selectedJob.applications.map((application) => (
-                        <div key={application.id} className="rounded-lg border border-slate-200 bg-white p-3 shadow-sm space-y-2">
+                        <div key={application.id} className="rounded-none border border-slate-200 bg-white p-3 shadow-sm space-y-2">
                           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                             <div>
                               <p className="text-sm font-medium text-foreground">{application.candidate_name}</p>

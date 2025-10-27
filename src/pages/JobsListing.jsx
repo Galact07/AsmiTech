@@ -6,7 +6,6 @@ import { toast } from 'react-hot-toast';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
@@ -14,8 +13,8 @@ const APPLY_FORM_INITIAL_STATE = {
   name: '',
   email: '',
   phone: '',
-  resumeUrl: '',
-  coverLetter: '',
+  resumeFile: null,
+  cvFile: null,
 };
 
 const parseRequirements = (requirements) => {
@@ -150,6 +149,26 @@ const JobsListing = () => {
     }
   };
 
+  const handleFileChange = (event) => {
+    const { name, files } = event.target;
+    if (files && files.length > 0) {
+      const file = files[0];
+      // Validate file type is PDF
+      if (file.type !== 'application/pdf') {
+        setApplyError('Please upload only PDF files.');
+        toast.error('Please upload only PDF files.');
+        return;
+      }
+      setFormData((previous) => ({
+        ...previous,
+        [name]: file,
+      }));
+      if (applyError) {
+        setApplyError('');
+      }
+    }
+  };
+
   const handleSubmitApplication = async (event) => {
     event.preventDefault();
     if (!selectedJob) return;
@@ -160,15 +179,56 @@ const JobsListing = () => {
       return;
     }
 
+    if (!formData.phone.trim()) {
+      setApplyError('Please provide your phone number.');
+      toast.error('Please provide your phone number.');
+      return;
+    }
+
+    if (!formData.resumeFile) {
+      setApplyError('Please attach your resume.');
+      toast.error('Please attach your resume.');
+      return;
+    }
+
     setSubmitting(true);
     try {
+      let resumeUrl = null;
+      let cvUrl = null;
+
+      // Upload resume file
+      const resumeExt = formData.resumeFile.name.split('.').pop();
+      const resumeFileName = `${Date.now()}-resume.${resumeExt}`;
+      const { error: resumeError } = await supabase.storage
+        .from('applications')
+        .upload(resumeFileName, formData.resumeFile);
+
+      if (resumeError) throw resumeError;
+
+      const { data: resumeData } = supabase.storage.from('applications').getPublicUrl(resumeFileName);
+      resumeUrl = resumeData.publicUrl;
+
+      // Upload CV file if provided
+      if (formData.cvFile) {
+        const cvExt = formData.cvFile.name.split('.').pop();
+        const cvFileName = `${Date.now()}-cv.${cvExt}`;
+        const { error: cvError } = await supabase.storage
+          .from('applications')
+          .upload(cvFileName, formData.cvFile);
+
+        if (!cvError) {
+          const { data: cvData } = supabase.storage.from('applications').getPublicUrl(cvFileName);
+          cvUrl = cvData.publicUrl;
+        }
+      }
+
       const { error } = await supabase.from('applications').insert({
         job_id: selectedJob.id,
         candidate_name: formData.name.trim(),
         email: formData.email.trim(),
-        phone: formData.phone.trim() || null,
-        resume_url: formData.resumeUrl.trim() || null,
-        cover_letter: formData.coverLetter.trim() || null,
+        phone: formData.phone.trim(),
+        resume_url: resumeUrl,
+        cover_letter: cvUrl,
         details: {
           source: 'jobs_listing_page',
           job_title: selectedJob.title,
@@ -195,7 +255,7 @@ const JobsListing = () => {
       <div className="min-h-screen">
         {/* Header Section */}
         <section className="md:px-8 md:pt-16 max-w-7xl mr-auto ml-auto pt-10 pr-5 pl-5">
-          <div className="rounded-3xl bg-white/70 backdrop-blur-[10px] border border-slate-200 shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] overflow-hidden transition duration-500 ease-in">
+          <div className="bg-white/70 backdrop-blur-[10px] shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] transition duration-500 ease-in">
             <div className="sm:p-8 md:p-12 pt-6 pr-6 pb-6 pl-6">
               <Link 
                 to="/careers" 
@@ -205,10 +265,10 @@ const JobsListing = () => {
                 Back to Careers
               </Link>
               <div>
-                <p className="text-[11px] uppercase font-light text-slate-500 tracking-[0.18em]">
+                <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em]">
                   Career Opportunities
                 </p>
-                <h1 className="sm:text-5xl md:text-6xl text-4xl font-light text-slate-900 tracking-tight mt-2">
+                <h1 className="sm:text-5xl md:text-6xl text-4xl font-bold text-slate-700 tracking-tight mt-2">
                   Open Positions
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
@@ -221,7 +281,7 @@ const JobsListing = () => {
 
         {/* Search and Filters */}
         <section className="md:px-8 md:pt-8 max-w-7xl mr-auto ml-auto pt-6 pr-5 pl-5">
-          <div className="rounded-2xl bg-slate-100 p-6 transition duration-500 ease-in">
+          <div className="rounded-none bg-slate-100 p-6 transition duration-500 ease-in">
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1 relative">
                 <Search className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
@@ -287,14 +347,14 @@ const JobsListing = () => {
         <section className="md:px-8 md:pt-8 max-w-7xl mr-auto ml-auto pt-6 pr-5 pl-5 pb-12">
           <div className="space-y-4">
             {loadingJobs ? (
-              <div className="rounded-2xl bg-slate-800 p-12">
+              <div className="rounded-none bg-slate-800 p-12">
                 <div className="flex flex-col items-center justify-center text-muted-foreground gap-3">
                   <Loader2 className="h-8 w-8 animate-spin" />
                   <p>Loading open positions...</p>
                 </div>
               </div>
             ) : filteredJobs.length === 0 ? (
-              <div className="rounded-2xl bg-slate-800 p-12">
+              <div className="rounded-none bg-slate-800 p-12">
                 <div className="text-center">
                   <h3 className="text-lg font-medium text-slate-900">
                     {searchTerm || typeFilter !== 'all' || locationFilter !== 'all' 
@@ -331,7 +391,7 @@ const JobsListing = () => {
               filteredJobs.map((job, index) => (
                 <div 
                   key={job.id} 
-                  className="rounded-2xl bg-white/70 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 hover:shadow-lg transition duration-300"
+                  className="rounded-none bg-white/70 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 hover:shadow-lg transition duration-300"
                   style={{ 
                     animationDelay: `${index * 50}ms`,
                     animation: 'fadeInUp 0.5s ease-out forwards',
@@ -410,7 +470,7 @@ const JobsListing = () => {
 
       {/* Application Dialog */}
       <Dialog open={applyDialogOpen} onOpenChange={handleDialogChange}>
-        <DialogContent className="max-w-2xl md:max-w-3xl border border-slate-200 bg-white shadow-2xl p-6">
+        <DialogContent className="max-w-xl border border-slate-200 bg-white shadow-2xl p-6 rounded-none">
           <DialogHeader>
             <DialogTitle>Apply for {selectedJob?.title}</DialogTitle>
             <DialogDescription>
@@ -420,7 +480,7 @@ const JobsListing = () => {
 
           {selectedJob && (
             <div className="space-y-6">
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700 shadow-sm space-y-2">
+              <div className="rounded-none border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700 shadow-sm space-y-2">
                 <div className="flex flex-wrap gap-3">
                   {selectedJob.location && (
                     <span className="inline-flex items-center gap-2">
@@ -452,7 +512,7 @@ const JobsListing = () => {
                 )}
               </div>
 
-              <form onSubmit={handleSubmitApplication} className="space-y-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+              <form onSubmit={handleSubmitApplication} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="name">Full Name</Label>
@@ -464,7 +524,7 @@ const JobsListing = () => {
                       onChange={handleInputChange}
                       required
                       disabled={submitting}
-                      className="bg-white border border-slate-200 focus-visible:ring-primary"
+                      className="bg-white border border-slate-200 focus-visible:ring-primary rounded-none"
                     />
                   </div>
                   <div>
@@ -478,54 +538,54 @@ const JobsListing = () => {
                       onChange={handleInputChange}
                       required
                       disabled={submitting}
-                      className="bg-white border border-slate-200 focus-visible:ring-primary"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="phone">Phone (optional)</Label>
-                    <Input
-                      id="phone"
-                      name="phone"
-                      placeholder="+31 6 12345678"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      disabled={submitting}
-                      className="bg-white border border-slate-200 focus-visible:ring-primary"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="resumeUrl">Resume URL (optional)</Label>
-                    <Input
-                      id="resumeUrl"
-                      name="resumeUrl"
-                      placeholder="Link to your resume or portfolio"
-                      value={formData.resumeUrl}
-                      onChange={handleInputChange}
-                      disabled={submitting}
-                      className="bg-white border border-slate-200 focus-visible:ring-primary"
+                      className="bg-white border border-slate-200 focus-visible:ring-primary rounded-none"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <Label htmlFor="coverLetter">Cover Letter / Message (optional)</Label>
-                  <Textarea
-                    id="coverLetter"
-                    name="coverLetter"
-                    placeholder="Share a brief motivation for this role"
-                    value={formData.coverLetter}
+                  <Label htmlFor="phone">Phone Number</Label>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    placeholder="+31 6 12345678"
+                    value={formData.phone}
                     onChange={handleInputChange}
-                    rows={4}
+                    required
                     disabled={submitting}
-                    className="bg-white border border-slate-200 focus-visible:ring-primary"
+                    className="bg-white border border-slate-200 focus-visible:ring-primary rounded-none"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="resumeFile">Resume (PDF only) *</Label>
+                  <Input
+                    id="resumeFile"
+                    type="file"
+                    name="resumeFile"
+                    accept=".pdf"
+                    onChange={handleFileChange}
+                    required
+                    disabled={submitting}
+                    className="bg-white border border-slate-200 focus-visible:ring-primary rounded-none"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="cvFile">Cover Letter (PDF only, optional)</Label>
+                  <Input
+                    id="cvFile"
+                    type="file"
+                    name="cvFile"
+                    accept=".pdf"
+                    onChange={handleFileChange}
+                    disabled={submitting}
+                    className="bg-white border border-slate-200 focus-visible:ring-primary rounded-none"
                   />
                 </div>
 
                 {applyError && (
-                  <div className="rounded-md border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+                  <div className="rounded-none border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive">
                     {applyError}
                   </div>
                 )}
@@ -536,10 +596,11 @@ const JobsListing = () => {
                     variant="outline"
                     onClick={() => handleDialogChange(false)}
                     disabled={submitting}
+                    className="rounded-none"
                   >
                     Cancel
                   </Button>
-                  <Button type="submit" disabled={submitting}>
+                  <Button type="submit" disabled={submitting} className="rounded-none">
                     {submitting ? (
                       <>
                         <Loader2 className="h-4 w-4 animate-spin mr-2" />

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, ArrowRight } from 'lucide-react';
+import { ArrowUpRight, ArrowRight, Linkedin } from 'lucide-react';
 import Carousel from '../components/ui/carousel';
 
 const About = () => {
@@ -23,16 +23,16 @@ const About = () => {
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <Link
                     to="/contact"
-                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-full px-5 py-3 focus:outline-none"
+                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3 focus:outline-none"
                   >
                     Get in Touch
-                    <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-black/5">
+                    <span className="inline-flex h-6 w-6 items-center justify-center rounded-none bg-black/5">
                       <ArrowUpRight className="h-4 w-4" />
                     </span>
                   </Link>
                   <Link
                     to="/services"
-                    className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition"
+                    className="inline-flex items-center gap-2 rounded-none px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition"
                   >
                     Our Services
                     <ArrowRight className="h-4 w-4" />
@@ -45,7 +45,7 @@ const About = () => {
                   src="https://i.pinimg.com/1200x/b1/4c/c1/b14cc161cce4383a47cfaebca0af04cb.jpg"
                   alt="Asmi team collaboration"
                   loading="lazy"
-                  className="w-full rounded-2xl pt-2 pr-2 pb-2 pl-2"
+                  className="w-full rounded-none pt-2 pr-2 pb-2 pl-2"
                 />
               </div>
             </div>
@@ -55,8 +55,8 @@ const About = () => {
 
       {/* Our Story Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="our-story">
-        <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
-            <h2 id="our-story" className="text-xl md:text-2xl tracking-tight font-bold text-slate-700">
+        <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
+            <h2 id="our-story" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">
             Our Story
           </h2>
           <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -73,76 +73,48 @@ const About = () => {
                 src="https://i.pinimg.com/1200x/db/e6/14/dbe61467598a34dc1b363374526dcad8.jpg"
                 alt="ASMI team collaboration and SAP consulting"
                 loading="lazy"
-                className="w-full h-80 object-cover rounded-2xl"
+                className="w-full h-80 object-cover rounded-none"
               />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Trusted by Leading Organizations Worldwide Section */}
-      <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="trusted-title">
-        <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
-          <div className="flex items-center justify-between gap-3">
-            <h2 id="trusted-title" className="text-xl md:text-2xl tracking-tight font-bold text-slate-700">
-              Trusted by Leading Organizations Worldwide
-            </h2>
-          </div>
-          <div className="mt-5">
-            <Carousel speed="slow" className="py-4">
-              {[
-                { name: 'HITACHI', logoFile: 'hitachi logo.png' },
-                { name: 'CARGILL', logoFile: 'cargill logo.jpg' },
-                { name: 'DELOITTE', logoFile: 'deloitte logo.svg' },
-                { name: 'KPMG', logoFile: 'kpmg logo.png' },
-                { name: 'SUCAFINA', logoFile: 'sucafina logo.svg' },
-                { name: 'GREENWORKS', logoFile: 'greenworks logo.jpg' },
-                { name: 'SEGWAY-NINEBOT', logoFile: 'segway-ninebot logo.jpg' }
-              ].map((client, index) => (
-                <div key={index} className="flex-shrink-0 mx-6 flex items-center justify-center h-28 w-64">
-                  <div className="flex items-center justify-center h-24 w-60 bg-white rounded-lg px-4 hover:bg-slate-50 transition-colors">
-                    <img 
-                      src={`/logos/${client.logoFile}`}
-                      alt={`${client.name} logo`}
-                      className="max-h-20 max-w-48 object-contain"
-                    />
-                  </div>
-                </div>
-              ))}
-            </Carousel>
-          </div>
-        </div>
-      </section>
-
-
       {/* Team Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="team">
-        <div className="bg-dark-blue p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
-          <h2 id="team" className="text-xl md:text-2xl tracking-tight font-bold text-white">
-            Meet Our Team
-          </h2>
-          <p className="mt-2 text-white/80">
-            Our diverse team brings together deep SAP expertise, industry knowledge, and a passion for delivering exceptional results.
-          </p>
-          <div className="mt-6 flex justify-center">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
+        <div className="bg-dark-blue p-6 md:p-8 transition duration-500 ease-in rounded-none">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+            {/* Left side - Title and Description */}
+            <div className="lg:col-span-1">
+              <h2 id="team" className="text-3xl md:text-4xl tracking-tight font-bold text-white">
+                Meet Our Team
+              </h2>
+              <p className="mt-4 text-white/80">
+                Our diverse team brings together deep SAP expertise, industry knowledge, and a passion for delivering exceptional results.
+              </p>
+            </div>
+            
+            {/* Right side - Team Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:col-span-2">
               {[
                 {
                   name: 'Basavaraj K M',
                   role: 'Managing Director',
                   bio: 'With 20+ years in SAP consulting, he specializes in S/4HANA Finance, Central Finance, and Group Reporting. He has led multiple global implementations and migrations with proven results. A certified S/4HANA expert, he focuses on delivering practical, high-impact digital transformation solutions.',
                   image: '/logos/Basavaraj.jpg',
-                  initials: 'BK'
+                  initials: 'BK',
+                  linkedin: 'https://www.linkedin.com/in/basavaraj-km-192b9813/'
                 },
                 {
                   name: 'Asha M',
                   role: 'Managing Partner',
-                  bio: 'As Managing Partner, she leads the firm’s strategy and operations. She focuses on delivering measurable results and building strong client relationships. Her leadership combines vision, accountability, and a commitment to excellence.',
-                  image: '/logos/asha.jpg',
-                  initials: 'AM'
+                  bio: 'As Managing Partner, she leads the firm\'s strategy and operations. She focuses on delivering measurable results and building strong client relationships. Her leadership combines vision, accountability, and a commitment to excellence.',
+                  image: '/logos/Asha.jpg',
+                  initials: 'AM',
+                  linkedin: 'https://www.linkedin.com/in/asha-mathada-42a522370/'
                 }
               ].map((member, index) => (
-                <div key={index} className="bg-white p-6 text-center rounded-2xl">
+                <div key={index} className="bg-white p-6 text-center rounded-none">
                   <div className="relative inline-block mb-4">
                     <img
                       src={member.image}
@@ -162,6 +134,14 @@ const About = () => {
                   </div>
                   <h3 className="text-lg font-medium text-slate-700 mb-1">{member.name}</h3>
                   <p className="text-primary text-sm font-medium mb-3">{member.role}</p>
+                  <a
+                    href={member.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center w-8 h-8 bg-primary rounded-full hover:bg-primary/80 transition mb-4"
+                  >
+                    <Linkedin className="h-4 w-4 text-white" />
+                  </a>
                   <p className="text-slate-700/80 text-sm leading-relaxed">{member.bio}</p>
                 </div>
               ))}
@@ -171,12 +151,12 @@ const About = () => {
       </section>
 
       {/* Our Mission Section */}
-      <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="mission-title">
-        <div className="bg-blue-100 p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <section className="md:px-8 md:pt-8 max-w-7xl mr-auto ml-auto pt-6 pr-5 pl-5" aria-labelledby="mission-title">
+        <div className="bg-blue-100 p-4 md:p-6 transition duration-500 ease-in rounded-none">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
             <div className="order-2 md:order-1">
-              <h2 id="mission-title" className="text-xl md:text-2xl tracking-tight font-bold text-slate-700">Our Mission</h2>
-              <p className="mt-3 text-slate-700/90">
+              <h2 id="mission-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">Our Mission</h2>
+              <p className="mt-3 text-sm text-slate-700/90">
                 At ASMI, we create SAP solutions that make a real difference. We simplify complex processes, unlock new opportunities, and deliver results you can measure. Our goal is to help businesses work smarter, innovate faster, and achieve more with every solution we implement.
               </p>
             </div>
@@ -185,8 +165,33 @@ const About = () => {
                 src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&q=80&auto=format&fit=crop"
                 alt="Our Mission - SAP Solutions"
                 loading="lazy"
-                className="aspect-square w-full object-cover rounded-2xl"
+                className="aspect-square w-full object-cover rounded-none max-h-64"
               />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Vision Section */}
+      <section className="md:px-8 md:pt-8 max-w-7xl mr-auto ml-auto pt-6 pr-5 pl-5" aria-labelledby="vision-title">
+        <div className="bg-slate-100 p-4 md:p-6 transition duration-500 ease-in rounded-none">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+            <div className="order-2 md:order-1">
+              <img
+                src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80&auto=format&fit=crop"
+                alt="Our Vision - Future of SAP"
+                loading="lazy"
+                className="aspect-square w-full object-cover rounded-none max-h-64"
+              />
+            </div>
+            <div className="order-1 md:order-2">
+              <h2 id="vision-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">Our Vision</h2>
+              <p className="mt-3 text-sm text-slate-700/90">
+                We envision a future where every business can harness the full power of SAP to drive innovation, efficiency, and sustainable growth. Our goal is to be the leading SAP consulting partner globally, recognized for transforming how organizations operate through technology excellence.
+              </p>
+              <p className="mt-4 text-sm text-slate-700/90">
+                We strive to be the catalyst that empowers businesses to unlock their full potential through intelligent SAP solutions, creating lasting competitive advantages and measurable value for our clients worldwide.
+              </p>
             </div>
           </div>
         </div>
@@ -194,8 +199,8 @@ const About = () => {
 
       {/* Our Core Values Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="core-values">
-        <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
-          <h2 id="core-values" className="text-xl md:text-2xl tracking-tight font-bold text-slate-700">
+        <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
+          <h2 id="core-values" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">
             Our Core Values
           </h2>
           <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -224,7 +229,7 @@ const About = () => {
                   src={value.image}
                   alt={value.alt}
                   loading="lazy"
-                  className="w-full h-48 object-cover rounded-2xl mb-4"
+                  className="w-full h-48 object-cover rounded-none mb-4"
                 />
                 <h3 className="text-lg font-medium text-slate-700 mb-3">{value.title}</h3>
                 <p className="text-slate-700/80 text-sm leading-relaxed">{value.description}</p>
@@ -234,30 +239,74 @@ const About = () => {
         </div>
       </section>
 
+      {/* What Clients Say Section */}
+      <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="testimonials-title">
+        <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
+          <h2 id="testimonials-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">What Clients Say</h2>
+          <div className="mt-5">
+            <Carousel speed="slow" className="py-4">
+              {[
+                { quote: '"Their SAP expertise transformed our processes, efficient, reliable, and seamless implementation!" – Cargill Corporation', logoFile: 'cargill logo.jpg' },
+                { quote: '"A trusted partner for SAP solutions. They understood our business needs perfectly." – Hitachi Energy', logoFile: 'hitachi logo.png' },
+                { quote: '"Professional, proactive, and results-driven. Our SAP system has never run smoother." – Sucafina', logoFile: 'sucafina logo.svg' },
+                { quote: '"Exceptional support and guidance throughout our SAP journey. Highly recommended!" – Johnson & Johnson', logoFile: 'johnson and johnson logo.png' }
+              ].map((testimonial, idx) => (
+                <div key={idx} className="flex-shrink-0 mx-4 w-96">
+                  <div className="bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6 rounded-none">
+                    <div className="flex-shrink-0 w-32 h-28 bg-white rounded-none flex items-center justify-center p-3">
+                      <img 
+                        src={`/logos/${testimonial.logoFile}`}
+                        alt={`${testimonial.logoFile.split(' ')[0]} logo`}
+                        className="max-h-24 max-w-28 object-contain"
+                      />
+                    </div>
+                    <blockquote className="text-slate-700/90 text-sm leading-relaxed flex-1">
+                      {testimonial.quote}
+                    </blockquote>
+                  </div>
+                </div>
+              ))}
+            </Carousel>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="cta-title">
-        <div className="rounded-2xl bg-blue-100 text-slate-700 p-8 md:p-12 text-center">
-          <h2 id="cta-title" className="text-2xl md:text-3xl font-bold tracking-tight">
-            Drive better SAP results with ASMI.
-          </h2>
-          <p className="mt-4 text-slate-600 max-w-2xl mx-auto">
-            Request your consultation today.
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition px-6 py-3 rounded-full font-bold"
-            >
-              Get In Touch
-              <ArrowUpRight className="h-4 w-4" />
-            </Link>
-            <Link
-              to="/services"
-              className="inline-flex items-center gap-2 border border-primary text-primary hover:bg-primary hover:text-white transition px-6 py-3 rounded-full font-bold"
-            >
-              Our Services
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+        <div className="rounded-none bg-blue-100 text-slate-700 p-8 md:p-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div>
+              <img
+                src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&auto=format&fit=crop"
+                alt="SAP results"
+                loading="lazy"
+                className="w-full h-64 object-cover rounded-none"
+              />
+            </div>
+            <div className="text-center md:text-left">
+              <h2 id="cta-title" className="text-3xl md:text-4xl font-bold tracking-tight">
+                Drive better SAP results with ASMI.
+              </h2>
+              <p className="mt-4 text-slate-600 max-w-2xl">
+                Request your consultation today.
+              </p>
+              <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition px-6 py-3 rounded-none font-bold"
+                >
+                  Get In Touch
+                  <ArrowUpRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  to="/services"
+                  className="inline-flex items-center gap-2 border border-primary text-primary hover:bg-primary hover:text-white transition px-6 py-3 rounded-none font-bold"
+                >
+                  Our Services
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>

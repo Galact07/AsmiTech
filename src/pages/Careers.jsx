@@ -6,15 +6,14 @@ import { toast } from 'react-hot-toast';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 
 const APPLY_FORM_INITIAL_STATE = {
   name: '',
   email: '',
   phone: '',
-  resumeUrl: '',
-  coverLetter: '',
+  resumeFile: null,
+  cvFile: null,
 };
 
 const parseRequirements = (requirements) => {
@@ -120,6 +119,26 @@ const Careers = () => {
     }
   };
 
+  const handleFileChange = (event) => {
+    const { name, files } = event.target;
+    if (files && files.length > 0) {
+      const file = files[0];
+      // Validate file type is PDF
+      if (file.type !== 'application/pdf') {
+        setApplyError('Please upload only PDF files.');
+        toast.error('Please upload only PDF files.');
+        return;
+      }
+      setFormData((previous) => ({
+        ...previous,
+        [name]: file,
+      }));
+      if (applyError) {
+        setApplyError('');
+      }
+    }
+  };
+
   const handleSubmitApplication = async (event) => {
     event.preventDefault();
     if (!selectedJob) return;
@@ -130,15 +149,56 @@ const Careers = () => {
       return;
     }
 
+    if (!formData.phone.trim()) {
+      setApplyError('Please provide your phone number.');
+      toast.error('Please provide your phone number.');
+      return;
+    }
+
+    if (!formData.resumeFile) {
+      setApplyError('Please attach your resume.');
+      toast.error('Please attach your resume.');
+      return;
+    }
+
     setSubmitting(true);
     try {
+      let resumeUrl = null;
+      let cvUrl = null;
+
+      // Upload resume file
+      const resumeExt = formData.resumeFile.name.split('.').pop();
+      const resumeFileName = `${Date.now()}-resume.${resumeExt}`;
+      const { error: resumeError } = await supabase.storage
+        .from('applications')
+        .upload(resumeFileName, formData.resumeFile);
+
+      if (resumeError) throw resumeError;
+
+      const { data: resumeData } = supabase.storage.from('applications').getPublicUrl(resumeFileName);
+      resumeUrl = resumeData.publicUrl;
+
+      // Upload CV file if provided
+      if (formData.cvFile) {
+        const cvExt = formData.cvFile.name.split('.').pop();
+        const cvFileName = `${Date.now()}-cv.${cvExt}`;
+        const { error: cvError } = await supabase.storage
+          .from('applications')
+          .upload(cvFileName, formData.cvFile);
+
+        if (!cvError) {
+          const { data: cvData } = supabase.storage.from('applications').getPublicUrl(cvFileName);
+          cvUrl = cvData.publicUrl;
+        }
+      }
+
       const { error } = await supabase.from('applications').insert({
         job_id: selectedJob.id,
         candidate_name: formData.name.trim(),
         email: formData.email.trim(),
-        phone: formData.phone.trim() || null,
-        resume_url: formData.resumeUrl.trim() || null,
-        cover_letter: formData.coverLetter.trim() || null,
+        phone: formData.phone.trim(),
+        resume_url: resumeUrl,
+        cover_letter: cvUrl,
         details: {
           source: 'careers_page',
           job_title: selectedJob.title,
@@ -181,16 +241,16 @@ const Careers = () => {
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <Link
                     to="/jobs"
-                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-full px-5 py-3 focus:outline-none"
+                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3 focus:outline-none"
                   >
                     View Open Positions
-                    <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-black/5">
+                    <span className="inline-flex h-6 w-6 items-center justify-center rounded-none bg-black/5">
                       <ArrowUpRight className="h-4 w-4" />
                     </span>
                   </Link>
                   <Link
                     to="/about"
-                    className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition"
+                    className="inline-flex items-center gap-2 rounded-none px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition"
                   >
                     Learn About Us
                     <ArrowRight className="h-4 w-4" />
@@ -203,7 +263,7 @@ const Careers = () => {
                   src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=60&auto=format&fit=crop"
                   alt="Our team collaboration"
                   loading="lazy"
-                  className="w-full rounded-2xl pt-2 pr-2 pb-2 pl-2"
+                  className="w-full rounded-none pt-2 pr-2 pb-2 pl-2"
                 />
               </div>
             </div>
@@ -213,10 +273,10 @@ const Careers = () => {
 
       {/* Open Positions Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="positions">
-        <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
+        <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
             <div className="flex-1">
-              <h2 id="positions" className="text-xl md:text-2xl tracking-tight font-bold text-slate-700">
+              <h2 id="positions" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">
                 Open Positions
               </h2>
               <p className="mt-2 text-slate-700/80">
@@ -226,12 +286,10 @@ const Careers = () => {
             {!loadingJobs && parsedJobs.length > 0 && (
               <Link
                 to="/jobs"
-                className="group inline-flex items-center gap-2 bg-primary text-white hover:brightness-110 transition px-5 py-3 rounded-full font-medium text-sm whitespace-nowrap focus:outline-none"
+                className="group inline-flex items-center gap-2 bg-primary text-white hover:brightness-110 transition px-5 py-3 rounded-none font-medium text-sm whitespace-nowrap focus:outline-none"
               >
                 View All Jobs
-                <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-white/20 group-hover:bg-white/30 transition">
-                  <ArrowRight className="h-3 w-3" />
-                </span>
+                <ArrowRight className="h-4 w-4" />
               </Link>
             )}
           </div>
@@ -242,7 +300,7 @@ const Careers = () => {
                 <p>Loading open positions...</p>
               </div>
             ) : parsedJobs.length === 0 ? (
-              <div className="rounded-xl border border-dashed border-slate-300 bg-white/60 p-10 text-center">
+              <div className="rounded-none border border-dashed border-slate-300 bg-white/60 p-10 text-center">
                 <h3 className="text-lg font-medium text-slate-700">No open positions right now</h3>
                 <p className="mt-2 text-sm text-slate-600 max-w-xl mx-auto">
                   We&apos;re not actively hiring for new roles at the moment. Please check back soon or send us your resume so we can reach out when a matching opportunity opens up.
@@ -259,7 +317,7 @@ const Careers = () => {
               </div>
             ) : (
               parsedJobs.slice(0, 3).map((job) => (
-                <div key={job.id} className="rounded-xl border border-slate-200 bg-white p-6 hover:shadow-md transition">
+                <div key={job.id} className="rounded-none border border-slate-200 bg-white p-6 hover:shadow-md transition">
                   <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between mb-4">
                     <div className="space-y-2">
                       <h3 className="text-lg font-medium text-slate-700">{job.title}</h3>
@@ -284,7 +342,7 @@ const Careers = () => {
                     </div>
                     <Button
                       variant="ghost"
-                      className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 text-sm font-medium"
+                      className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 text-sm font-medium rounded-none"
                       onClick={() => openApplyDialog(job)}
                     >
                       Apply Now
@@ -324,7 +382,7 @@ const Careers = () => {
               <div className="pt-6 text-center border-t border-slate-200">
                 <Link
                   to="/jobs"
-                  className="inline-flex items-center gap-2 bg-primary text-white hover:brightness-110 transition px-6 py-3 rounded-full font-medium focus:outline-none"
+                  className="inline-flex items-center gap-2 bg-primary text-white hover:brightness-110 transition px-6 py-3 rounded-none font-medium focus:outline-none"
                 >
                   View All {parsedJobs.length} Open Positions
                   <ArrowRight className="h-4 w-4" />
@@ -337,11 +395,11 @@ const Careers = () => {
 
       {/* Application Process Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="process">
-        <div className="bg-dark-blue p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
-          <h2 id="process" className="text-xl md:text-2xl tracking-tight font-bold text-white">
+        <div className="bg-dark-blue p-6 md:p-8 transition duration-500 ease-in rounded-none">
+          <h2 id="process" className="text-3xl md:text-4xl tracking-tight font-bold text-white text-center">
             Application Process
           </h2>
-          <p className="mt-2 text-white/80">
+          <p className="mt-2 text-white/80 text-center">
           Join Our Global Team at ASMI Technologies
           </p>
           <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6 gap-y-8">
@@ -377,8 +435,8 @@ const Careers = () => {
                 description: 'New hires undergo an introduction program to integrate quickly and start contributing effectively.'
               }
             ].map((phase, index) => (
-              <div key={index} className="rounded-xl bg-blue-50 p-6 text-center hover:shadow-md transition">
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary text-white text-lg font-medium mb-4">
+              <div key={index} className="rounded-none bg-blue-50 p-6 text-center hover:shadow-md transition">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-primary text-white text-xl font-bold mb-4 rounded-none">
                   {phase.step}
                 </div>
                 <h3 className="text-lg font-medium text-slate-700 mb-2">{phase.title}</h3>
@@ -391,34 +449,46 @@ const Careers = () => {
 
       {/* CTA Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="cta">
-        <div className="rounded-2xl bg-blue-100 text-slate-700 p-8 md:p-12 text-center">
-          <h2 id="cta" className="text-2xl md:text-3xl font-bold tracking-tight">
-          Ready to join our team?
-          </h2>
-          <p className="mt-4 text-slate-600 max-w-2xl mx-auto">
-          Don't see the perfect role? We're always looking for talented SAP professionals. Send us your resume and let's start a conversation.
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/jobs"
-              className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition px-6 py-3 rounded-full font-bold"
-            >
-              Browse All Jobs
-              <ArrowUpRight className="h-4 w-4" />
-            </Link>
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 border border-primary text-primary hover:bg-primary hover:text-white transition px-6 py-3 rounded-full font-bold"
-            >
-              Send Your Resume
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+        <div className="rounded-none bg-blue-100 text-slate-700 p-8 md:p-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div>
+              <img
+                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop"
+                alt="Team collaboration"
+                loading="lazy"
+                className="w-full h-64 object-cover rounded-none"
+              />
+            </div>
+            <div className="text-center md:text-left">
+              <h2 id="cta" className="text-3xl md:text-4xl font-bold tracking-tight">
+              Ready to join our team?
+              </h2>
+              <p className="mt-4 text-slate-600 max-w-2xl">
+              Don't see the perfect role? We're always looking for talented SAP professionals. Send us your resume and let's start a conversation.
+              </p>
+              <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                <Link
+                  to="/jobs"
+                  className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition px-6 py-3 rounded-none font-bold"
+                >
+                  Browse All Jobs
+                  <ArrowUpRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center gap-2 border border-primary text-primary hover:bg-primary hover:text-white transition px-6 py-3 rounded-none font-bold"
+                >
+                  Send Your Resume
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
     </div>
     <Dialog open={applyDialogOpen} onOpenChange={handleDialogChange}>
-      <DialogContent className="max-w-2xl md:max-w-3xl border border-slate-200 bg-white shadow-2xl p-6">
+      <DialogContent className="max-w-xl border border-slate-200 bg-white shadow-2xl p-6 rounded-none">
         <DialogHeader>
           <DialogTitle>Apply for {selectedJob?.title}</DialogTitle>
           <DialogDescription>
@@ -428,7 +498,7 @@ const Careers = () => {
 
         {selectedJob && (
           <div className="space-y-6">
-            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700 shadow-sm space-y-2">
+            <div className="rounded-none border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700 shadow-sm space-y-2">
               <div className="flex flex-wrap gap-3">
                 {selectedJob.location && (
                   <span className="inline-flex items-center gap-2">
@@ -449,7 +519,7 @@ const Careers = () => {
               </div>
             </div>
 
-            <form onSubmit={handleSubmitApplication} className="space-y-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <form onSubmit={handleSubmitApplication} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="name">Full Name</Label>
@@ -461,7 +531,7 @@ const Careers = () => {
                     onChange={handleInputChange}
                     required
                     disabled={submitting}
-                    className="bg-white border border-slate-200 focus-visible:ring-primary"
+                    className="bg-white border border-slate-200 focus-visible:ring-primary rounded-none"
                   />
                 </div>
                 <div>
@@ -475,54 +545,54 @@ const Careers = () => {
                     onChange={handleInputChange}
                     required
                     disabled={submitting}
-                    className="bg-white border border-slate-200 focus-visible:ring-primary"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="phone">Phone (optional)</Label>
-                  <Input
-                    id="phone"
-                    name="phone"
-                    placeholder="+31 6 12345678"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    disabled={submitting}
-                    className="bg-white border border-slate-200 focus-visible:ring-primary"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="resumeUrl">Resume URL (optional)</Label>
-                  <Input
-                    id="resumeUrl"
-                    name="resumeUrl"
-                    placeholder="Link to your resume or portfolio"
-                    value={formData.resumeUrl}
-                    onChange={handleInputChange}
-                    disabled={submitting}
-                    className="bg-white border border-slate-200 focus-visible:ring-primary"
+                    className="bg-white border border-slate-200 focus-visible:ring-primary rounded-none"
                   />
                 </div>
               </div>
 
               <div>
-                <Label htmlFor="coverLetter">Cover Letter / Message (optional)</Label>
-                <Textarea
-                  id="coverLetter"
-                  name="coverLetter"
-                  placeholder="Share a brief motivation for this role"
-                  value={formData.coverLetter}
+                <Label htmlFor="phone">Phone Number</Label>
+                <Input
+                  id="phone"
+                  name="phone"
+                  placeholder="+31 6 12345678"
+                  value={formData.phone}
                   onChange={handleInputChange}
-                  rows={4}
+                  required
                   disabled={submitting}
-                  className="bg-white border border-slate-200 focus-visible:ring-primary"
+                  className="bg-white border border-slate-200 focus-visible:ring-primary rounded-none"
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="resumeFile">Resume (PDF only) *</Label>
+                <Input
+                  id="resumeFile"
+                  type="file"
+                  name="resumeFile"
+                  accept=".pdf"
+                  onChange={handleFileChange}
+                  required
+                  disabled={submitting}
+                  className="bg-white border border-slate-200 focus-visible:ring-primary rounded-none"
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="cvFile">Cover Letter (PDF only, optional)</Label>
+                <Input
+                  id="cvFile"
+                  type="file"
+                  name="cvFile"
+                  accept=".pdf"
+                  onChange={handleFileChange}
+                  disabled={submitting}
+                  className="bg-white border border-slate-200 focus-visible:ring-primary rounded-none"
                 />
               </div>
 
               {applyError && (
-                <div className="rounded-md border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+                <div className="rounded-none border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive">
                   {applyError}
                 </div>
               )}
@@ -533,10 +603,11 @@ const Careers = () => {
                   variant="outline"
                   onClick={() => handleDialogChange(false)}
                   disabled={submitting}
+                  className="rounded-none"
                 >
                   Cancel
                 </Button>
-                <Button type="submit" disabled={submitting}>
+                <Button type="submit" disabled={submitting} className="rounded-none">
                   {submitting ? (
                     <>
                       <Loader2 className="h-4 w-4 animate-spin mr-2" />

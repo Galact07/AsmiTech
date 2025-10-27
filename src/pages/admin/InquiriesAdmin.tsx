@@ -348,7 +348,7 @@ export default function InquiriesAdmin() {
                                   <Trash2 className="h-4 w-4" />
                                 </Button>
                               </AlertDialogTrigger>
-                              <AlertDialogContent className="max-w-md rounded-2xl border border-slate-200 bg-white shadow-2xl p-6">
+                              <AlertDialogContent className="max-w-md rounded-none border border-slate-200 bg-white shadow-2xl p-6">
                                 <AlertDialogHeader>
                                   <AlertDialogTitle>Delete Inquiry</AlertDialogTitle>
                                   <AlertDialogDescription>
@@ -386,7 +386,7 @@ export default function InquiriesAdmin() {
 
         {/* View Inquiry Dialog */}
         <Dialog open={viewDialogOpen} onOpenChange={setViewDialogOpen}>
-          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl border border-slate-200 bg-white shadow-2xl p-6">
+          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto rounded-none border border-slate-200 bg-white shadow-2xl p-6">
             <DialogHeader>
               <DialogTitle>Inquiry Details</DialogTitle>
               <DialogDescription>
@@ -397,7 +397,7 @@ export default function InquiriesAdmin() {
             {selectedInquiry && (
               <div className="space-y-6">
                 {/* Status and Actions */}
-                <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
+                <div className="rounded-none border border-slate-200 bg-slate-50 p-4 shadow-sm">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div className="flex items-center gap-3">
                       <Label className="font-medium">Status:</Label>
@@ -424,7 +424,7 @@ export default function InquiriesAdmin() {
                 </div>
 
                 {/* Contact Information */}
-                <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
+                <div className="rounded-none border border-slate-200 bg-slate-50 p-4 shadow-sm">
                   <Label className="font-medium text-lg mb-3 block">Contact Information</Label>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                     <div>
@@ -466,7 +466,7 @@ export default function InquiriesAdmin() {
 
                 {/* Subject */}
                 {selectedInquiry.subject && (
-                  <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
+                  <div className="rounded-none border border-slate-200 bg-slate-50 p-4 shadow-sm">
                     <Label className="font-medium flex items-center gap-2 mb-2">
                       <FileQuestion className="h-4 w-4" />
                       Subject
@@ -476,7 +476,7 @@ export default function InquiriesAdmin() {
                 )}
 
                 {/* Message */}
-                <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
+                <div className="rounded-none border border-slate-200 bg-slate-50 p-4 shadow-sm">
                   <Label className="font-medium mb-3 block">Message</Label>
                   <p className="text-muted-foreground whitespace-pre-wrap text-sm leading-relaxed">
                     {selectedInquiry.message}
@@ -484,7 +484,7 @@ export default function InquiriesAdmin() {
                 </div>
 
                 {/* Quick Actions */}
-                <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
+                <div className="rounded-none border border-slate-200 bg-slate-50 p-4 shadow-sm">
                   <Label className="font-medium mb-3 block">Quick Actions</Label>
                   <div className="flex flex-wrap gap-2">
                     <Button

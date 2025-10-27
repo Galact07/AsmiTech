@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, ArrowRight, Shield, Award, Factory, ShoppingCart, Banknote, HeartPulse, CheckCircle, Cloud, Settings, FileText, Users, Database, Headphones, GraduationCap, Clipboard } from 'lucide-react';
+import { ArrowUpRight, ArrowRight, Shield, Award, Factory, ShoppingCart, Banknote, HeartPulse, CheckCircle } from 'lucide-react';
 import Carousel from '../components/ui/carousel';
 
 const Services = () => {
@@ -23,16 +23,16 @@ const Services = () => {
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <Link
                     to="/contact"
-                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-full px-5 py-3 focus:outline-none"
+                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3 focus:outline-none"
                   >
                     Start Your Project
-                    <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-black/5">
+                    <span className="inline-flex h-6 w-6 items-center justify-center rounded-none bg-black/5">
                       <ArrowUpRight className="h-4 w-4" />
                     </span>
                   </Link>
                   <Link
                     to="/industries"
-                    className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition"
+                    className="inline-flex items-center gap-2 rounded-none px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition"
                   >
                     Industry Solutions
                     <ArrowRight className="h-4 w-4" />
@@ -45,7 +45,7 @@ const Services = () => {
                   src="https://i.pinimg.com/736x/96/9d/14/969d14e99603860237ae3526342f47c7.jpg"
                   alt="SAP services overview"
                   loading="lazy"
-                  className="w-full rounded-2xl pt-2 pr-2 pb-2 pl-2"
+                  className="w-full rounded-none pt-2 pr-2 pb-2 pl-2"
                 />
               </div>
             </div>
@@ -56,9 +56,9 @@ const Services = () => {
 
       {/* Clients Section */}
       <section className="max-w-7xl mx-auto px-5 md:px-8 pt-8 md:pt-12" aria-labelledby="partners-title">
-        <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
+        <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <div className="flex items-center justify-between gap-3">
-            <h2 id="partners-title" className="text-xl md:text-2xl tracking-tight font-bold text-slate-700">
+            <h2 id="partners-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">
             Clients We've Served
             </h2>
           </div>
@@ -74,7 +74,7 @@ const Services = () => {
                 { name: 'SEGWAY-NINEBOT', logoFile: 'segway-ninebot logo.jpg' }
               ].map((client, index) => (
                 <div key={index} className="flex-shrink-0 mx-6 flex items-center justify-center h-28 w-64">
-                  <div className="flex items-center justify-center h-24 w-60 bg-white rounded-lg px-4 hover:bg-slate-50 transition-colors">
+                  <div className="flex items-center justify-center h-24 w-60 bg-white rounded-none px-4 hover:bg-slate-50 transition-colors">
                     <img 
                       src={`/logos/${client.logoFile}`}
                       alt={`${client.name} logo`}
@@ -90,11 +90,16 @@ const Services = () => {
 
       {/* Our Services Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="our-services">
-        <div className="bg-dark-blue p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
-          <h2 id="our-services" className="text-xl md:text-2xl tracking-tight font-bold text-white">
-            Our Services
-          </h2>
-          <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-dark-blue p-6 md:p-8 transition duration-500 ease-in rounded-none">
+          <div className="mb-8">
+            <h2 id="our-services" className="text-3xl md:text-4xl tracking-tight font-bold text-white mb-4">
+              Our Services
+            </h2>
+            <p className="text-white/90 text-lg max-w-4xl">
+              Comprehensive SAP solutions tailored to your business needs. From cloud deployment to ongoing support, we deliver end-to-end services that drive efficiency, innovation, and measurable results across all industries.
+            </p>
+          </div>
+          <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
                 title: 'SAP Public Cloud',
@@ -105,7 +110,8 @@ const Services = () => {
                   'Integration with existing systems for seamless data flow.'
                 ],
                 logo: 'Cloud',
-                alt: 'SAP Public Cloud'
+                alt: 'SAP Public Cloud',
+                image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop'
               },
               {
                 title: 'SAP Implementations and Rollouts',
@@ -116,7 +122,8 @@ const Services = () => {
                   'Risk mitigation and quality assurance throughout the deployment.'
                 ],
                 logo: 'Settings',
-                alt: 'SAP Implementations and Rollouts'
+                alt: 'SAP Implementations and Rollouts',
+                image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&auto=format&fit=crop'
               },
               {
                 title: 'SAP Document and Reporting Compliance',
@@ -127,7 +134,8 @@ const Services = () => {
                   'Provide audit-ready documentation and reporting capabilities.'
                 ],
                 logo: 'FileText',
-                alt: 'SAP Document and Reporting Compliance'
+                alt: 'SAP Document and Reporting Compliance',
+                image: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&auto=format&fit=crop'
               },
               {
                 title: 'SAP Consulting & Advisory',
@@ -138,7 +146,8 @@ const Services = () => {
                   'Strategic planning for SAP adoption, upgrades, and transformation.'
                 ],
                 logo: 'Users',
-                alt: 'SAP Consulting & Advisory'
+                alt: 'SAP Consulting & Advisory',
+                image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&auto=format&fit=crop'
               },
               {
                 title: 'Data & Migration Services',
@@ -149,7 +158,8 @@ const Services = () => {
                   'Integration with legacy systems and new SAP modules.'
                 ],
                 logo: 'Database',
-                alt: 'Data & Migration Services'
+                alt: 'Data & Migration Services',
+                image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop'
               },
               {
                 title: 'Support & Managed Services',
@@ -160,7 +170,8 @@ const Services = () => {
                   'Regular updates, patches, and preventive maintenance.'
                 ],
                 logo: 'Headphones',
-                alt: 'Support & Managed Services'
+                alt: 'Support & Managed Services',
+                image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop'
               },
               {
                 title: 'Training & Change Management',
@@ -171,7 +182,8 @@ const Services = () => {
                   'Documentation and resources to ensure long-term proficiency.'
                 ],
                 logo: 'GraduationCap',
-                alt: 'Training & Change Management'
+                alt: 'Training & Change Management',
+                image: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800&auto=format&fit=crop'
               },
               {
                 title: 'SAP Project Management & Governance',
@@ -182,23 +194,30 @@ const Services = () => {
                   'Stakeholder communication and reporting for transparency and accountability.'
                 ],
                 logo: 'Clipboard',
-                alt: 'SAP Project Management & Governance'
+                alt: 'SAP Project Management & Governance',
+                image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&auto=format&fit=crop'
               }
-            ].map((service, index) => (
-              <article key={index} className="bg-slate-50 p-6 hover:shadow-md transition rounded-2xl">
-                <div className="flex items-start gap-4">
-                  <div className="bg-primary/10 w-16 h-16 rounded-lg flex items-center justify-center flex-shrink-0">
-                    {service.logo === 'Cloud' && <Cloud className="h-8 w-8 text-primary" />}
-                    {service.logo === 'Settings' && <Settings className="h-8 w-8 text-primary" />}
-                    {service.logo === 'FileText' && <FileText className="h-8 w-8 text-primary" />}
-                    {service.logo === 'Users' && <Users className="h-8 w-8 text-primary" />}
-                    {service.logo === 'Database' && <Database className="h-8 w-8 text-primary" />}
-                    {service.logo === 'Headphones' && <Headphones className="h-8 w-8 text-primary" />}
-                    {service.logo === 'GraduationCap' && <GraduationCap className="h-8 w-8 text-primary" />}
-                    {service.logo === 'Clipboard' && <Clipboard className="h-8 w-8 text-primary" />}
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg tracking-tight font-bold text-slate-700">{service.title}</h3>
+            ].map((service, index) => {
+              const serviceHrefs = [
+                '/services/sap-public-cloud',
+                '/services/sap-implementations-and-rollouts',
+                '/services/sap-document-and-reporting-compliance',
+                '/services/sap-consulting-advisory',
+                '/services/data-migration-services',
+                '/services/support-managed-services',
+                '/services/training-change-management',
+                '/services/sap-project-management-governance'
+              ];
+              return (
+                <article key={index} className="bg-white hover:shadow-md transition rounded-none overflow-hidden flex flex-col">
+                  <img 
+                    src={service.image}
+                    alt={service.alt}
+                    className="w-full h-48 object-cover"
+                    loading="lazy"
+                  />
+                  <div className="p-6 flex-1 flex flex-col">
+                    <h3 className="text-base tracking-tight font-bold text-slate-700">{service.title}</h3>
                     <p className="mt-2 text-slate-700/80 text-sm">{service.description}</p>
                     <ul className="mt-3 space-y-1">
                       {service.features.map((feature, featureIndex) => (
@@ -208,18 +227,25 @@ const Services = () => {
                         </li>
                       ))}
                     </ul>
+                    <Link 
+                      to={serviceHrefs[index]}
+                      className="mt-4 inline-flex items-center gap-2 text-primary hover:text-primary/80 transition text-sm font-bold hover:underline"
+                    >
+                      Learn more
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
                   </div>
-                </div>
-              </article>
-            ))}
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* Technology Stack Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="technology">
-        <div className="bg-blue-100 p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
-          <h2 id="technology" className="text-xl md:text-2xl tracking-tight font-bold text-slate-700">
+        <div className="bg-blue-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
+          <h2 id="technology" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">
             Technology Stack
           </h2>
           <p className="mt-2 text-slate-700/80">
@@ -234,8 +260,8 @@ const Services = () => {
               { name: 'SAP Integration Suite', logo: 'SAP Integration Suite.png' },
               { name: 'SAP Business Technology Platform', logo: 'SAP Business Technology Platform.png' }
             ].map((tech, index) => (
-              <div key={index} className="flex items-center justify-center p-4 bg-white hover:bg-slate-50 transition rounded-xl">
-                <div className={`w-full flex items-center justify-center bg-slate-50 rounded-lg ${tech.name === 'SAP S/4HANA' ? 'h-20' : 'h-24'}`}>
+              <div key={index} className="flex items-center justify-center p-4 bg-white hover:bg-slate-50 transition rounded-none">
+                <div className={`w-full flex items-center justify-center bg-slate-50 rounded-none ${tech.name === 'SAP S/4HANA' ? 'h-20' : 'h-24'}`}>
                   <img
                     src={`/logos/${tech.logo}`}
                     alt={`${tech.name} logo`}
@@ -251,8 +277,8 @@ const Services = () => {
 
       {/* What Clients Say Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="testimonials-title">
-        <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-2xl">
-          <h2 id="testimonials-title" className="text-xl md:text-2xl tracking-tight font-bold text-slate-700">What Clients Say</h2>
+        <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
+          <h2 id="testimonials-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">What Clients Say</h2>
           <div className="mt-5">
             <Carousel speed="very-slow" className="py-4">
               {[
@@ -262,8 +288,8 @@ const Services = () => {
                 { quote: '"Exceptional support and guidance throughout our SAP journey. Highly recommended!" – Johnson & Johnson', logoFile: 'johnson and johnson logo.png' }
               ].map((testimonial, idx) => (
                 <div key={idx} className="flex-shrink-0 mx-4 w-96">
-                  <div className="bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6 rounded-2xl">
-                    <div className="flex-shrink-0 w-32 h-28 bg-white rounded-lg flex items-center justify-center p-3">
+                  <div className="bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6 rounded-none">
+                    <div className="flex-shrink-0 w-32 h-28 bg-white rounded-none flex items-center justify-center p-3">
                       <img 
                         src={`/logos/${testimonial.logoFile}`}
                         alt={`${testimonial.logoFile.split(' ')[0]} logo`}
@@ -283,28 +309,40 @@ const Services = () => {
 
       {/* CTA Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="cta">
-        <div className="rounded-2xl bg-blue-100 text-slate-700 p-8 md:p-12 text-center">
-          <h2 id="cta" className="text-2xl md:text-3xl font-bold tracking-tight">
-            Ready to transform your business with SAP?
-          </h2>
-          <p className="mt-4 text-slate-600 max-w-2xl mx-auto">
-            Let's discuss how our SAP expertise can help you achieve your business goals and drive sustainable growth.
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition px-6 py-3 rounded-full font-bold"
-            >
-              Get Started Today
-              <ArrowUpRight className="h-4 w-4" />
-            </Link>
-            <Link
-              to="/about"
-              className="inline-flex items-center gap-2 border border-primary text-primary hover:bg-primary hover:text-white transition px-6 py-3 rounded-full font-bold"
-            >
-              Learn More About Us
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+        <div className="rounded-none bg-blue-100 text-slate-700 p-8 md:p-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div>
+              <img
+                src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&auto=format&fit=crop"
+                alt="SAP transformation"
+                loading="lazy"
+                className="w-full h-64 object-cover rounded-none"
+              />
+            </div>
+            <div className="text-center md:text-left">
+              <h2 id="cta" className="text-3xl md:text-4xl font-bold tracking-tight">
+                Ready to transform your business with SAP?
+              </h2>
+              <p className="mt-4 text-slate-600 max-w-2xl">
+                Let's discuss how our SAP expertise can help you achieve your business goals and drive sustainable growth.
+              </p>
+              <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition px-6 py-3 rounded-none font-bold"
+                >
+                  Get Started Today
+                  <ArrowUpRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  to="/about"
+                  className="inline-flex items-center gap-2 border border-primary text-primary hover:bg-primary hover:text-white transition px-6 py-3 rounded-none font-bold"
+                >
+                  Learn More About Us
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
