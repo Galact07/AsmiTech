@@ -10,20 +10,20 @@ const About = () => {
         <div className="bg-white/70 backdrop-blur-[10px] shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] transition duration-500 ease-in">
           <div className="sm:p-8 md:p-12 pt-6 pr-6 pb-6 pl-6">
             <div className="flex items-start md:items-center gap-6 md:gap-10 flex-col md:flex-row">
-              <div className="flex-1">
+              <div className="flex-1 w-full">
                 <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em]">
                 About ASMI Technology Consulting B.V.
                 </p>
-                <h1 id="about-title" className="sm:text-5xl md:text-6xl text-4xl font-bold text-slate-700 tracking-tight mt-2">
-                Your Trusted SAP Transformation Partner.
+                <h1 id="about-title" className="sm:text-5xl md:text-6xl text-4xl font-bold text-slate-700 tracking-tight mt-2 break-words">
+                Your Trusted SAP Partner.
                 </h1>
-                <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
+                <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg break-words">
                 Discover how ASMI makes SAP transformations simple and effective. We deliver end-to-end solutions that streamline processes, connect systems seamlessly, and generate measurable business results.
                 </p>
-                <div className="mt-6 flex flex-col sm:flex-row gap-3">
+                <div className="mt-6 flex flex-col sm:flex-row gap-3 w-full">
                   <Link
                     to="/contact"
-                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3 focus:outline-none"
+                    className="group inline-flex items-center justify-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3 focus:outline-none flex-shrink-0"
                   >
                     Get in Touch
                     <span className="inline-flex h-6 w-6 items-center justify-center rounded-none bg-black/5">
@@ -32,7 +32,7 @@ const About = () => {
                   </Link>
                   <Link
                     to="/services"
-                    className="inline-flex items-center gap-2 rounded-none px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition"
+                    className="inline-flex items-center justify-center gap-2 rounded-none px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition flex-shrink-0"
                   >
                     Our Services
                     <ArrowRight className="h-4 w-4" />
