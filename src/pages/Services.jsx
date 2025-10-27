@@ -251,7 +251,7 @@ const Services = () => {
           <p className="mt-2 text-slate-700/80">
             We work with the latest SAP technologies and complementary solutions to deliver comprehensive business value.
           </p>
-          <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
               { name: 'SAP S/4HANA', logo: 'SAP S4HANA.png' },
               { name: 'SAP Fiori', logo: 'SAP Fiori.png' },
