@@ -12,7 +12,7 @@ const SapImplementationsAndRollouts = () => {
                 <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em]">
                   Our Services
                 </p>
-                <h1 id="service-title" className="sm:text-5xl md:text-6xl text-4xl font-bold text-slate-700 tracking-tight mt-2">
+                <h1 id="service-title" className="sm:text-5xl md:text-6xl text-4xl font-bold text-slate-700 tracking-tight mt-2 break-words">
                   SAP Implementations and Rollouts
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">

@@ -196,10 +196,6 @@ const Header = () => {
                             ? 'text-primary'
                             : 'text-slate-600'
                         }`}
-                        style={{
-                          borderBottom: (isActive(item.href) || location.pathname.startsWith('/services/')) ? '3px solid #1E3A8A' : '3px solid transparent',
-                          paddingBottom: (isActive(item.href) || location.pathname.startsWith('/services/')) ? '0.4rem' : '0.5rem'
-                        }}
                       >
                         {item.name}
                       </Link>
@@ -211,7 +207,7 @@ const Header = () => {
                       </button>
                     </div>
                     {showServicesDropdown && (
-                      <div className="mt-2 space-y-2 pl-4">
+                      <div className="mt-2 space-y-2 pl-4 max-h-64 overflow-y-auto">
                         {services.map((service, index) => (
                           <Link
                             key={index}
@@ -220,7 +216,7 @@ const Header = () => {
                               setIsMobileMenuOpen(false);
                               setShowServicesDropdown(false);
                             }}
-                            className="block px-3 py-2 text-base text-slate-600 hover:text-primary hover:bg-slate-50 rounded-none"
+                            className="block px-3 py-2 text-base text-slate-600 hover:text-primary hover:bg-slate-50 rounded-none break-words"
                           >
                             {service.name}
                           </Link>
