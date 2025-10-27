@@ -336,7 +336,7 @@ const Home = () => {
               </button>
             )}
             
-            <div className="overflow-hidden mx-16">
+            <div className="overflow-hidden mx-4 md:mx-16">
               <div 
                 className="flex gap-6 transition-transform duration-300 ease-in-out"
                 style={{ transform: `translateX(calc(-${industryIndex} * (50% + 12px)))` }}

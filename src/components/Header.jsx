@@ -78,7 +78,7 @@ const Header = () => {
                   </Link>
                   {showServicesDropdown && (
                     <div 
-                      className="absolute top-full left-0 mt-2 w-[580px] bg-slate-100 backdrop-blur-[10px] shadow-2xl rounded-none border border-slate-200 overflow-hidden"
+                      className="absolute top-full left-0 mt-2 w-[580px] max-w-[calc(100vw-2rem)] bg-slate-100 backdrop-blur-[10px] shadow-2xl rounded-none border border-slate-200 overflow-hidden"
                       onMouseEnter={handleDropdownEnter}
                       onMouseLeave={handleDropdownLeave}
                       style={{ marginTop: '0.5rem' }}
@@ -158,7 +158,7 @@ const Header = () => {
             aria-controls="mobileMenu"
             aria-expanded={isMobileMenuOpen}
             aria-label="Open menu"
-            className="md:hidden ml-auto inline-flex items-center justify-center 15 w-15 rounded-none border border-primary/20 text-primary hover:text-primary transition-all duration-200 font-bold"
+            className="md:hidden ml-auto inline-flex items-center justify-center w-10 h-10 rounded-none border border-primary/20 text-primary hover:text-primary transition-all duration-200 font-bold"
           >
             {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>

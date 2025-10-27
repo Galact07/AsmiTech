@@ -13,31 +13,31 @@ const Footer = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="flex flex-col">
                 <h3 className="text-sm font-bold text-white mb-3">Head Office – Netherlands</h3>
-                <address className="not-italic text-sm text-white/80 leading-relaxed">
+                <address className="not-italic text-sm text-white/80 leading-relaxed break-words">
                   Asmi Technology Consulting B.V<br />
                   #10, Boudewijn Buchstraat<br />
                   3544HJ Utrecht<br />
                   Ph No: +31-622098973<br />
-                  <a href="mailto:info@asmitechconsulting.com" className="text-blue-400 hover:text-blue-300 transition">info@asmitechconsulting.com</a>
+                  <a href="mailto:info@asmitechconsulting.com" className="text-blue-400 hover:text-blue-300 transition break-all">info@asmitechconsulting.com</a>
                 </address>
               </div>
 
               <div className="flex flex-col">
                 <h3 className="text-sm font-bold text-white mb-3">India Office</h3>
-                <address className="not-italic text-sm text-white/80 leading-relaxed">
+                <address className="not-italic text-sm text-white/80 leading-relaxed break-words">
                   Asmi Technology Consulting Pvt. Ltd.<br />
                   #136, Meenakshi Layout,<br />
                   Kalena Agrahara, Bannerghatta Main Road,<br />
                   Bengaluru - 560076<br />
                   Ph No: +91 98862 00035<br />
-                  <a href="mailto:info@asmitechconsulting.com" className="text-blue-400 hover:text-blue-300 transition">info@asmitechconsulting.com</a>
+                  <a href="mailto:info@asmitechconsulting.com" className="text-blue-400 hover:text-blue-300 transition break-all">info@asmitechconsulting.com</a>
                 </address>
               </div>
             </div>
           </div>
           
           {/* Quick Links */}
-          <div className="md:col-span-3 ml-12">
+          <div className="md:col-span-3 ml-0 md:ml-12">
             <h3 className="text-base font-bold text-white mb-3">Quick links</h3>
             <ul className="space-y-2 text-sm text-white/80">
               <li><Link to="/" className="block hover:text-blue-400 transition">Home</Link></li>
@@ -72,13 +72,13 @@ const Footer = () => {
               </a>
               <a
                 href="mailto:info@asmitechconsulting.com"
-                className="flex items-center gap-3 text-sm text-white/80 hover:text-blue-300 transition break-all"
+                className="flex items-start gap-3 text-sm text-white/80 hover:text-blue-300 transition"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 flex-shrink-0 mt-0.5">
                   <rect width="20" height="16" x="2" y="4" rx="2"></rect>
                   <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                 </svg>
-                info@asmitechconsulting.com
+                <span className="break-all">info@asmitechconsulting.com</span>
               </a>
             </div>
           </div>
