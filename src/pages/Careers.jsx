@@ -260,7 +260,7 @@ const Careers = () => {
               {/* Team Illustration */}
               <div className="w-full md:w-[440px] shrink-0 space-y-3">
                 <img
-                  src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=900&auto=format&fit=crop"
+                  src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=900&auto=format&fit=crop"
                   alt="Our team collaboration"
                   loading="lazy"
                   className="w-full rounded-none pt-2 pr-2 pb-2 pl-2"
