@@ -141,16 +141,16 @@ const Header = () => {
           </nav>
 
           {/* CTA */}
-          <Link
-            to="/contact"
+          <a
+            href="tel:+31622098973"
             className="hidden items-center gap-3 hover:bg-slate-50 transition-all focus:outline-none sm:inline-flex bg-white font-bold rounded-none ml-auto px-5 py-3"
           >
             <Phone className="h-7 w-7 text-primary" />
             <div className="flex flex-col items-end">
               <span className="text-base font-bold text-slate-900">Get in Touch</span>
-              <span className="text-base font-bold text-primary">+31 6 2209 8973</span>
+              <span className="text-base font-bold text-primary">+31-622098973</span>
             </div>
-          </Link>
+          </a>
 
           {/* Mobile Menu Button */}
           <button
@@ -170,16 +170,16 @@ const Header = () => {
         <div className="md:hidden border-t border-primary/20 bg-white">
           {/* Mobile Get in Touch */}
           <div className="max-w-7xl mx-auto px-5 md:px-8 py-3 border-b border-slate-200">
-            <Link
-              to="/contact"
+            <a
+              href="tel:+31622098973"
               className="flex items-center gap-3 hover:bg-slate-50 transition-all px-3 py-2"
             >
               <Phone className="h-5 w-5 text-primary" />
               <div className="flex flex-col">
                 <span className="text-sm font-bold text-slate-900">Get in Touch</span>
-                <span className="text-sm font-bold text-primary">+31 6 2209 8973</span>
+                <span className="text-sm font-bold text-primary">+31-622098973</span>
               </div>
-            </Link>
+            </a>
           </div>
           
           <nav className="max-w-7xl mx-auto px-5 md:px-8 py-3 grid grid-cols-1 gap-1" aria-label="Mobile navigation">
