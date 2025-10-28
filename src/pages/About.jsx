@@ -119,14 +119,14 @@ const About = () => {
                     <img
                       src={member.image}
                       alt={`${member.name} headshot`}
-                      className="w-24 h-24 rounded-full object-cover mx-auto"
+                      className="w-36 h-36 rounded-full object-cover mx-auto"
                       onError={(e) => {
                         e.target.style.display = 'none';
                         e.target.nextSibling.style.display = 'flex';
                       }}
                     />
                     <div 
-                      className="w-24 h-24 rounded-full bg-primary text-white flex items-center justify-center mx-auto text-lg font-semibold"
+                      className="w-36 h-36 rounded-full bg-primary text-white flex items-center justify-center mx-auto text-xl font-semibold"
                       style={{ display: 'none' }}
                     >
                       {member.initials}
