@@ -4,12 +4,13 @@ const Footer = () => {
   return (
     <footer className="border-t border-blue-300 bg-dark-blue mt-12" role="contentinfo" aria-label="Footer">
       <div className="max-w-7xl mx-auto px-5 md:px-8 py-6">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+        {/* Company name as a full-width row */}
+        <div className="mb-4">
+          <span className="text-xl font-bold text-white">ASMI Technology Consulting B.V.</span>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
           {/* Company Info */}
           <div className="md:col-span-6">
-            <div className="mb-4">
-              <span className="text-xl font-bold text-white">ASMI Technology Consulting B.V.</span>
-            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="flex flex-col">
                 <h3 className="text-sm font-bold text-white mb-3">Head Office – Netherlands</h3>
@@ -35,7 +36,7 @@ const Footer = () => {
           </div>
           
           {/* Quick Links */}
-          <div className="md:col-span-3 ml-0 md:ml-12">
+          <div className="md:col-span-3">
             <h3 className="text-base font-bold text-white mb-3">Quick links</h3>
             <ul className="space-y-2 text-sm text-white/80">
               <li><Link to="/" className="block hover:text-blue-400 transition">Home</Link></li>
