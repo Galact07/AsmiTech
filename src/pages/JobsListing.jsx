@@ -254,7 +254,7 @@ const JobsListing = () => {
     <>
       <div className="min-h-screen">
         {/* Header Section */}
-        <section className="md:px-8 md:pt-16 max-w-7xl mr-auto ml-auto pt-10 pr-5 pl-5">
+        <section className="md:px-8 md:pt-6 max-w-7xl mr-auto ml-auto pt-4 pr-5 pl-5">
           <div className="bg-white/70 backdrop-blur-[10px] shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] transition duration-500 ease-in">
             <div className="sm:p-8 md:p-12 pt-6 pr-6 pb-6 pl-6">
               <Link 
