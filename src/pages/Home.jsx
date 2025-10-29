@@ -129,7 +129,7 @@ const Home = () => {
                 </div>
               </div>
               {/* Vector Illustration + image placeholder */}
-              <div className="w-full md:w-[320px] shrink-0 space-y-3">
+              <div className="w-full md:w-[400px] shrink-0 space-y-3">
                 <img
                   src="/logos/sap logo.jpg"
                   alt="SAP Technology Logo"
