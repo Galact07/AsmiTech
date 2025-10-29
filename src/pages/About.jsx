@@ -6,41 +6,54 @@ const About = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="md:px-8 md:pt-6 max-w-7xl mr-auto ml-auto pt-5 pr-5 pl-5" aria-labelledby="about-title">
+      <section className="md:px-8 md:pt-20 max-w-7xl mr-auto ml-auto pt-14 pr-5 pl-5" aria-labelledby="about-title">
         <div className="bg-white/70 backdrop-blur-[10px] shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] transition duration-500 ease-in">
           <div className="pt-0 pr-6 pb-6 pl-6 md:pr-12 md:pb-12 md:pl-12">
-            <div className="flex items-start gap-6 md:gap-10 flex-col md:flex-row">
+            <div className="flex items-stretch gap-6 md:gap-10 flex-col md:flex-row min-h-[240px] md:min-h-[280px]">
               <div className="flex-1 w-full">
                 <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em] mt-0 pt-2">
-                About ASMI Technology Consulting B.V.
+                About Us
                 </p>
-                <h1 id="about-title" className="sm:text-4xl md:text-5xl text-3xl font-bold text-slate-700 tracking-tight mt-2 break-words">
-                Your Trusted SAP Partner.
+                <h1 id="about-title" className="sm:text-4xl md:text-5xl text-3xl font-bold text-slate-700 tracking-tight mt-2">
+                Learn More About ASMI
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg break-words">
-                Discover how ASMI makes SAP transformations simple and effective. We deliver end-to-end solutions that streamline processes, connect systems seamlessly, and generate measurable business results.
+                Discover how ASMI helps businesses run better with SAP. We bring hands-on expertise, practical solutions, and a clear focus on results that move your business forward.
                 </p>
                 <div className="mt-6 flex flex-col sm:flex-row gap-3 w-full">
                   <Link
                     to="/contact"
                     className="group inline-flex items-center justify-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3 focus:outline-none flex-shrink-0"
                   >
-                    Get in Touch
+                    Contact Us
                     <span className="inline-flex h-6 w-6 items-center justify-center rounded-none bg-black/5">
                       <ArrowUpRight className="h-4 w-4" />
                     </span>
                   </Link>
-                  <Link
-                    to="/services"
-                    className="inline-flex items-center justify-center gap-2 rounded-none px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition flex-shrink-0"
+                  <a
+                    href="#our-story"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const element = document.getElementById('our-story');
+                      if (element) {
+                        const headerOffset = 80;
+                        const elementPosition = element.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        window.scrollTo({
+                          top: offsetPosition,
+                          behavior: 'smooth'
+                        });
+                      }
+                    }}
+                    className="inline-flex items-center justify-center gap-2 rounded-none px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition flex-shrink-0 cursor-pointer"
                   >
-                    Our Services
+                    Our Story
                     <ArrowRight className="h-4 w-4" />
-                  </Link>
+                  </a>
                 </div>
               </div>
               {/* Team Image */}
-              <div className="w-full md:w-[350px] shrink-0 space-y-3">
+              <div className="w-full md:w-[280px] shrink-0 space-y-3">
                 <img
                   src="https://i.pinimg.com/1200x/b1/4c/c1/b14cc161cce4383a47cfaebca0af04cb.jpg"
                   alt="Asmi team collaboration"
@@ -50,30 +63,82 @@ const About = () => {
               </div>
             </div>
           </div>
+          <div className="h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
         </div>
       </section>
 
       {/* Our Story Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="our-story">
         <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
-            <h2 id="our-story" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">
-            Our Story
-          </h2>
-          <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
+          <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6 items-start">
+            <div className="max-w-2xl">
+              <h2 id="our-story" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700 mb-5">
+                Our Story
+              </h2>
               <p className="text-slate-700/80">
-                At ASMI, we help businesses get the most out of SAP. Based in Utrecht, Netherlands, our team combines technical expertise with hands-on experience to simplify complex processes and deliver solutions that truly make a difference. From implementation and integration to process optimization, data migration, training, and ongoing support, we focus on solutions that align technology with your business goals and make daily workflows smoother.
+                At ASMI, we've built our work around one belief — technology should make business simpler, not harder. From our base in Utrecht, we help companies use SAP in ways that truly matter: smoother operations, smarter decisions, and stronger results. Our team blends deep know-how with real-world insight to create solutions that fit how your business actually runs.
               </p>
               <p className="mt-4 text-slate-700/80">
-                What makes us different is our practical, collaborative approach. We value problem-solving, innovation, and doing things right, not just fast. Trusted by organizations like Hitachi, Cargill, and Deloitte, we work closely with our clients to optimize operations and support growth that lasts.
+                We've earned the trust of global names like Hitachi, Cargill, and Deloitte by staying hands-on, honest, and focused on lasting impact. For us, it's never about quick fixes — it's about building systems that stand the test of time and help businesses grow with confidence.
               </p>
             </div>
-            <div>
+            <div className="flex items-start justify-end md:ml-auto">
               <img
-                src="https://i.pinimg.com/1200x/db/e6/14/dbe61467598a34dc1b363374526dcad8.jpg"
-                alt="ASMI team collaboration and SAP consulting"
+                src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&h=800&fit=crop&auto=format"
+                alt="Business partnership and collaborative growth representing ASMI's story"
                 loading="lazy"
-                className="w-full h-80 object-cover rounded-none"
+                className="object-cover rounded-none w-full aspect-[4/3]"
+                style={{ maxWidth: '100%' }}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Vision Section */}
+      <section className="md:px-8 md:pt-8 max-w-7xl mr-auto ml-auto pt-6 pr-5 pl-5" aria-labelledby="vision-title">
+        <div className="bg-blue-100 p-4 md:p-6 transition duration-500 ease-in rounded-none">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+            <div className="order-2 md:order-1 h-full flex items-start">
+              <img
+                src="https://images.unsplash.com/photo-1573164574572-cb89e39749b4?w=1200&h=800&fit=crop&auto=format"
+                alt="Future vision and innovative growth representing ASMI's vision"
+                loading="lazy"
+                className="object-cover rounded-none max-w-md w-full h-full"
+              />
+            </div>
+            <div className="order-1 md:order-2">
+              <h2 id="vision-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700 mb-3">Our Vision</h2>
+              <p className="text-slate-700/80">
+                We aim to shape a future where businesses run with clarity, agility, and purpose through the power of SAP. Our vision is to help organizations move beyond complexity by building intelligent systems that simplify work, strengthen decisions, and enable sustainable growth.
+              </p>
+              <p className="mt-4 text-slate-700/80">
+                We see technology as a driver of real progress. By combining deep expertise with a partnership mindset, we work to create lasting value — empowering businesses to operate smarter, innovate faster, and stay ahead in a changing world.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Mission Section */}
+      <section className="md:px-8 md:pt-8 max-w-7xl mr-auto ml-auto pt-6 pr-5 pl-5" aria-labelledby="mission-title">
+        <div className="bg-slate-100 p-4 md:p-6 transition duration-500 ease-in rounded-none">
+          <div className="grid grid-cols-1 md:grid-cols-[3fr_1fr] gap-6 items-start">
+            <div className="order-2 md:order-1 max-w-2xl">
+              <h2 id="mission-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700 mb-3">Our Mission</h2>
+              <p className="text-slate-700/80">
+                Our mission is to deliver SAP solutions that turn challenges into opportunities and strategies into results. We help businesses optimize performance, streamline operations, and unlock the full potential of their systems through thoughtful, precise implementation.
+              </p>
+              <p className="mt-4 text-slate-700/80">
+                Every project reflects our commitment to excellence, collaboration, and measurable outcomes. We focus on building reliable solutions that adapt to change, create impact from day one, and support long-term success for every client we work with.
+              </p>
+            </div>
+            <div className="order-1 md:order-2 h-full flex items-start justify-end md:ml-auto">
+              <img
+                src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&q=80&auto=format&fit=crop"
+                alt="Our Mission - SAP Solutions"
+                loading="lazy"
+                className="object-cover rounded-none max-w-md w-full h-full"
               />
             </div>
           </div>
@@ -90,7 +155,7 @@ const About = () => {
                 Meet Our Team
               </h2>
               <p className="mt-4 text-white/80">
-                Our diverse team brings together deep SAP expertise, industry knowledge, and a passion for delivering exceptional results.
+                Our team blends real experience with a shared drive to make SAP work better for you.
               </p>
             </div>
             
@@ -114,7 +179,7 @@ const About = () => {
                   linkedin: 'https://www.linkedin.com/in/asha-mathada-42a522370/'
                 }
               ].map((member, index) => (
-                <div key={index} className="bg-white p-6 text-center rounded-none">
+                <div key={index} className="bg-slate-100 p-6 text-center rounded-none">
                   <div className="relative inline-block mb-4">
                     <img
                       src={member.image}
@@ -150,101 +215,12 @@ const About = () => {
         </div>
       </section>
 
-      {/* Our Mission Section */}
-      <section className="md:px-8 md:pt-8 max-w-7xl mr-auto ml-auto pt-6 pr-5 pl-5" aria-labelledby="mission-title">
-        <div className="bg-blue-100 p-4 md:p-6 transition duration-500 ease-in rounded-none">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-            <div className="order-2 md:order-1">
-              <h2 id="mission-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">Our Mission</h2>
-              <p className="mt-3 text-sm text-slate-700/90">
-                At ASMI, we create SAP solutions that make a real difference. We simplify complex processes, unlock new opportunities, and deliver results you can measure. Our goal is to help businesses work smarter, innovate faster, and achieve more with every solution we implement.
-              </p>
-            </div>
-            <div className="order-1 md:order-2">
-              <img
-                src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&q=80&auto=format&fit=crop"
-                alt="Our Mission - SAP Solutions"
-                loading="lazy"
-                className="aspect-square w-full object-cover rounded-none max-h-64"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Our Vision Section */}
-      <section className="md:px-8 md:pt-8 max-w-7xl mr-auto ml-auto pt-6 pr-5 pl-5" aria-labelledby="vision-title">
-        <div className="bg-slate-100 p-4 md:p-6 transition duration-500 ease-in rounded-none">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-            <div className="order-2 md:order-1">
-              <img
-                src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80&auto=format&fit=crop"
-                alt="Our Vision - Future of SAP"
-                loading="lazy"
-                className="aspect-square w-full object-cover rounded-none max-h-64"
-              />
-            </div>
-            <div className="order-1 md:order-2">
-              <h2 id="vision-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">Our Vision</h2>
-              <p className="mt-3 text-sm text-slate-700/90">
-                We envision a future where every business can harness the full power of SAP to drive innovation, efficiency, and sustainable growth. Our goal is to be the leading SAP consulting partner globally, recognized for transforming how organizations operate through technology excellence.
-              </p>
-              <p className="mt-4 text-sm text-slate-700/90">
-                We strive to be the catalyst that empowers businesses to unlock their full potential through intelligent SAP solutions, creating lasting competitive advantages and measurable value for our clients worldwide.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Our Core Values Section */}
-      <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="core-values">
-        <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
-          <h2 id="core-values" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">
-            Our Core Values
-          </h2>
-          <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                title: 'Integrity',
-                description: 'We uphold transparency and ethical practices in all our projects, building lasting relationships based on trust.',
-                image: 'https://i.pinimg.com/736x/0e/81/16/0e81165b627a9b29bc38498d8313527a.jpg',
-                alt: 'Handshake representing integrity and trust'
-              },
-              {
-                title: 'Innovation',
-                description: 'We challenge the status quo with curiosity and new ideas, continuously improving our solutions to meet evolving business needs.',
-                image: 'https://i.pinimg.com/1200x/4d/1a/60/4d1a60bb13a96a176b8b703d2ebeac1d.jpg',
-                alt: 'Innovation and technology advancement'
-              },
-              {
-                title: 'Collaboration',
-                description: 'We work closely with our clients and partners, fostering a culture of teamwork to achieve shared success.',
-                image: 'https://i.pinimg.com/1200x/db/6d/fc/db6dfc1494fdd8cbae6d8a09feea549f.jpg',
-                alt: 'Team collaboration and partnership'
-              }
-            ].map((value, index) => (
-              <div key={index} className="bg-white p-6 text-center">
-                <img
-                  src={value.image}
-                  alt={value.alt}
-                  loading="lazy"
-                  className="w-full h-48 object-cover rounded-none mb-4"
-                />
-                <h3 className="text-lg font-medium text-slate-700 mb-3">{value.title}</h3>
-                <p className="text-slate-700/80 text-sm leading-relaxed">{value.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* What Clients Say Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="testimonials-title">
         <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <h2 id="testimonials-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">What Clients Say</h2>
           <div className="mt-5">
-            <Carousel speed="slow" className="py-4">
+            <Carousel speed="very-slow" className="py-4">
               {[
                 { quote: '"Their SAP expertise transformed our processes, efficient, reliable, and seamless implementation!" – Cargill Corporation', logoFile: 'cargill logo.jpg' },
                 { quote: '"A trusted partner for SAP solutions. They understood our business needs perfectly." – Hitachi Energy', logoFile: 'hitachi logo.png' },
@@ -277,10 +253,10 @@ const About = () => {
           <div className="flex justify-center">
             <div className="text-center max-w-2xl">
               <h2 id="cta-title" className="text-3xl md:text-4xl font-bold tracking-tight">
-                Drive better SAP results with ASMI.
+                Drive better SAP results with ASMI
               </h2>
               <p className="mt-4 text-slate-600 max-w-2xl">
-                Request your consultation today.
+                Start your SAP journey with the right partner.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
@@ -289,13 +265,6 @@ const About = () => {
                 >
                   Get In Touch
                   <ArrowUpRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  to="/services"
-                  className="inline-flex items-center gap-2 border border-primary text-primary hover:bg-primary hover:text-white transition px-6 py-3 rounded-none font-bold"
-                >
-                  Our Services
-                  <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
             </div>

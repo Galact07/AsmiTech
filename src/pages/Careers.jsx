@@ -224,43 +224,56 @@ const Careers = () => {
     <>
       <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="md:px-8 md:pt-6 max-w-7xl mr-auto ml-auto pt-5 pr-5 pl-5" aria-labelledby="careers-title">
+      <section className="md:px-8 md:pt-20 max-w-7xl mr-auto ml-auto pt-14 pr-5 pl-5" aria-labelledby="careers-title">
         <div className="bg-white/70 backdrop-blur-[10px] shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] transition duration-500 ease-in">
           <div className="pt-0 pr-6 pb-6 pl-6 md:pr-12 md:pb-12 md:pl-12">
-            <div className="flex items-start gap-6 md:gap-10 flex-col md:flex-row">
+            <div className="flex items-stretch gap-6 md:gap-10 flex-col md:flex-row min-h-[240px] md:min-h-[280px]">
               <div className="flex-1">
                 <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em] mt-0 pt-2">
                   Careers
                 </p>
                 <h1 id="careers-title" className="sm:text-4xl md:text-5xl text-3xl font-bold text-slate-700 tracking-tight mt-2">
-                  Join Us at ASMI
+                  Join Our Team
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
-                  We understand the unique challenges and opportunities in each industry. Our solutions are designed to address specific sector requirements while delivering measurable business value.
+                  Join a team that values your skills and ambitions. At ASMI, we grow together and create real impact.
                 </p>
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
-                  <Link
-                    to="/jobs"
-                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3 focus:outline-none"
+                  <a
+                    href="#positions"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const element = document.getElementById('positions');
+                      if (element) {
+                        const headerOffset = 80;
+                        const elementPosition = element.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        window.scrollTo({
+                          top: offsetPosition,
+                          behavior: 'smooth'
+                        });
+                      }
+                    }}
+                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3 focus:outline-none cursor-pointer"
                   >
-                    View Open Positions
+                    Open Positions
                     <span className="inline-flex h-6 w-6 items-center justify-center rounded-none bg-black/5">
                       <ArrowUpRight className="h-4 w-4" />
                     </span>
-                  </Link>
+                  </a>
                   <Link
-                    to="/about"
+                    to="/jobs"
                     className="inline-flex items-center gap-2 rounded-none px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition"
                   >
-                    Learn About Us
+                    View Jobs
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </div>
               </div>
               {/* Team Illustration */}
-              <div className="w-full md:w-[440px] shrink-0 space-y-3">
+              <div className="w-full md:w-[280px] shrink-0 space-y-3">
                 <img
-                  src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=900&auto=format&fit=crop"
+                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&auto=format&fit=crop"
                   alt="Our team collaboration"
                   loading="lazy"
                   className="w-full rounded-none pt-2 pr-2 pb-2 pl-2"
@@ -268,6 +281,7 @@ const Careers = () => {
               </div>
             </div>
           </div>
+          <div className="h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
         </div>
       </section>
 
@@ -465,10 +479,10 @@ const Careers = () => {
           <div className="flex justify-center">
             <div className="text-center max-w-2xl">
               <h2 id="cta" className="text-3xl md:text-4xl font-bold tracking-tight">
-              Ready to join our team?
+              Ready to Join the ASMI Team?
               </h2>
               <p className="mt-4 text-slate-600 max-w-2xl">
-              Don't see the perfect role? We're always looking for talented SAP professionals. Send us your resume and let's start a conversation.
+              Join a team where you can grow, learn, and build your career.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
@@ -477,13 +491,6 @@ const Careers = () => {
                 >
                   Browse All Jobs
                   <ArrowUpRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center gap-2 border border-primary text-primary hover:bg-primary hover:text-white transition px-6 py-3 rounded-none font-bold"
-                >
-                  Send Your Resume
-                  <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
             </div>

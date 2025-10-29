@@ -95,41 +95,54 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="md:px-8 md:pt-6 max-w-7xl mr-auto ml-auto pt-5 pr-5 pl-5" aria-labelledby="home-title">
+      <section className="md:px-8 md:pt-20 max-w-7xl mr-auto ml-auto pt-14 pr-5 pl-5" aria-labelledby="home-title">
         <div className="bg-white/70 backdrop-blur-[10px] shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] transition duration-500 ease-in">
           <div className="pt-0 pr-6 pb-6 pl-6 md:pr-12 md:pb-12 md:pl-12">
-            <div className="flex items-start gap-6 md:gap-10 flex-col md:flex-row">
+            <div className="flex items-stretch gap-6 md:gap-10 flex-col md:flex-row min-h-[240px] md:min-h-[280px]">
               <div className="flex-1">
                 <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em] mt-0 pt-2">
-                Premier SAP Consulting — Utrecht, Netherlands
+                Premier SAP Consulting
                 </p>
                 <h1 id="home-title" className="sm:text-4xl md:text-5xl text-3xl font-bold text-slate-700 tracking-tight mt-2">
-                ASMI: Your SAP Success Partner
+                ASMI: Your SAP Experts
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
-                At ASMI, we deliver end-to-end SAP consulting to enhance efficiency, innovation, and growth. Our experts manage implementation, integration, and optimization, aligning your SAP systems with business goals for reliable, future-proof results.
+                At ASMI, we help businesses get the most out of SAP. From setup to optimization, our experts make your systems smarter, faster, and aligned with your goals, so you can run efficiently today and scale confidently tomorrow.
                 </p>
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <Link
                     to="/contact"
                     className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3 focus:outline-none"
                   >
-                    Request Consultation
+                    Get Started
                     <span className="inline-flex h-6 w-6 items-center justify-center rounded-none bg-black/5">
                       <ArrowUpRight className="h-4 w-4" />
                     </span>
                   </Link>
-                  <Link
-                    to="/services"
-                    className="inline-flex items-center gap-2 rounded-none px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition"
+                  <a
+                    href="#who-we-are-title"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const element = document.getElementById('who-we-are-title');
+                      if (element) {
+                        const headerOffset = 80;
+                        const elementPosition = element.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        window.scrollTo({
+                          top: offsetPosition,
+                          behavior: 'smooth'
+                        });
+                      }
+                    }}
+                    className="inline-flex items-center gap-2 rounded-none px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition cursor-pointer"
                   >
-                    Explore Services
+                    Learn More
                     <ArrowRight className="h-4 w-4" />
-                  </Link>
+                  </a>
                 </div>
               </div>
               {/* Vector Illustration + image placeholder */}
-              <div className="w-full md:w-[400px] shrink-0 space-y-3">
+              <div className="w-full md:w-[280px] shrink-0 space-y-3">
                 <img
                   src="/logos/sap logo.jpg"
                   alt="SAP Technology Logo"
@@ -146,24 +159,24 @@ const Home = () => {
       {/* Who We Are Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="who-we-are-title">
         <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-12 items-stretch">
             <div className="order-1">
               <h2 id="who-we-are-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">Who We Are</h2>
-              <div className="md:block order-2 mt-4 md:mt-0">
+              <div className="md:block order-2 mt-4 md:mt-0 md:hidden">
                 <img
-                  src="https://i.pinimg.com/1200x/4e/36/82/4e368242894207ed5bcda793b443f050.jpg"
+                  src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=870"
                   alt="Who We Are - ASMI Team"
                   loading="lazy"
-                  className="aspect-square w-full object-cover rounded-none md:hidden"
+                  className="aspect-video w-full max-w-xs mx-auto object-cover rounded-none"
                 />
               </div>
               <p className="mt-3 md:mt-3 text-slate-700/90">
-                At ASMI, we are a premier SAP consulting firm dedicated to transforming how businesses operate. Our experienced team of SAP experts brings deep technical knowledge and industry insights to every project. We believe in creating solutions that not only meet today's needs but also position your business for future growth.
+                At ASMI, we help businesses work smarter with SAP. Our team combines hands-on experience and real-world understanding to build solutions that make operations simpler, faster, and ready for what's next.
               </p>
               <p className="mt-4 text-slate-700/90">
-                With offices in the Netherlands and India, we serve clients across the globe, delivering tailored SAP solutions that drive efficiency, innovation, and measurable results. Our commitment to excellence and client success sets us apart in the SAP consulting landscape.
+                With roots in the Netherlands and India, we support clients worldwide, delivering SAP systems that truly fit their goals. Every project we take on is driven by one thing — helping our clients grow with clarity and confidence.
               </p>
-              <div className="mt-6 md:hidden">
+              <div className="mt-6">
                 <Link
                   to="/about"
                   className="inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3"
@@ -175,25 +188,16 @@ const Home = () => {
                 </Link>
               </div>
             </div>
-            <div className="order-2 hidden md:block">
-              <img
-                src="https://i.pinimg.com/1200x/4e/36/82/4e368242894207ed5bcda793b443f050.jpg"
-                alt="Who We Are - ASMI Team"
-                loading="lazy"
-                className="aspect-square w-full object-cover rounded-none"
-              />
+            <div className="order-2 flex items-end justify-center md:justify-start h-full">
+              <div className="hidden md:block w-full h-full">
+                <img
+                  src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=870"
+                  alt="Who We Are - ASMI Team"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-none"
+                />
+              </div>
             </div>
-          </div>
-          <div className="hidden md:flex mt-6">
-            <Link
-              to="/about"
-              className="inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3"
-            >
-              Learn More
-              <span className="inline-flex h-6 w-6 items-center justify-center rounded-none bg-black/5">
-                <ArrowUpRight className="h-4 w-4" />
-              </span>
-            </Link>
           </div>
         </div>
       </section>
@@ -207,7 +211,7 @@ const Home = () => {
             </h2>
           </div>
           <div className="mt-5">
-            <Carousel speed="slow" className="py-4">
+            <Carousel speed="very-slow" className="py-4">
               {[
                 { name: 'HITACHI', logoFile: 'hitachi logo.png' },
                 { name: 'CARGILL', logoFile: 'cargill logo.jpg' },
@@ -237,18 +241,18 @@ const Home = () => {
         <div className="bg-dark-blue p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-6">
             <div className="flex-1">
-              <h2 id="services-title" className="text-3xl md:text-4xl tracking-tight font-bold text-white">
+              <h2 id="services-title" className="text-3xl md:text-4xl tracking-tight font-bold text-white mb-2">
                 Our Services
               </h2>
               <p className="text-white/90 text-lg max-w-3xl">
-                Comprehensive SAP solutions tailored to your business needs. From cloud deployment to ongoing support, we deliver end-to-end services that drive efficiency and innovation.
+                We offer SAP solutions built around your business. From setup to support, we make your systems smoother, smarter, and ready to grow with you.
               </p>
               <div className="mt-4 md:hidden">
                 <Link
                   to="/services"
                   className="inline-flex items-center gap-2 hover:bg-slate-50 transition text-sm font-bold text-primary bg-white border-secondary border rounded-none pt-2 pr-4 pb-2 pl-4"
                 >
-                  Learn more
+                  Learn More
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
@@ -328,7 +332,7 @@ const Home = () => {
                     to={service.href}
                     className="mt-auto inline-flex items-center gap-2 text-primary hover:text-primary/80 transition text-sm font-bold hover:underline"
                   >
-                    Learn more
+                    Learn More
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </div>
@@ -448,7 +452,7 @@ const Home = () => {
         <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <h2 id="testimonials-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">What Clients Say</h2>
           <div className="mt-5">
-            <Carousel speed="slow" className="py-4">
+            <Carousel speed="very-slow" className="py-4">
               {[
                 { quote: '"Their SAP expertise transformed our processes, efficient, reliable, and seamless implementation!" – Cargill Corporation', logoFile: 'cargill logo.jpg' },
                 { quote: '"A trusted partner for SAP solutions. They understood our business needs perfectly." – Hitachi Energy', logoFile: 'hitachi logo.png' },
@@ -489,17 +493,17 @@ const Home = () => {
           <div className="flex justify-center">
             <div className="text-center max-w-2xl">
               <h2 id="final-cta-title" className="text-3xl md:text-4xl font-bold tracking-tight">
-            Transform your SAP operations with ASMI.
+            Make your SAP work better with ASMI
           </h2>
               <p className="mt-4 text-slate-600 max-w-2xl">
-            Streamline your systems, improve reporting, and get results that matter.
+            Get systems that run right and grow with your business.
           </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/contact"
                   className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition px-6 py-3 rounded-none font-bold"
             >
-              Request a consultation
+              Request A Consultation
               <ArrowUpRight className="h-4 w-4" />
             </Link>
               </div>

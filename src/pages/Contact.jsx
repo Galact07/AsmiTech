@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowUpRight, ArrowRight, MapPin, Phone, Mail, Send, CheckCircle, AlertCircle, Clock, Globe, MessageCircle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -71,43 +72,69 @@ const Contact = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="md:px-8 md:pt-6 max-w-7xl mr-auto ml-auto pt-5 pr-5 pl-5" aria-labelledby="contact-title">
+      <section className="md:px-8 md:pt-20 max-w-7xl mr-auto ml-auto pt-14 pr-5 pl-5" aria-labelledby="contact-title">
         <div className="bg-white/70 backdrop-blur-[10px] shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] transition duration-500 ease-in">
           <div className="pt-0 pr-6 pb-6 pl-6 md:pr-12 md:pb-12 md:pl-12">
-            <div className="flex items-start gap-6 md:gap-10 flex-col md:flex-row">
+            <div className="flex items-stretch gap-6 md:gap-10 flex-col md:flex-row min-h-[240px] md:min-h-[280px]">
               <div className="flex-1">
                 <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em] mt-0 pt-2">
                   Contact Us
                 </p>
                 <h1 id="contact-title" className="sm:text-4xl md:text-5xl text-3xl font-bold text-slate-700 tracking-tight mt-2">
-                  Get in Touch
+                  Get in Touch With Us
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
-                  Ready to transform your business with SAP? Get in touch with our experts to discuss your project and discover how we can help you achieve your goals.
+                  Discuss your SAP needs with our experts and see how we can help. Our team is ready to guide you toward the right solution.
                 </p>
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <a
-                    href="tel:+31622098973"
-                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3 focus:outline-none"
+                    href="#contact-form"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const element = document.getElementById('contact-form');
+                      if (element) {
+                        const headerOffset = 80;
+                        const elementPosition = element.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        window.scrollTo({
+                          top: offsetPosition,
+                          behavior: 'smooth'
+                        });
+                      }
+                    }}
+                    className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3 focus:outline-none cursor-pointer"
                   >
-                    Call Us Now
+                    Send Message
                     <span className="inline-flex h-6 w-6 items-center justify-center rounded-none bg-black/5">
                       <ArrowUpRight className="h-4 w-4" />
                     </span>
                   </a>
                   <a
-                    href="mailto:info@asmitechconsulting.com"
-                    className="inline-flex items-center gap-2 rounded-none px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition"
+                    href="#office-locations"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const element = document.getElementById('office-locations');
+                      if (element) {
+                        const headerOffset = 80;
+                        const elementPosition = element.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        window.scrollTo({
+                          top: offsetPosition,
+                          behavior: 'smooth'
+                        });
+                      }
+                    }}
+                    className="inline-flex items-center gap-2 rounded-none px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition cursor-pointer"
                   >
-                    Send Email
+                    Visit Us
                     <ArrowRight className="h-4 w-4" />
                   </a>
                 </div>
               </div>
               {/* Contact Illustration */}
-              <div className="w-full md:w-[440px] shrink-0 space-y-3">
+              <div className="w-full md:w-[280px] shrink-0 space-y-3">
                 <img
-                  src="https://i.pinimg.com/736x/36/32/3b/36323bfae96be417b2a51a5195aea37f.jpg"
+                  src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&h=600&auto=format&fit=crop&q=80"
                   alt="Contact us for SAP consulting"
                   loading="lazy"
                   className="w-full rounded-none pt-2 pr-2 pb-2 pl-2"
@@ -115,6 +142,7 @@ const Contact = () => {
               </div>
             </div>
           </div>
+          <div className="h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
         </div>
       </section>
 
@@ -122,14 +150,14 @@ const Contact = () => {
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="contact-form">
         <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <h2 id="contact-form" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">
-            Send us a message
+            Send Us a Message
           </h2>
           <p className="mt-2 text-slate-700/80">
             Fill out the form below and we'll get back to you within 24 hours.
           </p>
           
-          <form onSubmit={handleSubmit} className="mt-6 space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-2">
                   Name *
@@ -141,7 +169,7 @@ const Contact = () => {
                   value={formData.name}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-4 py-3 border border-slate-200 rounded-none focus:ring-2 focus:ring-primary focus:border-primary transition"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-none focus:ring-2 focus:ring-primary focus:border-primary transition"
                   placeholder="Your full name"
                 />
               </div>
@@ -156,13 +184,13 @@ const Contact = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-4 py-3 border border-slate-200 rounded-none focus:ring-2 focus:ring-primary focus:border-primary transition"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-none focus:ring-2 focus:ring-primary focus:border-primary transition"
                   placeholder="your.email@company.com"
                 />
               </div>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="location" className="block text-sm font-medium text-slate-700 mb-2">
                   Location *
@@ -174,7 +202,7 @@ const Contact = () => {
                   value={formData.location}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-4 py-3 border border-slate-200 rounded-none focus:ring-2 focus:ring-primary focus:border-primary transition"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-none focus:ring-2 focus:ring-primary focus:border-primary transition"
                   placeholder="Your city, country"
                 />
               </div>
@@ -188,13 +216,13 @@ const Contact = () => {
                   name="company"
                   value={formData.company}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-slate-200 rounded-none focus:ring-2 focus:ring-primary focus:border-primary transition"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-none focus:ring-2 focus:ring-primary focus:border-primary transition"
                   placeholder="Your company name"
                 />
               </div>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-2">
                   Phone
@@ -205,7 +233,7 @@ const Contact = () => {
                   name="phone"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-slate-200 rounded-none focus:ring-2 focus:ring-primary focus:border-primary transition"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-none focus:ring-2 focus:ring-primary focus:border-primary transition"
                   placeholder="+31 (0)30 123 4567"
                 />
               </div>
@@ -224,10 +252,10 @@ const Contact = () => {
                 value={formData.message}
                 onChange={handleInputChange}
                 required
-                rows={6}
-                className="w-full px-4 py-3 border border-slate-200 rounded-none focus:ring-2 focus:ring-primary focus:border-primary transition"
-                placeholder="Tell us about your project and how we can help..."
-              />
+                  rows={5}
+                  className="w-full px-3 py-2 border border-slate-200 rounded-none focus:ring-2 focus:ring-primary focus:border-primary transition"
+                  placeholder="Tell us about your project and how we can help..."
+                />
             </div>
             
             {submitStatus === 'success' && (
@@ -365,10 +393,10 @@ const Contact = () => {
           <div className="flex justify-center">
             <div className="text-center max-w-2xl">
               <h2 id="cta" className="text-3xl md:text-4xl font-bold tracking-tight">
-                Ready to transform your business with SAP?
+                Talk to Our SAP Experts Today
               </h2>
               <p className="mt-4 text-slate-600 max-w-2xl">
-                Let's discuss how our SAP expertise can help you achieve your business goals and drive sustainable growth.
+                Reach out to discuss your needs and see how we can help.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
                 <a
@@ -377,13 +405,6 @@ const Contact = () => {
                 >
                   Call Us Now
                   <ArrowUpRight className="h-4 w-4" />
-                </a>
-                <a
-                  href="mailto:info@asmitechconsulting.com"
-                  className="inline-flex items-center gap-2 border border-primary text-primary hover:bg-primary hover:text-white transition px-6 py-3 rounded-none font-bold"
-                >
-                  Send an Email
-                  <ArrowRight className="h-4 w-4" />
                 </a>
               </div>
             </div>

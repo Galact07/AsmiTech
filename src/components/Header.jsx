@@ -78,7 +78,7 @@ const Header = () => {
                   </Link>
                   {showServicesDropdown && (
                     <div 
-                      className="absolute top-full left-0 mt-2 w-[580px] max-w-[calc(100vw-2rem)] bg-slate-100 backdrop-blur-[10px] shadow-2xl rounded-none border border-slate-200 overflow-hidden"
+                      className="absolute top-full left-0 mt-2 w-[600px] max-w-[calc(100vw-2rem)] bg-slate-100 backdrop-blur-[10px] shadow-2xl rounded-none border border-slate-200 overflow-hidden"
                       onMouseEnter={handleDropdownEnter}
                       onMouseLeave={handleDropdownLeave}
                       style={{ marginTop: '0.5rem' }}
@@ -93,14 +93,14 @@ const Header = () => {
                               className="group relative px-4 py-3.5 rounded-none bg-slate-50 hover:bg-primary hover:shadow-md transition-all duration-200 border border-slate-200 hover:border-primary flex items-start gap-3"
                               onClick={() => setShowServicesDropdown(false)}
                             >
-                              <div className="flex-shrink-0 w-10 h-10 rounded-none overflow-hidden">
+                              <div className="flex-shrink-0 w-12 h-12 rounded-none overflow-hidden">
                                 <img 
                                   src={service.image} 
                                   alt={service.name}
                                   className="w-full h-full object-cover"
                                 />
                               </div>
-                              <span className="text-xs font-medium text-slate-700 group-hover:text-white leading-snug">
+                              <span className="text-sm font-medium text-slate-700 group-hover:text-white leading-snug">
                                 {service.name}
                               </span>
                             </Link>
@@ -112,11 +112,11 @@ const Header = () => {
                       <div className="border-t border-slate-200 bg-slate-50 px-6 py-3">
                         <Link 
                           to="/services" 
-                          className="text-xs text-primary font-medium hover:underline inline-flex items-center gap-1"
+                          className="text-sm text-primary font-medium hover:underline inline-flex items-center gap-1"
                           onClick={() => setShowServicesDropdown(false)}
                         >
                           View all services
-                          <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                           </svg>
                         </Link>

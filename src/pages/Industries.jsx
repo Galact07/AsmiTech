@@ -6,43 +6,56 @@ const Industries = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="md:px-8 md:pt-6 max-w-7xl mr-auto ml-auto pt-5 pr-5 pl-5" aria-labelledby="industries-title">
+      <section className="md:px-8 md:pt-20 max-w-7xl mr-auto ml-auto pt-14 pr-5 pl-5" aria-labelledby="industries-title">
         <div className="bg-white/70 backdrop-blur-[10px] shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] transition duration-500 ease-in">
           <div className="pt-0 pr-6 pb-6 pl-6 md:pr-12 md:pb-12 md:pl-12">
-            <div className="flex items-start gap-6 md:gap-10 flex-col md:flex-row">
+            <div className="flex items-stretch gap-6 md:gap-10 flex-col md:flex-row min-h-[240px] md:min-h-[280px]">
               <div className="flex-1">
                 <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em] mt-0 pt-2">
-                  Industry Solutions
+                  Industries
                 </p>
                 <h1 id="industries-title" className="sm:text-4xl md:text-5xl text-3xl font-bold text-slate-700 tracking-tight mt-2">
-                  SAP Solutions That Fit Your Industry Needs
+                  Industries We Serve
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
-                  We understand the unique challenges and opportunities in each industry. Our solutions are designed to address specific sector requirements while delivering measurable business value.
+                  We understand that every industry works differently. Our SAP services are shaped around each sector's needs to solve real challenges and deliver solid results.
                 </p>
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <Link
                     to="/contact"
                     className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3 focus:outline-none"
                   >
-                    Discuss Your Industry Needs
+                    Contact Us
                     <span className="inline-flex h-6 w-6 items-center justify-center rounded-none bg-black/5">
                       <ArrowUpRight className="h-4 w-4" />
                     </span>
                   </Link>
-                  <Link
-                    to="/services"
-                    className="inline-flex items-center gap-2 rounded-none px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition"
+                  <a
+                    href="#industries"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const element = document.getElementById('industries');
+                      if (element) {
+                        const headerOffset = 80;
+                        const elementPosition = element.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        window.scrollTo({
+                          top: offsetPosition,
+                          behavior: 'smooth'
+                        });
+                      }
+                    }}
+                    className="inline-flex items-center gap-2 rounded-none px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition cursor-pointer"
                   >
-                    View All Services
+                    View Industries
                     <ArrowRight className="h-4 w-4" />
-                  </Link>
+                  </a>
                 </div>
               </div>
               {/* Industry Illustration */}
-              <div className="w-full md:w-[440px] shrink-0 space-y-3">
+              <div className="w-full md:w-[280px] shrink-0 space-y-3">
                 <img
-                  src="https://images.pexels.com/photos/7433827/pexels-photo-7433827.jpeg?_gl=1*1xxunhd*_ga*MTU5Njc0NzgwOS4xNzU5ODE5NDIw*_ga_8JE65Q40S6*czE3NjEwNTc3MDYkbzMkZzEkdDE3NjEwNTkwMzIkajMxJGwwJGgw"
+                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&auto=format&fit=crop"
                   alt="Industry solutions overview"
                   loading="lazy"
                   className="w-full rounded-none pt-2 pr-2 pb-2 pl-2"
@@ -50,6 +63,7 @@ const Industries = () => {
               </div>
             </div>
           </div>
+          <div className="h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
         </div>
       </section>
 
@@ -200,25 +214,18 @@ const Industries = () => {
           <div className="flex justify-center">
             <div className="text-center max-w-2xl">
               <h2 id="cta" className="text-3xl md:text-4xl font-bold tracking-tight">
-                Ready to transform your industry with SAP?
+                Simplify your SAP journey with ASMI
               </h2>
               <p className="mt-4 text-slate-600 max-w-2xl">
-                Let's discuss how our industry expertise can help you achieve your business goals and stay ahead of the competition.
+                Reliable support for lasting business results.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   to="/contact"
                   className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition px-6 py-3 rounded-none font-bold"
                 >
-                  Start Your Industry Transformation
+                  Contact Us
                   <ArrowUpRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  to="/services"
-                  className="inline-flex items-center gap-2 border border-primary text-primary hover:bg-primary hover:text-white transition px-6 py-3 rounded-none font-bold"
-                >
-                  Explore Our Services
-                  <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
             </div>

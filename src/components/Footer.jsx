@@ -37,29 +37,27 @@ const Footer = () => {
           
           {/* Quick Links */}
           <div className="md:col-span-3">
-            <h3 className="text-base font-bold text-white mb-3">Quick links</h3>
-            <ul className="space-y-2 text-sm text-white/80">
-              <li><Link to="/" className="block hover:text-blue-400 transition">Home</Link></li>
-              <li><Link to="/about" className="block hover:text-blue-400 transition">About Us</Link></li>
-              <li><Link to="/services" className="block hover:text-blue-400 transition">Services</Link></li>
-              <li><Link to="/industries" className="block hover:text-blue-400 transition">Industries</Link></li>
-              <li>
-                <Link to="/resources" className="sr-only focus:not-sr-only block hover:text-blue-400 transition">Resources</Link>
-              </li>
-              <li><Link to="/careers" className="block hover:text-blue-400 transition">Careers</Link></li>
-              <li><Link to="/contact" className="block hover:text-blue-400 transition">Contact</Link></li>
-            </ul>
+            <h3 className="text-sm font-bold text-white mb-3">Quick links</h3>
+            <div className="text-sm text-white/80 leading-relaxed">
+              <Link to="/" className="block hover:text-blue-400 transition">Home</Link>
+              <Link to="/about" className="block hover:text-blue-400 transition">About Us</Link>
+              <Link to="/services" className="block hover:text-blue-400 transition">Services</Link>
+              <Link to="/industries" className="block hover:text-blue-400 transition">Industries</Link>
+              <Link to="/resources" className="sr-only focus:not-sr-only block hover:text-blue-400 transition">Resources</Link>
+              <Link to="/careers" className="block hover:text-blue-400 transition">Careers</Link>
+              <Link to="/contact" className="block hover:text-blue-400 transition">Contact</Link>
+            </div>
           </div>
           
           {/* Social Links */}
           <div className="md:col-span-3">
-            <h3 className="text-base font-bold text-white mb-3">Connect with Us</h3>
-            <div className="space-y-3">
+            <h3 className="text-sm font-bold text-white mb-3">Connect with Us</h3>
+            <div className="text-sm text-white/80 leading-relaxed">
               <a
                 href="https://www.linkedin.com/company/asmi-technology-consulting-bv/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-sm text-white/80 hover:text-blue-300 transition"
+                className="flex items-center gap-3 hover:text-blue-300 transition block"
                 aria-label="Visit our LinkedIn profile (opens in a new tab)"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 flex-shrink-0">
@@ -71,7 +69,7 @@ const Footer = () => {
               </a>
               <a
                 href="mailto:info@asmitechconsulting.com"
-                className="flex items-start gap-3 text-sm text-white/80 hover:text-blue-300 transition"
+                className="flex items-start gap-3 hover:text-blue-300 transition block"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 flex-shrink-0 mt-0.5">
                   <rect width="20" height="16" x="2" y="4" rx="2"></rect>
