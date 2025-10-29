@@ -40,7 +40,7 @@ const About = () => {
                 </div>
               </div>
               {/* Team Image */}
-              <div className="w-full md:w-[440px] shrink-0 space-y-3">
+              <div className="w-full md:w-[350px] shrink-0 space-y-3">
                 <img
                   src="https://i.pinimg.com/1200x/b1/4c/c1/b14cc161cce4383a47cfaebca0af04cb.jpg"
                   alt="Asmi team collaboration"
