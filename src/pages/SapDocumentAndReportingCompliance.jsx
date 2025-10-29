@@ -4,7 +4,7 @@ import { ArrowUpRight, FileText, CheckCircle } from 'lucide-react';
 const SapDocumentAndReportingCompliance = () => {
   return (
     <div className="min-h-screen">
-      <section className="md:px-8 md:pt-5 max-w-7xl mr-auto ml-auto pt-4 pr-5 pl-5" aria-labelledby="service-title">
+      <section className="md:px-8 md:pt-6 max-w-7xl mr-auto ml-auto pt-5 pr-5 pl-5" aria-labelledby="service-title">
         <div className="bg-white/70 backdrop-blur-[10px] shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] transition duration-500 ease-in">
           <div className="pt-0 pr-6 pb-6 pl-6 md:pr-12 md:pb-12 md:pl-12">
             <div className="flex items-start gap-6 md:gap-10 flex-col md:flex-row">
