@@ -143,12 +143,12 @@ const Header = () => {
           {/* CTA */}
           <a
             href="tel:+31622098973"
-            className="hidden items-center gap-3 hover:bg-slate-50 transition-all focus:outline-none sm:inline-flex bg-white font-bold rounded-none ml-auto px-5 py-3"
+            className="hidden items-center gap-3 transition-all focus:outline-none sm:inline-flex bg-white hover:bg-primary active:bg-primary font-bold rounded-none ml-auto px-5 py-3 group"
           >
-            <Phone className="h-7 w-7 text-primary" />
+            <Phone className="h-7 w-7 text-primary group-hover:text-white group-active:text-white transition-colors" />
             <div className="flex flex-col items-end">
-              <span className="text-base font-bold text-slate-900">Get in Touch</span>
-              <span className="text-base font-bold text-primary">+31-622098973</span>
+              <span className="text-base font-bold text-slate-900 group-hover:text-white group-active:text-white transition-colors">Get in Touch</span>
+              <span className="text-base font-bold text-primary group-hover:text-white group-active:text-white transition-colors">+31-622098973</span>
             </div>
           </a>
 

@@ -6,7 +6,7 @@ const About = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="md:px-8 md:pt-16 max-w-7xl mr-auto ml-auto pt-10 pr-5 pl-5" aria-labelledby="about-title">
+      <section className="md:px-8 md:pt-10 max-w-7xl mr-auto ml-auto pt-6 pr-5 pl-5" aria-labelledby="about-title">
         <div className="bg-white/70 backdrop-blur-[10px] shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] transition duration-500 ease-in">
           <div className="sm:p-8 md:p-12 pt-6 pr-6 pb-6 pl-6">
             <div className="flex items-start md:items-center gap-6 md:gap-10 flex-col md:flex-row">
@@ -14,7 +14,7 @@ const About = () => {
                 <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em]">
                 About ASMI Technology Consulting B.V.
                 </p>
-                <h1 id="about-title" className="sm:text-5xl md:text-6xl text-4xl font-bold text-slate-700 tracking-tight mt-2 break-words">
+                <h1 id="about-title" className="sm:text-4xl md:text-5xl text-3xl font-bold text-slate-700 tracking-tight mt-2 break-words">
                 Your Trusted SAP Partner.
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg break-words">
@@ -101,7 +101,7 @@ const About = () => {
                   name: 'Basavaraj K M',
                   role: 'Managing Director',
                   bio: 'With 20+ years in SAP consulting, he specializes in S/4HANA Finance, Central Finance, and Group Reporting. He has led multiple global implementations and migrations with proven results. A certified S/4HANA expert, he focuses on delivering practical, high-impact digital transformation solutions.',
-                  image: '/logos/Basavaraj.jpg',
+                  image: '/logos/Basavaraj.png',
                   initials: 'BK',
                   linkedin: 'https://www.linkedin.com/in/basavaraj-km-192b9813/'
                 },
@@ -109,7 +109,7 @@ const About = () => {
                   name: 'Asha M',
                   role: 'Managing Partner',
                   bio: 'As Managing Partner, she leads the firm\'s strategy and operations. She focuses on delivering measurable results and building strong client relationships. Her leadership combines vision, accountability, and a commitment to excellence.',
-                  image: '/logos/Asha.jpg',
+                  image: '/logos/Asha.png',
                   initials: 'AM',
                   linkedin: 'https://www.linkedin.com/in/asha-mathada-42a522370/'
                 }
@@ -275,14 +275,14 @@ const About = () => {
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="cta-title">
         <div className="rounded-none bg-blue-100 text-slate-700 p-8 md:p-12">
           <div className="flex justify-center">
-            <div className="text-center md:text-left max-w-2xl">
+            <div className="text-center max-w-2xl">
               <h2 id="cta-title" className="text-3xl md:text-4xl font-bold tracking-tight">
                 Drive better SAP results with ASMI.
               </h2>
               <p className="mt-4 text-slate-600 max-w-2xl">
                 Request your consultation today.
               </p>
-              <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+              <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   to="/contact"
                   className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition px-6 py-3 rounded-none font-bold"

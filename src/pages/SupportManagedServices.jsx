@@ -4,7 +4,7 @@ import { ArrowUpRight, Headphones, CheckCircle } from 'lucide-react';
 const SupportManagedServices = () => {
   return (
     <div className="min-h-screen">
-      <section className="md:px-8 md:pt-16 max-w-7xl mr-auto ml-auto pt-10 pr-5 pl-5" aria-labelledby="service-title">
+      <section className="md:px-8 md:pt-10 max-w-7xl mr-auto ml-auto pt-6 pr-5 pl-5" aria-labelledby="service-title">
         <div className="bg-white/70 backdrop-blur-[10px] shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] transition duration-500 ease-in">
           <div className="sm:p-8 md:p-12 pt-6 pr-6 pb-6 pl-6">
             <div className="flex items-start md:items-center gap-6 md:gap-10 flex-col md:flex-row">
@@ -12,7 +12,7 @@ const SupportManagedServices = () => {
                 <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em]">
                   Our Services
                 </p>
-                <h1 id="service-title" className="sm:text-5xl md:text-6xl text-4xl font-bold text-slate-700 tracking-tight mt-2">
+                <h1 id="service-title" className="sm:text-4xl md:text-5xl text-3xl font-bold text-slate-700 tracking-tight mt-2">
                   Support & Managed Services
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
@@ -89,14 +89,14 @@ const SupportManagedServices = () => {
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="cta">
         <div className="rounded-none bg-blue-100 text-slate-700 p-8 md:p-12">
           <div className="flex justify-center">
-            <div className="text-center md:text-left max-w-2xl">
+            <div className="text-center max-w-2xl">
               <h2 id="cta" className="text-3xl md:text-4xl font-bold tracking-tight">
                 Need reliable SAP support?
               </h2>
               <p className="mt-4 text-slate-600 max-w-2xl">
                 Let's keep your SAP system running at peak performance.
               </p>
-              <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+              <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   to="/contact"
                   className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition px-6 py-3 rounded-none font-bold"

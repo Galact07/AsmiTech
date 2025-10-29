@@ -224,7 +224,7 @@ const Careers = () => {
     <>
       <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="md:px-8 md:pt-16 max-w-7xl mr-auto ml-auto pt-10 pr-5 pl-5" aria-labelledby="careers-title">
+      <section className="md:px-8 md:pt-10 max-w-7xl mr-auto ml-auto pt-6 pr-5 pl-5" aria-labelledby="careers-title">
         <div className="bg-white/70 backdrop-blur-[10px] shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] transition duration-500 ease-in">
           <div className="sm:p-8 md:p-12 pt-6 pr-6 pb-6 pl-6">
             <div className="flex items-start md:items-center gap-6 md:gap-10 flex-col md:flex-row">
@@ -232,7 +232,7 @@ const Careers = () => {
                 <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em]">
                   Careers
                 </p>
-                <h1 id="careers-title" className="sm:text-5xl md:text-6xl text-4xl font-bold text-slate-700 tracking-tight mt-2">
+                <h1 id="careers-title" className="sm:text-4xl md:text-5xl text-3xl font-bold text-slate-700 tracking-tight mt-2">
                   Join Us at ASMI
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
@@ -463,14 +463,14 @@ const Careers = () => {
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="cta">
         <div className="rounded-none bg-blue-100 text-slate-700 p-8 md:p-12">
           <div className="flex justify-center">
-            <div className="text-center md:text-left max-w-2xl">
+            <div className="text-center max-w-2xl">
               <h2 id="cta" className="text-3xl md:text-4xl font-bold tracking-tight">
               Ready to join our team?
               </h2>
               <p className="mt-4 text-slate-600 max-w-2xl">
               Don't see the perfect role? We're always looking for talented SAP professionals. Send us your resume and let's start a conversation.
               </p>
-              <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+              <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   to="/jobs"
                   className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition px-6 py-3 rounded-none font-bold"
