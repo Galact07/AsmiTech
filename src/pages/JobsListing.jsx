@@ -265,7 +265,7 @@ const JobsListing = () => {
                 Back to Careers
               </Link>
               <div>
-                <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em]">
+                <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em] mt-0 pt-2">
                   Career Opportunities
                 </p>
                 <h1 className="sm:text-5xl md:text-6xl text-4xl font-bold text-slate-700 tracking-tight mt-2">
