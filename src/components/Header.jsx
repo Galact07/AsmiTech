@@ -41,7 +41,7 @@ const Header = () => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-slate-100 transition-colors shadow-lg">
+    <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-blue-100 transition-colors shadow-lg">
       <div className="max-w-7xl mx-auto px-5 md:px-8 py-4">
         <div className="flex gap-4 items-center">
           {/* Brand */}
@@ -167,7 +167,7 @@ const Header = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden border-t border-primary/20 bg-slate-100">
+        <div className="md:hidden border-t border-primary/20 bg-blue-100">
           {/* Mobile Get in Touch */}
           <div className="max-w-7xl mx-auto px-5 md:px-8 py-3 border-b border-slate-200">
             <a
