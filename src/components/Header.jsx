@@ -42,11 +42,11 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-blue-100 transition-colors shadow-lg">
-      <div className="max-w-7xl mx-auto px-5 md:px-8 py-4">
+      <div className="max-w-7xl mx-auto px-5 md:px-8 py-2">
         <div className="flex gap-4 items-center">
           {/* Brand */}
           <Link to="/" className="inline-flex items-center gap-3" aria-label="Asmi Home">
-            <div className="flex items-center justify-center h-16 w-40 rounded-none bg-white border border-white/20 backdrop-blur-sm px-2">
+            <div className="flex items-center justify-center h-12 w-32 rounded-none bg-white border border-white/20 backdrop-blur-sm px-2">
               <img 
                 src="/logos/asmi logo.jpg"
                 alt="ASMI Technology Consulting logo"
@@ -67,7 +67,7 @@ const Header = () => {
                 >
                   <Link
                     to={item.href}
-                    className={`px-3 py-2 text-lg font-normal transition-all duration-200 border-b-[3px] flex items-center gap-1 ${
+                    className={`px-3 py-2 text-base font-normal transition-all duration-200 border-b-[3px] flex items-center gap-1 ${
                       isActive(item.href) || (location.pathname.startsWith('/services/'))
                         ? 'text-primary border-primary'
                         : 'text-slate-600 border-transparent hover:text-primary hover:border-primary'
@@ -128,7 +128,7 @@ const Header = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`px-3 py-2 text-lg font-normal transition-all duration-200 border-b-[3px] ${
+                  className={`px-3 py-2 text-base font-normal transition-all duration-200 border-b-[3px] ${
                     isActive(item.href)
                       ? 'text-primary border-primary'
                       : 'text-slate-600 border-transparent hover:text-primary hover:border-primary'
@@ -143,12 +143,12 @@ const Header = () => {
           {/* CTA */}
           <a
             href="tel:+31622098973"
-            className="hidden items-center gap-3 transition-all focus:outline-none sm:inline-flex bg-white hover:bg-primary active:bg-primary font-bold rounded-none ml-auto px-5 py-3 group"
+            className="hidden items-center gap-3 transition-all focus:outline-none sm:inline-flex bg-white hover:bg-primary active:bg-primary font-bold rounded-none ml-auto px-4 py-2 group"
           >
-            <Phone className="h-7 w-7 text-primary group-hover:text-white group-active:text-white transition-colors" />
+            <Phone className="h-5 w-5 text-primary group-hover:text-white group-active:text-white transition-colors" />
             <div className="flex flex-col items-end">
-              <span className="text-base font-bold text-slate-900 group-hover:text-white group-active:text-white transition-colors">Get in Touch</span>
-              <span className="text-base font-bold text-primary group-hover:text-white group-active:text-white transition-colors">+31-622098973</span>
+              <span className="text-sm font-bold text-slate-900 group-hover:text-white group-active:text-white transition-colors">Get in Touch</span>
+              <span className="text-sm font-bold text-primary group-hover:text-white group-active:text-white transition-colors">+31-622098973</span>
             </div>
           </a>
 
@@ -191,7 +191,7 @@ const Header = () => {
                       <Link
                         to={item.href}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className={`px-3 py-2 text-lg font-normal transition-all duration-200 flex-1 inline-block ${
+                        className={`px-3 py-2 text-base font-normal transition-all duration-200 flex-1 inline-block ${
                           isActive(item.href) || location.pathname.startsWith('/services/')
                             ? 'text-primary'
                             : 'text-slate-600'
@@ -201,7 +201,7 @@ const Header = () => {
                       </Link>
                       <button
                         onClick={() => setShowServicesDropdown(!showServicesDropdown)}
-                        className="px-3 py-2 text-lg font-normal transition-all duration-200"
+                        className="px-3 py-2 text-base font-normal transition-all duration-200"
                       >
                         <ChevronDown className={`h-4 w-4 transition-transform ${showServicesDropdown ? 'rotate-180' : ''}`} />
                       </button>
@@ -241,7 +241,7 @@ const Header = () => {
                   key={item.name}
                   to={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`px-3 py-2 text-lg font-normal inline-block ${
+                  className={`px-3 py-2 text-base font-normal inline-block ${
                     isActive(item.href)
                       ? 'text-primary'
                       : 'text-slate-600'
