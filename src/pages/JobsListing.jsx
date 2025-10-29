@@ -256,7 +256,7 @@ const JobsListing = () => {
         {/* Header Section */}
         <section className="md:px-8 md:pt-6 max-w-7xl mr-auto ml-auto pt-4 pr-5 pl-5">
           <div className="bg-white/70 backdrop-blur-[10px] shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] transition duration-500 ease-in">
-            <div className="sm:p-8 md:p-12 pt-6 pr-6 pb-6 pl-6">
+            <div className="sm:p-8 md:p-12 pt-0 pr-6 pb-6 pl-6">
               <Link 
                 to="/careers" 
                 className="inline-flex items-center gap-2 text-sm text-slate-600 hover:text-primary mb-6 transition"
