@@ -95,7 +95,7 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="md:px-8 md:pt-6 max-w-7xl mr-auto ml-auto pt-4 pr-5 pl-5" aria-labelledby="home-title">
+      <section className="md:px-8 md:pt-4 max-w-7xl mr-auto ml-auto pt-3 pr-5 pl-5" aria-labelledby="home-title">
         <div className="bg-white/70 backdrop-blur-[10px] shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] transition duration-500 ease-in">
           <div className="sm:p-8 md:p-12 pt-0 pr-6 pb-6 pl-6">
             <div className="flex items-start md:items-center gap-6 md:gap-10 flex-col md:flex-row">
