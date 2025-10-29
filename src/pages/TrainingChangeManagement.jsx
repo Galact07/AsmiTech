@@ -88,16 +88,8 @@ const TrainingChangeManagement = () => {
 
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="cta">
         <div className="rounded-none bg-blue-100 text-slate-700 p-8 md:p-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div>
-              <img
-                src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800&auto=format&fit=crop"
-                alt="Training & Change Management"
-                loading="lazy"
-                className="w-full h-64 object-cover rounded-none"
-              />
-            </div>
-            <div className="text-center md:text-left">
+          <div className="flex justify-center">
+            <div className="text-center md:text-left max-w-2xl">
               <h2 id="cta" className="text-3xl md:text-4xl font-bold tracking-tight">
                 Ready to train your team?
               </h2>
