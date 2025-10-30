@@ -166,29 +166,36 @@ const Careers = () => {
       let resumeUrl = null;
       let cvUrl = null;
 
-      // Upload resume file
+      // Upload resume file to the correct bucket and folder
       const resumeExt = formData.resumeFile.name.split('.').pop();
       const resumeFileName = `${Date.now()}-resume.${resumeExt}`;
+      const resumePath = `applications/${resumeFileName}`;
       const { error: resumeError } = await supabase.storage
-        .from('applications')
-        .upload(resumeFileName, formData.resumeFile);
+        .from('resumes')
+        .upload(resumePath, formData.resumeFile, { cacheControl: '3600', upsert: false });
 
       if (resumeError) throw resumeError;
 
-      const { data: resumeData } = supabase.storage.from('applications').getPublicUrl(resumeFileName);
-      resumeUrl = resumeData.publicUrl;
+      // Generate a signed URL since the bucket is private
+      const { data: resumeSigned } = await supabase.storage
+        .from('resumes')
+        .createSignedUrl(resumePath, 60 * 60 * 24 * 365); // 1 year
+      resumeUrl = resumeSigned?.signedUrl || null;
 
       // Upload CV file if provided
       if (formData.cvFile) {
         const cvExt = formData.cvFile.name.split('.').pop();
         const cvFileName = `${Date.now()}-cv.${cvExt}`;
+        const cvPath = `applications/${cvFileName}`;
         const { error: cvError } = await supabase.storage
-          .from('applications')
-          .upload(cvFileName, formData.cvFile);
+          .from('resumes')
+          .upload(cvPath, formData.cvFile, { cacheControl: '3600', upsert: false });
 
         if (!cvError) {
-          const { data: cvData } = supabase.storage.from('applications').getPublicUrl(cvFileName);
-          cvUrl = cvData.publicUrl;
+          const { data: cvSigned } = await supabase.storage
+            .from('resumes')
+            .createSignedUrl(cvPath, 60 * 60 * 24 * 365); // 1 year
+          cvUrl = cvSigned?.signedUrl || null;
         }
       }
 
