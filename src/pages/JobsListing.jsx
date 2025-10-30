@@ -185,29 +185,30 @@ const JobsListing = () => {
       return;
     }
 
-    if (!formData.resumeFile) {
-      setApplyError('Please attach your resume.');
-      toast.error('Please attach your resume.');
-      return;
-    }
+    // Resume is recommended but do not block submission in production
 
     setSubmitting(true);
     try {
       let resumeUrl = null;
       let cvUrl = null;
 
-      // Upload resume file to the correct bucket and folder
-      const resumeExt = formData.resumeFile.name.split('.').pop();
-      const resumeFileName = `${Date.now()}-resume.${resumeExt}`;
-      const resumePath = `applications/${resumeFileName}`;
-      const { error: resumeError } = await supabase.storage
-        .from('resumes')
-        .upload(resumePath, formData.resumeFile, { cacheControl: '3600', upsert: false });
+      // Upload resume file to the correct bucket and folder if provided
+      if (formData.resumeFile) {
+        const resumeExt = formData.resumeFile.name.split('.').pop();
+        const resumeFileName = `${Date.now()}-resume.${resumeExt}`;
+        const resumePath = `applications/${resumeFileName}`;
+        const { error: resumeError } = await supabase.storage
+          .from('resumes')
+          .upload(resumePath, formData.resumeFile, { cacheControl: '3600', upsert: false });
 
-      if (resumeError) throw resumeError;
-
-      // Store private storage path (admin will generate signed URL when viewing)
-      resumeUrl = resumePath;
+        if (resumeError) {
+          console.error('Resume upload failed:', resumeError);
+          toast('Submitted without resume: upload failed.', { icon: '⚠️' });
+        } else {
+          // Store private storage path (admin will generate signed URL when viewing)
+          resumeUrl = resumePath;
+        }
+      }
 
       // Upload CV file if provided
       if (formData.cvFile) {
@@ -218,7 +219,10 @@ const JobsListing = () => {
           .from('resumes')
           .upload(cvPath, formData.cvFile, { cacheControl: '3600', upsert: false });
 
-        if (!cvError) {
+        if (cvError) {
+          console.error('Cover letter upload failed:', cvError);
+          toast('Submitted without cover letter: upload failed.', { icon: '⚠️' });
+        } else {
           // Store private storage path
           cvUrl = cvPath;
         }
@@ -245,8 +249,9 @@ const JobsListing = () => {
       resetForm();
     } catch (error) {
       console.error('Error submitting application:', error);
+      const message = error?.message || String(error);
       setApplyError('Unable to submit your application right now. Please try again.');
-      toast.error('Unable to submit your application right now. Please try again.');
+      toast.error(`Unable to submit your application right now. ${message}`);
     } finally {
       setSubmitting(false);
     }
