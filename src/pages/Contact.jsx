@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, ArrowRight, MapPin, Phone, Mail, Send, CheckCircle, AlertCircle, Clock, Globe, MessageCircle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'react-hot-toast';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -72,9 +73,9 @@ const Contact = () => {
 
       if (error) {
         console.error('Supabase error:', error);
-        setSubmitStatus('error');
+        toast.error('Sorry, there was an error sending your message. Please try again.');
       } else {
-        setSubmitStatus('success');
+        toast.success("Thank you! Your message has been sent successfully. We'll get back to you soon.");
         // Clear form on success
         setFormData({
           name: '',
@@ -88,7 +89,7 @@ const Contact = () => {
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      setSubmitStatus('error');
+      toast.error('Sorry, there was an error sending your message. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -296,19 +297,7 @@ const Contact = () => {
                 />
             </div>
             
-            {submitStatus === 'success' && (
-              <div className="flex items-center gap-2 p-4 bg-green-50 border border-green-200 rounded-none">
-                <CheckCircle className="h-5 w-5 text-green-600" />
-                <p className="text-green-800">Thank you! Your message has been sent successfully. We'll get back to you soon.</p>
-              </div>
-            )}
             
-            {submitStatus === 'error' && (
-              <div className="flex items-center gap-2 p-4 bg-red-50 border border-red-200 rounded-none">
-                <AlertCircle className="h-5 w-5 text-red-600" />
-                <p className="text-red-800">Sorry, there was an error sending your message. Please try again or contact us directly.</p>
-              </div>
-            )}
             
             <button
               type="submit"
