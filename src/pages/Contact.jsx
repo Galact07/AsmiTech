@@ -31,6 +31,7 @@ const Contact = () => {
 
     try {
       let attachmentNote = '';
+      const locationNote = formData.location ? `\nLocation: ${formData.location}` : '';
       // Optional file upload: store in 'resumes' bucket under 'applications/' per storage policy
       if (attachmentFile) {
         const maxSize = 5 * 1024 * 1024; // 5MB
@@ -60,10 +61,9 @@ const Contact = () => {
           {
             name: formData.name,
             email: formData.email,
-            location: formData.location || null,
             company: formData.company || null,
             phone: formData.phone || null,
-            message: `${formData.message}${attachmentNote}`,
+            message: `${formData.message}${locationNote}${attachmentNote}`,
             subject: 'Contact Form Submission',
             status: 'new'
           }
