@@ -11,6 +11,7 @@ import {
   Building,
   Calendar,
   FileQuestion,
+  MapPin,
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'react-hot-toast';
@@ -66,7 +67,7 @@ export default function InquiriesAdmin() {
         .order('submitted_at', { ascending: false });
 
       if (error) throw error;
-      setInquiries(data || []);
+      setInquiries((data || []) as unknown as Inquiry[]);
     } catch (error) {
       console.error('Error fetching inquiries:', error);
       toast.error('Failed to fetch inquiries');
@@ -481,6 +482,33 @@ export default function InquiriesAdmin() {
                   <p className="text-muted-foreground whitespace-pre-wrap text-sm leading-relaxed">
                     {selectedInquiry.message}
                   </p>
+                  {(() => {
+                    const match = selectedInquiry.message.match(/Attachment:\s*(resumes\/[^\s\n]+|applications\/[^\s\n]+)/i);
+                    const storagePath = match ? match[1] : null;
+                    if (!storagePath) return null;
+                    // Normalize to resumes bucket path; our uploader uses resumes/applications/...
+                    const normalizedPath = storagePath.startsWith('applications/') ? storagePath : storagePath.replace(/^resumes\//, '');
+                    return (
+                      <div className="mt-3">
+                        <Button
+                          variant="outline"
+                          onClick={async () => {
+                            const { data, error } = await supabase
+                              .storage
+                              .from('resumes')
+                              .createSignedUrl(normalizedPath, 60 * 60);
+                            if (!error && data?.signedUrl) {
+                              window.open(data.signedUrl, '_blank');
+                            } else {
+                              toast.error('Unable to open attachment');
+                            }
+                          }}
+                        >
+                          View Attachment
+                        </Button>
+                      </div>
+                    );
+                  })()}
                 </div>
 
                 {/* Quick Actions */}

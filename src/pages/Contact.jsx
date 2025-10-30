@@ -12,6 +12,7 @@ const Contact = () => {
     phone: '',
     message: ''
   });
+  const [attachmentFile, setAttachmentFile] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', null
 
@@ -29,6 +30,29 @@ const Contact = () => {
     setSubmitStatus(null);
 
     try {
+      let attachmentNote = '';
+      // Optional file upload: store in 'resumes' bucket under 'applications/' per storage policy
+      if (attachmentFile) {
+        const maxSize = 5 * 1024 * 1024; // 5MB
+        if (attachmentFile.size > maxSize) {
+          attachmentNote = '\n\nAttachment note: file too large (>5MB)';
+        } else {
+          const ext = attachmentFile.name.split('.').pop();
+          const safeName = attachmentFile.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+          const path = `applications/${Date.now()}-inquiry-${safeName}`;
+          const { error: uploadError } = await supabase.storage
+            .from('resumes')
+            .upload(path, attachmentFile, { cacheControl: '3600', upsert: false, contentType: attachmentFile.type || 'application/octet-stream' });
+          if (uploadError) {
+            console.error('Inquiry attachment upload failed:', uploadError);
+            attachmentNote = '\n\nAttachment note: upload failed';
+          } else {
+            // Store storage path in message for admins; admin UI will generate signed URL
+            attachmentNote = `\n\nAttachment: ${path}`;
+          }
+        }
+      }
+
       // Insert directly into Supabase inquiries table
       const { data, error } = await supabase
         .from('inquiries')
@@ -39,7 +63,7 @@ const Contact = () => {
             location: formData.location || null,
             company: formData.company || null,
             phone: formData.phone || null,
-            message: formData.message,
+            message: `${formData.message}${attachmentNote}`,
             subject: 'Contact Form Submission',
             status: 'new'
           }
@@ -60,6 +84,7 @@ const Contact = () => {
           phone: '',
           message: ''
         });
+        setAttachmentFile(null);
       }
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -238,7 +263,20 @@ const Contact = () => {
                 />
               </div>
               <div>
-                {/* Empty div for grid balance */}
+                <label htmlFor="attachment" className="block text-sm font-medium text-slate-700 mb-2">
+                  Attachment (optional)
+                </label>
+                <input
+                  type="file"
+                  id="attachment"
+                  name="attachment"
+                  onChange={(e) => setAttachmentFile(e.target.files && e.target.files[0] ? e.target.files[0] : null)}
+                  accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-none focus:ring-2 focus:ring-primary focus:border-primary transition"
+                />
+                {attachmentFile && (
+                  <p className="mt-1 text-xs text-slate-500">Attached: {attachmentFile.name}</p>
+                )}
               </div>
             </div>
             
