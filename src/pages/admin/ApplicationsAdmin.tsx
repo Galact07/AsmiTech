@@ -471,7 +471,24 @@ export default function ApplicationsAdmin() {
                     <Button
                       variant="outline"
                       className="w-full sm:w-auto rounded-none"
-                      onClick={() => window.open(selectedApplication.resume_url!, '_blank')}
+                      onClick={async () => {
+                        const value = selectedApplication.resume_url!;
+                        const isUrl = /^https?:\/\//i.test(value);
+                        if (isUrl) {
+                          window.open(value, '_blank');
+                          return;
+                        }
+                        // value is a storage path; generate a signed URL
+                        const { data, error } = await supabase
+                          .storage
+                          .from('resumes')
+                          .createSignedUrl(value, 60 * 60); // 1 hour
+                        if (!error && data?.signedUrl) {
+                          window.open(data.signedUrl, '_blank');
+                        } else {
+                          toast.error('Unable to generate resume link');
+                        }
+                      }}
                     >
                       <Download className="h-4 w-4 mr-2" />
                       View Resume
@@ -486,7 +503,23 @@ export default function ApplicationsAdmin() {
                     <Button
                       variant="outline"
                       className="w-full sm:w-auto rounded-none"
-                      onClick={() => window.open(selectedApplication.cover_letter!, '_blank')}
+                      onClick={async () => {
+                        const value = selectedApplication.cover_letter!;
+                        const isUrl = /^https?:\/\//i.test(value);
+                        if (isUrl) {
+                          window.open(value, '_blank');
+                          return;
+                        }
+                        const { data, error } = await supabase
+                          .storage
+                          .from('resumes')
+                          .createSignedUrl(value, 60 * 60); // 1 hour
+                        if (!error && data?.signedUrl) {
+                          window.open(data.signedUrl, '_blank');
+                        } else {
+                          toast.error('Unable to generate cover letter link');
+                        }
+                      }}
                     >
                       <Download className="h-4 w-4 mr-2" />
                       View Cover Letter

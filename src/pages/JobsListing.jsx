@@ -206,11 +206,8 @@ const JobsListing = () => {
 
       if (resumeError) throw resumeError;
 
-      // Generate a signed URL since the bucket is private
-      const { data: resumeSigned } = await supabase.storage
-        .from('resumes')
-        .createSignedUrl(resumePath, 60 * 60 * 24 * 365); // 1 year
-      resumeUrl = resumeSigned?.signedUrl || null;
+      // Store private storage path (admin will generate signed URL when viewing)
+      resumeUrl = resumePath;
 
       // Upload CV file if provided
       if (formData.cvFile) {
@@ -222,10 +219,8 @@ const JobsListing = () => {
           .upload(cvPath, formData.cvFile, { cacheControl: '3600', upsert: false });
 
         if (!cvError) {
-          const { data: cvSigned } = await supabase.storage
-            .from('resumes')
-            .createSignedUrl(cvPath, 60 * 60 * 24 * 365); // 1 year
-          cvUrl = cvSigned?.signedUrl || null;
+          // Store private storage path
+          cvUrl = cvPath;
         }
       }
 
