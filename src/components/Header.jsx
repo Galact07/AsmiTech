@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, Phone } from 'lucide-react';
+import asmiLogo from '../assets/logos/asmi logo.png';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -48,7 +49,7 @@ const Header = () => {
           <Link to="/" className="inline-flex items-center gap-3" aria-label="Asmi Home">
             <div className="flex items-center justify-center h-12 w-32 rounded-none bg-white border border-white/20 backdrop-blur-sm px-2">
               <img 
-                src="/logos/asmi logo.jpg"
+                src={asmiLogo}
                 alt="ASMI Technology Consulting logo"
                 className="h-full w-full object-contain"
               />
@@ -143,7 +144,7 @@ const Header = () => {
           {/* CTA */}
           <a
             href="tel:+31622098973"
-            className="hidden items-center gap-3 transition-all focus:outline-none sm:inline-flex bg-white hover:bg-primary active:bg-primary font-bold rounded-none ml-auto px-4 py-2 group"
+            className="hidden items-center gap-3 transition-all focus:outline-none sm:inline-flex bg-blue-100 hover:bg-primary active:bg-primary font-bold rounded-none ml-auto px-4 py-2 group"
           >
             <Phone className="h-5 w-5 text-primary group-hover:text-white group-active:text-white transition-colors" />
             <div className="flex flex-col items-end">

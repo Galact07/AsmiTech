@@ -30,23 +30,6 @@ const Contact = () => {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
-    // Validate required fields
-    if (!formData.name || !formData.email || !formData.location || !formData.message) {
-      setSubmitStatus('error');
-      toast.error('Please fill in all required fields.');
-      setIsSubmitting(false);
-      return;
-    }
-
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      setSubmitStatus('error');
-      toast.error('Please enter a valid email address.');
-      setIsSubmitting(false);
-      return;
-    }
-
     try {
       let attachmentNote = '';
       const locationNote = formData.location ? `\nLocation: ${formData.location}` : '';
@@ -56,25 +39,18 @@ const Contact = () => {
         if (attachmentFile.size > maxSize) {
           attachmentNote = '\n\nAttachment note: file too large (>5MB)';
         } else {
-          try {
-            const ext = attachmentFile.name.split('.').pop();
-            const safeName = attachmentFile.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-            const path = `applications/${Date.now()}-inquiry-${safeName}`;
-            const { error: uploadError } = await supabase.storage
-              .from('resumes')
-              .upload(path, attachmentFile, { cacheControl: '3600', upsert: false, contentType: attachmentFile.type || 'application/octet-stream' });
-            if (uploadError) {
-              console.error('Inquiry attachment upload failed:', uploadError);
-              attachmentNote = '\n\nAttachment note: upload failed';
-              // Continue with form submission even if attachment fails
-            } else {
-              // Store storage path in message for admins; admin UI will generate signed URL
-              attachmentNote = `\n\nAttachment: ${path}`;
-            }
-          } catch (uploadException) {
-            console.error('File upload exception:', uploadException);
+          const ext = attachmentFile.name.split('.').pop();
+          const safeName = attachmentFile.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+          const path = `applications/${Date.now()}-inquiry-${safeName}`;
+          const { error: uploadError } = await supabase.storage
+            .from('resumes')
+            .upload(path, attachmentFile, { cacheControl: '3600', upsert: false, contentType: attachmentFile.type || 'application/octet-stream' });
+          if (uploadError) {
+            console.error('Inquiry attachment upload failed:', uploadError);
             attachmentNote = '\n\nAttachment note: upload failed';
-            // Continue with form submission even if attachment fails
+          } else {
+            // Store storage path in message for admins; admin UI will generate signed URL
+            attachmentNote = `\n\nAttachment: ${path}`;
           }
         }
       }
@@ -97,23 +73,8 @@ const Contact = () => {
 
       if (error) {
         console.error('Supabase error:', error);
-        let errorMessage = 'Sorry, there was an error sending your message.';
-        
-        // Provide more specific error messages based on error type
-        if (error.code === 'PGRST116' || error.message?.includes('permission')) {
-          errorMessage = 'Access denied. Please check your connection or contact support.';
-        } else if (error.message?.includes('network') || error.message?.includes('fetch')) {
-          errorMessage = 'Network error. Please check your internet connection and try again.';
-        } else if (error.message?.includes('timeout')) {
-          errorMessage = 'Request timed out. Please try again.';
-        } else if (error.message) {
-          errorMessage = `Error: ${error.message}`;
-        }
-        
-        setSubmitStatus('error');
-        toast.error(errorMessage);
+        toast.error('Sorry, there was an error sending your message. Please try again.');
       } else {
-        setSubmitStatus('success');
         toast.success("Thank you! Your message has been sent successfully. We'll get back to you soon.");
         // Clear form on success
         setFormData({
@@ -125,26 +86,10 @@ const Contact = () => {
           message: ''
         });
         setAttachmentFile(null);
-        // Reset file input
-        const fileInput = document.getElementById('attachment');
-        if (fileInput) fileInput.value = '';
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      setSubmitStatus('error');
-      
-      let errorMessage = 'Sorry, there was an error sending your message.';
-      
-      // Handle different types of errors
-      if (error instanceof TypeError && error.message?.includes('fetch')) {
-        errorMessage = 'Network error. Please check your internet connection and try again.';
-      } else if (error.message?.includes('NetworkError') || error.message?.includes('Failed to fetch')) {
-        errorMessage = 'Network error. Please check your internet connection and try again.';
-      } else if (error.message) {
-        errorMessage = `Error: ${error.message}`;
-      }
-      
-      toast.error(errorMessage);
+      toast.error('Sorry, there was an error sending your message. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -352,36 +297,7 @@ const Contact = () => {
                 />
             </div>
             
-            {/* Status Messages */}
-            {submitStatus === 'error' && (
-              <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-none">
-                <AlertCircle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-red-800">
-                    Unable to send message
-                  </p>
-                  <p className="text-sm text-red-700 mt-1">
-                    Please check your internet connection and try again. If the problem persists, please contact us directly at{' '}
-                    <a href="mailto:info@asmi-tech.com" className="underline font-medium">info@asmi-tech.com</a> or call{' '}
-                    <a href="tel:+31622098973" className="underline font-medium">+31-622098973</a>.
-                  </p>
-                </div>
-              </div>
-            )}
             
-            {submitStatus === 'success' && (
-              <div className="flex items-start gap-3 p-4 bg-green-50 border border-green-200 rounded-none">
-                <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-green-800">
-                    Message sent successfully!
-                  </p>
-                  <p className="text-sm text-green-700 mt-1">
-                    We've received your message and will get back to you within 24 hours.
-                  </p>
-                </div>
-              </div>
-            )}
             
             <button
               type="submit"
