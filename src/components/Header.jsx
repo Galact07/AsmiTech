@@ -47,7 +47,7 @@ const Header = () => {
         <div className="flex gap-4 items-center">
           {/* Brand */}
           <Link to="/" className="inline-flex items-center gap-3" aria-label="Asmi Home">
-            <div className="flex items-center justify-center h-12 w-32 rounded-none bg-white border border-white/20 backdrop-blur-sm px-2">
+            <div className="flex items-center justify-center h-12 w-32 rounded-none bg-transparent px-2">
               <img 
                 src={asmiLogo}
                 alt="ASMI Technology Consulting logo"
