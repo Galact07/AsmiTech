@@ -68,8 +68,7 @@ const Contact = () => {
             subject: 'Contact Form Submission',
             status: 'new'
           }
-        ])
-        .select();
+        ]);
 
       if (error) {
         console.error('Supabase error:', error);
