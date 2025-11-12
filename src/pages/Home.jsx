@@ -2,82 +2,61 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, ArrowRight, ShoppingBag, Flame, Pill, FlaskConical, Landmark, Truck, ChevronLeft, ChevronRight } from 'lucide-react';
 import Carousel from '../components/ui/carousel';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const Home = () => {
+  const { t, tArray, tObject } = useTranslation();
   const [industryIndex, setIndustryIndex] = useState(0);
   
+  // Get translated industries data
   const industriesData = [
               {
                 icon: ShoppingBag,
-                title: 'Retail & Consumer Goods',
-                description: 'Integrate sales, inventory, and customer insights for smarter decisions and seamless shopping experiences across channels.',
-                features: [
-                  'Cut inventory waste and stockouts with smarter SAP planning',
-                  'Accelerate supply chain processes to get products to customers faster',
-                  'Use real-time data to improve sales decisions and customer satisfaction'
-                ],
+                title: t('home.industries.retail.title'),
+                description: t('home.industries.retail.description'),
+                features: tArray('home.industries.retail.features'),
                 image: 'https://i.pinimg.com/736x/ec/be/ba/ecbeba29212ecb314faf2760a9b200a3.jpg',
-                alt: 'Retail & Consumer Goods'
+                alt: t('home.industries.retail.title')
               },
               {
                 icon: Flame,
-                title: 'Oil, Gas & Energy',
-                description: 'Connect operations, maintenance, and compliance systems to improve efficiency, reduce downtime, and maintain the highest safety standards.',
-                features: [
-                  'Keep critical equipment running longer with predictive maintenance',
-                  'Stay fully compliant with safety and environmental regulations',
-                  'Turn operational data into cost-saving, actionable insights'
-                ],
+                title: t('home.industries.oilGas.title'),
+                description: t('home.industries.oilGas.description'),
+                features: tArray('home.industries.oilGas.features'),
                 image: 'https://i.pinimg.com/736x/56/c4/ec/56c4ec50629e9b8c7082b86bd1fe5332.jpg',
-                alt: 'Oil, Gas & Energy'
+                alt: t('home.industries.oilGas.title')
               },
               {
                 icon: Pill,
-                title: 'Pharmaceuticals & Life Sciences',
-                description: 'Link research, production, and regulatory processes to ensure product quality, accelerate delivery, and stay fully compliant.',
-                features: [
-                  'Speed up manufacturing without compromising quality or compliance',
-                  'Track every batch to ensure regulatory standards are met',
-                  'Coordinate distribution to meet demand efficiently and reliably'
-                ],
+                title: t('home.industries.pharma.title'),
+                description: t('home.industries.pharma.description'),
+                features: tArray('home.industries.pharma.features'),
                 image: 'https://i.pinimg.com/1200x/b7/56/19/b7561971cb6257a1e6b99b1c1fdf795d.jpg',
-                alt: 'Pharmaceuticals & Life Sciences'
+                alt: t('home.industries.pharma.title')
               },
               {
                 icon: FlaskConical,
-                title: 'Chemicals & Petrochemicals',
-                description: 'Coordinate production, safety, and supply chain operations to boost efficiency, minimize risks, and respond quickly to market demands.',
-                features: [
-                  'Optimize production to reduce waste and energy usage',
-                  'Simplify compliance reporting with automated SAP processes',
-                  'Respond quickly to supply chain disruptions or market changes'
-                ],
+                title: t('home.industries.chemicals.title'),
+                description: t('home.industries.chemicals.description'),
+                features: tArray('home.industries.chemicals.features'),
                 image: 'https://images.unsplash.com/photo-1757912666361-8c226b7279b9?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=870',
-                alt: 'Chemicals & Petrochemicals'
+                alt: t('home.industries.chemicals.title')
               },
               {
                 icon: Landmark,
-                title: 'Public Sector & Government',
-                description: 'Streamline financial, operational, and citizen services to improve transparency, accountability, and service delivery across departments.',
-                features: [
-                  'Automate budgeting and fund management for clarity and control',
-                  'Increase transparency across departments and operations',
-                  'Deliver citizen services more efficiently using real-time insights'
-                ],
+                title: t('home.industries.publicSector.title'),
+                description: t('home.industries.publicSector.description'),
+                features: tArray('home.industries.publicSector.features'),
                 image: 'https://images.pexels.com/photos/20432166/pexels-photo-20432166.jpeg?_gl=1*ydoi7k*_ga*MTU5Njc0NzgwOS4xNzU5ODE5NDIw*_ga_8JE65Q40S6*czE3NjEwNTc3MDYkbzMkZzEkdDE3NjEwNTgyNzEkajQzJGwwJGgw',
-                alt: 'Public Sector & Government'
+                alt: t('home.industries.publicSector.title')
               },
               {
                 icon: Truck,
-                title: 'Logistics & Supply Chain',
-                description: 'Unify procurement, warehousing, and distribution with real-time insights to ensure faster, more reliable, and cost-effective operations.',
-                features: [
-                  'Streamline warehousing, shipping, and inventory tracking',
-                  'Get full visibility across suppliers and deliveries',
-                  'Resolve bottlenecks quickly to maintain smooth operations'
-                ],
+                title: t('home.industries.logistics.title'),
+                description: t('home.industries.logistics.description'),
+                features: tArray('home.industries.logistics.features'),
                 image: 'https://i.pinimg.com/736x/94/b0/ed/94b0ed2a49f4452f0b4930f7c9ef09c1.jpg',
-                alt: 'Logistics & Supply Chain'
+                alt: t('home.industries.logistics.title')
               }
   ];
 
@@ -101,20 +80,20 @@ const Home = () => {
             <div className="flex items-stretch gap-6 md:gap-10 flex-col md:flex-row min-h-[240px] md:min-h-[280px]">
               <div className="flex-1">
                 <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em] mt-0 pt-2">
-                Premier SAP Consulting
+                {t('home.hero.tagline')}
                 </p>
                 <h1 id="home-title" className="sm:text-4xl md:text-5xl text-3xl font-bold text-slate-700 tracking-tight mt-2">
-                ASMI: Your SAP Experts
+                {t('home.hero.title')}
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
-                At ASMI, we help businesses get the most out of SAP. From setup to optimization, our experts make your systems smarter, faster, and aligned with your goals, so you can run efficiently today and scale confidently tomorrow.
+                {t('home.hero.description')}
                 </p>
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <Link
                     to="/contact"
                     className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3 focus:outline-none"
                   >
-                    Get Started
+                    {t('buttons.getStarted')}
                     <span className="inline-flex h-6 w-6 items-center justify-center rounded-none bg-black/5">
                       <ArrowUpRight className="h-4 w-4" />
                     </span>
@@ -161,7 +140,7 @@ const Home = () => {
         <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-12 items-stretch">
             <div className="order-1">
-              <h2 id="who-we-are-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">Who We Are</h2>
+              <h2 id="who-we-are-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">{t('home.whoWeAre.title')}</h2>
               <div className="md:block order-2 mt-4 md:mt-0 md:hidden">
                 <img
                   src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=870"
@@ -171,10 +150,10 @@ const Home = () => {
                 />
               </div>
               <p className="mt-3 md:mt-3 text-slate-700/90">
-                At ASMI, we help businesses work smarter with SAP. Our team combines hands-on experience and real-world understanding to build solutions that make operations simpler, faster, and ready for what's next.
+                {t('home.whoWeAre.paragraph1')}
               </p>
               <p className="mt-4 text-slate-700/90">
-                With roots in the Netherlands and India, we support clients worldwide, delivering SAP systems that truly fit their goals. Every project we take on is driven by one thing — helping our clients grow with clarity and confidence.
+                {t('home.whoWeAre.paragraph2')}
               </p>
               <div className="mt-6">
                 <Link
@@ -207,7 +186,7 @@ const Home = () => {
         <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <div className="flex items-center justify-between gap-3">
             <h2 id="partners-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">
-            Clients We've Served
+            {t('home.clients.title')}
             </h2>
           </div>
           <div className="mt-5">
@@ -242,10 +221,10 @@ const Home = () => {
           <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-6">
             <div className="flex-1">
               <h2 id="services-title" className="text-3xl md:text-4xl tracking-tight font-bold text-white mb-2">
-                Our Services
+                {t('home.services.title')}
               </h2>
               <p className="text-white/90 text-lg max-w-3xl">
-                We offer SAP solutions built around your business. From setup to support, we make your systems smoother, smarter, and ready to grow with you.
+                {t('home.services.description')}
               </p>
               <div className="mt-4 md:hidden">
                 <Link
@@ -262,7 +241,7 @@ const Home = () => {
                 to="/services"
                 className="inline-flex items-center gap-2 hover:bg-slate-50 transition text-sm font-bold text-primary bg-white border-secondary border rounded-none pt-2 pr-4 pb-2 pl-4"
               >
-                Learn more
+                  {t('buttons.learnMore')}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -270,50 +249,50 @@ const Home = () => {
           <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             {[
               {
-                title: 'SAP Public Cloud',
-                description: 'Deploy secure, scalable SAP cloud solutions for streamlined operations and agility.',
+                title: t('home.services.list.sapPublicCloud.title'),
+                description: t('home.services.list.sapPublicCloud.description'),
                 href: '/services/sap-public-cloud',
                 image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop'
               },
               {
-                title: 'SAP Implementations and Rollouts',
-                description: 'Execute tailored SAP deployments with proven Greenfield, Brownfield, or Bluefield strategies.',
+                title: t('home.services.list.sapImplementations.title'),
+                description: t('home.services.list.sapImplementations.description'),
                 href: '/services/sap-implementations-and-rollouts',
                 image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&auto=format&fit=crop'
               },
               {
-                title: 'SAP Document and Reporting Compliance',
-                description: 'Simplify e-Invoicing and tax reporting with seamless, compliant SAP solutions.',
+                title: t('home.services.list.sapDocumentCompliance.title'),
+                description: t('home.services.list.sapDocumentCompliance.description'),
                 href: '/services/sap-document-and-reporting-compliance',
                 image: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&auto=format&fit=crop'
               },
               {
-                title: 'SAP Consulting & Advisory',
-                description: 'Unlock strategic value with expert SAP guidance tailored to your business goals.',
+                title: t('home.services.list.sapConsulting.title'),
+                description: t('home.services.list.sapConsulting.description'),
                 href: '/services/sap-consulting-advisory',
                 image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&auto=format&fit=crop'
               },
               {
-                title: 'Data & Migration Services',
-                description: 'Ensure smooth, secure data migration for optimized SAP performance.',
+                title: t('home.services.list.dataMigration.title'),
+                description: t('home.services.list.dataMigration.description'),
                 href: '/services/data-migration-services',
                 image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop'
               },
               {
-                title: 'Support & Managed Services',
-                description: 'Maintain peak SAP performance with proactive support and management.',
+                title: t('home.services.list.supportManaged.title'),
+                description: t('home.services.list.supportManaged.description'),
                 href: '/services/support-managed-services',
                 image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop'
               },
               {
-                title: 'Training & Change Management',
-                description: 'Empower teams with targeted training for seamless SAP adoption.',
+                title: t('home.services.list.training.title'),
+                description: t('home.services.list.training.description'),
                 href: '/services/training-change-management',
                 image: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800&auto=format&fit=crop'
               },
               {
-                title: 'SAP Project Management & Governance',
-                description: 'Drive project success with expert oversight and disciplined governance.',
+                title: t('home.services.list.projectManagement.title'),
+                description: t('home.services.list.projectManagement.description'),
                 href: '/services/sap-project-management-governance',
                 image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&auto=format&fit=crop'
               }
@@ -332,7 +311,7 @@ const Home = () => {
                     to={service.href}
                     className="mt-auto inline-flex items-center gap-2 text-primary hover:text-primary/80 transition text-sm font-bold hover:underline"
                   >
-                    Learn More
+                    {t('buttons.learnMore')}
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </div>
@@ -347,14 +326,14 @@ const Home = () => {
         <div className="bg-blue-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between">
             <h2 className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700" id="sectors">
-            Industries We Serve
+            {t('home.industries.title')}
             </h2>
             <div className="mt-3 md:hidden">
               <Link
                 to="/industries"
                 className="inline-flex items-center gap-2 hover:bg-slate-50 transition text-sm font-bold text-primary bg-white border-secondary border rounded-none pt-2 pr-4 pb-2 pl-4"
               >
-                Learn more
+                  {t('buttons.learnMore')}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -363,7 +342,7 @@ const Home = () => {
                 to="/industries"
                 className="inline-flex items-center gap-2 hover:bg-slate-50 transition text-sm font-bold text-primary bg-white border-secondary border rounded-none pt-2 pr-4 pb-2 pl-4"
               >
-                Learn more
+                  {t('buttons.learnMore')}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -450,30 +429,28 @@ const Home = () => {
       {/* What Clients Say Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="testimonials-title">
         <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
-          <h2 id="testimonials-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">What Clients Say</h2>
+          <h2 id="testimonials-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">{t('home.testimonials.title')}</h2>
           <div className="mt-5">
             <Carousel speed="very-slow" className="py-4">
-              {[
-                { quote: '"Their SAP expertise transformed our processes, efficient, reliable, and seamless implementation!" – Cargill Corporation', logoFile: 'cargill logo.jpg' },
-                { quote: '"A trusted partner for SAP solutions. They understood our business needs perfectly." – Hitachi Energy', logoFile: 'hitachi logo.png' },
-                { quote: '"Professional, proactive, and results-driven. Our SAP system has never run smoother." – Sucafina', logoFile: 'sucafina logo.svg' },
-                { quote: '"Exceptional support and guidance throughout our SAP journey. Highly recommended!" – Johnson & Johnson', logoFile: 'johnson and johnson logo.png' }
-              ].map((testimonial, idx) => (
-                <div key={idx} className="flex-shrink-0 mx-4 w-96">
-                  <div className="bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6 rounded-none">
-                    <div className="flex-shrink-0 w-32 h-28 bg-white rounded-none flex items-center justify-center p-3">
-                      <img 
-                        src={`/logos/${testimonial.logoFile}`}
-                        alt={`${testimonial.logoFile.split(' ')[0]} logo`}
-                        className="max-h-24 max-w-28 object-contain"
-                      />
+              {tArray('home.testimonials.list').map((quote, idx) => {
+                const logoFiles = ['cargill logo.jpg', 'hitachi logo.png', 'sucafina logo.svg', 'johnson and johnson logo.png'];
+                return (
+                  <div key={idx} className="flex-shrink-0 mx-4 w-96">
+                    <div className="bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6 rounded-none">
+                      <div className="flex-shrink-0 w-32 h-28 bg-white rounded-none flex items-center justify-center p-3">
+                        <img 
+                          src={`/logos/${logoFiles[idx] || 'sap logo.jpg'}`}
+                          alt={`${logoFiles[idx]?.split(' ')[0] || 'Client'} logo`}
+                          className="max-h-24 max-w-28 object-contain"
+                        />
+                      </div>
+                      <blockquote className="text-slate-700/90 text-sm leading-relaxed flex-1">
+                        {quote}
+                      </blockquote>
                     </div>
-                    <blockquote className="text-slate-700/90 text-sm leading-relaxed flex-1">
-                      {testimonial.quote}
-                    </blockquote>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </Carousel>
           </div>
         </div>
@@ -482,7 +459,7 @@ const Home = () => {
       {/* Frequently Asked Questions Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="faq-title">
         <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
-          <h2 id="faq-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">Frequently Asked Questions</h2>
+          <h2 id="faq-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">{t('home.faq.title')}</h2>
           <FAQ />
         </div>
       </section>
@@ -493,17 +470,17 @@ const Home = () => {
           <div className="flex justify-center">
             <div className="text-center max-w-2xl">
               <h2 id="final-cta-title" className="text-3xl md:text-4xl font-bold tracking-tight">
-            Make your SAP work better with ASMI
+            {t('home.finalCTA.title')}
           </h2>
               <p className="mt-4 text-slate-600 max-w-2xl">
-            Get systems that run right and grow with your business.
+            {t('home.finalCTA.description')}
           </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/contact"
                   className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition px-6 py-3 rounded-none font-bold"
             >
-              Request A Consultation
+              {t('buttons.requestConsultation')}
               <ArrowUpRight className="h-4 w-4" />
             </Link>
               </div>
@@ -519,28 +496,8 @@ export default Home;
 
 // Accessible FAQ accordion component
 function FAQ() {
-  const items = [
-    {
-      q: 'How does ASMI ensure a smooth SAP implementation?',
-      a: 'We follow a structured rollout plan with clear milestones, thorough testing, and close collaboration with your team to avoid downtime and ensure the system works from day one.'
-    },
-    {
-      q: 'Can we customize SAP solutions for our unique business needs?',
-      a: 'Yes, we configure SAP workflows, reports, and dashboards to match your exact operational requirements, so the system fits your business processes perfectly.'
-    },
-    {
-      q: 'Can we integrate SAP with our existing systems?',
-      a: 'Absolutely. We connect SAP with your ERP, CRM, and other software, enabling seamless data flow and unified reporting without disrupting ongoing operations.'
-    },
-    {
-      q: 'Does ASMI provide training for our team on SAP systems?',
-      a: 'Yes, we deliver tailored training sessions, user manuals, and hands-on support to ensure your staff can use SAP confidently and independently.'
-    },
-    {
-      q: 'How quickly can we see improvements after implementing SAP with ASMI?',
-      a: 'Clients typically notice better process efficiency and accurate reporting within the first few weeks, with measurable operational improvements and cost savings visible within 2–3 months.'
-    }
-  ];
+  const { tArray } = useTranslation();
+  const items = tArray('home.faq.questions');
 
   const [openIndex, setOpenIndex] = useState(null);
 

@@ -7,6 +7,8 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useTranslation } from '@/hooks/useTranslation';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const APPLY_FORM_INITIAL_STATE = {
   name: '',
@@ -40,6 +42,8 @@ const formatEmploymentType = (type) => {
 };
 
 const Careers = () => {
+  const { t, tArray } = useTranslation();
+  const { tDb, language } = useLanguage();
   const [jobs, setJobs] = useState([]);
   const [loadingJobs, setLoadingJobs] = useState(true);
   const [applyDialogOpen, setApplyDialogOpen] = useState(false);
@@ -86,10 +90,24 @@ const Careers = () => {
 
   const parsedJobs = useMemo(
     () =>
-      jobs.map((job) => ({
-        ...job,
-        requirementList: parseRequirements(job.requirements),
-      })),
+      jobs.map((job) => {
+        // Parse content_nl if it's a string
+        let contentNl = job.content_nl;
+        if (typeof contentNl === 'string') {
+          try {
+            contentNl = JSON.parse(contentNl);
+          } catch (e) {
+            console.warn('Failed to parse content_nl for job:', job.id, e);
+            contentNl = {};
+          }
+        }
+        return {
+          ...job,
+          content_nl: contentNl || {},
+          requirementList: parseRequirements(job.requirements),
+          requirementListNl: contentNl?.requirements ? parseRequirements(contentNl.requirements) : [],
+        };
+      }),
     [jobs],
   );
 
@@ -237,13 +255,13 @@ const Careers = () => {
             <div className="flex items-stretch gap-6 md:gap-10 flex-col md:flex-row min-h-[240px] md:min-h-[280px]">
               <div className="flex-1">
                 <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em] mt-0 pt-2">
-                  Careers
+                  {t('careers.hero.tagline')}
                 </p>
                 <h1 id="careers-title" className="sm:text-4xl md:text-5xl text-3xl font-bold text-slate-700 tracking-tight mt-2">
-                  Join Our Team
+                  {t('careers.hero.title')}
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
-                  Join a team that values your skills and ambitions. At ASMI, we grow together and create real impact.
+                  {t('careers.hero.description')}
                 </p>
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <a
@@ -263,7 +281,7 @@ const Careers = () => {
                     }}
                     className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3 focus:outline-none cursor-pointer"
                   >
-                    Open Positions
+                    {t('buttons.openPositions')}
                     <span className="inline-flex h-6 w-6 items-center justify-center rounded-none bg-black/5">
                       <ArrowUpRight className="h-4 w-4" />
                     </span>
@@ -272,7 +290,7 @@ const Careers = () => {
                     to="/jobs"
                     className="inline-flex items-center gap-2 rounded-none px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition"
                   >
-                    View Jobs
+                    {t('buttons.viewJobs')}
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </div>
@@ -298,10 +316,10 @@ const Careers = () => {
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
             <div className="flex-1">
               <h2 id="positions" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">
-                Open Positions
+                {t('careers.positions.title')}
               </h2>
               <p className="mt-2 text-slate-700/80">
-                Explore our current openings and find the perfect role to advance your SAP career.
+                {t('careers.positions.description')}
               </p>
             </div>
             {!loadingJobs && parsedJobs.length > 0 && (
@@ -309,7 +327,7 @@ const Careers = () => {
                 to="/jobs"
                 className="group inline-flex items-center gap-2 bg-primary text-white hover:brightness-110 transition px-5 py-3 rounded-none font-medium text-sm whitespace-nowrap focus:outline-none"
               >
-                View All Jobs
+                {t('buttons.viewAllJobs')}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             )}
@@ -318,20 +336,20 @@ const Careers = () => {
             {loadingJobs ? (
               <div className="flex flex-col items-center justify-center py-12 text-muted-foreground gap-3">
                 <Loader2 className="h-6 w-6 animate-spin" />
-                <p>Loading open positions...</p>
+                <p>{t('careers.positions.loading')}</p>
               </div>
             ) : parsedJobs.length === 0 ? (
               <div className="rounded-none border border-dashed border-slate-300 bg-white/60 p-10 text-center">
-                <h3 className="text-lg font-medium text-slate-700">No open positions right now</h3>
+                <h3 className="text-lg font-medium text-slate-700">{t('careers.positions.noOpenings.title')}</h3>
                 <p className="mt-2 text-sm text-slate-600 max-w-xl mx-auto">
-                  We&apos;re not actively hiring for new roles at the moment. Please check back soon or send us your resume so we can reach out when a matching opportunity opens up.
+                  {t('careers.positions.noOpenings.description')}
                 </p>
                 <div className="mt-4 flex justify-center">
                   <Link
                     to="/contact"
                     className="inline-flex items-center gap-2 text-primary hover:text-primary/80 text-sm font-medium"
                   >
-                    Share Your Resume
+                    {t('careers.positions.noOpenings.shareResume')}
                     <ArrowUpRight className="h-4 w-4" />
                   </Link>
                 </div>
@@ -341,12 +359,12 @@ const Careers = () => {
                 <div key={job.id} className="rounded-none border border-slate-200 bg-white p-6 hover:shadow-md transition">
                   <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between mb-4">
                     <div className="space-y-2">
-                      <h3 className="text-lg font-medium text-slate-700">{job.title}</h3>
+                      <h3 className="text-lg font-medium text-slate-700">{tDb(job.title, job.content_nl?.title)}</h3>
                       <div className="flex flex-wrap items-center gap-4 text-sm text-slate-600">
                         {job.location && (
                           <div className="flex items-center gap-1">
                             <MapPin className="h-4 w-4" />
-                            {job.location}
+                            {tDb(job.location, job.content_nl?.location)}
                           </div>
                         )}
                         {job.type && (
@@ -374,9 +392,9 @@ const Careers = () => {
                   </div>
                   {job.description && (
                     <div className="mb-4">
-                      <h4 className="text-sm font-medium text-slate-700 mb-2">Responsibilities:</h4>
+                      <h4 className="text-sm font-medium text-slate-700 mb-2">{t('careers.positions.responsibilities')}:</h4>
                       <ul className="space-y-1">
-                        {parseRequirements(job.description).map((responsibility, respIndex) => (
+                        {parseRequirements(tDb(job.description, job.content_nl?.description)).map((responsibility, respIndex) => (
                           <li key={respIndex} className="flex items-start gap-2 text-sm text-slate-700/80">
                             <CheckCircle className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
                             {responsibility}
@@ -385,11 +403,14 @@ const Careers = () => {
                       </ul>
                     </div>
                   )}
-                  {job.requirementList.length > 0 && (
+                  {(job.requirementList.length > 0 || (job.content_nl?.requirements && job.requirementListNl.length > 0)) && (
                     <div className="mb-4">
-                      <h4 className="text-sm font-medium text-slate-700 mb-2">Requirements:</h4>
+                      <h4 className="text-sm font-medium text-slate-700 mb-2">{t('careers.positions.requirements')}:</h4>
                       <ul className="space-y-1">
-                        {job.requirementList.map((req, reqIndex) => (
+                        {(job.content_nl?.requirements && job.requirementListNl.length > 0 && language === 'nl' 
+                          ? job.requirementListNl 
+                          : job.requirementList
+                        ).map((req, reqIndex) => (
                           <li key={reqIndex} className="flex items-start gap-2 text-sm text-slate-700/80">
                             <CheckCircle className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
                             {req}
@@ -404,7 +425,7 @@ const Careers = () => {
                       className="w-full inline-flex items-center justify-center gap-2 bg-primary text-white hover:bg-primary/90 text-sm font-medium rounded-none"
                       onClick={() => openApplyDialog(job)}
                     >
-                      Apply Now
+                      {t('buttons.applyNow')}
                       <ArrowUpRight className="h-4 w-4" />
                     </Button>
                   </div>
@@ -417,7 +438,7 @@ const Careers = () => {
                   to="/jobs"
                   className="inline-flex items-center gap-2 bg-primary text-white hover:brightness-110 transition px-6 py-3 rounded-none font-medium focus:outline-none"
                 >
-                  View All {parsedJobs.length} Open Positions
+                  {t('careers.positions.viewAllPositions').replace('{count}', parsedJobs.length)}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
@@ -430,44 +451,13 @@ const Careers = () => {
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="process">
         <div className="bg-dark-blue p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <h2 id="process" className="text-3xl md:text-4xl tracking-tight font-bold text-white text-center">
-            Application Process
+            {t('careers.process.title')}
           </h2>
           <p className="mt-2 text-white/80 text-center">
-          Join Our Global Team at ASMI Technologies
+          {t('careers.process.description')}
           </p>
           <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6 gap-y-8">
-            {[
-              {
-                step: '01',
-                title: 'Find a Job',
-                description: 'Explore current openings on our ASMI Careers Page and find roles that match your skills and interests.'
-              },
-              {
-                step: '02',
-                title: 'Apply',
-                description: 'Submit your online application and receive instant confirmation.'
-              },
-              {
-                step: '03',
-                title: 'Pre-Selection',
-                description: 'We review your skills and experience to determine fit and may consider you for other relevant positions.'
-              },
-              {
-                step: '04',
-                title: 'Interview',
-                description: 'Shortlisted candidates meet the recruiting manager and HR. Additional rounds or assessments may apply. Virtual or in-person interviews available.'
-              },
-              {
-                step: '05',
-                title: 'Selection',
-                description: 'References may be checked. If selected, you\'ll receive an offer with a competitive package. All other applicants are notified.'
-              },
-              {
-                step: '06',
-                title: 'Onboarding',
-                description: 'New hires undergo an introduction program to integrate quickly and start contributing effectively.'
-              }
-            ].map((phase, index) => (
+            {tArray('careers.process.steps').map((phase, index) => (
               <div key={index} className="rounded-none bg-blue-50 p-6 text-center hover:shadow-md transition">
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-primary text-white text-xl font-bold mb-4 rounded-none">
                   {phase.step}
@@ -486,17 +476,17 @@ const Careers = () => {
           <div className="flex justify-center">
             <div className="text-center max-w-2xl">
               <h2 id="cta" className="text-3xl md:text-4xl font-bold tracking-tight">
-              Ready to Join the ASMI Team?
+              {t('careers.finalCTA.title')}
               </h2>
               <p className="mt-4 text-slate-600 max-w-2xl">
-              Join a team where you can grow, learn, and build your career.
+              {t('careers.finalCTA.description')}
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   to="/jobs"
                   className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition px-6 py-3 rounded-none font-bold"
                 >
-                  Browse All Jobs
+                  {t('buttons.browseAllJobs')}
                   <ArrowUpRight className="h-4 w-4" />
                 </Link>
               </div>
@@ -508,9 +498,9 @@ const Careers = () => {
     <Dialog open={applyDialogOpen} onOpenChange={handleDialogChange}>
       <DialogContent className="max-w-xl border border-slate-200 bg-white shadow-2xl p-6 rounded-none">
         <DialogHeader>
-          <DialogTitle>Apply for {selectedJob?.title}</DialogTitle>
+          <DialogTitle>{t('careers.apply.title').replace('{job}', selectedJob ? tDb(selectedJob.title, selectedJob.content_nl?.title) : '')}</DialogTitle>
           <DialogDescription>
-            Submit your details and we will get in touch if your profile is a good match.
+            {t('careers.apply.description')}
           </DialogDescription>
         </DialogHeader>
 
@@ -532,7 +522,7 @@ const Careers = () => {
                 )}
                 <span className="inline-flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
-                  Posted {new Date(selectedJob.created_at).toLocaleDateString()}
+                  {t('careers.positions.posted')} {new Date(selectedJob.created_at).toLocaleDateString()}
                 </span>
               </div>
             </div>
@@ -540,7 +530,7 @@ const Careers = () => {
             <form onSubmit={handleSubmitApplication} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="name">Full Name</Label>
+                  <Label htmlFor="name">{t('careers.apply.fullName')}</Label>
                   <Input
                     id="name"
                     name="name"
@@ -553,7 +543,7 @@ const Careers = () => {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email">{t('careers.apply.email')}</Label>
                   <Input
                     id="email"
                     type="email"
@@ -569,7 +559,7 @@ const Careers = () => {
               </div>
 
               <div>
-                <Label htmlFor="phone">Phone Number</Label>
+                <Label htmlFor="phone">{t('careers.apply.phoneNumber')}</Label>
                 <Input
                   id="phone"
                   name="phone"
@@ -583,7 +573,7 @@ const Careers = () => {
               </div>
 
               <div>
-                <Label htmlFor="resumeFile">Resume (PDF only) *</Label>
+                <Label htmlFor="resumeFile">{t('careers.apply.resume')}</Label>
                 <Input
                   id="resumeFile"
                   type="file"
@@ -597,7 +587,7 @@ const Careers = () => {
               </div>
 
               <div>
-                <Label htmlFor="cvFile">Cover Letter (PDF only, optional)</Label>
+                <Label htmlFor="cvFile">{t('careers.apply.coverLetter')}</Label>
                 <Input
                   id="cvFile"
                   type="file"
@@ -623,16 +613,16 @@ const Careers = () => {
                   disabled={submitting}
                   className="rounded-none"
                 >
-                  Cancel
+                  {t('buttons.cancel')}
                 </Button>
                 <Button type="submit" disabled={submitting} className="rounded-none">
                   {submitting ? (
                     <>
                       <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                      Submitting
+                      {t('careers.apply.submitting')}
                     </>
                   ) : (
-                    'Submit Application'
+                    t('buttons.submitApplication')
                   )}
                 </Button>
               </div>

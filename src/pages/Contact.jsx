@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight, ArrowRight, MapPin, Phone, Mail, Send, CheckCircle, AlertCircle, Clock, Globe, MessageCircle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'react-hot-toast';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const Contact = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -103,13 +105,13 @@ const Contact = () => {
             <div className="flex items-stretch gap-6 md:gap-10 flex-col md:flex-row min-h-[240px] md:min-h-[280px]">
               <div className="flex-1">
                 <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em] mt-0 pt-2">
-                  Contact Us
+                  {t('contact.hero.tagline')}
                 </p>
                 <h1 id="contact-title" className="sm:text-4xl md:text-5xl text-3xl font-bold text-slate-700 tracking-tight mt-2">
-                  Get in Touch With Us
+                  {t('contact.hero.title')}
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
-                  Discuss your SAP needs with our experts and see how we can help. Our team is ready to guide you toward the right solution.
+                  {t('contact.hero.description')}
                 </p>
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <a
@@ -129,7 +131,7 @@ const Contact = () => {
                     }}
                     className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3 focus:outline-none cursor-pointer"
                   >
-                    Send Message
+                    {t('buttons.sendMessage')}
                     <span className="inline-flex h-6 w-6 items-center justify-center rounded-none bg-black/5">
                       <ArrowUpRight className="h-4 w-4" />
                     </span>
@@ -151,7 +153,7 @@ const Contact = () => {
                     }}
                     className="inline-flex items-center gap-2 rounded-none px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition cursor-pointer"
                   >
-                    Visit Us
+                    {t('buttons.visitUs')}
                     <ArrowRight className="h-4 w-4" />
                   </a>
                 </div>
@@ -175,17 +177,17 @@ const Contact = () => {
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="contact-form">
         <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <h2 id="contact-form" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">
-            Send Us a Message
+            {t('contact.form.title')}
           </h2>
           <p className="mt-2 text-slate-700/80">
-            Fill out the form below and we'll get back to you within 24 hours.
+            {t('contact.form.description')}
           </p>
           
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-2">
-                  Name *
+                  {t('contact.form.name')} *
                 </label>
                 <input
                   type="text"
@@ -195,12 +197,12 @@ const Contact = () => {
                   onChange={handleInputChange}
                   required
                   className="w-full px-3 py-2 border border-slate-200 rounded-none focus:ring-2 focus:ring-primary focus:border-primary transition"
-                  placeholder="Your full name"
+                  placeholder={t('contact.form.namePlaceholder')}
                 />
               </div>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
-                  Email *
+                  {t('contact.form.email')} *
                 </label>
                 <input
                   type="email"
@@ -210,7 +212,7 @@ const Contact = () => {
                   onChange={handleInputChange}
                   required
                   className="w-full px-3 py-2 border border-slate-200 rounded-none focus:ring-2 focus:ring-primary focus:border-primary transition"
-                  placeholder="your.email@company.com"
+                  placeholder={t('contact.form.emailPlaceholder')}
                 />
               </div>
             </div>
@@ -218,7 +220,7 @@ const Contact = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="location" className="block text-sm font-medium text-slate-700 mb-2">
-                  Location *
+                  {t('contact.form.location')} *
                 </label>
                 <input
                   type="text"
@@ -228,12 +230,12 @@ const Contact = () => {
                   onChange={handleInputChange}
                   required
                   className="w-full px-3 py-2 border border-slate-200 rounded-none focus:ring-2 focus:ring-primary focus:border-primary transition"
-                  placeholder="Your city, country"
+                  placeholder={t('contact.form.locationPlaceholder')}
                 />
               </div>
               <div>
                 <label htmlFor="company" className="block text-sm font-medium text-slate-700 mb-2">
-                  Company
+                  {t('contact.form.company')}
                 </label>
                 <input
                   type="text"
@@ -242,7 +244,7 @@ const Contact = () => {
                   value={formData.company}
                   onChange={handleInputChange}
                   className="w-full px-3 py-2 border border-slate-200 rounded-none focus:ring-2 focus:ring-primary focus:border-primary transition"
-                  placeholder="Your company name"
+                  placeholder={t('contact.form.companyPlaceholder')}
                 />
               </div>
             </div>
@@ -250,7 +252,7 @@ const Contact = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-2">
-                  Phone
+                  {t('contact.form.phone')}
                 </label>
                 <input
                   type="tel"
@@ -264,7 +266,7 @@ const Contact = () => {
               </div>
               <div>
                 <label htmlFor="attachment" className="block text-sm font-medium text-slate-700 mb-2">
-                  Attachment (optional)
+                  {t('contact.form.attachment')}
                 </label>
                 <input
                   type="file"
@@ -275,14 +277,14 @@ const Contact = () => {
                   className="w-full px-3 py-2 border border-slate-200 rounded-none focus:ring-2 focus:ring-primary focus:border-primary transition"
                 />
                 {attachmentFile && (
-                  <p className="mt-1 text-xs text-slate-500">Attached: {attachmentFile.name}</p>
+                  <p className="mt-1 text-xs text-slate-500">{t('contact.form.attached')}: {attachmentFile.name}</p>
                 )}
               </div>
             </div>
             
             <div>
               <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-2">
-                Message *
+                {t('contact.form.message')} *
               </label>
               <textarea
                 id="message"
@@ -292,7 +294,7 @@ const Contact = () => {
                 required
                   rows={5}
                   className="w-full px-3 py-2 border border-slate-200 rounded-none focus:ring-2 focus:ring-primary focus:border-primary transition"
-                  placeholder="Tell us about your project and how we can help..."
+                  placeholder={t('contact.form.messagePlaceholder')}
                 />
             </div>
             
@@ -306,11 +308,11 @@ const Contact = () => {
               {isSubmitting ? (
                 <>
                   <div className="animate-spin rounded-none h-4 w-4 border-2 border-white border-t-transparent"></div>
-                  Sending...
+                  {t('contact.form.sending')}
                 </>
               ) : (
                 <>
-                  Send Message
+                  {t('buttons.sendMessage')}
                   <Send className="h-4 w-4" />
                 </>
               )}
@@ -323,13 +325,13 @@ const Contact = () => {
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="office-locations">
         <div className="bg-dark-blue p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <h2 id="office-locations" className="text-3xl md:text-4xl tracking-tight font-bold text-white">
-            Visit Us at Our Offices
+            {t('contact.offices.title')}
           </h2>
           <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Netherlands Office */}
             <div className="flex flex-col">
               <div className="bg-blue-50 p-6 mb-4 rounded-none">
-                <h3 className="text-lg font-medium text-slate-700 mb-4">Head Office – Netherlands</h3>
+                <h3 className="text-lg font-medium text-slate-700 mb-4">{t('contact.offices.netherlands.title')}</h3>
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
                     <MapPin className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
@@ -371,7 +373,7 @@ const Contact = () => {
             {/* India Office */}
             <div className="flex flex-col">
               <div className="bg-blue-50 p-6 mb-4 rounded-none">
-                <h3 className="text-lg font-medium text-slate-700 mb-4">India Office</h3>
+                <h3 className="text-lg font-medium text-slate-700 mb-4">{t('contact.offices.india.title')}</h3>
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
                     <MapPin className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
@@ -419,17 +421,17 @@ const Contact = () => {
           <div className="flex justify-center">
             <div className="text-center max-w-2xl">
               <h2 id="cta" className="text-3xl md:text-4xl font-bold tracking-tight">
-                Talk to Our SAP Experts Today
+                {t('contact.finalCTA.title')}
               </h2>
               <p className="mt-4 text-slate-600 max-w-2xl">
-                Reach out to discuss your needs and see how we can help.
+                {t('contact.finalCTA.description')}
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
                 <a
                   href="tel:+31622098973"
                   className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition px-6 py-3 rounded-none font-bold"
                 >
-                  Call Us Now
+                  {t('buttons.callUsNow')}
                   <ArrowUpRight className="h-4 w-4" />
                 </a>
               </div>

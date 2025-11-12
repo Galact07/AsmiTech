@@ -1,0 +1,673 @@
+{
+  "header": {
+    "nav": {
+      "home": "Home",
+      "about": "About Us",
+      "services": "Services",
+      "industries": "Industries",
+      "careers": "Careers",
+      "jobs": "Jobs",
+      "contact": "Contact",
+      "resources": "Resources"
+    },
+    "viewAllServices": "View all services",
+    "getInTouch": "Get in Touch"
+  },
+  "buttons": {
+    "getStarted": "Get Started",
+    "learnMore": "Learn More",
+    "contactUs": "Contact Us",
+    "readMore": "Read More",
+    "apply": "Apply",
+    "applyNow": "Apply Now",
+    "submit": "Submit",
+    "requestConsultation": "Request A Consultation",
+    "contactUsNow": "Contact Us Now",
+    "backToCareers": "Back to Careers",
+    "clearFilters": "Clear filters",
+    "clearAllFilters": "Clear All Filters",
+    "applyForPosition": "Apply for this Position",
+    "cancel": "Cancel",
+    "submitApplication": "Submit Application",
+    "ourServices": "Our Services",
+    "ourStory": "Our Story",
+    "viewIndustries": "View Industries",
+    "openPositions": "Open Positions",
+    "viewJobs": "View Jobs",
+    "viewAllJobs": "View All Jobs",
+    "sendMessage": "Send Message",
+    "visitUs": "Visit Us",
+    "sending": "Sending...",
+    "sendMessage": "Send Message",
+    "subscribeToUpdates": "Subscribe to Updates",
+    "registerNow": "Register Now",
+    "subscribe": "Subscribe",
+    "browseAllJobs": "Browse All Jobs",
+    "callUsNow": "Call Us Now",
+    "getInTouch": "Get In Touch",
+    "getStartedToday": "Get Started Today",
+    "download": "Download",
+    "viewOnline": "View Online"
+  },
+  "home": {
+    "hero": {
+      "tagline": "Premier SAP Consulting",
+      "title": "ASMI: Your SAP Experts",
+      "description": "At ASMI, we help businesses get the most out of SAP. From setup to optimization, our experts make your systems smarter, faster, and aligned with your goals, so you can run efficiently today and scale confidently tomorrow."
+    },
+    "whoWeAre": {
+      "title": "Who We Are",
+      "paragraph1": "At ASMI, we help businesses work smarter with SAP. Our team combines hands-on experience and real-world understanding to build solutions that make operations simpler, faster, and ready for what's next.",
+      "paragraph2": "With roots in the Netherlands and India, we support clients worldwide, delivering SAP systems that truly fit their goals. Every project we take on is driven by one thing — helping our clients grow with clarity and confidence."
+    },
+    "clients": {
+      "title": "Clients We've Served"
+    },
+    "services": {
+      "title": "Our Services",
+      "description": "We offer SAP solutions built around your business. From setup to support, we make your systems smoother, smarter, and ready to grow with you.",
+      "list": {
+        "sapPublicCloud": {
+          "title": "SAP Public Cloud",
+          "description": "Deploy secure, scalable SAP cloud solutions for streamlined operations and agility."
+        },
+        "sapImplementations": {
+          "title": "SAP Implementations and Rollouts",
+          "description": "Execute tailored SAP deployments with proven Greenfield, Brownfield, or Bluefield strategies."
+        },
+        "sapDocumentCompliance": {
+          "title": "SAP Document and Reporting Compliance",
+          "description": "Simplify e-Invoicing and tax reporting with seamless, compliant SAP solutions."
+        },
+        "sapConsulting": {
+          "title": "SAP Consulting & Advisory",
+          "description": "Unlock strategic value with expert SAP guidance tailored to your business goals."
+        },
+        "dataMigration": {
+          "title": "Data & Migration Services",
+          "description": "Ensure smooth, secure data migration for optimized SAP performance."
+        },
+        "supportManaged": {
+          "title": "Support & Managed Services",
+          "description": "Maintain peak SAP performance with proactive support and management."
+        },
+        "training": {
+          "title": "Training & Change Management",
+          "description": "Empower teams with targeted training for seamless SAP adoption."
+        },
+        "projectManagement": {
+          "title": "SAP Project Management & Governance",
+          "description": "Drive project success with expert oversight and disciplined governance."
+        }
+      }
+    },
+    "industries": {
+      "title": "Industries We Serve",
+      "retail": {
+        "title": "Retail & Consumer Goods",
+        "description": "Integrate sales, inventory, and customer insights for smarter decisions and seamless shopping experiences across channels.",
+        "features": [
+          "Cut inventory waste and stockouts with smarter SAP planning",
+          "Accelerate supply chain processes to get products to customers faster",
+          "Use real-time data to improve sales decisions and customer satisfaction"
+        ]
+      },
+      "oilGas": {
+        "title": "Oil, Gas & Energy",
+        "description": "Connect operations, maintenance, and compliance systems to improve efficiency, reduce downtime, and maintain the highest safety standards.",
+        "features": [
+          "Keep critical equipment running longer with predictive maintenance",
+          "Stay fully compliant with safety and environmental regulations",
+          "Turn operational data into cost-saving, actionable insights"
+        ]
+      },
+      "pharma": {
+        "title": "Pharmaceuticals & Life Sciences",
+        "description": "Link research, production, and regulatory processes to ensure product quality, accelerate delivery, and stay fully compliant.",
+        "features": [
+          "Speed up manufacturing without compromising quality or compliance",
+          "Track every batch to ensure regulatory standards are met",
+          "Coordinate distribution to meet demand efficiently and reliably"
+        ]
+      },
+      "chemicals": {
+        "title": "Chemicals & Petrochemicals",
+        "description": "Coordinate production, safety, and supply chain operations to boost efficiency, minimize risks, and respond quickly to market demands.",
+        "features": [
+          "Optimize production to reduce waste and energy usage",
+          "Simplify compliance reporting with automated SAP processes",
+          "Respond quickly to supply chain disruptions or market changes"
+        ]
+      },
+      "publicSector": {
+        "title": "Public Sector & Government",
+        "description": "Streamline financial, operational, and citizen services to improve transparency, accountability, and service delivery across departments.",
+        "features": [
+          "Automate budgeting and fund management for clarity and control",
+          "Increase transparency across departments and operations",
+          "Deliver citizen services more efficiently using real-time insights"
+        ]
+      },
+      "logistics": {
+        "title": "Logistics & Supply Chain",
+        "description": "Unify procurement, warehousing, and distribution with real-time insights to ensure faster, more reliable, and cost-effective operations.",
+        "features": [
+          "Streamline warehousing, shipping, and inventory tracking",
+          "Get full visibility across suppliers and deliveries",
+          "Resolve bottlenecks quickly to maintain smooth operations"
+        ]
+      }
+    },
+    "testimonials": {
+      "title": "What Clients Say",
+      "list": [
+        "\"Their SAP expertise transformed our processes, efficient, reliable, and seamless implementation!\" – Cargill Corporation",
+        "\"A trusted partner for SAP solutions. They understood our business needs perfectly.\" – Hitachi Energy",
+        "\"Professional, proactive, and results-driven. Our SAP system has never run smoother.\" – Sucafina",
+        "\"Exceptional support and guidance throughout our SAP journey. Highly recommended!\" – Johnson & Johnson"
+      ]
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "questions": [
+        {
+          "q": "How does ASMI ensure a smooth SAP implementation?",
+          "a": "We follow a structured rollout plan with clear milestones, thorough testing, and close collaboration with your team to avoid downtime and ensure the system works from day one."
+        },
+        {
+          "q": "Can we customize SAP solutions for our unique business needs?",
+          "a": "Yes, we configure SAP workflows, reports, and dashboards to match your exact operational requirements, so the system fits your business processes perfectly."
+        },
+        {
+          "q": "Can we integrate SAP with our existing systems?",
+          "a": "Absolutely. We connect SAP with your ERP, CRM, and other software, enabling seamless data flow and unified reporting without disrupting ongoing operations."
+        },
+        {
+          "q": "Does ASMI provide training for our team on SAP systems?",
+          "a": "Yes, we deliver tailored training sessions, user manuals, and hands-on support to ensure your staff can use SAP confidently and independently."
+        },
+        {
+          "q": "How quickly can we see improvements after implementing SAP with ASMI?",
+          "a": "Clients typically notice better process efficiency and accurate reporting within the first few weeks, with measurable operational improvements and cost savings visible within 2–3 months."
+        }
+      ]
+    },
+    "finalCTA": {
+      "title": "Make your SAP work better with ASMI",
+      "description": "Get systems that run right and grow with your business."
+    }
+  },
+  "about": {
+    "hero": {
+      "tagline": "About Us",
+      "title": "Learn More About ASMI",
+      "description": "Discover how ASMI helps businesses run better with SAP. We bring hands-on expertise, practical solutions, and a clear focus on results that move your business forward."
+    },
+    "story": {
+      "title": "Our Story",
+      "paragraph1": "At ASMI, we've built our work around one belief — technology should make business simpler, not harder. From our base in Utrecht, we help companies use SAP in ways that truly matter: smoother operations, smarter decisions, and stronger results. Our team blends deep know-how with real-world insight to create solutions that fit how your business actually runs.",
+      "paragraph2": "We've earned the trust of global names like Hitachi, Cargill, and Deloitte by staying hands-on, honest, and focused on lasting impact. For us, it's never about quick fixes — it's about building systems that stand the test of time and help businesses grow with confidence."
+    },
+    "vision": {
+      "title": "Our Vision",
+      "paragraph1": "We aim to shape a future where businesses run with clarity, agility, and purpose through the power of SAP. Our vision is to help organizations move beyond complexity by building intelligent systems that simplify work, strengthen decisions, and enable sustainable growth.",
+      "paragraph2": "We see technology as a driver of real progress. By combining deep expertise with a partnership mindset, we work to create lasting value — empowering businesses to operate smarter, innovate faster, and stay ahead in a changing world."
+    },
+    "mission": {
+      "title": "Our Mission",
+      "paragraph1": "Our mission is to deliver SAP solutions that turn challenges into opportunities and strategies into results. We help businesses optimize performance, streamline operations, and unlock the full potential of their systems through thoughtful, precise implementation.",
+      "paragraph2": "Every project reflects our commitment to excellence, collaboration, and measurable outcomes. We focus on building reliable solutions that adapt to change, create impact from day one, and support long-term success for every client we work with."
+    },
+    "team": {
+      "title": "Meet Our Team",
+      "description": "Our team blends real experience with a shared drive to make SAP work better for you.",
+      "members": {
+        "basavaraj": {
+          "name": "Basavaraj K M",
+          "role": "Managing Director",
+          "bio": "With 20+ years in SAP consulting, he specializes in S/4HANA Finance, Central Finance, and Group Reporting. He has led multiple global implementations and migrations with proven results. A certified S/4HANA expert, he focuses on delivering practical, high-impact digital transformation solutions."
+        },
+        "asha": {
+          "name": "Asha M",
+          "role": "Managing Partner",
+          "bio": "As Managing Partner, she leads the firm's strategy and operations. She focuses on delivering measurable results and building strong client relationships. Her leadership combines vision, accountability, and a commitment to excellence."
+        }
+      }
+    },
+    "finalCTA": {
+      "title": "Drive better SAP results with ASMI",
+      "description": "Start your SAP journey with the right partner."
+    }
+  },
+  "services": {
+    "hero": {
+      "tagline": "Our Services",
+      "title": "SAP Services We Offer",
+      "description": "We deliver a complete range of SAP services designed to improve processes, integrate systems, and drive business efficiency."
+    },
+    "clients": {
+      "title": "Clients We've Served"
+    },
+    "servicesSection": {
+      "title": "Our Services",
+      "description": "We offer SAP solutions built around your business. From setup to support, we make your systems smoother, smarter, and ready to grow with you.",
+      "list": {
+        "sapPublicCloud": {
+          "title": "SAP Public Cloud",
+          "description": "Deploy secure, scalable SAP cloud solutions for streamlined operations and agility.",
+          "features": [
+            "Rapid deployment with minimal disruption to ongoing operations.",
+            "Flexible, scalable infrastructure to support growing business needs.",
+            "Integration with existing systems for seamless data flow."
+          ]
+        },
+        "sapImplementations": {
+          "title": "SAP Implementations and Rollouts",
+          "description": "Execute tailored SAP deployments with proven Greenfield, Brownfield, or Bluefield strategies.",
+          "features": [
+            "Full lifecycle management from planning to go-live.",
+            "Customization to match specific business processes and reporting requirements.",
+            "Risk mitigation and quality assurance throughout the deployment."
+          ]
+        },
+        "sapDocumentCompliance": {
+          "title": "SAP Document and Reporting Compliance",
+          "description": "Simplify e-Invoicing and tax reporting with seamless, compliant SAP solutions.",
+          "features": [
+            "Automate invoicing and reporting to reduce errors and delays.",
+            "Ensure compliance with local and international regulations.",
+            "Provide audit-ready documentation and reporting capabilities."
+          ]
+        },
+        "sapConsulting": {
+          "title": "SAP Consulting & Advisory",
+          "description": "Unlock strategic value with expert SAP guidance tailored to your business goals.",
+          "features": [
+            "Process analysis to identify bottlenecks and optimization opportunities.",
+            "Recommendations on system enhancements and best practices.",
+            "Strategic planning for SAP adoption, upgrades, and transformation."
+          ]
+        },
+        "dataMigration": {
+          "title": "Data & Migration Services",
+          "description": "Ensure smooth, secure data migration for optimized SAP performance.",
+          "features": [
+            "Data cleansing, validation, and mapping for accuracy.",
+            "Minimized downtime during migration with phased approaches.",
+            "Integration with legacy systems and new SAP modules."
+          ]
+        },
+        "supportManaged": {
+          "title": "Support & Managed Services",
+          "description": "Maintain peak SAP performance with proactive support and management.",
+          "features": [
+            "24/7 monitoring and issue resolution to avoid disruptions.",
+            "System optimization to maintain efficiency and reliability.",
+            "Regular updates, patches, and preventive maintenance."
+          ]
+        },
+        "training": {
+          "title": "Training & Change Management",
+          "description": "Empower teams with targeted training for seamless SAP adoption.",
+          "features": [
+            "Customized training sessions for different user roles.",
+            "Support for change adoption and process standardization.",
+            "Documentation and resources to ensure long-term proficiency."
+          ]
+        },
+        "projectManagement": {
+          "title": "SAP Project Management & Governance",
+          "description": "Drive project success with expert oversight and disciplined governance.",
+          "features": [
+            "Clear project planning, timelines, and milestone tracking.",
+            "Risk management and mitigation throughout the project lifecycle.",
+            "Stakeholder communication and reporting for transparency and accountability."
+          ]
+        }
+      }
+    },
+    "technology": {
+      "title": "Technology Stack",
+      "description": "We work with the latest SAP technologies and complementary solutions to deliver comprehensive business value."
+    },
+    "finalCTA": {
+      "title": "Move your business forward with ASMI",
+      "description": "Powering growth through smarter SAP solutions."
+    }
+  },
+  "industries": {
+    "hero": {
+      "tagline": "Industries",
+      "title": "Industries We Serve",
+      "description": "We understand that every industry works differently. Our SAP services are shaped around each sector's needs to solve real challenges and deliver solid results."
+    },
+    "industriesSection": {
+      "title": "Industries We Serve",
+      "retail": {
+        "title": "Retail & Consumer Goods",
+        "description": "Integrate sales, inventory, and customer insights to make smarter decisions and deliver a seamless shopping experience across all channels.",
+        "features": [
+          "Cut inventory waste and stockouts with smarter SAP planning.",
+          "Accelerate supply chain processes to get products to customers faster.",
+          "Use real-time data to improve sales decisions and customer satisfaction."
+        ]
+      },
+      "oilGas": {
+        "title": "Oil, Gas & Energy",
+        "description": "Connect operations, maintenance, and compliance systems to improve efficiency, reduce downtime, and maintain the highest safety standards.",
+        "features": [
+          "Keep critical equipment running longer with predictive maintenance.",
+          "Stay fully compliant with safety and environmental regulations.",
+          "Turn operational data into cost-saving, actionable insights."
+        ]
+      },
+      "pharma": {
+        "title": "Pharmaceuticals & Life Sciences",
+        "description": "Link research, production, and regulatory processes to ensure product quality, accelerate delivery, and stay fully compliant.",
+        "features": [
+          "Speed up manufacturing without compromising quality or compliance.",
+          "Track every batch to ensure regulatory standards are met.",
+          "Coordinate distribution to meet demand efficiently and reliably."
+        ]
+      },
+      "chemicals": {
+        "title": "Chemicals & Petrochemicals",
+        "description": "Coordinate production, safety, and supply chain operations to boost efficiency, minimize risks, and respond quickly to market demands.",
+        "features": [
+          "Optimize production to reduce waste and energy usage.",
+          "Simplify compliance reporting with automated SAP processes.",
+          "Respond quickly to supply chain disruptions or market changes."
+        ]
+      },
+      "publicSector": {
+        "title": "Public Sector & Government",
+        "description": "Streamline financial, operational, and citizen services to improve transparency, accountability, and service delivery across departments.",
+        "features": [
+          "Automate budgeting and fund management for clarity and control.",
+          "Increase transparency across departments and operations.",
+          "Deliver citizen services more efficiently using real-time insights."
+        ]
+      },
+      "logistics": {
+        "title": "Logistics & Supply Chain",
+        "description": "Unify procurement, warehousing, and distribution with real-time insights to ensure faster, more reliable, and cost-effective operations.",
+        "features": [
+          "Streamline warehousing, shipping, and inventory tracking.",
+          "Get full visibility across suppliers and deliveries.",
+          "Resolve bottlenecks quickly to maintain smooth operations."
+        ]
+      }
+    },
+    "finalCTA": {
+      "title": "Simplify your SAP journey with ASMI",
+      "description": "Reliable support for lasting business results."
+    }
+  },
+  "careers": {
+    "hero": {
+      "tagline": "Careers",
+      "title": "Join Our Team",
+      "description": "Join a team that values your skills and ambitions. At ASMI, we grow together and create real impact."
+    },
+    "positions": {
+      "title": "Open Positions",
+      "description": "Explore our current openings and find the perfect role to advance your SAP career.",
+      "noOpenings": {
+        "title": "No open positions right now",
+        "description": "We're not actively hiring for new roles at the moment. Please check back soon or send us your resume so we can reach out when a matching opportunity opens up.",
+        "shareResume": "Share Your Resume"
+      },
+      "loading": "Loading open positions...",
+      "viewAllPositions": "View All {count} Open Positions",
+      "responsibilities": "Responsibilities:",
+      "requirements": "Requirements:",
+      "posted": "Posted"
+    },
+    "process": {
+      "title": "Application Process",
+      "description": "Join Our Global Team at ASMI Technologies",
+      "steps": [
+        {
+          "step": "01",
+          "title": "Find a Job",
+          "description": "Explore current openings on our ASMI Careers Page and find roles that match your skills and interests."
+        },
+        {
+          "step": "02",
+          "title": "Apply",
+          "description": "Submit your online application and receive instant confirmation."
+        },
+        {
+          "step": "03",
+          "title": "Pre-Selection",
+          "description": "We review your skills and experience to determine fit and may consider you for other relevant positions."
+        },
+        {
+          "step": "04",
+          "title": "Interview",
+          "description": "Shortlisted candidates meet the recruiting manager and HR. Additional rounds or assessments may apply. Virtual or in-person interviews available."
+        },
+        {
+          "step": "05",
+          "title": "Selection",
+          "description": "References may be checked. If selected, you'll receive an offer with a competitive package. All other applicants are notified."
+        },
+        {
+          "step": "06",
+          "title": "Onboarding",
+          "description": "New hires undergo an introduction program to integrate quickly and start contributing effectively."
+        }
+      ]
+    },
+    "apply": {
+      "title": "Apply for {job}",
+      "description": "Submit your details and we will get in touch if your profile is a good match.",
+      "fullName": "Full Name",
+      "email": "Email",
+      "phoneNumber": "Phone Number",
+      "resume": "Resume (PDF only) *",
+      "coverLetter": "Cover Letter (PDF only, optional)",
+      "submitting": "Submitting"
+    },
+    "finalCTA": {
+      "title": "Ready to Join the ASMI Team?",
+      "description": "Join a team where you can grow, learn, and build your career."
+    }
+  },
+  "contact": {
+    "hero": {
+      "tagline": "Contact Us",
+      "title": "Get in Touch With Us",
+      "description": "Discuss your SAP needs with our experts and see how we can help. Our team is ready to guide you toward the right solution."
+    },
+    "form": {
+      "title": "Send Us a Message",
+      "description": "Fill out the form below and we'll get back to you within 24 hours.",
+      "name": "Name",
+      "namePlaceholder": "Your full name",
+      "email": "Email",
+      "emailPlaceholder": "your.email@company.com",
+      "location": "Location",
+      "locationPlaceholder": "Your city, country",
+      "company": "Company",
+      "companyPlaceholder": "Your company name",
+      "phone": "Phone",
+      "phonePlaceholder": "+31 (0)30 123 4567",
+      "attachment": "Attachment (optional)",
+      "attached": "Attached",
+      "message": "Message",
+      "messagePlaceholder": "Tell us about your project and how we can help...",
+      "sending": "Sending...",
+      "successMessage": "Thank you! Your message has been sent successfully. We'll get back to you soon.",
+      "errorMessage": "Sorry, there was an error sending your message. Please try again."
+    },
+    "offices": {
+      "title": "Visit Us at Our Offices",
+      "netherlands": {
+        "title": "Head Office – Netherlands",
+        "address": "Asmi Technology Consulting B.V\n#10, Boudewijn Buchstraat\n3544HJ Utrecht"
+      },
+      "india": {
+        "title": "India Office",
+        "address": "Asmi Technology Consulting Pvt. Ltd.\n#136, Meenakshi Layout,\nKalena Agrahara, Bannerghatta Main Road,\nBengaluru - 560076"
+      }
+    },
+    "finalCTA": {
+      "title": "Talk to Our SAP Experts Today",
+      "description": "Reach out to discuss your needs and see how we can help."
+    }
+  },
+  "resources": {
+    "hero": {
+      "tagline": "Resources & Insights",
+      "title": "Knowledge hub for SAP excellence.",
+      "description": "Access our library of whitepapers, case studies, webinars, and best practices to accelerate your SAP journey and stay ahead of industry trends."
+    },
+    "featured": {
+      "title": "Featured Resources",
+      "items": [
+        {
+          "title": "S/4HANA Migration Guide for Mid-Market",
+          "description": "A comprehensive guide to planning and executing your S/4HANA migration with minimal business disruption.",
+          "type": "Whitepaper"
+        },
+        {
+          "title": "Manufacturing Excellence with SAP",
+          "description": "How leading manufacturers are using SAP to optimize production, reduce costs, and improve quality.",
+          "type": "Case Study"
+        },
+        {
+          "title": "Digital Transformation in Retail",
+          "description": "Best practices for implementing omni-channel retail solutions with SAP Commerce and ERP integration.",
+          "type": "Webinar"
+        },
+        {
+          "title": "SAP Security Best Practices",
+          "description": "Essential security measures to protect your SAP landscape and ensure compliance with industry standards.",
+          "type": "Guide"
+        },
+        {
+          "title": "Cloud Migration Strategies",
+          "description": "Planning and executing your move to SAP Cloud with minimal risk and maximum business value.",
+          "type": "Whitepaper"
+        },
+        {
+          "title": "SAP Analytics for Business Intelligence",
+          "description": "Leveraging SAP Analytics Cloud to transform data into actionable business insights.",
+          "type": "Case Study"
+        }
+      ]
+    },
+    "webinars": {
+      "title": "Upcoming Webinars",
+      "description": "Join our experts for live sessions on the latest SAP trends, best practices, and industry insights.",
+      "items": [
+        {
+          "title": "S/4HANA 2024: What's New for Mid-Market",
+          "date": "March 15, 2024",
+          "time": "2:00 PM CET",
+          "speaker": "Sarah van der Berg",
+          "description": "Discover the latest S/4HANA features and how they can benefit your mid-market business."
+        },
+        {
+          "title": "AI and Machine Learning in SAP",
+          "date": "March 22, 2024",
+          "time": "2:00 PM CET",
+          "speaker": "Michael Chen",
+          "description": "Explore how AI and ML capabilities in SAP can transform your business processes."
+        },
+        {
+          "title": "Manufacturing 4.0 with SAP",
+          "date": "March 29, 2024",
+          "time": "2:00 PM CET",
+          "speaker": "Elena Rodriguez",
+          "description": "Learn how to implement Industry 4.0 solutions using SAP's manufacturing suite."
+        }
+      ]
+    },
+    "newsletter": {
+      "title": "Stay Updated with SAP Insights",
+      "description": "Get the latest SAP news, best practices, and industry insights delivered to your inbox monthly.",
+      "emailPlaceholder": "Enter your email",
+      "privacyNote": "We respect your privacy. Unsubscribe at any time."
+    }
+  },
+  "jobs": {
+    "header": {
+      "tagline": "Career Opportunities",
+      "title": "Open Positions",
+      "description": "Browse all our current job openings and find your next career opportunity with ASMI BV."
+    },
+    "search": {
+      "placeholder": "Search by job title or specialization...",
+      "employmentType": "Employment Type",
+      "location": "Location",
+      "allTypes": "All Types",
+      "allLocations": "All Locations",
+      "showing": "Showing",
+      "of": "of",
+      "positions": "positions"
+    },
+    "status": {
+      "loading": "Loading open positions...",
+      "noResults": "No positions match your criteria",
+      "noOpenings": "No open positions right now",
+      "noResultsDescription": "Try adjusting your search or filters to find more opportunities.",
+      "noOpeningsDescription": "We're not actively hiring for new roles at the moment. Please check back soon or send us your resume."
+    },
+    "details": {
+      "keyRequirements": "Key Requirements:",
+      "posted": "Posted",
+      "specialization": "Specialization:"
+    },
+    "apply": {
+      "title": "Apply for",
+      "description": "Submit your details and we will get in touch if your profile is a good match.",
+      "fullName": "Full Name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "resume": "Resume (PDF only) *",
+      "coverLetter": "Cover Letter (PDF only, optional)",
+      "submitting": "Submitting"
+    },
+    "employmentTypes": {
+      "fullTime": "Full Time",
+      "partTime": "Part Time",
+      "contract": "Contract",
+      "freelance": "Freelance"
+    }
+  },
+  "footer": {
+    "companyName": "ASMI Technology Consulting B.V.",
+    "about": "About ASMI",
+    "quickLinks": "Quick links",
+    "contact": "Connect with Us",
+    "linkedin": "LinkedIn",
+    "email": "info@asmitechconsulting.com",
+    "allRightsReserved": "All rights reserved.",
+    "netherlands": {
+      "title": "Head Office – Netherlands",
+      "address": "Asmi Technology Consulting B.V\n#10, Boudewijn Buchstraat\n3544HJ Utrecht\nPh No: +31-622098973"
+    },
+    "india": {
+      "title": "India Office",
+      "address": "Asmi Technology Consulting Pvt. Ltd.\n#136, Meenakshi Layout,\nKalena Agrahara, Bannerghatta Main Road,\nBengaluru - 560076\nPh No: +91 98862 00035"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "close": "Close",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "clear": "Clear"
+  }
+}

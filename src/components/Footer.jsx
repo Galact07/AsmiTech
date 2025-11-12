@@ -1,35 +1,31 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const Footer = () => {
+  const { t } = useTranslation();
+  
   return (
     <footer className="border-t border-blue-300 bg-dark-blue mt-12" role="contentinfo" aria-label="Footer">
       <div className="max-w-7xl mx-auto px-5 md:px-8 py-6">
         {/* Company name as a full-width row */}
         <div className="mb-4">
-          <span className="text-xl font-bold text-white">ASMI Technology Consulting B.V.</span>
+          <span className="text-xl font-bold text-white">{t('footer.companyName')}</span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
           {/* Company Info */}
           <div className="md:col-span-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="flex flex-col">
-                <h3 className="text-sm font-bold text-white mb-3">Head Office – Netherlands</h3>
-                <address className="not-italic text-sm text-white/80 leading-relaxed break-words">
-                  Asmi Technology Consulting B.V<br />
-                  #10, Boudewijn Buchstraat<br />
-                  3544HJ Utrecht<br />
-                  Ph No: +31-622098973
+                <h3 className="text-sm font-bold text-white mb-3">{t('footer.netherlands.title')}</h3>
+                <address className="not-italic text-sm text-white/80 leading-relaxed break-words" style={{ whiteSpace: 'pre-line' }}>
+                  {t('footer.netherlands.address')}
                 </address>
               </div>
 
               <div className="flex flex-col">
-                <h3 className="text-sm font-bold text-white mb-3">India Office</h3>
-                <address className="not-italic text-sm text-white/80 leading-relaxed break-words">
-                  Asmi Technology Consulting Pvt. Ltd.<br />
-                  #136, Meenakshi Layout,<br />
-                  Kalena Agrahara, Bannerghatta Main Road,<br />
-                  Bengaluru - 560076<br />
-                  Ph No: +91 98862 00035
+                <h3 className="text-sm font-bold text-white mb-3">{t('footer.india.title')}</h3>
+                <address className="not-italic text-sm text-white/80 leading-relaxed break-words" style={{ whiteSpace: 'pre-line' }}>
+                  {t('footer.india.address')}
                 </address>
               </div>
             </div>
@@ -37,21 +33,21 @@ const Footer = () => {
           
           {/* Quick Links */}
           <div className="md:col-span-3">
-            <h3 className="text-sm font-bold text-white mb-3">Quick links</h3>
+            <h3 className="text-sm font-bold text-white mb-3">{t('footer.quickLinks')}</h3>
             <div className="text-sm text-white/80 leading-relaxed">
-              <Link to="/" className="block hover:text-blue-400 transition">Home</Link>
-              <Link to="/about" className="block hover:text-blue-400 transition">About Us</Link>
-              <Link to="/services" className="block hover:text-blue-400 transition">Services</Link>
-              <Link to="/industries" className="block hover:text-blue-400 transition">Industries</Link>
-              <Link to="/resources" className="sr-only focus:not-sr-only block hover:text-blue-400 transition">Resources</Link>
-              <Link to="/careers" className="block hover:text-blue-400 transition">Careers</Link>
-              <Link to="/contact" className="block hover:text-blue-400 transition">Contact</Link>
+              <Link to="/" className="block hover:text-blue-400 transition">{t('header.nav.home')}</Link>
+              <Link to="/about" className="block hover:text-blue-400 transition">{t('header.nav.about')}</Link>
+              <Link to="/services" className="block hover:text-blue-400 transition">{t('header.nav.services')}</Link>
+              <Link to="/industries" className="block hover:text-blue-400 transition">{t('header.nav.industries')}</Link>
+              <Link to="/resources" className="sr-only focus:not-sr-only block hover:text-blue-400 transition">{t('header.nav.resources')}</Link>
+              <Link to="/careers" className="block hover:text-blue-400 transition">{t('header.nav.careers')}</Link>
+              <Link to="/contact" className="block hover:text-blue-400 transition">{t('header.nav.contact')}</Link>
             </div>
           </div>
           
           {/* Social Links */}
           <div className="md:col-span-3">
-            <h3 className="text-sm font-bold text-white mb-3">Connect with Us</h3>
+            <h3 className="text-sm font-bold text-white mb-3">{t('footer.contact')}</h3>
             <div className="text-sm text-white/80 leading-relaxed">
               <a
                 href="https://www.linkedin.com/company/asmi-technology-consulting-bv/"
@@ -65,7 +61,7 @@ const Footer = () => {
                   <rect width="4" height="12" x="2" y="9"></rect>
                   <circle cx="4" cy="4" r="2"></circle>
                 </svg>
-                LinkedIn
+                {t('footer.linkedin')}
               </a>
               <a
                 href="mailto:info@asmitechconsulting.com"
@@ -75,13 +71,13 @@ const Footer = () => {
                   <rect width="20" height="16" x="2" y="4" rx="2"></rect>
                   <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                 </svg>
-                <span className="break-all">info@asmitechconsulting.com</span>
+                <span className="break-all">{t('footer.email')}</span>
               </a>
             </div>
           </div>
         </div>
         <div className="mt-6 pt-4 border-t border-white/10 text-sm text-white/60 text-center">
-          © 2025 Asmi Technology Consulting B.V.
+          © 2025 {t('footer.companyName')} {t('footer.allRightsReserved')}
         </div>
       </div>
     </footer>

@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import { LanguageProvider } from './contexts/LanguageContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
@@ -10,14 +12,7 @@ import Careers from './pages/Careers';
 import JobsListing from './pages/JobsListing';
 import Contact from './pages/Contact';
 import Resources from './pages/Resources';
-import SapPublicCloud from './pages/SapPublicCloud';
-import SapImplementationsAndRollouts from './pages/SapImplementationsAndRollouts';
-import SapDocumentAndReportingCompliance from './pages/SapDocumentAndReportingCompliance';
-import SapConsultingAdvisory from './pages/SapConsultingAdvisory';
-import DataMigrationServices from './pages/DataMigrationServices';
-import SupportManagedServices from './pages/SupportManagedServices';
-import TrainingChangeManagement from './pages/TrainingChangeManagement';
-import SapProjectManagementGovernance from './pages/SapProjectManagementGovernance';
+import DynamicServicePage from './pages/DynamicServicePage';
 
 // Admin imports
 import AdminLogin from './pages/AdminLogin';
@@ -27,12 +22,16 @@ import JobsAdmin from './pages/admin/JobsAdmin';
 import ApplicationsAdmin from './pages/admin/ApplicationsAdmin';
 import InquiriesAdmin from './pages/admin/InquiriesAdmin';
 import CaseStudiesAdmin from './pages/admin/CaseStudiesAdmin';
+import ServicePagesAdmin from './pages/admin/ServicePagesAdmin';
+import TranslateAllAdmin from './pages/admin/TranslateAllAdmin';
 
 function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <Routes>
+    <LanguageProvider>
+      <Router>
+        <ScrollToTop />
+        <Toaster position="top-right" />
+        <Routes>
         {/* Main Website Routes - Existing UI preserved 100% */}
         <Route path="/" element={
           <div className="min-h-screen bg-white">
@@ -90,59 +89,12 @@ function App() {
             <Footer />
           </div>
         } />
-        <Route path="/services/sap-public-cloud" element={
+
+        {/* Service detail pages (dynamic, uses Supabase translations) */}
+        <Route path="/services/:slug" element={
           <div className="min-h-screen bg-white">
             <Header />
-            <main><SapPublicCloud /></main>
-            <Footer />
-          </div>
-        } />
-        <Route path="/services/sap-implementations-and-rollouts" element={
-          <div className="min-h-screen bg-white">
-            <Header />
-            <main><SapImplementationsAndRollouts /></main>
-            <Footer />
-          </div>
-        } />
-        <Route path="/services/sap-document-and-reporting-compliance" element={
-          <div className="min-h-screen bg-white">
-            <Header />
-            <main><SapDocumentAndReportingCompliance /></main>
-            <Footer />
-          </div>
-        } />
-        <Route path="/services/sap-consulting-advisory" element={
-          <div className="min-h-screen bg-white">
-            <Header />
-            <main><SapConsultingAdvisory /></main>
-            <Footer />
-          </div>
-        } />
-        <Route path="/services/data-migration-services" element={
-          <div className="min-h-screen bg-white">
-            <Header />
-            <main><DataMigrationServices /></main>
-            <Footer />
-          </div>
-        } />
-        <Route path="/services/support-managed-services" element={
-          <div className="min-h-screen bg-white">
-            <Header />
-            <main><SupportManagedServices /></main>
-            <Footer />
-          </div>
-        } />
-        <Route path="/services/training-change-management" element={
-          <div className="min-h-screen bg-white">
-            <Header />
-            <main><TrainingChangeManagement /></main>
-            <Footer />
-          </div>
-        } />
-        <Route path="/services/sap-project-management-governance" element={
-          <div className="min-h-screen bg-white">
-            <Header />
-            <main><SapProjectManagementGovernance /></main>
+            <main><DynamicServicePage /></main>
             <Footer />
           </div>
         } />
@@ -156,9 +108,12 @@ function App() {
           <Route path="applications" element={<ApplicationsAdmin />} />
           <Route path="inquiries" element={<InquiriesAdmin />} />
           <Route path="case-studies" element={<CaseStudiesAdmin />} />
+          <Route path="service-pages" element={<ServicePagesAdmin />} />
+          <Route path="translations" element={<TranslateAllAdmin />} />
         </Route>
       </Routes>
-    </Router>
+      </Router>
+    </LanguageProvider>
   );
 }
 

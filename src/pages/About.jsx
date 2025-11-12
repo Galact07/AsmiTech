@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, ArrowRight, Linkedin } from 'lucide-react';
 import Carousel from '../components/ui/carousel';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const About = () => {
+  const { t, tArray } = useTranslation();
+  
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -12,20 +15,20 @@ const About = () => {
             <div className="flex items-stretch gap-6 md:gap-10 flex-col md:flex-row min-h-[240px] md:min-h-[280px]">
               <div className="flex-1 w-full">
                 <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em] mt-0 pt-2">
-                About Us
+                {t('about.hero.tagline')}
                 </p>
                 <h1 id="about-title" className="sm:text-4xl md:text-5xl text-3xl font-bold text-slate-700 tracking-tight mt-2">
-                Learn More About ASMI
+                {t('about.hero.title')}
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg break-words">
-                Discover how ASMI helps businesses run better with SAP. We bring hands-on expertise, practical solutions, and a clear focus on results that move your business forward.
+                {t('about.hero.description')}
                 </p>
                 <div className="mt-6 flex flex-col sm:flex-row gap-3 w-full">
                   <Link
                     to="/contact"
                     className="group inline-flex items-center justify-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3 focus:outline-none flex-shrink-0"
                   >
-                    Contact Us
+                    {t('buttons.contactUs')}
                     <span className="inline-flex h-6 w-6 items-center justify-center rounded-none bg-black/5">
                       <ArrowUpRight className="h-4 w-4" />
                     </span>
@@ -47,7 +50,7 @@ const About = () => {
                     }}
                     className="inline-flex items-center justify-center gap-2 rounded-none px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition flex-shrink-0 cursor-pointer"
                   >
-                    Our Story
+                    {t('buttons.ourStory')}
                     <ArrowRight className="h-4 w-4" />
                   </a>
                 </div>
@@ -73,13 +76,13 @@ const About = () => {
           <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6 items-start">
             <div className="max-w-2xl">
               <h2 id="our-story" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700 mb-5">
-                Our Story
+                {t('about.story.title')}
               </h2>
               <p className="text-slate-700/80">
-                At ASMI, we've built our work around one belief — technology should make business simpler, not harder. From our base in Utrecht, we help companies use SAP in ways that truly matter: smoother operations, smarter decisions, and stronger results. Our team blends deep know-how with real-world insight to create solutions that fit how your business actually runs.
+                {t('about.story.paragraph1')}
               </p>
               <p className="mt-4 text-slate-700/80">
-                We've earned the trust of global names like Hitachi, Cargill, and Deloitte by staying hands-on, honest, and focused on lasting impact. For us, it's never about quick fixes — it's about building systems that stand the test of time and help businesses grow with confidence.
+                {t('about.story.paragraph2')}
               </p>
             </div>
             <div className="flex items-start justify-end md:ml-auto">
@@ -108,12 +111,12 @@ const About = () => {
               />
             </div>
             <div className="order-1 md:order-2">
-              <h2 id="vision-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700 mb-3">Our Vision</h2>
+              <h2 id="vision-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700 mb-3">{t('about.vision.title')}</h2>
               <p className="text-slate-700/80">
-                We aim to shape a future where businesses run with clarity, agility, and purpose through the power of SAP. Our vision is to help organizations move beyond complexity by building intelligent systems that simplify work, strengthen decisions, and enable sustainable growth.
+                {t('about.vision.paragraph1')}
               </p>
               <p className="mt-4 text-slate-700/80">
-                We see technology as a driver of real progress. By combining deep expertise with a partnership mindset, we work to create lasting value — empowering businesses to operate smarter, innovate faster, and stay ahead in a changing world.
+                {t('about.vision.paragraph2')}
               </p>
             </div>
           </div>
@@ -125,12 +128,12 @@ const About = () => {
         <div className="bg-slate-100 p-4 md:p-6 transition duration-500 ease-in rounded-none">
           <div className="grid grid-cols-1 md:grid-cols-[3fr_1fr] gap-6 items-start">
             <div className="order-2 md:order-1 max-w-2xl">
-              <h2 id="mission-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700 mb-3">Our Mission</h2>
+              <h2 id="mission-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700 mb-3">{t('about.mission.title')}</h2>
               <p className="text-slate-700/80">
-                Our mission is to deliver SAP solutions that turn challenges into opportunities and strategies into results. We help businesses optimize performance, streamline operations, and unlock the full potential of their systems through thoughtful, precise implementation.
+                {t('about.mission.paragraph1')}
               </p>
               <p className="mt-4 text-slate-700/80">
-                Every project reflects our commitment to excellence, collaboration, and measurable outcomes. We focus on building reliable solutions that adapt to change, create impact from day one, and support long-term success for every client we work with.
+                {t('about.mission.paragraph2')}
               </p>
             </div>
             <div className="order-1 md:order-2 h-full flex items-start justify-end md:ml-auto">
@@ -152,10 +155,10 @@ const About = () => {
             {/* Left side - Title and Description */}
             <div className="lg:col-span-1">
               <h2 id="team" className="text-3xl md:text-4xl tracking-tight font-bold text-white">
-                Meet Our Team
+                {t('about.team.title')}
               </h2>
               <p className="mt-4 text-white/80">
-                Our team blends real experience with a shared drive to make SAP work better for you.
+                {t('about.team.description')}
               </p>
             </div>
             
@@ -163,17 +166,17 @@ const About = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:col-span-2">
               {[
                 {
-                  name: 'Basavaraj K M',
-                  role: 'Managing Director',
-                  bio: 'With 20+ years in SAP consulting, he specializes in S/4HANA Finance, Central Finance, and Group Reporting. He has led multiple global implementations and migrations with proven results. A certified S/4HANA expert, he focuses on delivering practical, high-impact digital transformation solutions.',
+                  name: t('about.team.members.basavaraj.name'),
+                  role: t('about.team.members.basavaraj.role'),
+                  bio: t('about.team.members.basavaraj.bio'),
                   image: '/logos/Basavaraj.png',
                   initials: 'BK',
                   linkedin: 'https://www.linkedin.com/in/basavaraj-km-192b9813/'
                 },
                 {
-                  name: 'Asha M',
-                  role: 'Managing Partner',
-                  bio: 'As Managing Partner, she leads the firm\'s strategy and operations. She focuses on delivering measurable results and building strong client relationships. Her leadership combines vision, accountability, and a commitment to excellence.',
+                  name: t('about.team.members.asha.name'),
+                  role: t('about.team.members.asha.role'),
+                  bio: t('about.team.members.asha.bio'),
                   image: '/logos/Asha.png',
                   initials: 'AM',
                   linkedin: 'https://www.linkedin.com/in/asha-mathada-42a522370/'
@@ -218,14 +221,14 @@ const About = () => {
       {/* What Clients Say Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="testimonials-title">
         <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
-          <h2 id="testimonials-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">What Clients Say</h2>
+          <h2 id="testimonials-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">{t('home.testimonials.title')}</h2>
           <div className="mt-5">
             <Carousel speed="very-slow" className="py-4">
               {[
-                { quote: '"Their SAP expertise transformed our processes, efficient, reliable, and seamless implementation!" – Cargill Corporation', logoFile: 'cargill logo.jpg' },
-                { quote: '"A trusted partner for SAP solutions. They understood our business needs perfectly." – Hitachi Energy', logoFile: 'hitachi logo.png' },
-                { quote: '"Professional, proactive, and results-driven. Our SAP system has never run smoother." – Sucafina', logoFile: 'sucafina logo.svg' },
-                { quote: '"Exceptional support and guidance throughout our SAP journey. Highly recommended!" – Johnson & Johnson', logoFile: 'johnson and johnson logo.png' }
+                { quote: tArray('home.testimonials.list')[0], logoFile: 'cargill logo.jpg' },
+                { quote: tArray('home.testimonials.list')[1], logoFile: 'hitachi logo.png' },
+                { quote: tArray('home.testimonials.list')[2], logoFile: 'sucafina logo.svg' },
+                { quote: tArray('home.testimonials.list')[3], logoFile: 'johnson and johnson logo.png' }
               ].map((testimonial, idx) => (
                 <div key={idx} className="flex-shrink-0 mx-4 w-96">
                   <div className="bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6 rounded-none">
@@ -253,17 +256,17 @@ const About = () => {
           <div className="flex justify-center">
             <div className="text-center max-w-2xl">
               <h2 id="cta-title" className="text-3xl md:text-4xl font-bold tracking-tight">
-                Drive better SAP results with ASMI
+                {t('about.finalCTA.title')}
               </h2>
               <p className="mt-4 text-slate-600 max-w-2xl">
-                Start your SAP journey with the right partner.
+                {t('about.finalCTA.description')}
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   to="/contact"
                   className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition px-6 py-3 rounded-none font-bold"
                 >
-                  Get In Touch
+                  {t('buttons.getInTouch')}
                   <ArrowUpRight className="h-4 w-4" />
                 </Link>
               </div>

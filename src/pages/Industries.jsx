@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, ArrowRight, ShoppingCart, Flame, Pill, FlaskConical, Landmark, Truck, CheckCircle } from 'lucide-react';
 import Carousel from '../components/ui/carousel';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const Industries = () => {
+  const { t, tArray } = useTranslation();
+  
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -12,20 +15,20 @@ const Industries = () => {
             <div className="flex items-stretch gap-6 md:gap-10 flex-col md:flex-row min-h-[240px] md:min-h-[280px]">
               <div className="flex-1">
                 <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em] mt-0 pt-2">
-                  Industries
+                  {t('industries.hero.tagline')}
                 </p>
                 <h1 id="industries-title" className="sm:text-4xl md:text-5xl text-3xl font-bold text-slate-700 tracking-tight mt-2">
-                  Industries We Serve
+                  {t('industries.hero.title')}
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
-                  We understand that every industry works differently. Our SAP services are shaped around each sector's needs to solve real challenges and deliver solid results.
+                  {t('industries.hero.description')}
                 </p>
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <Link
                     to="/contact"
                     className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3 focus:outline-none"
                   >
-                    Contact Us
+                    {t('buttons.contactUs')}
                     <span className="inline-flex h-6 w-6 items-center justify-center rounded-none bg-black/5">
                       <ArrowUpRight className="h-4 w-4" />
                     </span>
@@ -47,7 +50,7 @@ const Industries = () => {
                     }}
                     className="inline-flex items-center gap-2 rounded-none px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition cursor-pointer"
                   >
-                    View Industries
+                    {t('buttons.viewIndustries')}
                     <ArrowRight className="h-4 w-4" />
                   </a>
                 </div>
@@ -71,79 +74,55 @@ const Industries = () => {
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="industries">
         <div className="bg-dark-blue p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <h2 className="md:text-2xl text-xl font-bold text-white tracking-tight" id="industries">
-            Industries We Serve
+            {t('industries.industriesSection.title')}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5 gap-x-6 gap-y-6">
             {[
               {
                 icon: ShoppingCart,
-                title: 'Retail & Consumer Goods',
-                description: 'Integrate sales, inventory, and customer insights to make smarter decisions and deliver a seamless shopping experience across all channels.',
-                features: [
-                  'Cut inventory waste and stockouts with smarter SAP planning.',
-                  'Accelerate supply chain processes to get products to customers faster.',
-                  'Use real-time data to improve sales decisions and customer satisfaction.'
-                ],
+                title: t('industries.industriesSection.retail.title'),
+                description: t('industries.industriesSection.retail.description'),
+                features: tArray('industries.industriesSection.retail.features'),
                 image: 'https://i.pinimg.com/736x/ec/be/ba/ecbeba29212ecb314faf2760a9b200a3.jpg',
                 alt: 'Retail & Consumer Goods'
               },
               {
                 icon: Flame,
-                title: 'Oil, Gas & Energy',
-                description: 'Connect operations, maintenance, and compliance systems to improve efficiency, reduce downtime, and maintain the highest safety standards.',
-                features: [
-                  'Keep critical equipment running longer with predictive maintenance.',
-                  'Stay fully compliant with safety and environmental regulations.',
-                  'Turn operational data into cost-saving, actionable insights.'
-                ],
+                title: t('industries.industriesSection.oilGas.title'),
+                description: t('industries.industriesSection.oilGas.description'),
+                features: tArray('industries.industriesSection.oilGas.features'),
                 image: 'https://i.pinimg.com/736x/56/c4/ec/56c4ec50629e9b8c7082b86bd1fe5332.jpg',
                 alt: 'Oil, Gas & Energy'
               },
               {
                 icon: Pill,
-                title: 'Pharmaceuticals & Life Sciences',
-                description: 'Link research, production, and regulatory processes to ensure product quality, accelerate delivery, and stay fully compliant.',
-                features: [
-                  'Speed up manufacturing without compromising quality or compliance.',
-                  'Track every batch to ensure regulatory standards are met.',
-                  'Coordinate distribution to meet demand efficiently and reliably.'
-                ],
+                title: t('industries.industriesSection.pharma.title'),
+                description: t('industries.industriesSection.pharma.description'),
+                features: tArray('industries.industriesSection.pharma.features'),
                 image: 'https://i.pinimg.com/1200x/b7/56/19/b7561971cb6257a1e6b99b1c1fdf795d.jpg',
                 alt: 'Pharmaceuticals & Life Sciences'
               },
               {
                 icon: FlaskConical,
-                title: 'Chemicals & Petrochemicals',
-                description: 'Coordinate production, safety, and supply chain operations to boost efficiency, minimize risks, and respond quickly to market demands.',
-                features: [
-                  'Optimize production to reduce waste and energy usage.',
-                  'Simplify compliance reporting with automated SAP processes.',
-                  'Respond quickly to supply chain disruptions or market changes.'
-                ],
+                title: t('industries.industriesSection.chemicals.title'),
+                description: t('industries.industriesSection.chemicals.description'),
+                features: tArray('industries.industriesSection.chemicals.features'),
                 image: 'https://images.unsplash.com/photo-1757912666361-8c226b7279b9?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=870',
                 alt: 'Chemicals & Petrochemicals'
               },
               {
                 icon: Landmark,
-                title: 'Public Sector & Government',
-                description: 'Streamline financial, operational, and citizen services to improve transparency, accountability, and service delivery across departments.',
-                features: [
-                  'Automate budgeting and fund management for clarity and control.',
-                  'Increase transparency across departments and operations.',
-                  'Deliver citizen services more efficiently using real-time insights.'
-                ],
+                title: t('industries.industriesSection.publicSector.title'),
+                description: t('industries.industriesSection.publicSector.description'),
+                features: tArray('industries.industriesSection.publicSector.features'),
                 image: 'https://images.pexels.com/photos/20432166/pexels-photo-20432166.jpeg?_gl=1*ydoi7k*_ga*MTU5Njc0NzgwOS4xNzU5ODE5NDIw*_ga_8JE65Q40S6*czE3NjEwNTc3MDYkbzMkZzEkdDE3NjEwNTgyNzEkajQzJGwwJGgw',
                 alt: 'Public Sector & Government'
               },
               {
                 icon: Truck,
-                title: 'Logistics & Supply Chain',
-                description: 'Unify procurement, warehousing, and distribution with real-time insights to ensure faster, more reliable, and cost-effective operations.',
-                features: [
-                  'Streamline warehousing, shipping, and inventory tracking.',
-                  'Get full visibility across suppliers and deliveries.',
-                  'Resolve bottlenecks quickly to maintain smooth operations.'
-                ],
+                title: t('industries.industriesSection.logistics.title'),
+                description: t('industries.industriesSection.logistics.description'),
+                features: tArray('industries.industriesSection.logistics.features'),
                 image: 'https://i.pinimg.com/736x/94/b0/ed/94b0ed2a49f4452f0b4930f7c9ef09c1.jpg',
                 alt: 'Logistics & Supply Chain'
               }
@@ -179,14 +158,14 @@ const Industries = () => {
       {/* What Clients Say Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="testimonials-title">
         <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
-          <h2 id="testimonials-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">What Clients Say</h2>
+          <h2 id="testimonials-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">{t('home.testimonials.title')}</h2>
           <div className="mt-5">
             <Carousel speed="very-slow" className="py-4">
               {[
-                { quote: '"Their SAP expertise transformed our processes, efficient, reliable, and seamless implementation!" – Cargill Corporation', logoFile: 'cargill logo.jpg' },
-                { quote: '"A trusted partner for SAP solutions. They understood our business needs perfectly." – Hitachi Energy', logoFile: 'hitachi logo.png' },
-                { quote: '"Professional, proactive, and results-driven. Our SAP system has never run smoother." – Sucafina', logoFile: 'sucafina logo.svg' },
-                { quote: '"Exceptional support and guidance throughout our SAP journey. Highly recommended!" – Johnson & Johnson', logoFile: 'johnson and johnson logo.png' }
+                { quote: tArray('home.testimonials.list')[0], logoFile: 'cargill logo.jpg' },
+                { quote: tArray('home.testimonials.list')[1], logoFile: 'hitachi logo.png' },
+                { quote: tArray('home.testimonials.list')[2], logoFile: 'sucafina logo.svg' },
+                { quote: tArray('home.testimonials.list')[3], logoFile: 'johnson and johnson logo.png' }
               ].map((testimonial, idx) => (
                 <div key={idx} className="flex-shrink-0 mx-4 w-96">
                   <div className="bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6 rounded-none">
@@ -214,17 +193,17 @@ const Industries = () => {
           <div className="flex justify-center">
             <div className="text-center max-w-2xl">
               <h2 id="cta" className="text-3xl md:text-4xl font-bold tracking-tight">
-                Simplify your SAP journey with ASMI
+                {t('industries.finalCTA.title')}
               </h2>
               <p className="mt-4 text-slate-600 max-w-2xl">
-                Reliable support for lasting business results.
+                {t('industries.finalCTA.description')}
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   to="/contact"
                   className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition px-6 py-3 rounded-none font-bold"
                 >
-                  Contact Us
+                  {t('buttons.contactUs')}
                   <ArrowUpRight className="h-4 w-4" />
                 </Link>
               </div>

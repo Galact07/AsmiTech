@@ -158,6 +158,8 @@ export type Database = {
           title: string
           type: string | null
           updated_at: string | null
+          content_nl: Json | null
+          translation_status: string | null
         }
         Insert: {
           created_at?: string | null
@@ -171,6 +173,8 @@ export type Database = {
           title: string
           type?: string | null
           updated_at?: string | null
+          content_nl?: Json | null
+          translation_status?: string | null
         }
         Update: {
           created_at?: string | null
@@ -184,6 +188,8 @@ export type Database = {
           title?: string
           type?: string | null
           updated_at?: string | null
+          content_nl?: Json | null
+          translation_status?: string | null
         }
         Relationships: []
       }
@@ -210,6 +216,141 @@ export type Database = {
           full_name?: string | null
           id?: string
           role?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      service_pages: {
+        Row: {
+          id: string
+          slug: string
+          title: string
+          status: string | null
+          content_nl: Json | null
+          translation_status: string | null
+          hero_headline: string | null
+          hero_subheadline: string | null
+          hero_cta_text: string | null
+          hero_image_url: string | null
+          introduction_title: string | null
+          introduction_content: string | null
+          differentiator_title: string | null
+          differentiator_content: string | null
+          differentiator_video_url: string | null
+          core_offerings: Json | null
+          benefits: Json | null
+          process_steps: Json | null
+          case_studies: Json | null
+          tech_stack: Json | null
+          why_choose_us: Json | null
+          consultation_title: string | null
+          consultation_description: string | null
+          social_proof_logos: Json | null
+          testimonials: Json | null
+          final_cta_title: string | null
+          final_cta_description: string | null
+          final_cta_button_text: string | null
+          meta_description: string | null
+          display_order: number | null
+          created_at: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          slug: string
+          title: string
+          status?: string | null
+          content_nl?: Json | null
+          translation_status?: string | null
+          hero_headline?: string | null
+          hero_subheadline?: string | null
+          hero_cta_text?: string | null
+          hero_image_url?: string | null
+          introduction_title?: string | null
+          introduction_content?: string | null
+          differentiator_title?: string | null
+          differentiator_content?: string | null
+          differentiator_video_url?: string | null
+          core_offerings?: Json | null
+          benefits?: Json | null
+          process_steps?: Json | null
+          case_studies?: Json | null
+          tech_stack?: Json | null
+          why_choose_us?: Json | null
+          consultation_title?: string | null
+          consultation_description?: string | null
+          social_proof_logos?: Json | null
+          testimonials?: Json | null
+          final_cta_title?: string | null
+          final_cta_description?: string | null
+          final_cta_button_text?: string | null
+          meta_description?: string | null
+          display_order?: number | null
+          created_at?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          slug?: string
+          title?: string
+          status?: string | null
+          content_nl?: Json | null
+          translation_status?: string | null
+          hero_headline?: string | null
+          hero_subheadline?: string | null
+          hero_cta_text?: string | null
+          hero_image_url?: string | null
+          introduction_title?: string | null
+          introduction_content?: string | null
+          differentiator_title?: string | null
+          differentiator_content?: string | null
+          differentiator_video_url?: string | null
+          core_offerings?: Json | null
+          benefits?: Json | null
+          process_steps?: Json | null
+          case_studies?: Json | null
+          tech_stack?: Json | null
+          why_choose_us?: Json | null
+          consultation_title?: string | null
+          consultation_description?: string | null
+          social_proof_logos?: Json | null
+          testimonials?: Json | null
+          final_cta_title?: string | null
+          final_cta_description?: string | null
+          final_cta_button_text?: string | null
+          meta_description?: string | null
+          display_order?: number | null
+          created_at?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      translations: {
+        Row: {
+          id: string
+          translation_key: string
+          language: string
+          translation_value: string
+          category: string | null
+          created_at: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          translation_key: string
+          language: string
+          translation_value: string
+          category?: string | null
+          created_at?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          translation_key?: string
+          language?: string
+          translation_value?: string
+          category?: string | null
+          created_at?: string | null
           updated_at?: string | null
         }
         Relationships: []

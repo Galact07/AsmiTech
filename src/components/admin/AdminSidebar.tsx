@@ -8,7 +8,9 @@ import {
   BookOpen, 
   LogOut,
   ChevronLeft,
-  Menu
+  Menu,
+  FileText,
+  Languages
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
@@ -39,6 +41,16 @@ const sidebarItems = [
     title: 'Inquiries',
     href: '/admin/inquiries',
     icon: MessageSquare,
+  },
+  {
+    title: 'Service Pages',
+    href: '/admin/service-pages',
+    icon: FileText,
+  },
+  {
+    title: 'Translations',
+    href: '/admin/translations',
+    icon: Languages,
   },
   // Case Studies hidden as requested
   // {

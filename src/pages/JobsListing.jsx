@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useTranslation } from '@/hooks/useTranslation';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const APPLY_FORM_INITIAL_STATE = {
   name: '',
@@ -41,6 +43,8 @@ const formatEmploymentType = (type) => {
 };
 
 const JobsListing = () => {
+  const { t } = useTranslation();
+  const { t: tDb } = useLanguage(); // For database content
   const [jobs, setJobs] = useState([]);
   const [loadingJobs, setLoadingJobs] = useState(true);
   const [applyDialogOpen, setApplyDialogOpen] = useState(false);
@@ -111,17 +115,22 @@ const JobsListing = () => {
   // Filter jobs based on search and filters
   const filteredJobs = useMemo(() => {
     return parsedJobs.filter(job => {
+      // Get translated title and description for search
+      const title = tDb(job.title, job.content_nl?.title);
+      const specialization = job.specialization ? tDb(job.specialization, job.content_nl?.specialization) : '';
+      const description = job.description ? tDb(job.description, job.content_nl?.description) : '';
+      
       const matchesSearch = searchTerm === '' || 
-        job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        job.specialization?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        job.description?.toLowerCase().includes(searchTerm.toLowerCase());
+        title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        specialization.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        description.toLowerCase().includes(searchTerm.toLowerCase());
       
       const matchesType = typeFilter === 'all' || job.type === typeFilter;
       const matchesLocation = locationFilter === 'all' || job.location === locationFilter;
       
       return matchesSearch && matchesType && matchesLocation;
     });
-  }, [parsedJobs, searchTerm, typeFilter, locationFilter]);
+  }, [parsedJobs, searchTerm, typeFilter, locationFilter, tDb]);
 
   const handleDialogChange = (open) => {
     setApplyDialogOpen(open);
@@ -269,17 +278,17 @@ const JobsListing = () => {
                 className="inline-flex items-center gap-2 text-sm text-slate-600 hover:text-primary mb-6 transition"
               >
                 <ArrowLeft className="h-4 w-4" />
-                Back to Careers
+                {t('buttons.backToCareers')}
               </Link>
               <div>
                 <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em] mt-0 pt-2">
-                  Career Opportunities
+                  {t('jobs.header.tagline')}
                 </p>
                 <h1 className="sm:text-5xl md:text-6xl text-4xl font-bold text-slate-700 tracking-tight mt-2">
-                  Open Positions
+                  {t('jobs.header.title')}
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
-                  Browse all our current job openings and find your next career opportunity with ASMI BV.
+                  {t('jobs.header.description')}
                 </p>
               </div>
             </div>
@@ -294,7 +303,7 @@ const JobsListing = () => {
                 <Search className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
                 <Input
                   type="text"
-                  placeholder="Search by job title or specialization..."
+                  placeholder={t('jobs.search.placeholder')}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10 bg-white border-slate-200"
@@ -302,10 +311,10 @@ const JobsListing = () => {
               </div>
               <Select value={typeFilter} onValueChange={setTypeFilter}>
                 <SelectTrigger className="w-full md:w-48 bg-white border-slate-200">
-                  <SelectValue placeholder="Employment Type" />
+                  <SelectValue placeholder={t('jobs.search.employmentType')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Types</SelectItem>
+                  <SelectItem value="all">{t('jobs.search.allTypes')}</SelectItem>
                   {uniqueTypes.map(type => (
                     <SelectItem key={type} value={type}>
                       {formatEmploymentType(type)}
@@ -315,10 +324,10 @@ const JobsListing = () => {
               </Select>
               <Select value={locationFilter} onValueChange={setLocationFilter}>
                 <SelectTrigger className="w-full md:w-48 bg-white border-slate-200">
-                  <SelectValue placeholder="Location" />
+                  <SelectValue placeholder={t('jobs.search.location')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Locations</SelectItem>
+                  <SelectItem value="all">{t('jobs.search.allLocations')}</SelectItem>
                   {uniqueLocations.map(location => (
                     <SelectItem key={location} value={location}>
                       {location}
@@ -331,7 +340,7 @@ const JobsListing = () => {
               <div className="mt-4 flex items-center gap-2 text-sm text-slate-600">
                 <Filter className="h-4 w-4" />
                 <span>
-                  Showing {filteredJobs.length} of {parsedJobs.length} positions
+                  {t('jobs.search.showing')} {filteredJobs.length} {t('jobs.search.of')} {parsedJobs.length} {t('jobs.search.positions')}
                 </span>
                 {(searchTerm || typeFilter !== 'all' || locationFilter !== 'all') && (
                   <button
@@ -342,7 +351,7 @@ const JobsListing = () => {
                     }}
                     className="text-primary hover:text-primary/80 underline ml-2"
                   >
-                    Clear filters
+                    {t('buttons.clearFilters')}
                   </button>
                 )}
               </div>
@@ -357,7 +366,7 @@ const JobsListing = () => {
               <div className="rounded-none bg-slate-800 p-12">
                 <div className="flex flex-col items-center justify-center text-muted-foreground gap-3">
                   <Loader2 className="h-8 w-8 animate-spin" />
-                  <p>Loading open positions...</p>
+                  <p>{t('jobs.status.loading')}</p>
                 </div>
               </div>
             ) : filteredJobs.length === 0 ? (
@@ -365,13 +374,13 @@ const JobsListing = () => {
                 <div className="text-center">
                   <h3 className="text-lg font-medium text-slate-900">
                     {searchTerm || typeFilter !== 'all' || locationFilter !== 'all' 
-                      ? 'No positions match your criteria'
-                      : 'No open positions right now'}
+                      ? t('jobs.status.noResults')
+                      : t('jobs.status.noOpenings')}
                   </h3>
                   <p className="mt-2 text-sm text-slate-600 max-w-xl mx-auto">
                     {searchTerm || typeFilter !== 'all' || locationFilter !== 'all'
-                      ? 'Try adjusting your search or filters to find more opportunities.'
-                      : "We're not actively hiring for new roles at the moment. Please check back soon or send us your resume."}
+                      ? t('jobs.status.noResultsDescription')
+                      : t('jobs.status.noOpeningsDescription')}
                   </p>
                   <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
                     {(searchTerm || typeFilter !== 'all' || locationFilter !== 'all') && (
@@ -383,12 +392,12 @@ const JobsListing = () => {
                           setLocationFilter('all');
                         }}
                       >
-                        Clear All Filters
+                        {t('buttons.clearAllFilters')}
                       </Button>
                     )}
                     <Link to="/contact">
                       <Button>
-                        Contact Us
+                        {t('buttons.contactUs')}
                       </Button>
                     </Link>
                   </div>
@@ -407,9 +416,9 @@ const JobsListing = () => {
                   <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
                     <div className="flex-1 space-y-4">
                       <div>
-                        <h3 className="text-2xl font-medium text-slate-900 mb-2">{job.title}</h3>
+                        <h3 className="text-2xl font-medium text-slate-900 mb-2">{tDb(job.title, job.content_nl?.title)}</h3>
                         {job.specialization && (
-                          <p className="text-base text-primary/90 font-medium">{job.specialization}</p>
+                          <p className="text-base text-primary/90 font-medium">{tDb(job.specialization, job.content_nl?.specialization)}</p>
                         )}
                       </div>
                       
@@ -434,19 +443,19 @@ const JobsListing = () => {
                         )}
                         <div className="flex items-center gap-1.5">
                           <Calendar className="h-4 w-4" />
-                          <span>Posted {new Date(job.created_at).toLocaleDateString()}</span>
+                          <span>{t('jobs.details.posted')} {new Date(job.created_at).toLocaleDateString()}</span>
                         </div>
                       </div>
 
                       {job.description && (
                         <p className="text-slate-700/80 leading-relaxed whitespace-pre-line">
-                          {job.description}
+                          {tDb(job.description, job.content_nl?.description)}
                         </p>
                       )}
 
                       {job.requirementList.length > 0 && (
                         <div>
-                          <h4 className="text-sm font-semibold text-slate-900 mb-3">Key Requirements:</h4>
+                          <h4 className="text-sm font-semibold text-slate-900 mb-3">{t('jobs.details.keyRequirements')}</h4>
                           <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
                             {job.requirementList.map((req, reqIndex) => (
                               <li key={reqIndex} className="flex items-start gap-2 text-sm text-slate-700/80">
@@ -464,7 +473,7 @@ const JobsListing = () => {
                         onClick={() => openApplyDialog(job)}
                         className="w-full lg:w-auto whitespace-nowrap px-8 py-6 text-base"
                       >
-                        Apply for this Position
+                        {t('buttons.applyForPosition')}
                       </Button>
                     </div>
                   </div>
@@ -479,9 +488,9 @@ const JobsListing = () => {
       <Dialog open={applyDialogOpen} onOpenChange={handleDialogChange}>
         <DialogContent className="max-w-xl border border-slate-200 bg-white shadow-2xl p-6 rounded-none">
           <DialogHeader>
-            <DialogTitle>Apply for {selectedJob?.title}</DialogTitle>
+            <DialogTitle>{t('jobs.apply.title')} {selectedJob && tDb(selectedJob.title, selectedJob.content_nl?.title)}</DialogTitle>
             <DialogDescription>
-              Submit your details and we will get in touch if your profile is a good match.
+              {t('jobs.apply.description')}
             </DialogDescription>
           </DialogHeader>
 
@@ -509,12 +518,12 @@ const JobsListing = () => {
                   )}
                   <span className="inline-flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
-                    Posted {new Date(selectedJob.created_at).toLocaleDateString()}
+                    {t('jobs.details.posted')} {new Date(selectedJob.created_at).toLocaleDateString()}
                   </span>
                 </div>
                 {selectedJob.specialization && (
                   <p className="text-sm text-slate-600">
-                    Specialization: <span className="font-medium text-slate-800">{selectedJob.specialization}</span>
+                    {t('jobs.details.specialization')} <span className="font-medium text-slate-800">{tDb(selectedJob.specialization, selectedJob.content_nl?.specialization)}</span>
                   </p>
                 )}
               </div>
@@ -522,7 +531,7 @@ const JobsListing = () => {
               <form onSubmit={handleSubmitApplication} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="name">Full Name</Label>
+                    <Label htmlFor="name">{t('jobs.apply.fullName')}</Label>
                     <Input
                       id="name"
                       name="name"
@@ -535,7 +544,7 @@ const JobsListing = () => {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="email">Email</Label>
+                    <Label htmlFor="email">{t('jobs.apply.email')}</Label>
                     <Input
                       id="email"
                       type="email"
@@ -551,7 +560,7 @@ const JobsListing = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="phone">Phone Number</Label>
+                  <Label htmlFor="phone">{t('jobs.apply.phone')}</Label>
                   <Input
                     id="phone"
                     name="phone"
@@ -565,7 +574,7 @@ const JobsListing = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="resumeFile">Resume (PDF only) *</Label>
+                  <Label htmlFor="resumeFile">{t('jobs.apply.resume')}</Label>
                   <Input
                     id="resumeFile"
                     type="file"
@@ -579,7 +588,7 @@ const JobsListing = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="cvFile">Cover Letter (PDF only, optional)</Label>
+                  <Label htmlFor="cvFile">{t('jobs.apply.coverLetter')}</Label>
                   <Input
                     id="cvFile"
                     type="file"
@@ -605,16 +614,16 @@ const JobsListing = () => {
                     disabled={submitting}
                     className="rounded-none"
                   >
-                    Cancel
+                    {t('buttons.cancel')}
                   </Button>
                   <Button type="submit" disabled={submitting} className="rounded-none">
                     {submitting ? (
                       <>
                         <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                        Submitting
+                        {t('jobs.apply.submitting')}
                       </>
                     ) : (
-                      'Submit Application'
+                      t('buttons.submitApplication')
                     )}
                   </Button>
                 </div>

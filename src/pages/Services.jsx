@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, ArrowRight, Shield, Award, Factory, ShoppingCart, Banknote, HeartPulse, CheckCircle } from 'lucide-react';
 import Carousel from '../components/ui/carousel';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const Services = () => {
+  const { t, tArray } = useTranslation();
+  
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -12,20 +15,20 @@ const Services = () => {
             <div className="flex items-stretch gap-6 md:gap-10 flex-col md:flex-row min-h-[240px] md:min-h-[280px]">
               <div className="flex-1">
                 <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em] mt-0 pt-2">
-                  Our Services
+                  {t('services.hero.tagline')}
                 </p>
                 <h1 id="services-title" className="sm:text-4xl md:text-5xl text-3xl font-bold text-slate-700 tracking-tight mt-2">
-                  SAP Services We Offer
+                  {t('services.hero.title')}
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
-                  We deliver a complete range of SAP services designed to improve processes, integrate systems, and drive business efficiency.
+                  {t('services.hero.description')}
                 </p>
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <Link
                     to="/contact"
                     className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3 focus:outline-none"
                   >
-                    Contact Us
+                    {t('buttons.contactUs')}
                     <span className="inline-flex h-6 w-6 items-center justify-center rounded-none bg-black/5">
                       <ArrowUpRight className="h-4 w-4" />
                     </span>
@@ -47,7 +50,7 @@ const Services = () => {
                     }}
                     className="inline-flex items-center gap-2 rounded-none px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition cursor-pointer"
                   >
-                    Our Services
+                    {t('buttons.ourServices')}
                     <ArrowRight className="h-4 w-4" />
                   </a>
                 </div>
@@ -72,7 +75,7 @@ const Services = () => {
         <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <div className="flex items-center justify-between gap-3">
             <h2 id="partners-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">
-            Clients We've Served
+            {t('services.clients.title')}
             </h2>
           </div>
           <div className="mt-5">
@@ -106,106 +109,74 @@ const Services = () => {
         <div className="bg-dark-blue p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <div className="mb-8">
             <h2 id="our-services" className="text-3xl md:text-4xl tracking-tight font-bold text-white mb-4">
-              Our Services
+              {t('services.servicesSection.title')}
             </h2>
             <p className="text-white/90 text-lg max-w-4xl">
-              We offer SAP solutions built around your business. From setup to support, we make your systems smoother, smarter, and ready to grow with you.
+              {t('services.servicesSection.description')}
             </p>
           </div>
           <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
-                title: 'SAP Public Cloud',
-                description: 'Deploy secure, scalable SAP cloud solutions for streamlined operations and agility.',
-                features: [
-                  'Rapid deployment with minimal disruption to ongoing operations.',
-                  'Flexible, scalable infrastructure to support growing business needs.',
-                  'Integration with existing systems for seamless data flow.'
-                ],
+                title: t('services.servicesSection.list.sapPublicCloud.title'),
+                description: t('services.servicesSection.list.sapPublicCloud.description'),
+                features: tArray('services.servicesSection.list.sapPublicCloud.features'),
                 logo: 'Cloud',
                 alt: 'SAP Public Cloud',
                 image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop'
               },
               {
-                title: 'SAP Implementations and Rollouts',
-                description: 'Execute tailored SAP deployments with proven Greenfield, Brownfield, or Bluefield strategies.',
-                features: [
-                  'Full lifecycle management from planning to go-live.',
-                  'Customization to match specific business processes and reporting requirements.',
-                  'Risk mitigation and quality assurance throughout the deployment.'
-                ],
+                title: t('services.servicesSection.list.sapImplementations.title'),
+                description: t('services.servicesSection.list.sapImplementations.description'),
+                features: tArray('services.servicesSection.list.sapImplementations.features'),
                 logo: 'Settings',
                 alt: 'SAP Implementations and Rollouts',
                 image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&auto=format&fit=crop'
               },
               {
-                title: 'SAP Document and Reporting Compliance',
-                description: 'Simplify e-Invoicing and tax reporting with seamless, compliant SAP solutions.',
-                features: [
-                  'Automate invoicing and reporting to reduce errors and delays.',
-                  'Ensure compliance with local and international regulations.',
-                  'Provide audit-ready documentation and reporting capabilities.'
-                ],
+                title: t('services.servicesSection.list.sapDocumentCompliance.title'),
+                description: t('services.servicesSection.list.sapDocumentCompliance.description'),
+                features: tArray('services.servicesSection.list.sapDocumentCompliance.features'),
                 logo: 'FileText',
                 alt: 'SAP Document and Reporting Compliance',
                 image: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&auto=format&fit=crop'
               },
               {
-                title: 'SAP Consulting & Advisory',
-                description: 'Unlock strategic value with expert SAP guidance tailored to your business goals.',
-                features: [
-                  'Process analysis to identify bottlenecks and optimization opportunities.',
-                  'Recommendations on system enhancements and best practices.',
-                  'Strategic planning for SAP adoption, upgrades, and transformation.'
-                ],
+                title: t('services.servicesSection.list.sapConsulting.title'),
+                description: t('services.servicesSection.list.sapConsulting.description'),
+                features: tArray('services.servicesSection.list.sapConsulting.features'),
                 logo: 'Users',
                 alt: 'SAP Consulting & Advisory',
                 image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&auto=format&fit=crop'
               },
               {
-                title: 'Data & Migration Services',
-                description: 'Ensure smooth, secure data migration for optimized SAP performance.',
-                features: [
-                  'Data cleansing, validation, and mapping for accuracy.',
-                  'Minimized downtime during migration with phased approaches.',
-                  'Integration with legacy systems and new SAP modules.'
-                ],
+                title: t('services.servicesSection.list.dataMigration.title'),
+                description: t('services.servicesSection.list.dataMigration.description'),
+                features: tArray('services.servicesSection.list.dataMigration.features'),
                 logo: 'Database',
                 alt: 'Data & Migration Services',
                 image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop'
               },
               {
-                title: 'Support & Managed Services',
-                description: 'Maintain peak SAP performance with proactive support and management.',
-                features: [
-                  '24/7 monitoring and issue resolution to avoid disruptions.',
-                  'System optimization to maintain efficiency and reliability.',
-                  'Regular updates, patches, and preventive maintenance.'
-                ],
+                title: t('services.servicesSection.list.supportManaged.title'),
+                description: t('services.servicesSection.list.supportManaged.description'),
+                features: tArray('services.servicesSection.list.supportManaged.features'),
                 logo: 'Headphones',
                 alt: 'Support & Managed Services',
                 image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop'
               },
               {
-                title: 'Training & Change Management',
-                description: 'Empower teams with targeted training for seamless SAP adoption.',
-                features: [
-                  'Customized training sessions for different user roles.',
-                  'Support for change adoption and process standardization.',
-                  'Documentation and resources to ensure long-term proficiency.'
-                ],
+                title: t('services.servicesSection.list.training.title'),
+                description: t('services.servicesSection.list.training.description'),
+                features: tArray('services.servicesSection.list.training.features'),
                 logo: 'GraduationCap',
                 alt: 'Training & Change Management',
                 image: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800&auto=format&fit=crop'
               },
               {
-                title: 'SAP Project Management & Governance',
-                description: 'Drive project success with expert oversight and disciplined governance.',
-                features: [
-                  'Clear project planning, timelines, and milestone tracking.',
-                  'Risk management and mitigation throughout the project lifecycle.',
-                  'Stakeholder communication and reporting for transparency and accountability.'
-                ],
+                title: t('services.servicesSection.list.projectManagement.title'),
+                description: t('services.servicesSection.list.projectManagement.description'),
+                features: tArray('services.servicesSection.list.projectManagement.features'),
                 logo: 'Clipboard',
                 alt: 'SAP Project Management & Governance',
                 image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&auto=format&fit=crop'
@@ -244,7 +215,7 @@ const Services = () => {
                       to={serviceHrefs[index]}
                       className="mt-4 inline-flex items-center gap-2 text-primary hover:text-primary/80 transition text-sm font-bold hover:underline"
                     >
-                      Learn More
+                      {t('buttons.learnMore')}
                       <ArrowRight className="h-4 w-4" />
                     </Link>
                   </div>
@@ -259,10 +230,10 @@ const Services = () => {
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="technology">
         <div className="bg-blue-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <h2 id="technology" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">
-            Technology Stack
+            {t('services.technology.title')}
           </h2>
           <p className="mt-2 text-slate-700/80">
-            We work with the latest SAP technologies and complementary solutions to deliver comprehensive business value.
+            {t('services.technology.description')}
           </p>
           <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
@@ -291,14 +262,14 @@ const Services = () => {
       {/* What Clients Say Section */}
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="testimonials-title">
         <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
-          <h2 id="testimonials-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">What Clients Say</h2>
+          <h2 id="testimonials-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">{t('home.testimonials.title')}</h2>
           <div className="mt-5">
             <Carousel speed="very-slow" className="py-4">
               {[
-                { quote: '"Their SAP expertise transformed our processes, efficient, reliable, and seamless implementation!" – Cargill Corporation', logoFile: 'cargill logo.jpg' },
-                { quote: '"A trusted partner for SAP solutions. They understood our business needs perfectly." – Hitachi Energy', logoFile: 'hitachi logo.png' },
-                { quote: '"Professional, proactive, and results-driven. Our SAP system has never run smoother." – Sucafina', logoFile: 'sucafina logo.svg' },
-                { quote: '"Exceptional support and guidance throughout our SAP journey. Highly recommended!" – Johnson & Johnson', logoFile: 'johnson and johnson logo.png' }
+                { quote: tArray('home.testimonials.list')[0], logoFile: 'cargill logo.jpg' },
+                { quote: tArray('home.testimonials.list')[1], logoFile: 'hitachi logo.png' },
+                { quote: tArray('home.testimonials.list')[2], logoFile: 'sucafina logo.svg' },
+                { quote: tArray('home.testimonials.list')[3], logoFile: 'johnson and johnson logo.png' }
               ].map((testimonial, idx) => (
                 <div key={idx} className="flex-shrink-0 mx-4 w-96">
                   <div className="bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6 rounded-none">
@@ -326,17 +297,17 @@ const Services = () => {
           <div className="flex justify-center">
             <div className="text-center max-w-2xl">
               <h2 id="cta" className="text-3xl md:text-4xl font-bold tracking-tight">
-                Move your business forward with ASMI
+                {t('services.finalCTA.title')}
               </h2>
               <p className="mt-4 text-slate-600 max-w-2xl">
-                Powering growth through smarter SAP solutions.
+                {t('services.finalCTA.description')}
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   to="/contact"
                   className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition px-6 py-3 rounded-none font-bold"
                 >
-                  Get Started Today
+                  {t('buttons.getStartedToday')}
                   <ArrowUpRight className="h-4 w-4" />
                 </Link>
               </div>
