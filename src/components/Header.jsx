@@ -193,7 +193,7 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* Language Switcher */}
+          {/* Language Switcher - Desktop */}
           <div className="hidden md:flex items-center ml-4">
             <SimpleLanguageSwitcher />
           </div>
@@ -210,13 +210,18 @@ const Header = () => {
             </div>
           </a>
 
+          {/* Language Switcher - Mobile */}
+          <div className="md:hidden ml-auto mr-2">
+            <SimpleLanguageSwitcher />
+          </div>
+
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-controls="mobileMenu"
             aria-expanded={isMobileMenuOpen}
             aria-label="Open menu"
-            className="md:hidden ml-auto inline-flex items-center justify-center w-10 h-10 rounded-none border border-primary/20 text-primary hover:text-primary transition-all duration-200 font-bold"
+            className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-none border border-primary/20 text-primary hover:text-primary transition-all duration-200 font-bold"
           >
             {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
