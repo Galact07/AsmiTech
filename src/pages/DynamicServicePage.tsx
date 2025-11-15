@@ -225,9 +225,9 @@ export default function DynamicServicePage() {
           : [],
         social_proof_logos: Array.isArray(data.social_proof_logos) ? data.social_proof_logos : [],
         testimonials: Array.isArray(data.testimonials) ? data.testimonials : [],
-        mini_cta_text: data.mini_cta_text ?? '',
-        mini_cta_subtext: data.mini_cta_subtext ?? '',
-        mini_cta_link: data.mini_cta_link ?? '',
+        mini_cta_text: data.mini_cta_text ?? null,
+        mini_cta_subtext: data.mini_cta_subtext ?? null,
+        mini_cta_link: data.mini_cta_link ?? null,
       } as ServicePageData;
 
       setPageData(normalizedData);
@@ -318,74 +318,67 @@ export default function DynamicServicePage() {
 
       <div className="min-h-screen">
         {/* 1. Hero Section */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(79,70,229,0.2),_transparent_50%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_rgba(139,92,246,0.15),_transparent_50%)]" />
-          <div className="absolute -top-32 -left-24 h-96 w-96 rounded-full bg-primary/30 blur-3xl animate-pulse" />
-          <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-violet-500/20 blur-3xl" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-full w-full bg-[url('/grid.svg')] opacity-10" />
-          <div className="relative z-10 mx-auto max-w-7xl px-6 pt-20 pb-20 md:px-10 md:pt-32 md:pb-24">
-            <div className="grid items-center gap-12 md:grid-cols-[1.1fr_minmax(0,0.9fr)] md:items-stretch">
-              <div className="space-y-8 text-white">
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-gradient-to-r from-white/10 to-white/5 px-5 py-2 text-xs font-bold uppercase tracking-[0.3em] text-white/90 backdrop-blur-xl shadow-lg">
-                  <Sparkles className="h-3 w-3" />
-                  {language === 'nl' ? 'Onze Diensten' : 'Our Services'}
+        <section className="md:px-8 md:pt-20 max-w-7xl mr-auto ml-auto pt-14 pr-5 pl-5" aria-labelledby="service-title">
+          <div className="bg-white/70 backdrop-blur-[10px] shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] transition duration-500 ease-in">
+            <div className="pt-0 pr-6 pb-6 pl-6 md:pr-12 md:pb-12 md:pl-12">
+              <div className="flex items-stretch gap-6 md:gap-10 flex-col md:flex-row min-h-[240px] md:min-h-[280px]">
+                <div className="flex-1">
+                  <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em] mt-0 pt-2">
+                    {language === 'nl' ? 'Onze Diensten' : 'Our Services'}
+                  </p>
+                  <h1 id="service-title" className="sm:text-4xl md:text-5xl text-3xl font-bold text-slate-700 tracking-tight mt-2">
+                    {getLocalizedValue(pageData.hero_headline || pageData.title, 'hero_headline') ||
+                      getLocalizedValue(pageData.title, 'title')}
+                  </h1>
+                  <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
+                    {getLocalizedValue(pageData.hero_subheadline, 'hero_subheadline')}
+                  </p>
+                  <div className="mt-6 flex flex-col sm:flex-row gap-3">
+                    <Link
+                      to="/contact"
+                      className="group inline-flex items-center gap-2 hover:brightness-110 transition text-sm font-bold text-slate-50 bg-primary border-slate-200 border rounded-none px-5 py-3 focus:outline-none"
+                    >
+                      {getLocalizedValue(pageData.hero_cta_text || 'Get Started', 'hero_cta_text')}
+                      <span className="inline-flex h-6 w-6 items-center justify-center rounded-none bg-black/5">
+                        <ArrowUpRight className="h-4 w-4" />
+                      </span>
+                    </Link>
+                    <Link
+                      to="/services"
+                      className="inline-flex items-center gap-2 rounded-none px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition cursor-pointer"
+                    >
+                      {language === 'nl' ? 'Al onze diensten' : 'All Services'}
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </div>
                 </div>
-                <h1 className="text-4xl font-black leading-tight tracking-tight md:text-6xl lg:text-7xl bg-gradient-to-br from-white via-white to-white/80 bg-clip-text text-transparent">
-                  {getLocalizedValue(pageData.hero_headline || pageData.title, 'hero_headline') ||
-                    getLocalizedValue(pageData.title, 'title')}
-                </h1>
-                <p className="max-w-2xl text-lg text-white/90 leading-relaxed md:text-xl font-light">
-                  {getLocalizedValue(pageData.hero_subheadline, 'hero_subheadline')}
-                </p>
-                <div className="flex flex-wrap items-center gap-4 pt-2">
-                  <Link
-                    to="/contact"
-                    className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary to-primary/80 px-8 py-4 text-sm font-bold text-white shadow-xl shadow-primary/30 transition-all hover:scale-105 hover:shadow-2xl hover:shadow-primary/40 focus:outline-none focus:ring-2 focus:ring-white/60 focus:ring-offset-2 focus:ring-offset-slate-900"
-                  >
-                    {getLocalizedValue(pageData.hero_cta_text || 'Get Started', 'hero_cta_text')}
-                    <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-1 group-hover:-translate-y-1" />
-                  </Link>
-                  <Link
-                    to="/services"
-                    className="inline-flex items-center gap-2 rounded-full border-2 border-white/40 bg-white/5 px-8 py-4 text-sm font-bold text-white backdrop-blur-xl transition-all hover:border-white/80 hover:bg-white/15 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-slate-900"
-                  >
-                    {language === 'nl' ? 'Bekijk al onze diensten' : 'Explore services'}
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </div>
+                {pageData.hero_image_url && (
+                  <div className="w-full md:w-[280px] shrink-0 space-y-3">
+                    <img
+                      src={pageData.hero_image_url}
+                      alt={getLocalizedValue(pageData.title, 'title')}
+                      loading="lazy"
+                      className="w-full rounded-none pt-2 pr-2 pb-2 pl-2"
+                    />
+                  </div>
+                )}
               </div>
-              {pageData.hero_image_url && (
-                <div className="relative mx-auto w-full max-w-md overflow-hidden rounded-3xl border-2 border-white/20 bg-gradient-to-br from-white/10 to-white/5 shadow-[0_40px_100px_-50px_rgba(79,70,229,0.5)] backdrop-blur-xl ring-1 ring-white/10">
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-transparent" />
-                  <div className="absolute -top-12 -right-12 h-48 w-48 rounded-full bg-primary/20 blur-3xl" />
-                  <img
-                    src={pageData.hero_image_url}
-                    alt={getLocalizedValue(pageData.title, 'title')}
-                    loading="lazy"
-                    className="relative h-full w-full object-cover"
-                  />
-                </div>
-              )}
             </div>
+            <div className="h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
           </div>
         </section>
 
         {/* Mini CTA */}
         {(pageData.mini_cta_text || pageData.mini_cta_subtext) && (
-          <section className="-mt-16 px-6 pb-16 md:px-10">
-            <div className="mx-auto max-w-5xl rounded-3xl border-2 border-primary/20 bg-gradient-to-br from-white via-white to-primary/5 p-8 shadow-2xl shadow-primary/10 md:p-12 ring-1 ring-white/50 backdrop-blur-sm">
+          <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5">
+            <div className="bg-blue-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
               <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-                <div className="space-y-3">
-                  <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1 text-xs font-bold uppercase tracking-[0.25em] text-primary">
-                    <Zap className="h-3 w-3" />
-                    {language === 'nl' ? 'Snelkoppeling' : 'Quick Action'}
-                  </div>
-                  <h2 className="text-3xl font-black text-slate-900 md:text-4xl">
+                <div className="flex-1">
+                  <h2 className="text-2xl md:text-3xl font-bold text-slate-700 tracking-tight">
                     {getLocalizedValue(pageData.mini_cta_text || '', 'mini_cta_text')}
                   </h2>
                   {pageData.mini_cta_subtext && (
-                    <p className="text-base text-slate-600 leading-relaxed">
+                    <p className="mt-2 text-slate-700/80 leading-relaxed">
                       {getLocalizedValue(pageData.mini_cta_subtext, 'mini_cta_subtext')}
                     </p>
                   )}
@@ -396,11 +389,11 @@ export default function DynamicServicePage() {
                   const content = (
                     <span className="inline-flex items-center gap-2">
                       {language === 'nl' ? 'Plan een gesprek' : 'Schedule now'}
-                      <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                      <ArrowUpRight className="h-4 w-4" />
                     </span>
                   );
                   const buttonClass =
-                    'group inline-flex items-center justify-center rounded-full bg-gradient-to-r from-primary to-primary/80 px-8 py-4 text-sm font-bold text-white shadow-lg shadow-primary/30 transition-all hover:scale-105 hover:shadow-xl hover:shadow-primary/40 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:ring-offset-2';
+                    'inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition px-6 py-3 rounded-none font-bold whitespace-nowrap';
                   return isExternal ? (
                     <a href={href} target="_blank" rel="noopener noreferrer" className={buttonClass}>
                       {content}
@@ -418,17 +411,13 @@ export default function DynamicServicePage() {
 
         {/* 2. Introduction / Why This Service */}
         {pageData.introduction_content && (
-          <section className="px-6 pt-12 md:px-10 md:pt-20">
-            <div className="mx-auto max-w-5xl rounded-3xl border-2 border-slate-200 bg-gradient-to-br from-white via-slate-50/50 to-white p-12 shadow-2xl shadow-slate-900/10 backdrop-blur-sm md:p-16">
-              <div className="space-y-6">
-                <div className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-xs font-bold uppercase tracking-[0.25em] text-slate-700">
-                  <Target className="h-3 w-3" />
-                  {language === 'nl' ? 'Waarom Deze Service' : 'Why This Service'}
-                </div>
-                <h2 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 bg-gradient-to-br from-slate-900 to-slate-700 bg-clip-text text-transparent">
+          <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5">
+            <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
+              <div className="space-y-4">
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700">
                   {getLocalizedValue(pageData.introduction_title, 'introduction_title')}
                 </h2>
-                <p className="whitespace-pre-line text-xl leading-relaxed text-slate-600 font-light">
+                <p className="whitespace-pre-line text-lg leading-relaxed text-slate-700/80">
                   {getLocalizedValue(pageData.introduction_content, 'introduction_content')}
                 </p>
               </div>
@@ -438,23 +427,19 @@ export default function DynamicServicePage() {
 
         {/* 3. Key Differentiator / What Makes It Unique */}
         {pageData.differentiator_content && (
-          <section className="px-6 pt-12 md:px-10 md:pt-20">
-            <div className="mx-auto max-w-7xl rounded-3xl border-2 border-yellow-200 bg-gradient-to-br from-yellow-50 via-white to-amber-50 p-12 shadow-2xl shadow-yellow-500/10 md:p-16">
-              <div className="flex flex-col gap-10 md:flex-row md:items-start">
-                <div className="flex-1 space-y-6">
-                  <div className="inline-flex items-center gap-2 rounded-full bg-yellow-100 px-4 py-2 text-xs font-bold uppercase tracking-[0.25em] text-yellow-700">
-                    <Star className="h-3 w-3" />
-                    {language === 'nl' ? 'Ons Onderscheid' : 'Our Edge'}
-                  </div>
-                  <h2 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900">
+          <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5">
+            <div className="bg-blue-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
+              <div className="flex flex-col gap-8 md:flex-row md:items-start">
+                <div className="flex-1 space-y-4">
+                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700">
                     {getLocalizedValue(pageData.differentiator_title, 'differentiator_title')}
                   </h2>
-                  <p className="whitespace-pre-line text-xl leading-relaxed text-slate-600 font-light">
+                  <p className="whitespace-pre-line text-lg leading-relaxed text-slate-700/80">
                     {getLocalizedValue(pageData.differentiator_content, 'differentiator_content')}
                   </p>
                 </div>
                 {pageData.differentiator_video_url && (
-                  <div className="w-full max-w-xl overflow-hidden rounded-3xl border-2 border-slate-200 bg-white shadow-2xl ring-1 ring-slate-100">
+                  <div className="w-full max-w-xl overflow-hidden rounded-none border-2 border-slate-200 bg-white shadow-lg">
                     <div className="aspect-video w-full">
                       <iframe
                         src={pageData.differentiator_video_url}
@@ -472,50 +457,38 @@ export default function DynamicServicePage() {
 
         {/* 4. Core Offerings / Sub-Services */}
         {localizedCoreOfferings.length > 0 && (
-          <section className="px-6 pt-12 md:px-10 md:pt-20">
-            <div className="mx-auto max-w-7xl overflow-hidden rounded-3xl border-2 border-primary/20 bg-gradient-to-br from-primary/5 via-white to-violet-50 p-12 shadow-2xl shadow-primary/10 md:p-16">
-              <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-                <div className="space-y-4">
-                  <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.25em] text-primary">
-                    <Layers className="h-3 w-3" />
-                    {language === 'nl' ? 'Aanbod' : 'Offerings'}
-                  </div>
-                  <h2 className="text-4xl font-black tracking-tight text-slate-900 md:text-5xl">
-                    {language === 'nl' ? 'Kernaanbiedingen' : 'Core Offerings'}
-                  </h2>
-                </div>
-                <p className="max-w-xl text-lg text-slate-600 leading-relaxed font-light">
+          <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5">
+            <div className="bg-dark-blue p-6 md:p-8 transition duration-500 ease-in rounded-none">
+              <div className="mb-6">
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-2">
+                  {language === 'nl' ? 'Kernaanbiedingen' : 'Core Offerings'}
+                </h2>
+                <p className="text-white/90 text-lg max-w-3xl">
                   {language === 'nl'
                     ? 'Ontdek de bouwstenen van deze dienst, elk ontworpen voor voorspelbare waarde.'
                     : 'Explore the pillars of this service, each crafted to deliver measurable value.'}
                 </p>
               </div>
-              <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+              <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                 {localizedCoreOfferings.map((offering: CoreOffering, index) => (
-                  <div
+                  <article
                     key={`${offering.title}-${index}`}
-                    className="group relative h-full overflow-hidden rounded-3xl border-2 border-slate-200 bg-white p-8 shadow-xl transition-all hover:-translate-y-2 hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10"
+                    className="bg-white hover:shadow-md transition h-full rounded-none overflow-hidden flex flex-col"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-                    <div className="absolute inset-x-8 top-0 h-1.5 w-2/3 rounded-full bg-gradient-to-r from-primary via-violet-500 to-primary/40" />
-                    <div className="relative flex items-start justify-between pt-4">
-                      <div className="rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 p-4 text-primary ring-1 ring-primary/20 transition-all group-hover:scale-110 group-hover:ring-primary/40">
-                        <Sparkles className="h-7 w-7" />
-                      </div>
-                      <span className="text-lg font-black text-slate-300 transition-colors group-hover:text-primary">0{index + 1}</span>
+                    <div className="p-5 flex-1 flex flex-col">
+                      <h3 className="text-base tracking-tight font-bold text-slate-700">{offering.title}</h3>
+                      <p className="mt-2 text-slate-700/80 mb-4 text-sm">{offering.description}</p>
+                      {offering.link && (
+                        <Link
+                          to={offering.link}
+                          className="mt-auto inline-flex items-center gap-2 text-primary hover:text-primary/80 transition text-sm font-bold hover:underline"
+                        >
+                          {language === 'nl' ? 'Meer weten' : 'Learn More'}
+                          <ArrowRight className="h-4 w-4" />
+                        </Link>
+                      )}
                     </div>
-                    <h3 className="relative mt-8 text-2xl font-black text-slate-900">{offering.title}</h3>
-                    <p className="relative mt-4 text-base leading-relaxed text-slate-600 font-light">{offering.description}</p>
-                    {offering.link && (
-                      <Link
-                        to={offering.link}
-                        className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary transition hover:gap-3"
-                      >
-                        {language === 'nl' ? 'Meer weten' : 'Learn More'}
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    )}
-                  </div>
+                  </article>
                 ))}
               </div>
             </div>
@@ -524,38 +497,32 @@ export default function DynamicServicePage() {
 
         {/* 5. Benefits / Value Section */}
         {localizedBenefits.length > 0 && (
-          <section className="px-6 pt-12 md:px-10 md:pt-20">
-            <div className="mx-auto max-w-7xl rounded-3xl bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 px-8 py-12 text-white shadow-2xl shadow-slate-900/60 md:px-16 md:py-16 ring-1 ring-white/10">
-              <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-                <div className="space-y-4">
-                  <div className="inline-flex items-center gap-2 rounded-full bg-primary/20 px-4 py-2 text-xs font-bold uppercase tracking-[0.25em] text-primary">
-                    <CheckCircle className="h-3 w-3" />
-                    {language === 'nl' ? 'Impact' : 'Impact'}
-                  </div>
-                  <h2 className="text-4xl font-black tracking-tight md:text-5xl bg-gradient-to-br from-white via-white to-white/80 bg-clip-text text-transparent">
-                    {language === 'nl' ? 'Voordelen' : 'Benefits'}
-                  </h2>
-                </div>
-                <p className="max-w-xl text-lg text-white/80 leading-relaxed font-light">
+          <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5">
+            <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
+              <div className="mb-6">
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-2">
+                  {language === 'nl' ? 'Voordelen' : 'Key Benefits'}
+                </h2>
+                <p className="text-slate-700/80 text-lg max-w-3xl">
                   {language === 'nl'
                     ? 'Samengevatte waardeproposities die laten zien hoe wij efficiëntie, snelheid en zekerheid leveren.'
                     : 'Curated value propositions that show how we drive efficiency, velocity, and assurance.'}
                 </p>
               </div>
-              <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 {localizedBenefits.map((benefit, index) => {
                   const BenefitIcon = resolveIcon(benefit.icon);
                   return (
                     <div
                       key={index}
-                      className="group flex gap-5 rounded-2xl border-2 border-white/10 bg-gradient-to-br from-white/10 to-white/5 p-8 backdrop-blur-xl transition-all hover:-translate-y-2 hover:border-primary/60 hover:bg-gradient-to-br hover:from-primary/20 hover:to-primary/10 hover:shadow-2xl hover:shadow-primary/20"
+                      className="flex gap-4 bg-white p-6 rounded-none transition hover:shadow-md"
                     >
-                      <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/30 to-primary/20 text-primary ring-1 ring-primary/30 transition-all group-hover:scale-110 group-hover:from-primary group-hover:to-primary/80 group-hover:text-white group-hover:ring-primary/50 group-hover:shadow-lg group-hover:shadow-primary/40">
-                        <BenefitIcon className="h-7 w-7" />
+                      <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-none bg-primary/10 text-primary">
+                        <BenefitIcon className="h-6 w-6" />
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold">{benefit.title}</h3>
-                        <p className="mt-3 text-base text-white/80 leading-relaxed font-light">{benefit.description}</p>
+                        <h3 className="text-lg font-bold text-slate-700">{benefit.title}</h3>
+                        <p className="mt-2 text-sm text-slate-700/80 leading-relaxed">{benefit.description}</p>
                       </div>
                     </div>
                   );
@@ -567,42 +534,30 @@ export default function DynamicServicePage() {
 
         {/* 6. Process / Roadmap */}
         {localizedProcess.length > 0 && (
-          <section className="px-6 pt-12 md:px-10 md:pt-20">
-            <div className="mx-auto max-w-7xl rounded-3xl border-2 border-blue-200 bg-gradient-to-br from-blue-50 via-white to-blue-50/50 p-12 shadow-2xl shadow-blue-500/10 md:p-16">
-              <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-                <div className="space-y-4">
-                  <div className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 text-xs font-bold uppercase tracking-[0.25em] text-blue-700">
-                    <Activity className="h-3 w-3" />
-                    {language === 'nl' ? 'Roadmap' : 'Roadmap'}
-                  </div>
-                  <h2 className="text-4xl font-black tracking-tight text-slate-900 md:text-5xl">
-                    {language === 'nl' ? 'Ons Proces' : 'Our Process'}
-                  </h2>
-                </div>
-                <p className="max-w-xl text-lg text-slate-600 leading-relaxed font-light">
+          <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5">
+            <div className="bg-blue-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
+              <div className="mb-6">
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-2">
+                  {language === 'nl' ? 'Ons Proces' : 'Our Process'}
+                </h2>
+                <p className="text-slate-700/80 text-lg max-w-3xl">
                   {language === 'nl'
                     ? 'Een bewezen leveringsmodel met duidelijke stappen van afstemming tot optimalisatie.'
                     : 'A proven delivery model with explicit stages from alignment to optimization.'}
                 </p>
               </div>
-              <div className="mt-12 relative">
-                <div className="absolute left-8 top-0 hidden h-full w-1 rounded-full bg-gradient-to-b from-blue-400 via-primary to-violet-400 opacity-20 md:block" />
-                <div className="space-y-6">
-                  {localizedProcess.map((step, index) => (
-                    <div key={index} className="relative flex flex-col gap-6 rounded-3xl border-2 border-blue-100 bg-white/80 p-8 shadow-lg transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 md:flex-row md:items-center md:gap-8 backdrop-blur-sm">
-                      <div className="flex items-center gap-5 md:w-52">
-                        <div className="relative flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/70 text-white text-2xl font-black shadow-lg shadow-primary/30 ring-4 ring-white">
-                          {index + 1}
-                        </div>
-                        <div className="font-bold text-slate-800 text-lg md:hidden">{step.title}</div>
-                      </div>
-                      <div className="flex-1 space-y-3">
-                        <h3 className="hidden text-2xl font-black text-slate-900 md:block">{step.title}</h3>
-                        <p className="text-base leading-relaxed text-slate-600 font-light">{step.description}</p>
-                      </div>
+              <div className="space-y-4">
+                {localizedProcess.map((step, index) => (
+                  <div key={index} className="flex gap-4 bg-white p-6 rounded-none transition hover:shadow-md">
+                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-none bg-primary text-white text-lg font-bold">
+                      {index + 1}
                     </div>
-                  ))}
-                </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-bold text-slate-700">{step.title}</h3>
+                      <p className="mt-2 text-sm text-slate-700/80 leading-relaxed">{step.description}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </section>
@@ -610,75 +565,46 @@ export default function DynamicServicePage() {
 
         {/* 7. Case Studies / Proof of Success */}
         {localizedCaseStudies.length > 0 && (
-          <section className="px-6 pt-12 md:px-10 md:pt-20">
-            <div className="mx-auto max-w-7xl rounded-3xl border-2 border-purple-200 bg-gradient-to-br from-purple-50 via-white to-purple-50 px-8 py-12 shadow-2xl shadow-purple-500/10 md:px-16 md:py-16">
-              <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-                <div className="space-y-4">
-                  <div className="inline-flex items-center gap-2 rounded-full bg-purple-100 px-4 py-2 text-xs font-bold uppercase tracking-[0.25em] text-purple-700">
-                    <Award className="h-3 w-3" />
-                    {language === 'nl' ? 'Bewijs' : 'Proof'}
-                  </div>
-                  <h2 className="text-4xl font-black tracking-tight text-slate-900 md:text-5xl">
-                    {language === 'nl' ? 'Succesverhalen' : 'Success Stories'}
-                  </h2>
-                </div>
-                <p className="max-w-xl text-lg text-slate-600 leading-relaxed font-light">
+          <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5">
+            <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
+              <div className="mb-6">
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-2">
+                  {language === 'nl' ? 'Succesverhalen' : 'Success Stories'}
+                </h2>
+                <p className="text-slate-700/80 text-lg max-w-3xl">
                   {language === 'nl'
                     ? 'Concrete voorbeelden van projecten waarin we meetbare bedrijfsresultaten realiseerden.'
                     : 'Real client outcomes demonstrating how we deliver tangible business impact.'}
                 </p>
               </div>
-              <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {localizedCaseStudies.map((caseStudy, index) => (
-                  <Card key={index} className="group relative h-full overflow-hidden rounded-3xl border-2 border-purple-200 bg-white p-8 shadow-xl transition-all hover:-translate-y-2 hover:border-purple-400 hover:shadow-2xl hover:shadow-purple-500/20">
-                    <div className="absolute inset-0 -z-10 bg-gradient-to-br from-purple-50 via-white to-white opacity-0 transition-opacity group-hover:opacity-100" />
-                    <div className="absolute top-0 right-0 h-32 w-32 rounded-full bg-purple-200/30 blur-3xl transition-all group-hover:bg-purple-300/50" />
-                    <div className="relative flex items-start justify-between">
-                      <div className="rounded-full bg-purple-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] text-purple-700 ring-1 ring-purple-200">
-                        {language === 'nl' ? 'Case' : 'Case'}
-                      </div>
-                      <span className="text-2xl font-black text-purple-200 transition-colors group-hover:text-purple-400">0{index + 1}</span>
-                    </div>
-                    <h3 className="relative mt-6 text-xl font-black text-slate-900">{caseStudy.title}</h3>
-                    <div className="relative mt-6 space-y-4 text-base leading-relaxed text-slate-600 font-light">
-                      <div className="flex items-start gap-2">
-                        <div className="mt-1 rounded-lg bg-red-100 p-1">
-                          <Target className="h-3 w-3 text-red-600" />
-                        </div>
-                        <p>
-                          <span className="font-bold text-red-700">
-                            {language === 'nl' ? 'Probleem:' : 'Problem:'}
-                          </span>{' '}
-                          {caseStudy.problem}
-                        </p>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <div className="mt-1 rounded-lg bg-blue-100 p-1">
-                          <Lightbulb className="h-3 w-3 text-blue-600" />
-                        </div>
-                        <p>
-                          <span className="font-bold text-blue-700">
-                            {language === 'nl' ? 'Oplossing:' : 'Solution:'}
-                          </span>{' '}
-                          {caseStudy.solution}
-                        </p>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <div className="mt-1 rounded-lg bg-green-100 p-1">
-                          <TrendingUp className="h-3 w-3 text-green-600" />
-                        </div>
-                        <p>
-                          <span className="font-bold text-green-700">
-                            {language === 'nl' ? 'Resultaat:' : 'Result:'}
-                          </span>{' '}
-                          {caseStudy.result}
-                        </p>
-                      </div>
+                  <Card key={index} className="bg-white p-6 rounded-none transition hover:shadow-md">
+                    <h3 className="text-lg font-bold text-slate-700">{caseStudy.title}</h3>
+                    <div className="mt-4 space-y-3 text-sm">
+                      <p className="text-slate-700/80">
+                        <span className="font-bold text-slate-700">
+                          {language === 'nl' ? 'Probleem:' : 'Problem:'}
+                        </span>{' '}
+                        {caseStudy.problem}
+                      </p>
+                      <p className="text-slate-700/80">
+                        <span className="font-bold text-slate-700">
+                          {language === 'nl' ? 'Oplossing:' : 'Solution:'}
+                        </span>{' '}
+                        {caseStudy.solution}
+                      </p>
+                      <p className="text-slate-700/80">
+                        <span className="font-bold text-slate-700">
+                          {language === 'nl' ? 'Resultaat:' : 'Result:'}
+                        </span>{' '}
+                        {caseStudy.result}
+                      </p>
                     </div>
                     {caseStudy.link && (
                       <Link
                         to={caseStudy.link}
-                        className="relative mt-8 inline-flex items-center gap-2 text-sm font-bold text-purple-600 transition-all hover:gap-3 hover:text-purple-700"
+                        className="mt-4 inline-flex items-center gap-2 text-primary hover:text-primary/80 transition text-sm font-bold hover:underline"
                       >
                         {language === 'nl' ? 'Lees meer' : 'Read More'}
                         <ArrowRight className="h-4 w-4" />
@@ -693,55 +619,47 @@ export default function DynamicServicePage() {
 
         {/* 8. Tools / Technology Stack */}
         {localizedTechStack.length > 0 && (
-          <section className="px-6 pt-12 md:px-10 md:pt-20">
-            <div className="mx-auto max-w-7xl rounded-3xl border-2 border-orange-200 bg-gradient-to-br from-orange-50 via-white to-amber-50 px-8 py-12 shadow-2xl shadow-orange-500/10 md:px-16 md:py-16">
-              <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-                <div className="space-y-4">
-                  <div className="inline-flex items-center gap-2 rounded-full bg-orange-100 px-4 py-2 text-xs font-bold uppercase tracking-[0.25em] text-orange-700">
-                    <Settings className="h-3 w-3" />
-                    {language === 'nl' ? 'Stack' : 'Stack'}
-                  </div>
-                  <h2 className="text-4xl font-black tracking-tight text-slate-900 md:text-5xl">
-                    {language === 'nl' ? 'Technologie Stack' : 'Technology Stack'}
-                  </h2>
-                </div>
-                <p className="max-w-xl text-lg text-slate-600 leading-relaxed font-light">
+          <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5">
+            <div className="bg-blue-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
+              <div className="mb-6">
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-2">
+                  {language === 'nl' ? 'Technologie Stack' : 'Technology Stack'}
+                </h2>
+                <p className="text-slate-700/80 text-lg max-w-3xl">
                   {language === 'nl'
                     ? 'Platforms, frameworks en tools die wij inzetten om duurzame resultaten te behalen.'
                     : 'Platforms, frameworks, and accelerators we leverage to produce sustainable outcomes.'}
                 </p>
               </div>
-              <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {localizedTechStack.map((tech, index) => (
                   <div
                     key={index}
-                    className="group rounded-3xl border-2 border-orange-100 bg-white p-8 text-center shadow-lg transition-all hover:-translate-y-2 hover:border-orange-300 hover:shadow-2xl hover:shadow-orange-500/20"
+                    className="bg-white p-6 text-center rounded-none transition hover:shadow-md"
                   >
-                    <div className="relative">
-                      {tech.logo && (
-                        <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-orange-50 to-white shadow-lg ring-2 ring-orange-100 transition-all group-hover:scale-110 group-hover:ring-orange-300 group-hover:shadow-xl">
-                          <img src={tech.logo} alt={tech.name} className="h-16 w-16 object-contain transition-transform group-hover:scale-110" />
-                        </div>
-                      )}
-                      {!tech.logo && (
-                        <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-100 to-orange-50 transition-all group-hover:scale-110 group-hover:from-orange-200 group-hover:to-orange-100">
-                          <Settings className="h-10 w-10 text-orange-600" />
-                        </div>
-                      )}
-                      <p className="text-lg font-black text-slate-900">{tech.name}</p>
-                      {tech.description && (
-                        <p className="mt-3 text-sm text-slate-600 leading-relaxed font-light">{tech.description}</p>
-                      )}
-                      {tech.link && (
-                        <Link
-                          to={tech.link}
-                          className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-orange-600 transition-all hover:gap-3 hover:text-orange-700"
-                        >
-                          {language === 'nl' ? 'Bekijk' : 'View'}
-                          <ArrowRight className="h-4 w-4" />
-                        </Link>
-                      )}
-                    </div>
+                    {tech.logo && (
+                      <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center overflow-hidden rounded-none bg-slate-50">
+                        <img src={tech.logo} alt={tech.name} className="h-14 w-14 object-contain" />
+                      </div>
+                    )}
+                    {!tech.logo && (
+                      <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-none bg-primary/10">
+                        <Settings className="h-8 w-8 text-primary" />
+                      </div>
+                    )}
+                    <p className="text-base font-bold text-slate-700">{tech.name}</p>
+                    {tech.description && (
+                      <p className="mt-2 text-sm text-slate-700/80 leading-relaxed">{tech.description}</p>
+                    )}
+                    {tech.link && (
+                      <Link
+                        to={tech.link}
+                        className="mt-4 inline-flex items-center gap-2 text-primary hover:text-primary/80 transition text-sm font-bold hover:underline"
+                      >
+                        {language === 'nl' ? 'Bekijk' : 'View'}
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    )}
                   </div>
                 ))}
               </div>
@@ -751,41 +669,33 @@ export default function DynamicServicePage() {
 
         {/* 9. Why Choose Us / Differentiators */}
         {localizedWhyChoose.length > 0 && (
-          <section className="px-6 pt-12 md:px-10 md:pt-20">
-            <div className="mx-auto max-w-7xl rounded-3xl border-2 border-indigo-200 bg-gradient-to-br from-indigo-50 via-white to-indigo-50/50 px-8 py-12 shadow-2xl shadow-indigo-500/10 md:px-16 md:py-16">
-              <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-                <div className="space-y-4">
-                  <div className="inline-flex items-center gap-2 rounded-full bg-indigo-100 px-4 py-2 text-xs font-bold uppercase tracking-[0.25em] text-indigo-700">
-                    <ShieldCheck className="h-3 w-3" />
-                    {language === 'nl' ? 'Differentiatie' : 'Differentiators'}
-                  </div>
-                  <h2 className="text-4xl font-black tracking-tight text-slate-900 md:text-5xl">
-                    {language === 'nl' ? 'Waarom Kiezen Voor Ons' : 'Why Choose Us'}
-                  </h2>
-                </div>
-                <p className="max-w-xl text-lg text-slate-600 leading-relaxed font-light">
+          <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5">
+            <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
+              <div className="mb-6">
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-2">
+                  {language === 'nl' ? 'Waarom Kiezen Voor Ons' : 'Why Choose Us'}
+                </h2>
+                <p className="text-slate-700/80 text-lg max-w-3xl">
                   {language === 'nl'
                     ? 'Onze bewezen staat van dienst, certificeringen en wereldwijde bereik onderscheiden ons.'
                     : 'Our proven delivery record, certifications, and global reach set us apart.'}
                 </p>
               </div>
-              <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 {localizedWhyChoose.map((reason, index) => {
                   const ReasonIcon = resolveIcon(reason.icon);
                   return (
                     <Card
                       key={index}
-                      className="group relative overflow-hidden rounded-3xl border-2 border-indigo-100 bg-white p-8 shadow-xl transition-all hover:-translate-y-2 hover:border-indigo-300 hover:shadow-2xl hover:shadow-indigo-500/20"
+                      className="bg-white p-6 rounded-none transition hover:shadow-md"
                     >
-                      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-indigo-50 via-white to-white opacity-0 transition-opacity group-hover:opacity-100" />
-                      <div className="absolute top-0 right-0 h-40 w-40 rounded-full bg-indigo-200/30 blur-3xl transition-all group-hover:bg-indigo-300/50" />
-                      <div className="relative flex items-start gap-5">
-                        <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-100 to-indigo-50 text-indigo-600 ring-2 ring-indigo-100 transition-all group-hover:scale-110 group-hover:from-indigo-600 group-hover:to-indigo-500 group-hover:text-white group-hover:ring-indigo-300 group-hover:shadow-lg group-hover:shadow-indigo-500/40">
-                          <ReasonIcon className="h-8 w-8" />
+                      <div className="flex items-start gap-4">
+                        <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-none bg-primary/10 text-primary">
+                          <ReasonIcon className="h-6 w-6" />
                         </div>
                         <div>
-                          <h3 className="text-xl font-black text-slate-900">{reason.title}</h3>
-                          <p className="mt-3 text-base leading-relaxed text-slate-600 font-light">{reason.description}</p>
+                          <h3 className="text-lg font-bold text-slate-700">{reason.title}</h3>
+                          <p className="mt-2 text-sm text-slate-700/80 leading-relaxed">{reason.description}</p>
                         </div>
                       </div>
                     </Card>
@@ -798,31 +708,27 @@ export default function DynamicServicePage() {
 
         {/* 10. Consultation / Offer Section */}
         {pageData.consultation_title && (
-          <section className="px-6 pt-12 md:px-10 md:pt-20">
-            <div className="mx-auto max-w-7xl overflow-hidden rounded-3xl border-2 border-primary/30 bg-gradient-to-br from-primary/20 via-primary/10 to-white px-8 py-12 shadow-2xl shadow-primary/20 md:px-16 md:py-16">
-              <div className="mx-auto max-w-3xl text-center space-y-6">
-                <div className="inline-flex items-center gap-2 rounded-full bg-primary/20 px-4 py-2 text-xs font-bold uppercase tracking-[0.25em] text-primary">
-                  <MessageCircle className="h-3 w-3" />
-                  {language === 'nl' ? 'Laten We Beginnen' : "Let's Start"}
-                </div>
-                <h2 className="text-4xl font-black tracking-tight text-slate-900 md:text-5xl">
+          <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5">
+            <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
+              <div className="mx-auto max-w-3xl text-center mb-8">
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-2">
                   {getLocalizedValue(pageData.consultation_title, 'consultation_title')}
                 </h2>
                 {pageData.consultation_description && (
-                  <p className="text-lg text-slate-600 leading-relaxed font-light">
+                  <p className="text-lg text-slate-700/80 leading-relaxed">
                     {getLocalizedValue(pageData.consultation_description, 'consultation_description')}
                   </p>
                 )}
               </div>
-              <form onSubmit={handleConsultationSubmit} className="mx-auto mt-12 max-w-3xl space-y-6 rounded-3xl border-2 border-white/80 bg-white/95 p-8 shadow-2xl backdrop-blur-xl ring-1 ring-white md:p-10">
-                <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+              <form onSubmit={handleConsultationSubmit} className="mx-auto max-w-3xl space-y-4 bg-white p-6 md:p-8 rounded-none shadow-lg">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <Input
                     type="text"
                     placeholder={language === 'nl' ? 'Uw naam' : 'Your Name'}
                     value={consultationForm.name}
                     onChange={(e) => setConsultationForm({ ...consultationForm, name: e.target.value })}
                     required
-                    className="rounded-2xl border-2 border-slate-200 bg-white py-6 text-base transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
+                    className="rounded-none border-2 border-slate-200 bg-white py-3 px-4 text-base"
                   />
                   <Input
                     type="email"
@@ -830,7 +736,7 @@ export default function DynamicServicePage() {
                     value={consultationForm.email}
                     onChange={(e) => setConsultationForm({ ...consultationForm, email: e.target.value })}
                     required
-                    className="rounded-2xl border-2 border-slate-200 bg-white py-6 text-base transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
+                    className="rounded-none border-2 border-slate-200 bg-white py-3 px-4 text-base"
                   />
                 </div>
                 <Input
@@ -838,7 +744,7 @@ export default function DynamicServicePage() {
                   placeholder={language === 'nl' ? 'Bedrijfsnaam (optioneel)' : 'Company (optional)'}
                   value={consultationForm.company}
                   onChange={(e) => setConsultationForm({ ...consultationForm, company: e.target.value })}
-                  className="rounded-2xl border-2 border-slate-200 bg-white py-6 text-base transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  className="rounded-none border-2 border-slate-200 bg-white py-3 px-4 text-base"
                 />
                 <Textarea
                   placeholder={
@@ -850,15 +756,15 @@ export default function DynamicServicePage() {
                   onChange={(e) => setConsultationForm({ ...consultationForm, message: e.target.value })}
                   required
                   rows={5}
-                  className="rounded-2xl border-2 border-slate-200 bg-white text-base transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  className="rounded-none border-2 border-slate-200 bg-white px-4 py-3 text-base"
                 />
                 <Button
                   type="submit"
-                  className="group w-full rounded-2xl bg-gradient-to-r from-primary to-primary/80 px-8 py-6 text-lg font-bold text-white shadow-xl shadow-primary/30 transition-all hover:scale-105 hover:shadow-2xl hover:shadow-primary/40"
+                  className="w-full bg-primary text-white hover:bg-primary/90 transition px-6 py-3 rounded-none font-bold"
                 >
                   <span className="inline-flex items-center gap-2">
                     {language === 'nl' ? 'Plan een gesprek' : 'Book a Consultation'}
-                    <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                    <ArrowRight className="h-5 w-5" />
                   </span>
                 </Button>
               </form>
@@ -868,40 +774,27 @@ export default function DynamicServicePage() {
 
         {/* 11. Social Proof / Trust Section */}
         {(localizedSocialProof.length > 0 || localizedTestimonials.length > 0) && (
-          <section className="px-6 pt-12 md:px-10 md:pt-20">
-            <div className="mx-auto max-w-7xl space-y-16 rounded-3xl border-2 border-slate-200 bg-gradient-to-br from-slate-50 via-white to-slate-50 px-8 py-12 shadow-2xl shadow-slate-900/10 md:px-16 md:py-16">
+          <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5">
+            <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
               {localizedSocialProof.length > 0 && (
-                <div className="space-y-8">
-                  <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-                    <div className="space-y-4">
-                      <div className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-xs font-bold uppercase tracking-[0.25em] text-slate-700">
-                        <Award className="h-3 w-3" />
-                        {language === 'nl' ? 'Partners' : 'Partners'}
-                      </div>
-                      <h2 className="text-4xl font-black tracking-tight text-slate-900">
-                        {language === 'nl' ? 'Vertrouwd door leiders' : 'Trusted by leaders'}
-                      </h2>
-                    </div>
-                    <p className="max-w-xl text-lg text-slate-600 leading-relaxed font-light">
-                      {language === 'nl'
-                        ? 'Strategische partnerschappen en certificeringen die onze expertise onderbouwen.'
-                        : 'Strategic partnerships and certifications underpinning our delivery credentials.'}
-                    </p>
-                  </div>
-                  <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
+                <div className="mb-8">
+                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-4">
+                    {language === 'nl' ? 'Vertrouwd door leiders' : 'Trusted by Industry Leaders'}
+                  </h2>
+                  <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
                     {localizedSocialProof.map((logo, index) => (
                       <a
                         key={index}
                         href={logo.url || '#'}
                         target={logo.url ? '_blank' : undefined}
                         rel={logo.url ? 'noopener noreferrer' : undefined}
-                        className="group flex h-24 items-center justify-center rounded-3xl border-2 border-slate-200 bg-white px-6 shadow-md transition-all hover:-translate-y-1 hover:border-primary/40 hover:bg-primary/5 hover:shadow-xl"
+                        className="flex h-20 items-center justify-center bg-white px-4 rounded-none transition hover:bg-slate-50"
                       >
                         {logo.logo ? (
                           <img
                             src={logo.logo}
                             alt={logo.name}
-                            className="max-h-12 w-auto object-contain opacity-80 transition group-hover:opacity-100"
+                            className="max-h-12 w-auto object-contain"
                           />
                         ) : (
                           <span className="text-sm font-semibold text-slate-500">{logo.name}</span>
@@ -913,42 +806,20 @@ export default function DynamicServicePage() {
               )}
 
               {localizedTestimonials.length > 0 && (
-                <div className="space-y-8">
-                  <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-                    <div className="space-y-4">
-                      <div className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-xs font-bold uppercase tracking-[0.25em] text-slate-700">
-                        <ThumbsUp className="h-3 w-3" />
-                        {language === 'nl' ? 'Testimonials' : 'Testimonials'}
-                      </div>
-                      <h2 className="text-4xl font-black tracking-tight text-slate-900">
-                        {language === 'nl' ? 'Wat Klanten Zeggen' : 'What Clients Say'}
-                      </h2>
-                    </div>
-                    <p className="max-w-xl text-lg text-slate-600 leading-relaxed font-light">
-                      {language === 'nl'
-                        ? 'Directe citaten van klanten over onze samenwerking en resultaten.'
-                        : 'Direct client commentary on collaborating with our teams.'}
-                    </p>
-                  </div>
-                  <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+                <div>
+                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-4">
+                    {language === 'nl' ? 'Wat Klanten Zeggen' : 'What Clients Say'}
+                  </h2>
+                  <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                     {localizedTestimonials.map((testimonial, index) => (
-                      <Card key={index} className="group relative overflow-hidden rounded-3xl border-2 border-slate-200 bg-white p-10 shadow-xl transition-all hover:-translate-y-2 hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10">
-                        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/5 via-white to-white opacity-0 transition-opacity group-hover:opacity-100" />
-                        <div className="absolute top-0 left-0 h-24 w-24 rounded-full bg-primary/10 blur-3xl" />
-                        <div className="relative">
-                          <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 text-primary">
-                            <MessageCircle className="h-6 w-6" />
-                          </div>
-                          <p className="text-lg text-slate-700 leading-relaxed font-light italic">
-                            "{testimonial.quote}"
-                          </p>
-                          <div className="mt-8 space-y-2">
-                            <p className="text-sm font-bold uppercase tracking-[0.2em] text-primary">
-                              {testimonial.role || ''}
-                            </p>
-                            <p className="text-xl font-black text-slate-900">{testimonial.author}</p>
-                            <p className="text-base text-slate-600 font-medium">{testimonial.company}</p>
-                          </div>
+                      <Card key={index} className="bg-white p-6 rounded-none transition hover:shadow-md">
+                        <p className="text-base text-slate-700 leading-relaxed italic">
+                          "{testimonial.quote}"
+                        </p>
+                        <div className="mt-4 space-y-1">
+                          <p className="text-sm font-bold text-slate-700">{testimonial.author}</p>
+                          <p className="text-sm text-slate-600">{testimonial.role}</p>
+                          <p className="text-sm text-slate-600">{testimonial.company}</p>
                         </div>
                       </Card>
                     ))}
@@ -961,42 +832,30 @@ export default function DynamicServicePage() {
 
         {/* 12. Final CTA / Closing Section */}
         {pageData.final_cta_title && (
-          <section className="px-6 pt-12 pb-20 md:px-10 md:pt-20">
-            <div className="relative mx-auto max-w-7xl overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary/90 to-violet-600 px-8 py-16 text-white shadow-2xl md:px-16 md:py-20">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.1),_transparent_50%)]" />
-              <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-white/10 blur-3xl" />
-              <div className="absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-violet-500/30 blur-3xl" />
-              <div className="relative mx-auto max-w-3xl text-center space-y-8">
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-5 py-2 text-xs font-bold uppercase tracking-[0.25em] text-white backdrop-blur-xl">
-                  <Rocket className="h-3 w-3" />
-                  {language === 'nl' ? 'Klaar om te starten?' : 'Ready to Start?'}
-                </div>
-                <h2 className="text-4xl font-black tracking-tight md:text-6xl bg-gradient-to-br from-white via-white to-white/90 bg-clip-text text-transparent">
-                  {getLocalizedValue(pageData.final_cta_title, 'final_cta_title')}
-                </h2>
-                {pageData.final_cta_description && (
-                  <p className="text-xl text-white/90 leading-relaxed font-light">
-                    {getLocalizedValue(pageData.final_cta_description, 'final_cta_description')}
-                  </p>
-                )}
-                <div className="flex flex-col items-center justify-center gap-5 pt-4 sm:flex-row">
-                  <Link
-                    to="/contact"
-                    className="group inline-flex items-center gap-2 rounded-full bg-white px-8 py-5 text-base font-bold text-primary shadow-xl shadow-white/30 transition-all hover:scale-105 hover:shadow-2xl hover:shadow-white/40"
-                  >
-                    {getLocalizedValue(
-                      pageData.final_cta_button_text || 'Contact Us',
-                      'final_cta_button_text'
-                    )}
-                    <ArrowUpRight className="h-5 w-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                  </Link>
-                  <Link
-                    to="/services"
-                    className="inline-flex items-center gap-2 rounded-full border-2 border-white/50 bg-white/10 px-8 py-5 text-base font-bold text-white backdrop-blur-xl transition-all hover:scale-105 hover:border-white hover:bg-white/20"
-                  >
-                    {language === 'nl' ? 'Bekijk alle diensten' : 'Explore all services'}
-                    <ArrowRight className="h-5 w-5" />
-                  </Link>
+          <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5">
+            <div className="rounded-none bg-blue-100 text-slate-700 p-8 md:p-12">
+              <div className="flex justify-center">
+                <div className="text-center max-w-2xl">
+                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+                    {getLocalizedValue(pageData.final_cta_title, 'final_cta_title')}
+                  </h2>
+                  {pageData.final_cta_description && (
+                    <p className="mt-4 text-slate-600 max-w-2xl">
+                      {getLocalizedValue(pageData.final_cta_description, 'final_cta_description')}
+                    </p>
+                  )}
+                  <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+                    <Link
+                      to="/contact"
+                      className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition px-6 py-3 rounded-none font-bold"
+                    >
+                      {getLocalizedValue(
+                        pageData.final_cta_button_text || 'Contact Us',
+                        'final_cta_button_text'
+                      )}
+                      <ArrowUpRight className="h-4 w-4" />
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>

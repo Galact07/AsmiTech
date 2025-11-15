@@ -251,6 +251,9 @@ export type Database = {
           final_cta_description: string | null
           final_cta_button_text: string | null
           meta_description: string | null
+          mini_cta_text: string | null
+          mini_cta_subtext: string | null
+          mini_cta_link: string | null
           display_order: number | null
           created_at: string | null
           updated_at: string | null
@@ -285,6 +288,9 @@ export type Database = {
           final_cta_description?: string | null
           final_cta_button_text?: string | null
           meta_description?: string | null
+          mini_cta_text?: string | null
+          mini_cta_subtext?: string | null
+          mini_cta_link?: string | null
           display_order?: number | null
           created_at?: string | null
           updated_at?: string | null
@@ -319,6 +325,9 @@ export type Database = {
           final_cta_description?: string | null
           final_cta_button_text?: string | null
           meta_description?: string | null
+          mini_cta_text?: string | null
+          mini_cta_subtext?: string | null
+          mini_cta_link?: string | null
           display_order?: number | null
           created_at?: string | null
           updated_at?: string | null

@@ -1,12 +1,51 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, ArrowRight, ShoppingBag, Flame, Pill, FlaskConical, Landmark, Truck, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowUpRight, ArrowRight, ShoppingBag, Flame, Pill, FlaskConical, Landmark, Truck, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 import Carousel from '../components/ui/carousel';
 import { useTranslation } from '@/hooks/useTranslation';
+import { supabase } from '@/integrations/supabase/client';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Home = () => {
   const { t, tArray, tObject } = useTranslation();
+  const { language } = useLanguage();
   const [industryIndex, setIndustryIndex] = useState(0);
+  const [services, setServices] = useState([]);
+  const [servicesLoading, setServicesLoading] = useState(true);
+
+  useEffect(() => {
+    fetchServices();
+  }, []);
+
+  const fetchServices = async () => {
+    try {
+      setServicesLoading(true);
+      const { data, error } = await supabase
+        .from('service_pages')
+        .select('*')
+        .eq('status', 'published')
+        .order('created_at', { ascending: true });
+
+      if (error) throw error;
+      setServices(data || []);
+    } catch (error) {
+      console.error('Error fetching services:', error);
+    } finally {
+      setServicesLoading(false);
+    }
+  };
+
+  const getLocalizedValue = (service, field) => {
+    if (language === 'nl' && service.content_nl) {
+      const nlContent = typeof service.content_nl === 'string' 
+        ? JSON.parse(service.content_nl) 
+        : service.content_nl;
+      if (nlContent && nlContent[field]) {
+        return nlContent[field];
+      }
+    }
+    return service[field];
+  };
   
   // Get translated industries data
   const industriesData = [
@@ -246,78 +285,45 @@ const Home = () => {
               </Link>
             </div>
           </div>
-          <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-            {[
-              {
-                title: t('home.services.list.sapPublicCloud.title'),
-                description: t('home.services.list.sapPublicCloud.description'),
-                href: '/services/sap-public-cloud',
-                image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop'
-              },
-              {
-                title: t('home.services.list.sapImplementations.title'),
-                description: t('home.services.list.sapImplementations.description'),
-                href: '/services/sap-implementations-and-rollouts',
-                image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&auto=format&fit=crop'
-              },
-              {
-                title: t('home.services.list.sapDocumentCompliance.title'),
-                description: t('home.services.list.sapDocumentCompliance.description'),
-                href: '/services/sap-document-and-reporting-compliance',
-                image: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&auto=format&fit=crop'
-              },
-              {
-                title: t('home.services.list.sapConsulting.title'),
-                description: t('home.services.list.sapConsulting.description'),
-                href: '/services/sap-consulting-advisory',
-                image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&auto=format&fit=crop'
-              },
-              {
-                title: t('home.services.list.dataMigration.title'),
-                description: t('home.services.list.dataMigration.description'),
-                href: '/services/data-migration-services',
-                image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop'
-              },
-              {
-                title: t('home.services.list.supportManaged.title'),
-                description: t('home.services.list.supportManaged.description'),
-                href: '/services/support-managed-services',
-                image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop'
-              },
-              {
-                title: t('home.services.list.training.title'),
-                description: t('home.services.list.training.description'),
-                href: '/services/training-change-management',
-                image: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800&auto=format&fit=crop'
-              },
-              {
-                title: t('home.services.list.projectManagement.title'),
-                description: t('home.services.list.projectManagement.description'),
-                href: '/services/sap-project-management-governance',
-                image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&auto=format&fit=crop'
-              }
-            ].map((service, index) => (
-              <article key={index} className="bg-white hover:shadow-md transition h-full rounded-none overflow-hidden flex flex-col">
-                <img 
-                  src={service.image}
-                  alt={service.title}
-                  className="w-full h-48 object-cover"
-                  loading="lazy"
-                />
-                <div className="p-5 flex-1 flex flex-col">
-                  <h3 className="text-base tracking-tight font-bold text-slate-700">{service.title}</h3>
-                  <p className="mt-2 text-slate-700/80 mb-4 text-sm">{service.description}</p>
-                  <Link 
-                    to={service.href}
-                    className="mt-auto inline-flex items-center gap-2 text-primary hover:text-primary/80 transition text-sm font-bold hover:underline"
-                  >
-                    {t('buttons.learnMore')}
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
+          {servicesLoading ? (
+            <div className="flex items-center justify-center py-20">
+              <Loader2 className="h-12 w-12 animate-spin text-white" />
+            </div>
+          ) : services.length === 0 ? (
+            <div className="text-center py-20">
+              <p className="text-white/80 text-lg">No services available at the moment.</p>
+            </div>
+          ) : (
+            <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+              {services.map((service) => (
+                <article key={service.id} className="bg-white hover:shadow-md transition h-full rounded-none overflow-hidden flex flex-col">
+                  {service.hero_image_url && (
+                    <img 
+                      src={service.hero_image_url}
+                      alt={getLocalizedValue(service, 'title')}
+                      className="w-full h-48 object-cover"
+                      loading="lazy"
+                    />
+                  )}
+                  <div className="p-5 flex-1 flex flex-col">
+                    <h3 className="text-base tracking-tight font-bold text-slate-700">
+                      {getLocalizedValue(service, 'title')}
+                    </h3>
+                    <p className="mt-2 text-slate-700/80 mb-4 text-sm">
+                      {getLocalizedValue(service, 'hero_subheadline') || getLocalizedValue(service, 'meta_description') || ''}
+                    </p>
+                    <Link 
+                      to={`/services/${service.slug}`}
+                      className="mt-auto inline-flex items-center gap-2 text-primary hover:text-primary/80 transition text-sm font-bold hover:underline"
+                    >
+                      {t('buttons.learnMore')}
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
