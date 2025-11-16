@@ -621,7 +621,13 @@ Return the complete translated JSON starting with { and ending with }`
         max_tokens: maxTokens,
       });
 
-      const translatedText = chatCompletion.choices[0]?.message?.content || '';
+      // Hugging Face Router can sometimes return text in slightly different properties
+      // Prefer OpenAI-style message.content, but fall back to text / generated_text if needed
+      let translatedText: string =
+        (chatCompletion as any).choices?.[0]?.message?.content ??
+        (chatCompletion as any).choices?.[0]?.text ??
+        (chatCompletion as any).generated_text ??
+        '';
       totalTokens = chatCompletion.usage?.total_tokens || 0;
       const finishReason = chatCompletion.choices[0]?.finish_reason;
 
@@ -641,7 +647,10 @@ Return the complete translated JSON starting with { and ending with }`
       if (!translatedText || translatedText.trim().length === 0) {
         console.error('❌ API returned empty content!');
         console.error('📋 Full API response:', JSON.stringify(chatCompletion, null, 2));
-        throw new Error('API returned empty response - check API key or model availability');
+        console.log('💡 Falling back to SAFE BATCH MODE (per page & job) due to empty response.\n');
+
+        // Fallback: translate each service page and job individually
+        return await this.translateInBatches(dataToTranslate, pages || [], jobs || []);
       }
       
       console.log(`   Content length: ${translatedText.length} characters\n`);
