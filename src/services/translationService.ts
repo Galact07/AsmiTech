@@ -203,8 +203,8 @@ ${context ? `\nAdditional context: ${context}` : ''}`
             `Service page field: ${field}`
           );
           totalTokens += 100; // Estimate
-          // Small delay to avoid rate limiting
-          await new Promise(resolve => setTimeout(resolve, 500));
+          // Small delay to avoid rate limiting (reduced in batch mode)
+          await new Promise(resolve => setTimeout(resolve, 200));
         }
       }
 
@@ -223,7 +223,7 @@ ${context ? `\nAdditional context: ${context}` : ''}`
                     item[key],
                     `Service page ${field}.${key}`
                   );
-                  await new Promise(resolve => setTimeout(resolve, 300));
+                  await new Promise(resolve => setTimeout(resolve, 100));
                 } else {
                   translatedItem[key] = item[key];
                 }
@@ -315,7 +315,7 @@ ${context ? `\nAdditional context: ${context}` : ''}`
             `Job posting field: ${field}`
           );
           totalTokens += 100;
-          await new Promise(resolve => setTimeout(resolve, 500));
+          await new Promise(resolve => setTimeout(resolve, 200));
         }
       }
 
@@ -362,6 +362,92 @@ ${context ? `\nAdditional context: ${context}` : ''}`
     }
   }
 
+  private async translateInBatches(
+    dataToTranslate: any,
+    pages: any[],
+    jobs: any[]
+  ): Promise<{
+    totalSuccess: number;
+    totalFailed: number;
+    totalTokens: number;
+    totalCost: number;
+  }> {
+    let totalSuccess = 0;
+    let totalFailed = 0;
+    let totalTokens = 0;
+
+    console.log(`📦 BATCH MODE: Translating items individually for safety\n`);
+
+    // Translate each service page individually
+    if (dataToTranslate.service_pages && Object.keys(dataToTranslate.service_pages).length > 0) {
+      const pageIds = Object.keys(dataToTranslate.service_pages);
+      console.log(`📚 Translating ${pageIds.length} service pages one by one...\n`);
+
+      for (let i = 0; i < pageIds.length; i++) {
+        const pageId = pageIds[i];
+        const pageInfo = dataToTranslate.service_pages[pageId];
+        
+        console.log(`[${i + 1}/${pageIds.length}] Translating: ${pageInfo.title}`);
+
+        try {
+          const result = await this.translateServicePage(pageId);
+          if (result.success) {
+            totalSuccess++;
+            totalTokens += result.tokensUsed || 0;
+            console.log(`✅ Completed: ${pageInfo.title}\n`);
+          } else {
+            totalFailed++;
+            console.error(`❌ Failed: ${pageInfo.title} - ${result.error}\n`);
+          }
+          
+          // Small delay to avoid rate limiting
+          await new Promise(resolve => setTimeout(resolve, 1000));
+        } catch (error: any) {
+          totalFailed++;
+          console.error(`❌ Error translating ${pageInfo.title}:`, error.message);
+        }
+      }
+    }
+
+    // Translate each job individually
+    if (dataToTranslate.jobs && Object.keys(dataToTranslate.jobs).length > 0) {
+      const jobIds = Object.keys(dataToTranslate.jobs);
+      console.log(`\n💼 Translating ${jobIds.length} jobs one by one...\n`);
+
+      for (let i = 0; i < jobIds.length; i++) {
+        const jobId = jobIds[i];
+        const jobInfo = dataToTranslate.jobs[jobId];
+        
+        console.log(`[${i + 1}/${jobIds.length}] Translating: ${jobInfo.title}`);
+
+        try {
+          const result = await this.translateJob(jobId);
+          if (result.success) {
+            totalSuccess++;
+            totalTokens += result.tokensUsed || 0;
+            console.log(`✅ Completed: ${jobInfo.title}\n`);
+          } else {
+            totalFailed++;
+            console.error(`❌ Failed: ${jobInfo.title} - ${result.error}\n`);
+          }
+          
+          // Small delay to avoid rate limiting
+          await new Promise(resolve => setTimeout(resolve, 1000));
+        } catch (error: any) {
+          totalFailed++;
+          console.error(`❌ Error translating ${jobInfo.title}:`, error.message);
+        }
+      }
+    }
+
+    return {
+      totalSuccess,
+      totalFailed,
+      totalTokens,
+      totalCost: this.calculateCost(totalTokens),
+    };
+  }
+
   async translateAll(): Promise<{
     totalSuccess: number;
     totalFailed: number;
@@ -370,11 +456,11 @@ ${context ? `\nAdditional context: ${context}` : ''}`
   }> {
     console.log(`
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃  🌍 BULK TRANSLATION STARTED (SINGLE API CALL)                    ┃
+┃  🌍 BULK TRANSLATION STARTED (SMART BATCHING)                     ┃
 ┃  Target Language: Dutch (NL)                                       ┃
 ┃  Model: ${this.MODEL_NAME.padEnd(49)}┃
 ┃  Provider: Hugging Face Router + Groq (FREE!)                      ┃
-┃  Method: All data in ONE request                                   ┃
+┃  Method: Automatic batching if dataset is large                    ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 `);
 
@@ -480,12 +566,25 @@ ${context ? `\nAdditional context: ${context}` : ''}`
       console.log(`📊 Data prepared. Pretty size: ${prettyLength} characters`);
       console.log(`📉 Minified size sent to API: ${minifiedLength} characters`);
       
-      const estimatedTokens = Math.ceil(minifiedLength / 3.5);
-      const maxTokens = Math.min(64000, Math.max(32000, estimatedTokens + 4000));
+      const estimatedInputTokens = Math.ceil(minifiedLength / 3.5);
+      // Dutch translations are typically 10-20% longer, plus we need buffer for JSON structure
+      const estimatedOutputTokens = Math.ceil(estimatedInputTokens * 1.5);
+      const maxTokens = Math.min(120000, Math.max(60000, estimatedOutputTokens));
 
-      console.log(`🧮 Estimated tokens: ~${estimatedTokens}`);
+      console.log(`🧮 Estimated input tokens: ~${estimatedInputTokens}`);
+      console.log(`🧮 Estimated output tokens needed: ~${estimatedOutputTokens}`);
       console.log(`🎯 max_tokens request: ${maxTokens}`);
-      console.log(`🚀 Sending to AI for translation...\n`);
+      
+      // Check if data is too large for single request - use batch mode
+      if (estimatedOutputTokens > 50000) {
+        console.warn(`⚠️  Dataset is large (${estimatedOutputTokens} estimated output tokens).`);
+        console.log(`🔄 Switching to BATCH MODE for safer translation...\n`);
+        
+        // Translate in batches
+        return await this.translateInBatches(dataToTranslate, pages || [], jobs || []);
+      }
+      
+      console.log(`🚀 Sending to AI for translation in SINGLE REQUEST...\n`);
 
       // Send everything in ONE API call
       console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
@@ -499,7 +598,19 @@ ${context ? `\nAdditional context: ${context}` : ''}`
         messages: [
           {
             role: 'system',
-            content: `Translate this JSON from English to Dutch. Keep keys and IDs unchanged, translate only values. Keep SAP/ERP/CRM in English. Return complete valid JSON with NO extra whitespace (minified).`
+            content: `You are a professional Dutch translator. Translate this JSON from English to Dutch (Netherlands).
+
+CRITICAL RULES:
+1. Keep ALL JSON keys, IDs, and structure EXACTLY as-is
+2. Translate ONLY the string values
+3. Keep technical terms in English: SAP, ERP, CRM, S/4HANA, Fiori, BTP, Ariba, API, etc.
+4. Preserve ALL array items - do not skip or truncate any items
+5. Maintain the same array lengths - input and output must have identical structure
+6. Return ONLY valid, complete, minified JSON with NO markdown, NO comments, NO extra text
+7. Ensure ALL nested objects and arrays are fully translated
+8. Do not truncate the response - translate EVERYTHING
+
+Return the complete translated JSON starting with { and ending with }`
           },
           {
             role: 'user',
@@ -627,6 +738,44 @@ ${context ? `\nAdditional context: ${context}` : ''}`
         
         for (const [pageId, pageData] of Object.entries(translatedData.service_pages) as any[]) {
           try {
+            // Safety check: ensure pageData and pageData.data exist
+            if (!pageData || !pageData.data) {
+              console.error(`❌ Invalid data structure for page ${pageId}:`, pageData);
+              totalFailed++;
+              continue;
+            }
+
+            // Validate that all expected fields are present
+            const expectedArrayFields = ['process_steps', 'tech_stack', 'why_choose_us', 'core_offerings', 'benefits', 'case_studies', 'testimonials'];
+            const missingFields: string[] = [];
+            const emptyFields: string[] = [];
+            
+            expectedArrayFields.forEach(field => {
+              if (!pageData.data[field]) {
+                missingFields.push(field);
+              } else if (Array.isArray(pageData.data[field]) && pageData.data[field].length === 0) {
+                emptyFields.push(field);
+              }
+            });
+
+            if (missingFields.length > 0) {
+              console.warn(`⚠️  ${pageData.title || pageId}: Missing fields in translation - ${missingFields.join(', ')}`);
+            }
+            if (emptyFields.length > 0) {
+              console.warn(`⚠️  ${pageData.title || pageId}: Empty arrays in translation - ${emptyFields.join(', ')}`);
+            }
+
+            // Log sample of translated array data for verification
+            if (pageData.data.process_steps && Array.isArray(pageData.data.process_steps) && pageData.data.process_steps.length > 0) {
+              console.log(`  📋 process_steps: ${pageData.data.process_steps.length} items translated`);
+            }
+            if (pageData.data.tech_stack && Array.isArray(pageData.data.tech_stack) && pageData.data.tech_stack.length > 0) {
+              console.log(`  🔧 tech_stack: ${pageData.data.tech_stack.length} items translated`);
+            }
+            if (pageData.data.why_choose_us && Array.isArray(pageData.data.why_choose_us) && pageData.data.why_choose_us.length > 0) {
+              console.log(`  ⭐ why_choose_us: ${pageData.data.why_choose_us.length} items translated`);
+            }
+
             const { error } = await supabase
               .from('service_pages')
               .update({
@@ -670,6 +819,37 @@ ${context ? `\nAdditional context: ${context}` : ''}`
         
         for (const [jobId, jobData] of Object.entries(translatedData.jobs) as any[]) {
           try {
+            // Safety check: ensure jobData and jobData.data exist
+            if (!jobData || !jobData.data) {
+              console.error(`❌ Invalid data structure for job ${jobId}:`, jobData);
+              totalFailed++;
+              continue;
+            }
+
+            // Validate job fields
+            const expectedJobFields = ['title', 'description', 'requirements', 'location', 'salary_range', 'specialization'];
+            const missingJobFields: string[] = [];
+            
+            expectedJobFields.forEach(field => {
+              if (!jobData.data[field]) {
+                missingJobFields.push(field);
+              }
+            });
+
+            if (missingJobFields.length > 0) {
+              console.warn(`⚠️  Job "${jobData.title || jobId}": Missing fields - ${missingJobFields.join(', ')}`);
+            }
+
+            // Log what was translated
+            if (jobData.data.description) {
+              const descLength = jobData.data.description.length;
+              console.log(`  📝 description: ${descLength} characters translated`);
+            }
+            if (jobData.data.requirements) {
+              const reqLength = jobData.data.requirements.length;
+              console.log(`  📋 requirements: ${reqLength} characters translated`);
+            }
+
             const { error } = await supabase
               .from('jobs')
               .update({

@@ -172,6 +172,18 @@ export default function DynamicServicePage() {
     if (language === 'nl' && dutchContent && Array.isArray(dutchContent[nlKey]) && dutchContent[nlKey].length > 0) {
       return dutchContent[nlKey];
     }
+    // Debug: Log when Dutch content is missing or empty
+    if (language === 'nl' && enArray && enArray.length > 0) {
+      if (!dutchContent) {
+        console.warn(`⚠️  No Dutch content available for page (dutchContent is null/undefined)`);
+      } else if (!dutchContent[nlKey]) {
+        console.warn(`⚠️  Missing Dutch translation for array field: "${nlKey}"`);
+      } else if (!Array.isArray(dutchContent[nlKey])) {
+        console.warn(`⚠️  Dutch content for "${nlKey}" is not an array:`, typeof dutchContent[nlKey]);
+      } else if (dutchContent[nlKey].length === 0) {
+        console.warn(`⚠️  Dutch translation for "${nlKey}" is an empty array`);
+      }
+    }
     return enArray || [];
   };
 
@@ -236,6 +248,25 @@ export default function DynamicServicePage() {
       const nlContent = typeof data.content_nl === 'string' 
         ? JSON.parse(data.content_nl) 
         : (data.content_nl || {});
+      
+      // Debug logging for Dutch content
+      console.log(`📖 Loaded service page: ${data.title}`);
+      console.log(`🌐 Translation status: ${data.translation_status || 'not translated'}`);
+      if (nlContent && Object.keys(nlContent).length > 0) {
+        console.log(`✅ Dutch content available with ${Object.keys(nlContent).length} fields`);
+        
+        // Log array field counts
+        ['process_steps', 'tech_stack', 'why_choose_us', 'core_offerings', 'benefits'].forEach(field => {
+          if (Array.isArray(nlContent[field])) {
+            console.log(`  - ${field}: ${nlContent[field].length} items`);
+          } else if (nlContent[field]) {
+            console.log(`  - ${field}: exists but not an array (${typeof nlContent[field]})`);
+          }
+        });
+      } else {
+        console.log(`⚠️  No Dutch content available for this page`);
+      }
+      
       setDutchContent(nlContent);
     } catch (error) {
       console.error('Error fetching service page:', error);

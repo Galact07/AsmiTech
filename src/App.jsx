@@ -24,6 +24,7 @@ import InquiriesAdmin from './pages/admin/InquiriesAdmin';
 import CaseStudiesAdmin from './pages/admin/CaseStudiesAdmin';
 import ServicePagesAdmin from './pages/admin/ServicePagesAdmin';
 import TranslateAllAdmin from './pages/admin/TranslateAllAdmin';
+import TranslationDiagnostics from './pages/admin/TranslationDiagnostics';
 
 function App() {
   return (
@@ -110,6 +111,7 @@ function App() {
           <Route path="case-studies" element={<CaseStudiesAdmin />} />
           <Route path="service-pages" element={<ServicePagesAdmin />} />
           <Route path="translations" element={<TranslateAllAdmin />} />
+          <Route path="translation-diagnostics" element={<TranslationDiagnostics />} />
         </Route>
       </Routes>
       </Router>

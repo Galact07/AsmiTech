@@ -10,7 +10,8 @@ import {
   ChevronLeft,
   Menu,
   FileText,
-  Languages
+  Languages,
+  ClipboardCheck
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
@@ -51,6 +52,11 @@ const sidebarItems = [
     title: 'Translations',
     href: '/admin/translations',
     icon: Languages,
+  },
+  {
+    title: 'Translation Check',
+    href: '/admin/translation-diagnostics',
+    icon: ClipboardCheck,
   },
   // Case Studies hidden as requested
   // {

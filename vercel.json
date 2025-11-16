@@ -8,5 +8,14 @@
       "source": "/(.*)",
       "destination": "/index.html"
     }
-  ]
+  ],
+  "functions": {
+    "api/hf/v1/chat/completions.js": {
+      "maxDuration": 60,
+      "memory": 1024
+    },
+    "api/save-translation.js": {
+      "maxDuration": 10
+    }
+  }
 }
