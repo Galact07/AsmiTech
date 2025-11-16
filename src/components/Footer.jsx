@@ -11,30 +11,28 @@ const Footer = () => {
         <div className="mb-4">
           <span className="text-xl font-bold text-white">{t('footer.companyName')}</span>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-          {/* Company Info */}
-          <div className="md:col-span-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="flex flex-col">
-                <h3 className="text-sm font-bold text-white mb-3">{t('footer.netherlands.title')}</h3>
-                <address className="not-italic text-sm text-white/80 leading-relaxed break-words" style={{ whiteSpace: 'pre-line' }}>
-                  {t('footer.netherlands.address')}
-                </address>
-              </div>
+        {/* 4 columns with extra space after the first on desktop */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-16 items-start">
+          {/* Netherlands Office */}
+          <div className="flex flex-col lg:mr-10">
+            <h3 className="text-sm font-bold text-white mb-4 tracking-wide">{t('footer.netherlands.title')}</h3>
+            <address className="not-italic text-sm text-white/80 leading-relaxed break-words" style={{ whiteSpace: 'pre-line' }}>
+              {t('footer.netherlands.address')}
+            </address>
+          </div>
 
-              <div className="flex flex-col">
-                <h3 className="text-sm font-bold text-white mb-3">{t('footer.india.title')}</h3>
-                <address className="not-italic text-sm text-white/80 leading-relaxed break-words" style={{ whiteSpace: 'pre-line' }}>
-                  {t('footer.india.address')}
-                </address>
-              </div>
-            </div>
+          {/* India Office */}
+          <div className="flex flex-col lg:ml-1"> 
+            <h3 className="text-sm font-bold text-white mb-4 tracking-wide">{t('footer.india.title')}</h3>
+            <address className="not-italic text-sm text-white/80 leading-relaxed break-words" style={{ whiteSpace: 'pre-line' }}>
+              {t('footer.india.address')}
+            </address>
           </div>
           
           {/* Quick Links */}
-          <div className="md:col-span-3">
-            <h3 className="text-sm font-bold text-white mb-3">{t('footer.quickLinks')}</h3>
-            <div className="text-sm text-white/80 leading-relaxed">
+          <div className="flex flex-col lg:ml-6">
+            <h3 className="text-sm font-bold text-white mb-4 tracking-wide">{t('footer.quickLinks')}</h3>
+            <div className="text-sm text-white/80 leading-relaxed space-y-1">
               <Link to="/" className="block hover:text-blue-400 transition">{t('header.nav.home')}</Link>
               <Link to="/about" className="block hover:text-blue-400 transition">{t('header.nav.about')}</Link>
               <Link to="/services" className="block hover:text-blue-400 transition">{t('header.nav.services')}</Link>
@@ -46,14 +44,14 @@ const Footer = () => {
           </div>
           
           {/* Social Links */}
-          <div className="md:col-span-3">
-            <h3 className="text-sm font-bold text-white mb-3">{t('footer.contact')}</h3>
-            <div className="text-sm text-white/80 leading-relaxed">
+          <div className="flex flex-col">
+            <h3 className="text-sm font-bold text-white mb-4 tracking-wide">{t('footer.contact')}</h3>
+            <div className="text-sm text-white/80 leading-relaxed space-y-2">
               <a
                 href="https://www.linkedin.com/company/asmi-technology-consulting-bv/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 hover:text-blue-300 transition block"
+                className="flex items-center gap-3 hover:text-blue-300 transition"
                 aria-label="Visit our LinkedIn profile (opens in a new tab)"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 flex-shrink-0">
@@ -65,7 +63,7 @@ const Footer = () => {
               </a>
               <a
                 href="mailto:info@asmitechconsulting.com"
-                className="flex items-start gap-3 hover:text-blue-300 transition block"
+                className="flex items-start gap-3 hover:text-blue-300 transition"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 flex-shrink-0 mt-0.5">
                   <rect width="20" height="16" x="2" y="4" rx="2"></rect>
