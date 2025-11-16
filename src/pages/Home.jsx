@@ -27,7 +27,20 @@ const Home = () => {
         .order('created_at', { ascending: true });
 
       if (error) throw error;
-      setServices(data || []);
+      const all = Array.isArray(data) ? data : [];
+      // Sort by optional 'rank' (ascending, nulls last), then by created_at
+      const sorted = all
+        .slice()
+        .sort((a, b) => {
+          const ar = Number.isFinite(a?.rank) ? a.rank : Number.POSITIVE_INFINITY;
+          const br = Number.isFinite(b?.rank) ? b.rank : Number.POSITIVE_INFINITY;
+          if (ar !== br) return ar - br;
+          const ad = a?.created_at ? Date.parse(a.created_at) : 0;
+          const bd = b?.created_at ? Date.parse(b.created_at) : 0;
+          return ad - bd;
+        });
+      // Only top 3 for home page
+      setServices(sorted.slice(0, 3));
     } catch (error) {
       console.error('Error fetching services:', error);
     } finally {

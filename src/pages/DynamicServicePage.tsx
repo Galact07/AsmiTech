@@ -440,48 +440,57 @@ export default function DynamicServicePage() {
           </section>
         )}
 
-        {/* 2. Introduction / Why This Service */}
-        {pageData.introduction_content && (
+        {/* 2 & 3. Why This Service + What Makes It Unique - Side by Side */}
+        {(pageData.introduction_content || pageData.differentiator_content) && (
           <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5">
-            <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
-              <div className="space-y-4">
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700">
-                  {getLocalizedValue(pageData.introduction_title, 'introduction_title')}
-                </h2>
-                <p className="whitespace-pre-line text-lg leading-relaxed text-slate-700/80">
-                  {getLocalizedValue(pageData.introduction_content, 'introduction_content')}
-                </p>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* 3. Key Differentiator / What Makes It Unique */}
-        {pageData.differentiator_content && (
-          <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5">
-            <div className="bg-blue-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
-              <div className="flex flex-col gap-8 md:flex-row md:items-start">
-                <div className="flex-1 space-y-4">
-                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700">
-                    {getLocalizedValue(pageData.differentiator_title, 'differentiator_title')}
-                  </h2>
-                  <p className="whitespace-pre-line text-lg leading-relaxed text-slate-700/80">
-                    {getLocalizedValue(pageData.differentiator_content, 'differentiator_content')}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Why This Service */}
+              {pageData.introduction_content && (
+                <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none h-full">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="bg-primary/10 p-3 rounded-none flex-shrink-0">
+                      <Lightbulb className="h-8 w-8 text-primary" />
+                    </div>
+                    <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-700">
+                      {getLocalizedValue(pageData.introduction_title, 'introduction_title')}
+                    </h2>
+                  </div>
+                  <p className="whitespace-pre-line text-base leading-relaxed text-slate-700/80 pl-16">
+                    {getLocalizedValue(pageData.introduction_content, 'introduction_content')}
                   </p>
                 </div>
-                {pageData.differentiator_video_url && (
-                  <div className="w-full max-w-xl overflow-hidden rounded-none border-2 border-slate-200 bg-white shadow-lg">
-                    <div className="aspect-video w-full">
-                      <iframe
-                        src={pageData.differentiator_video_url}
-                        className="h-full w-full"
-                        allowFullScreen
-                        title={getLocalizedValue(pageData.differentiator_title, 'differentiator_title')}
-                      />
+              )}
+
+              {/* What Makes It Unique */}
+              {pageData.differentiator_content && (
+                <div className="bg-blue-100 p-6 md:p-8 transition duration-500 ease-in rounded-none h-full">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="bg-primary/10 p-3 rounded-none flex-shrink-0">
+                      <Target className="h-8 w-8 text-primary" />
                     </div>
+                    <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-700">
+                      {getLocalizedValue(pageData.differentiator_title, 'differentiator_title')}
+                    </h2>
                   </div>
-                )}
-              </div>
+                  <p className="whitespace-pre-line text-base leading-relaxed text-slate-700/80 pl-16 mb-4">
+                    {getLocalizedValue(pageData.differentiator_content, 'differentiator_content')}
+                  </p>
+                  {pageData.differentiator_video_url && (
+                    <div className="pl-16">
+                      <div className="w-full overflow-hidden rounded-none bg-white shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)]">
+                        <div className="aspect-video w-full">
+                          <iframe
+                            src={pageData.differentiator_video_url}
+                            className="h-full w-full"
+                            allowFullScreen
+                            title={getLocalizedValue(pageData.differentiator_title, 'differentiator_title')}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </section>
         )}
@@ -490,37 +499,48 @@ export default function DynamicServicePage() {
         {localizedCoreOfferings.length > 0 && (
           <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5">
             <div className="bg-dark-blue p-6 md:p-8 transition duration-500 ease-in rounded-none">
-              <div className="mb-6">
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-2">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-3">
                   {language === 'nl' ? 'Kernaanbiedingen' : 'Core Offerings'}
                 </h2>
-                <p className="text-white/90 text-lg max-w-3xl">
+                <p className="text-white/90 text-lg max-w-2xl mx-auto">
                   {language === 'nl'
                     ? 'Ontdek de bouwstenen van deze dienst, elk ontworpen voor voorspelbare waarde.'
                     : 'Explore the pillars of this service, each crafted to deliver measurable value.'}
                 </p>
               </div>
-              <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-                {localizedCoreOfferings.map((offering: CoreOffering, index) => (
-                  <article
-                    key={`${offering.title}-${index}`}
-                    className="bg-white hover:shadow-md transition h-full rounded-none overflow-hidden flex flex-col"
-                  >
-                    <div className="p-5 flex-1 flex flex-col">
-                      <h3 className="text-base tracking-tight font-bold text-slate-700">{offering.title}</h3>
-                      <p className="mt-2 text-slate-700/80 mb-4 text-sm">{offering.description}</p>
-                      {offering.link && (
-                        <Link
-                          to={offering.link}
-                          className="mt-auto inline-flex items-center gap-2 text-primary hover:text-primary/80 transition text-sm font-bold hover:underline"
-                        >
-                          {language === 'nl' ? 'Meer weten' : 'Learn More'}
-                          <ArrowRight className="h-4 w-4" />
-                        </Link>
-                      )}
-                    </div>
-                  </article>
-                ))}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {localizedCoreOfferings.map((offering: CoreOffering, index) => {
+                  // Cycle through icons for variety
+                  const icons = [Rocket, Zap, ShieldCheck, TrendingUp, Star, BarChart3];
+                  const OfferingIcon = icons[index % icons.length];
+                  
+                  return (
+                    <article
+                      key={`${offering.title}-${index}`}
+                      className="bg-white hover:shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] transition-all hover:-translate-y-1 h-full rounded-none overflow-hidden flex flex-col group"
+                    >
+                      <div className="p-6 flex-1 flex flex-col">
+                        <div className="flex items-start gap-3 mb-3">
+                          <div className="bg-primary/10 p-2 rounded-none flex-shrink-0 group-hover:bg-primary transition-all">
+                            <OfferingIcon className="h-6 w-6 text-primary group-hover:text-white transition-all" />
+                          </div>
+                          <h3 className="text-lg tracking-tight font-bold text-slate-700 flex-1">{offering.title}</h3>
+                        </div>
+                        <p className="text-slate-700/80 mb-4 text-sm leading-relaxed flex-1">{offering.description}</p>
+                        {offering.link && (
+                          <Link
+                            to={offering.link}
+                            className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition text-sm font-bold hover:underline"
+                          >
+                            {language === 'nl' ? 'Meer weten' : 'Learn More'}
+                            <ArrowRight className="h-4 w-4" />
+                          </Link>
+                        )}
+                      </div>
+                    </article>
+                  );
+                })}
               </div>
             </div>
           </section>
@@ -530,30 +550,30 @@ export default function DynamicServicePage() {
         {localizedBenefits.length > 0 && (
           <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5">
             <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
-              <div className="mb-6">
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-2">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-3">
                   {language === 'nl' ? 'Voordelen' : 'Key Benefits'}
                 </h2>
-                <p className="text-slate-700/80 text-lg max-w-3xl">
+                <p className="text-slate-700/80 text-lg max-w-2xl mx-auto">
                   {language === 'nl'
                     ? 'Samengevatte waardeproposities die laten zien hoe wij efficiëntie, snelheid en zekerheid leveren.'
                     : 'Curated value propositions that show how we drive efficiency, velocity, and assurance.'}
                 </p>
               </div>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
                 {localizedBenefits.map((benefit, index) => {
                   const BenefitIcon = resolveIcon(benefit.icon);
                   return (
                     <div
                       key={index}
-                      className="flex gap-4 bg-white p-6 rounded-none transition hover:shadow-md"
+                      className="bg-white p-6 rounded-none transition-all hover:shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] hover:-translate-y-1 group"
                     >
-                      <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-none bg-primary/10 text-primary">
-                        <BenefitIcon className="h-6 w-6" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-bold text-slate-700">{benefit.title}</h3>
-                        <p className="mt-2 text-sm text-slate-700/80 leading-relaxed">{benefit.description}</p>
+                      <div className="flex flex-col items-center text-center">
+                        <div className="flex h-16 w-16 items-center justify-center rounded-none bg-primary/10 text-primary mb-4 group-hover:bg-primary group-hover:text-white transition-all">
+                          <BenefitIcon className="h-8 w-8" />
+                        </div>
+                        <h3 className="text-lg font-bold text-slate-700 mb-2">{benefit.title}</h3>
+                        <p className="text-sm text-slate-700/80 leading-relaxed">{benefit.description}</p>
                       </div>
                     </div>
                   );
@@ -567,25 +587,28 @@ export default function DynamicServicePage() {
         {localizedProcess.length > 0 && (
           <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5">
             <div className="bg-blue-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
-              <div className="mb-6">
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-2">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-3">
                   {language === 'nl' ? 'Ons Proces' : 'Our Process'}
                 </h2>
-                <p className="text-slate-700/80 text-lg max-w-3xl">
+                <p className="text-slate-700/80 text-lg max-w-2xl mx-auto">
                   {language === 'nl'
                     ? 'Een bewezen leveringsmodel met duidelijke stappen van afstemming tot optimalisatie.'
                     : 'A proven delivery model with explicit stages from alignment to optimization.'}
                 </p>
               </div>
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {localizedProcess.map((step, index) => (
-                  <div key={index} className="flex gap-4 bg-white p-6 rounded-none transition hover:shadow-md">
-                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-none bg-primary text-white text-lg font-bold">
+                  <div 
+                    key={index} 
+                    className="bg-white p-6 rounded-none transition-all hover:shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] relative group"
+                  >
+                    <div className="absolute -top-3 -left-3 flex h-12 w-12 items-center justify-center rounded-none bg-primary text-white text-xl font-bold shadow-lg">
                       {index + 1}
                     </div>
-                    <div className="flex-1">
-                      <h3 className="text-lg font-bold text-slate-700">{step.title}</h3>
-                      <p className="mt-2 text-sm text-slate-700/80 leading-relaxed">{step.description}</p>
+                    <div className="pl-6">
+                      <h3 className="text-lg font-bold text-slate-700 mb-2 group-hover:text-primary transition-colors">{step.title}</h3>
+                      <p className="text-sm text-slate-700/80 leading-relaxed">{step.description}</p>
                     </div>
                   </div>
                 ))}
@@ -598,11 +621,11 @@ export default function DynamicServicePage() {
         {localizedCaseStudies.length > 0 && (
           <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5">
             <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
-              <div className="mb-6">
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-2">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-3">
                   {language === 'nl' ? 'Succesverhalen' : 'Success Stories'}
                 </h2>
-                <p className="text-slate-700/80 text-lg max-w-3xl">
+                <p className="text-slate-700/80 text-lg max-w-2xl mx-auto">
                   {language === 'nl'
                     ? 'Concrete voorbeelden van projecten waarin we meetbare bedrijfsresultaten realiseerden.'
                     : 'Real client outcomes demonstrating how we deliver tangible business impact.'}
@@ -610,27 +633,38 @@ export default function DynamicServicePage() {
               </div>
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {localizedCaseStudies.map((caseStudy, index) => (
-                  <Card key={index} className="bg-white p-6 rounded-none transition hover:shadow-md">
-                    <h3 className="text-lg font-bold text-slate-700">{caseStudy.title}</h3>
-                    <div className="mt-4 space-y-3 text-sm">
-                      <p className="text-slate-700/80">
-                        <span className="font-bold text-slate-700">
-                          {language === 'nl' ? 'Probleem:' : 'Problem:'}
-                        </span>{' '}
-                        {caseStudy.problem}
-                      </p>
-                      <p className="text-slate-700/80">
-                        <span className="font-bold text-slate-700">
-                          {language === 'nl' ? 'Oplossing:' : 'Solution:'}
-                        </span>{' '}
-                        {caseStudy.solution}
-                      </p>
-                      <p className="text-slate-700/80">
-                        <span className="font-bold text-slate-700">
-                          {language === 'nl' ? 'Resultaat:' : 'Result:'}
-                        </span>{' '}
-                        {caseStudy.result}
-                      </p>
+                  <Card key={index} className="bg-white p-6 rounded-none transition-all hover:shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] hover:-translate-y-1 flex flex-col h-full">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="h-10 w-10 rounded-none bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <Award className="h-5 w-5 text-primary" />
+                      </div>
+                      <h3 className="text-lg font-bold text-slate-700">{caseStudy.title}</h3>
+                    </div>
+                    <div className="space-y-4 flex-1">
+                      <div>
+                        <p className="text-xs uppercase font-bold text-primary mb-1">
+                          {language === 'nl' ? 'Probleem' : 'Problem'}
+                        </p>
+                        <p className="text-sm text-slate-700/80 leading-relaxed">
+                          {caseStudy.problem}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs uppercase font-bold text-primary mb-1">
+                          {language === 'nl' ? 'Oplossing' : 'Solution'}
+                        </p>
+                        <p className="text-sm text-slate-700/80 leading-relaxed">
+                          {caseStudy.solution}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs uppercase font-bold text-primary mb-1">
+                          {language === 'nl' ? 'Resultaat' : 'Result'}
+                        </p>
+                        <p className="text-sm text-slate-700/80 leading-relaxed">
+                          {caseStudy.result}
+                        </p>
+                      </div>
                     </div>
                     {caseStudy.link && (
                       <Link
@@ -652,35 +686,51 @@ export default function DynamicServicePage() {
         {localizedTechStack.length > 0 && (
           <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5">
             <div className="bg-blue-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
-              <div className="mb-6">
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-2">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-3">
                   {language === 'nl' ? 'Technologie Stack' : 'Technology Stack'}
                 </h2>
-                <p className="text-slate-700/80 text-lg max-w-3xl">
+                <p className="text-slate-700/80 text-lg max-w-2xl mx-auto">
                   {language === 'nl'
                     ? 'Platforms, frameworks en tools die wij inzetten om duurzame resultaten te behalen.'
                     : 'Platforms, frameworks, and accelerators we leverage to produce sustainable outcomes.'}
                 </p>
               </div>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              <div 
+                className={`grid gap-6 ${
+                  localizedTechStack.length === 1 
+                    ? 'grid-cols-1 max-w-sm mx-auto' 
+                    : localizedTechStack.length === 2 
+                    ? 'grid-cols-1 md:grid-cols-2' 
+                    : localizedTechStack.length === 3 
+                    ? 'grid-cols-1 md:grid-cols-3' 
+                    : localizedTechStack.length === 4 
+                    ? 'grid-cols-2 md:grid-cols-4'
+                    : localizedTechStack.length <= 6
+                    ? 'grid-cols-2 md:grid-cols-3'
+                    : localizedTechStack.length <= 8
+                    ? 'grid-cols-2 md:grid-cols-4'
+                    : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
+                }`}
+              >
                 {localizedTechStack.map((tech, index) => (
                   <div
                     key={index}
-                    className="bg-white p-6 text-center rounded-none transition hover:shadow-md"
+                    className="bg-white p-8 text-center rounded-none transition-all hover:shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] hover:-translate-y-1 group"
                   >
                     {tech.logo && (
-                      <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center overflow-hidden rounded-none bg-slate-50">
-                        <img src={tech.logo} alt={tech.name} className="h-14 w-14 object-contain" />
+                      <div className="mx-auto mb-5 flex h-28 w-28 items-center justify-center overflow-hidden rounded-none bg-slate-50 group-hover:bg-primary/5 transition-all">
+                        <img src={tech.logo} alt={tech.name} className="h-24 w-24 object-contain" />
                       </div>
                     )}
                     {!tech.logo && (
-                      <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-none bg-primary/10">
-                        <Settings className="h-8 w-8 text-primary" />
+                      <div className="mx-auto mb-5 flex h-28 w-28 items-center justify-center rounded-none bg-primary/10 group-hover:bg-primary transition-all">
+                        <Layers className="h-14 w-14 text-primary group-hover:text-white transition-all" />
                       </div>
                     )}
                     <p className="text-base font-bold text-slate-700">{tech.name}</p>
                     {tech.description && (
-                      <p className="mt-2 text-sm text-slate-700/80 leading-relaxed">{tech.description}</p>
+                      <p className="mt-3 text-sm text-slate-700/80 leading-relaxed">{tech.description}</p>
                     )}
                     {tech.link && (
                       <Link
@@ -702,32 +752,30 @@ export default function DynamicServicePage() {
         {localizedWhyChoose.length > 0 && (
           <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5">
             <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
-              <div className="mb-6">
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-2">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-3">
                   {language === 'nl' ? 'Waarom Kiezen Voor Ons' : 'Why Choose Us'}
                 </h2>
-                <p className="text-slate-700/80 text-lg max-w-3xl">
+                <p className="text-slate-700/80 text-lg max-w-2xl mx-auto">
                   {language === 'nl'
                     ? 'Onze bewezen staat van dienst, certificeringen en wereldwijde bereik onderscheiden ons.'
                     : 'Our proven delivery record, certifications, and global reach set us apart.'}
                 </p>
               </div>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
                 {localizedWhyChoose.map((reason, index) => {
                   const ReasonIcon = resolveIcon(reason.icon);
                   return (
                     <Card
                       key={index}
-                      className="bg-white p-6 rounded-none transition hover:shadow-md"
+                      className="bg-white p-6 rounded-none transition-all hover:shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] hover:-translate-y-1 group"
                     >
-                      <div className="flex items-start gap-4">
-                        <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-none bg-primary/10 text-primary">
-                          <ReasonIcon className="h-6 w-6" />
+                      <div className="flex flex-col items-center text-center">
+                        <div className="flex h-16 w-16 items-center justify-center rounded-none bg-primary/10 text-primary mb-4 group-hover:bg-primary group-hover:text-white transition-all">
+                          <ReasonIcon className="h-8 w-8" />
                         </div>
-                        <div>
-                          <h3 className="text-lg font-bold text-slate-700">{reason.title}</h3>
-                          <p className="mt-2 text-sm text-slate-700/80 leading-relaxed">{reason.description}</p>
-                        </div>
+                        <h3 className="text-lg font-bold text-slate-700 mb-2">{reason.title}</h3>
+                        <p className="text-sm text-slate-700/80 leading-relaxed">{reason.description}</p>
                       </div>
                     </Card>
                   );
@@ -838,19 +886,22 @@ export default function DynamicServicePage() {
 
               {localizedTestimonials.length > 0 && (
                 <div>
-                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-4">
+                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-6">
                     {language === 'nl' ? 'Wat Klanten Zeggen' : 'What Clients Say'}
                   </h2>
                   <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                     {localizedTestimonials.map((testimonial, index) => (
-                      <Card key={index} className="bg-white p-6 rounded-none transition hover:shadow-md">
-                        <p className="text-base text-slate-700 leading-relaxed italic">
-                          "{testimonial.quote}"
-                        </p>
-                        <div className="mt-4 space-y-1">
+                      <Card key={index} className="bg-white p-6 rounded-none transition-all hover:shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] hover:-translate-y-1 flex flex-col">
+                        <div className="flex items-start gap-3 mb-4">
+                          <MessageCircle className="h-8 w-8 text-primary flex-shrink-0" />
+                          <p className="text-base text-slate-700 leading-relaxed italic">
+                            "{testimonial.quote}"
+                          </p>
+                        </div>
+                        <div className="mt-auto pt-4 border-t border-slate-200">
                           <p className="text-sm font-bold text-slate-700">{testimonial.author}</p>
-                          <p className="text-sm text-slate-600">{testimonial.role}</p>
-                          <p className="text-sm text-slate-600">{testimonial.company}</p>
+                          <p className="text-xs text-slate-600 mt-1">{testimonial.role}</p>
+                          <p className="text-xs text-primary font-semibold mt-1">{testimonial.company}</p>
                         </div>
                       </Card>
                     ))}
