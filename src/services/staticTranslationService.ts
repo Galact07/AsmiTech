@@ -62,16 +62,18 @@ class StaticTranslationService {
     });
   }
 
-  private async saveRawTranslation(rawText: string) {
+  private async saveRawTranslation(rawText: string, language: string) {
     if (!rawText || rawText.trim().length === 0) {
       return;
     }
+
+    const filename = `${language}.raw.json`;
 
     try {
       const response = await fetch('/api/save-translation', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ rawContent: rawText })
+        body: JSON.stringify({ rawContent: rawText, filename: `${language}.json` }) // API derives raw filename from this
       });
 
       if (!response.ok) {
@@ -79,16 +81,16 @@ class StaticTranslationService {
         throw new Error(errorData.error || 'Unknown error saving raw translation');
       }
 
-      console.log('📦 Raw translation saved to nl.raw.json (development/server path)');
+      console.log(`📦 Raw translation saved to ${filename} (development/server path)`);
     } catch (error) {
       console.error('❌ Failed to save raw translation automatically:', error);
-      console.log('⬇️  Downloading raw output as fallback (nl.raw.json)...');
+      console.log(`⬇️  Downloading raw output as fallback (${filename})...`);
 
       const blob = new Blob([rawText], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'nl.raw.json';
+      a.download = filename;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -98,13 +100,47 @@ class StaticTranslationService {
     }
   }
 
+  private async repairJson(rawText: string): Promise<string> {
+    console.log('🔧 Attempting to repair invalid JSON with AI...');
+    try {
+      const response = await this.client!.chat.completions.create({
+        model: this.MODEL_NAME,
+        messages: [
+          {
+            role: 'system',
+            content: `You are a JSON repair expert. The user will provide a malformed or truncated JSON string. 
+            Your task is to:
+            1. Fix any syntax errors (missing braces, unescaped quotes, trailing commas).
+            2. If the JSON is truncated, close it properly.
+            3. Remove any non-JSON text (markdown, explanations).
+            4. Return ONLY the valid, minified JSON string. Do not add any markdown formatting.`
+          },
+          {
+            role: 'user',
+            content: rawText
+          }
+        ],
+        temperature: 0.1,
+        max_tokens: 32000, // Large buffer for full file
+      });
+
+      const repairedText = response.choices[0]?.message?.content || '';
+      const cleanedRepaired = repairedText.trim().replace(/^```json/, '').replace(/^```/, '').replace(/```$/, '').trim();
+
+      return cleanedRepaired;
+    } catch (error) {
+      console.error('❌ JSON repair failed:', error);
+      throw new Error('Failed to repair JSON with AI');
+    }
+  }
+
   setApiKey(apiKey: string) {
     // Use Vite proxy to avoid CORS issues
     const baseURL = `${window.location.origin}/api/hf/v1/`;
-    
+
     console.log('🔧 Using Hugging Face Router via proxy:', baseURL);
     console.log('🤖 Model:', this.MODEL_NAME);
-    
+
     this.client = new OpenAI({
       baseURL: baseURL,
       apiKey: apiKey,
@@ -113,11 +149,14 @@ class StaticTranslationService {
   }
 
 
-  async translateStaticContent(): Promise<StaticTranslationResult> {
+  async translateStaticContent(targetLanguage: 'nl' | 'de' = 'nl'): Promise<StaticTranslationResult> {
+    const targetLangName = targetLanguage === 'nl' ? 'Dutch' : 'German';
+    const targetFilename = `${targetLanguage}.json`;
+
     console.log(`
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃  🌍 STATIC CONTENT TRANSLATION STARTED                            ┃
-┃  Source: en.json → Target: nl.json                                ┃
+┃  Source: en.json → Target: ${targetFilename.padEnd(27)}┃
 ┃  Model: ${this.MODEL_NAME.padEnd(49)}┃
 ┃  Provider: Hugging Face Router + Groq (FREE!)                     ┃
 ┃  Method: Single API Call (Entire File)                            ┃
@@ -130,7 +169,7 @@ class StaticTranslationService {
       if (!response.ok) {
         throw new Error('Failed to fetch en.json');
       }
-      
+
       const englishContent = await response.json();
       const prettyLength = JSON.stringify(englishContent, null, 2).length;
       const jsonString = JSON.stringify(englishContent); // Minified to reduce token usage
@@ -140,28 +179,29 @@ class StaticTranslationService {
       console.log('📊 Pretty file size:', prettyLength, 'characters');
       console.log('📉 Minified size sent to API:', minifiedLength, 'characters');
 
-      // Estimate token usage and dynamically set max_tokens with safe buffer
-      const estimatedTokens = Math.ceil(minifiedLength / 3.5);
-      const maxTokens = Math.min(64000, Math.max(32000, estimatedTokens + 4000));
+      // Estimate token usage (conservative estimate: 1 token = 2 chars)
+      const estimatedTokens = Math.ceil(minifiedLength / 2);
+      // User requested 3x the input size to avoid truncation
+      const maxTokens = estimatedTokens * 3;
 
       console.log(`🧮 Estimated tokens: ~${estimatedTokens}`);
       console.log(`🎯 max_tokens request: ${maxTokens}`);
 
       // Translate entire JSON in ONE API call
       console.log('🔄 Translating entire file in single API call...\n');
-      
+
       console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
       console.log('📤 RAW INPUT SENT TO API:');
       console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
       console.log(jsonString);
       console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
-      
+
       const chatCompletion = await this.client!.chat.completions.create({
         model: this.MODEL_NAME,
         messages: [
           {
             role: 'system',
-            content: `Translate this JSON from English to Dutch. Keep keys unchanged, translate only values. Return complete valid JSON with NO extra whitespace (minified). Preserve numbers and URLs.Recheck json formatting.`
+            content: `Translate this JSON from English to ${targetLangName}. Keep keys unchanged, translate only values. Return complete valid JSON with NO extra whitespace (minified). Preserve numbers and URLs.Recheck json formatting.`
           },
           {
             role: 'user',
@@ -175,12 +215,12 @@ class StaticTranslationService {
       const translatedText = chatCompletion.choices[0]?.message?.content || '';
       const tokensUsed = chatCompletion.usage?.total_tokens || 0;
       const finishReason = chatCompletion.choices[0]?.finish_reason;
-      
+
       console.log(`✅ API call completed!`);
       console.log(`   Tokens used: ${tokensUsed} (FREE!)`);
       console.log(`   Finish reason: ${finishReason}`);
-      
-      await this.saveRawTranslation(translatedText);
+
+      await this.saveRawTranslation(translatedText, targetLanguage);
 
       // Check if response was truncated
       if (finishReason === 'length') {
@@ -188,21 +228,21 @@ class StaticTranslationService {
         console.error('   Try reducing the source content size or split translations by sections if this persists.');
         throw new Error('Response truncated - model token limit reached');
       }
-      
+
       if (!translatedText || translatedText.trim().length === 0) {
         console.error('❌ API returned empty content!');
         console.error('📋 Full API response:', JSON.stringify(chatCompletion, null, 2));
         throw new Error('API returned empty response - check API key or model availability');
       }
-      
+
       console.log(`   Content length: ${translatedText.length} characters\n`);
-      
+
       console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
       console.log('📥 RAW OUTPUT RECEIVED FROM API:');
       console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
       console.log(translatedText);
       console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
-      
+
       const normalizeJsonString = (text: string): string => {
         const start = text.indexOf('{');
         if (start === -1) {
@@ -236,10 +276,8 @@ class StaticTranslationService {
               depth = Math.max(0, depth - 1);
               normalized += char;
               if (depth === 0) {
-                const remaining = text.slice(i + 1).trim();
-                if (remaining.length === 0) {
-                  break;
-                }
+                // Found the closing brace of the top-level object
+                break;
               }
             } else {
               normalized += char;
@@ -263,17 +301,28 @@ class StaticTranslationService {
         if (cleanedText.startsWith('```')) {
           cleanedText = cleanedText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
         }
-        
+
         // Check if response is empty
         if (!cleanedText || cleanedText.length === 0) {
           throw new Error('API returned empty response');
         }
-        
+
         console.log('📝 Cleaned text length:', cleanedText.length);
 
-        const jsonPayload = normalizeJsonString(cleanedText);
-        translatedContent = JSON.parse(jsonPayload);
-        console.log('✅ JSON parsed successfully');
+        // First try: Extract valid JSON object
+        try {
+          const jsonPayload = normalizeJsonString(cleanedText);
+          translatedContent = JSON.parse(jsonPayload);
+          console.log('✅ JSON parsed successfully (direct extraction)');
+        } catch (initialParseError) {
+          console.warn('⚠️ Direct JSON parsing failed. Attempting AI repair...', initialParseError);
+
+          // Second try: AI Repair
+          const repairedJson = await this.repairJson(cleanedText);
+          translatedContent = JSON.parse(repairedJson);
+          console.log('✅ JSON parsed successfully (after AI repair)');
+        }
+
         console.log('✅ Translation contains', Object.keys(translatedContent).length, 'top-level keys');
       } catch (parseError) {
         console.error('❌ Failed to parse translated JSON:', parseError);
@@ -282,7 +331,7 @@ class StaticTranslationService {
         console.error('📄 Last 1000 chars:', translatedText.substring(Math.max(0, translatedText.length - 1000)));
         console.error('');
         console.error('💡 SOLUTION: The response was truncated. Try again - increased max_tokens should fix this.');
-        console.error('📁 Raw translation has been saved to src/locales/nl.raw.json (or downloaded). Inspect and fix manually if needed.');
+        console.error(`📁 Raw translation has been saved to src/locales/${targetLanguage}.raw.json (or downloaded). Inspect and fix manually if needed.`);
         throw new Error(`Translation returned invalid JSON: ${parseError instanceof Error ? parseError.message : 'Unknown error'}`);
       }
 
@@ -291,16 +340,16 @@ class StaticTranslationService {
       const mergedContent = this.mergeWithFallback(englishContent, translatedContent);
       translatedContent = mergedContent;
 
-      // Save to nl.json via API
-      console.log('\n💾 Saving translations to nl.json...');
-      
+      // Save to target file via API
+      console.log(`\n💾 Saving translations to ${targetFilename}...`);
+
       try {
         const saveResponse = await fetch('/api/save-translation', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ content: mergedContent }),
+          body: JSON.stringify({ content: mergedContent, filename: targetFilename }),
         });
 
         if (!saveResponse.ok) {
@@ -311,21 +360,21 @@ class StaticTranslationService {
         const saveResult = await saveResponse.json();
         console.log('✅ File saved successfully:', saveResult.message);
       } catch (saveError) {
-        console.error('❌ Failed to save nl.json via API:', saveError);
+        console.error(`❌ Failed to save ${targetFilename} via API:`, saveError);
         console.log('⬇️  Downloading as fallback...');
-        
+
         // Fallback: Download the file
         const blob = new Blob([JSON.stringify(mergedContent, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'nl.json';
+        a.download = targetFilename;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        
-        console.log('📥 File downloaded - please place it in src/locales/ manually');
+
+        console.log(`📥 File downloaded - please place it in src/locales/ manually`);
       }
 
       console.log(`
@@ -337,7 +386,7 @@ class StaticTranslationService {
 ┃  Method:       Single API Call${' '.padEnd(33)}┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
-✅ nl.json automatically saved to src/locales/
+✅ ${targetFilename} automatically saved to src/locales/
 `);
 
       return {
@@ -357,4 +406,3 @@ class StaticTranslationService {
 }
 
 export const staticTranslationService = new StaticTranslationService();
-

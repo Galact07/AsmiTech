@@ -11,7 +11,7 @@ interface DiagnosticResult {
   slug?: string;
   type: 'service_page' | 'job';
   translation_status: string;
-  has_content_nl: boolean;
+  has_content_target: boolean;
   missing_fields: string[];
   empty_arrays: string[];
   issues: string[];
@@ -20,6 +20,7 @@ interface DiagnosticResult {
 export default function TranslationDiagnostics() {
   const [results, setResults] = useState<DiagnosticResult[]>([]);
   const [loading, setLoading] = useState(false);
+  const [targetLanguage, setTargetLanguage] = useState<'nl' | 'de'>('nl');
   const [summary, setSummary] = useState({
     total: 0,
     fullyTranslated: 0,
@@ -29,7 +30,7 @@ export default function TranslationDiagnostics() {
 
   useEffect(() => {
     runDiagnostics();
-  }, []);
+  }, [targetLanguage]);
 
   const runDiagnostics = async () => {
     setLoading(true);
@@ -67,9 +68,9 @@ export default function TranslationDiagnostics() {
       // Calculate summary
       const fullyTranslated = diagnosticResults.filter(r => r.issues.length === 0).length;
       const partiallyTranslated = diagnosticResults.filter(
-        r => r.has_content_nl && r.issues.length > 0
+        r => r.has_content_target && r.issues.length > 0
       ).length;
-      const notTranslated = diagnosticResults.filter(r => !r.has_content_nl).length;
+      const notTranslated = diagnosticResults.filter(r => !r.has_content_target).length;
 
       setSummary({
         total: diagnosticResults.length,
@@ -79,6 +80,7 @@ export default function TranslationDiagnostics() {
       });
 
       console.log('🔍 Translation Diagnostics Complete');
+      console.log(`Target Language: ${targetLanguage.toUpperCase()}`);
       console.log(`Total: ${diagnosticResults.length}`);
       console.log(`Fully Translated: ${fullyTranslated}`);
       console.log(`Partially Translated: ${partiallyTranslated}`);
@@ -95,26 +97,27 @@ export default function TranslationDiagnostics() {
     const issues: string[] = [];
     const missing_fields: string[] = [];
     const empty_arrays: string[] = [];
+    const contentField = `content_${targetLanguage}`;
 
-    const nlContent = typeof page.content_nl === 'string' 
-      ? JSON.parse(page.content_nl) 
-      : page.content_nl;
+    const targetContent = typeof page[contentField] === 'string'
+      ? JSON.parse(page[contentField])
+      : page[contentField];
 
-    const has_content_nl = nlContent && Object.keys(nlContent).length > 0;
+    const has_content_target = targetContent && Object.keys(targetContent).length > 0;
 
-    if (!has_content_nl) {
-      issues.push('No Dutch translation available');
+    if (!has_content_target) {
+      issues.push(`No ${targetLanguage === 'nl' ? 'Dutch' : 'German'} translation available`);
       return {
         id: page.id,
         title: page.title,
         slug: page.slug,
         type: 'service_page',
         translation_status: page.translation_status || 'not_translated',
-        has_content_nl: false,
+        has_content_target: false, // Renamed from has_content_nl
         missing_fields: [],
         empty_arrays: [],
         issues,
-      };
+      } as any; // Cast to any to avoid strict type checking for now or update interface
     }
 
     // Check required text fields
@@ -129,7 +132,7 @@ export default function TranslationDiagnostics() {
     ];
 
     requiredTextFields.forEach(field => {
-      if (!nlContent[field] || nlContent[field].trim().length === 0) {
+      if (!targetContent[field] || targetContent[field].trim().length === 0) {
         missing_fields.push(field);
         issues.push(`Missing: ${field}`);
       }
@@ -148,19 +151,19 @@ export default function TranslationDiagnostics() {
 
     arrayFields.forEach(field => {
       const enArray = page[field];
-      const nlArray = nlContent[field];
+      const targetArray = targetContent[field];
 
       if (enArray && Array.isArray(enArray) && enArray.length > 0) {
-        if (!nlArray) {
+        if (!targetArray) {
           missing_fields.push(field);
           issues.push(`Missing array: ${field} (${enArray.length} items in English)`);
-        } else if (!Array.isArray(nlArray)) {
+        } else if (!Array.isArray(targetArray)) {
           issues.push(`Invalid: ${field} is not an array`);
-        } else if (nlArray.length === 0) {
+        } else if (targetArray.length === 0) {
           empty_arrays.push(field);
           issues.push(`Empty array: ${field} (${enArray.length} items in English)`);
-        } else if (nlArray.length !== enArray.length) {
-          issues.push(`Length mismatch: ${field} (EN: ${enArray.length}, NL: ${nlArray.length})`);
+        } else if (targetArray.length !== enArray.length) {
+          issues.push(`Length mismatch: ${field} (EN: ${enArray.length}, ${targetLanguage.toUpperCase()}: ${targetArray.length})`);
         }
       }
     });
@@ -171,42 +174,43 @@ export default function TranslationDiagnostics() {
       slug: page.slug,
       type: 'service_page',
       translation_status: page.translation_status || 'unknown',
-      has_content_nl,
+      has_content_target,
       missing_fields,
       empty_arrays,
       issues,
-    };
+    } as any;
   };
 
   const analyzeJob = (job: any): DiagnosticResult => {
     const issues: string[] = [];
     const missing_fields: string[] = [];
+    const contentField = `content_${targetLanguage}`;
 
-    const nlContent = typeof job.content_nl === 'string' 
-      ? JSON.parse(job.content_nl) 
-      : job.content_nl;
+    const targetContent = typeof job[contentField] === 'string'
+      ? JSON.parse(job[contentField])
+      : job[contentField];
 
-    const has_content_nl = nlContent && Object.keys(nlContent).length > 0;
+    const has_content_target = targetContent && Object.keys(targetContent).length > 0;
 
-    if (!has_content_nl) {
-      issues.push('No Dutch translation available');
+    if (!has_content_target) {
+      issues.push(`No ${targetLanguage === 'nl' ? 'Dutch' : 'German'} translation available`);
       return {
         id: job.id,
         title: job.title,
         type: 'job',
         translation_status: job.translation_status || 'not_translated',
-        has_content_nl: false,
+        has_content_target: false,
         missing_fields: [],
         empty_arrays: [],
         issues,
-      };
+      } as any;
     }
 
     // Check required fields
     const requiredFields = ['title', 'description', 'requirements'];
 
     requiredFields.forEach(field => {
-      if (!nlContent[field] || nlContent[field].trim().length === 0) {
+      if (!targetContent[field] || targetContent[field].trim().length === 0) {
         missing_fields.push(field);
         issues.push(`Missing: ${field}`);
       }
@@ -217,26 +221,26 @@ export default function TranslationDiagnostics() {
       title: job.title,
       type: 'job',
       translation_status: job.translation_status || 'unknown',
-      has_content_nl,
+      has_content_target,
       missing_fields,
       empty_arrays: [],
       issues,
-    };
+    } as any;
   };
 
-  const getStatusIcon = (result: DiagnosticResult) => {
+  const getStatusIcon = (result: any) => {
     if (result.issues.length === 0) {
       return <CheckCircle className="h-5 w-5 text-green-600" />;
-    } else if (!result.has_content_nl) {
+    } else if (!result.has_content_target) {
       return <XCircle className="h-5 w-5 text-red-600" />;
     } else {
       return <AlertTriangle className="h-5 w-5 text-yellow-600" />;
     }
   };
 
-  const getStatusColor = (result: DiagnosticResult) => {
+  const getStatusColor = (result: any) => {
     if (result.issues.length === 0) return 'border-green-200 bg-green-50';
-    if (!result.has_content_nl) return 'border-red-200 bg-red-50';
+    if (!result.has_content_target) return 'border-red-200 bg-red-50';
     return 'border-yellow-200 bg-yellow-50';
   };
 
@@ -252,10 +256,32 @@ export default function TranslationDiagnostics() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold text-slate-800">Translation Diagnostics</h1>
-        <Button onClick={runDiagnostics} className="flex items-center gap-2">
-          <RefreshCw className="h-4 w-4" />
-          Refresh
-        </Button>
+        <div className="flex items-center gap-3">
+          <div className="flex bg-slate-100 p-1 rounded-lg">
+            <button
+              onClick={() => setTargetLanguage('nl')}
+              className={`px-3 py-1.5 text-sm font-medium rounded-md transition-all ${targetLanguage === 'nl'
+                ? 'bg-white text-primary shadow-sm'
+                : 'text-slate-600 hover:text-slate-900'
+                }`}
+            >
+              Dutch (NL)
+            </button>
+            <button
+              onClick={() => setTargetLanguage('de')}
+              className={`px-3 py-1.5 text-sm font-medium rounded-md transition-all ${targetLanguage === 'de'
+                ? 'bg-white text-primary shadow-sm'
+                : 'text-slate-600 hover:text-slate-900'
+                }`}
+            >
+              German (DE)
+            </button>
+          </div>
+          <Button onClick={runDiagnostics} className="flex items-center gap-2">
+            <RefreshCw className="h-4 w-4" />
+            Refresh
+          </Button>
+        </div>
       </div>
 
       {/* Summary Cards */}
@@ -265,7 +291,7 @@ export default function TranslationDiagnostics() {
           <div className="text-3xl font-bold text-slate-800">{summary.total}</div>
         </Card>
         <Card className="p-4 border-2 border-green-200 bg-green-50">
-          <div className="text-sm text-green-700 mb-1">Fully Translated</div>
+          <div className="text-sm text-green-700 mb-1">Fully Translated ({targetLanguage.toUpperCase()})</div>
           <div className="text-3xl font-bold text-green-800">{summary.fullyTranslated}</div>
         </Card>
         <Card className="p-4 border-2 border-yellow-200 bg-yellow-50">
@@ -280,8 +306,8 @@ export default function TranslationDiagnostics() {
 
       {/* Results List */}
       <div className="space-y-3">
-        <h2 className="text-xl font-semibold text-slate-800">Detailed Results</h2>
-        {results.map((result) => (
+        <h2 className="text-xl font-semibold text-slate-800">Detailed Results ({targetLanguage.toUpperCase()})</h2>
+        {results.map((result: any) => (
           <Card key={result.id} className={`p-4 border-2 ${getStatusColor(result)}`}>
             <div className="flex items-start gap-4">
               <div className="mt-1">{getStatusIcon(result)}</div>
@@ -301,7 +327,7 @@ export default function TranslationDiagnostics() {
                   <div className="space-y-2 mt-3">
                     <div className="text-sm font-medium text-slate-700">Issues Found:</div>
                     <ul className="space-y-1">
-                      {result.issues.map((issue, index) => (
+                      {result.issues.map((issue: string, index: number) => (
                         <li key={index} className="text-sm text-slate-700 flex items-start gap-2">
                           <span className="text-red-500 mt-0.5">•</span>
                           {issue}

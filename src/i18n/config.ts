@@ -13,10 +13,13 @@ i18n
       },
       nl: {
         translation: {} // Will be populated from Supabase
+      },
+      de: {
+        translation: {} // Will be populated from Supabase
       }
     },
     fallbackLng: 'en',
-    supportedLngs: ['en', 'nl'],
+    supportedLngs: ['en', 'nl', 'de'],
     debug: false,
     interpolation: {
       escapeValue: false // React already escapes values

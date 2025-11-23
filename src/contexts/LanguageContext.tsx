@@ -1,12 +1,12 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
 
-type Language = 'en' | 'nl';
+export type Language = 'en' | 'nl' | 'de';
 
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (enText: string, nlText?: string) => string;
-  tDb: (enText: string, nlText?: string) => string;
+  t: (enText: string, nlText?: string, deText?: string) => string;
+  tDb: (enText: string, nlText?: string, deText?: string) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -15,7 +15,7 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
  * LanguageProvider - Manages the current language state
  * 
  * This provider handles:
- * 1. Current language state (en/nl)
+ * 1. Current language state (en/nl/de)
  * 2. Language persistence to localStorage
  * 3. Simple inline translation for dynamic content from database
  * 
@@ -25,7 +25,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(() => {
     // Get from localStorage or default to English
     const saved = localStorage.getItem('language');
-    return (saved === 'nl' ? 'nl' : 'en') as Language;
+    return (saved === 'nl' || saved === 'de' ? saved : 'en') as Language;
   });
 
   const setLanguage = (lang: Language) => {
@@ -35,21 +35,25 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   /**
    * Simple translation function for dynamic content
-   * Used when you have both English and Dutch text available (e.g., from database)
+   * Used when you have English, Dutch, and German text available (e.g., from database)
    * 
    * @param enText - English text
    * @param nlText - Dutch text (optional)
-   * @returns Text in the current language, falling back to English if Dutch is not available
+   * @param deText - German text (optional)
+   * @returns Text in the current language, falling back to English if target language text is not available
    * 
    * Example:
    * ```tsx
-   * // For database content with content_nl field
-   * <h1>{tDb(service.title, service.content_nl?.title)}</h1>
+   * // For database content with content_nl and content_de fields
+   * <h1>{tDb(service.title, service.content_nl?.title, service.content_de?.title)}</h1>
    * ```
    */
-  const tDb = (enText: string, nlText?: string): string => {
+  const tDb = (enText: string, nlText?: string, deText?: string): string => {
     if (language === 'nl' && nlText) {
       return nlText;
+    }
+    if (language === 'de' && deText) {
+      return deText;
     }
     return enText;
   };

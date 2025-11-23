@@ -25,7 +25,7 @@ export default function handler(req, res) {
   }
 
   try {
-    const { content, rawContent } = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+    const { content, rawContent, filename } = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
 
     if (!content && !rawContent) {
       return res.status(400).json({ error: 'No content or rawContent provided' });
@@ -34,11 +34,15 @@ export default function handler(req, res) {
     const messages = [];
     const paths = {};
 
+    // Determine filename from parameter or default to nl.json
+    const targetFilename = filename || 'nl.json';
+    const baseFilename = targetFilename.replace('.json', '');
+
     if (typeof rawContent !== 'undefined') {
-      const rawPath = path.join(__dirname, '..', 'src', 'locales', 'nl.raw.json');
+      const rawPath = path.join(__dirname, '..', 'src', 'locales', `${baseFilename}.raw.json`);
       const rawData = typeof rawContent === 'string' ? rawContent : JSON.stringify(rawContent, null, 2);
       fs.writeFileSync(rawPath, rawData, 'utf-8');
-      console.log('✅ nl.raw.json saved successfully to:', rawPath);
+      console.log(`✅ ${baseFilename}.raw.json saved successfully to:`, rawPath);
       messages.push('Raw translation saved successfully');
       paths.raw = rawPath;
     }
@@ -52,28 +56,28 @@ export default function handler(req, res) {
         return res.status(400).json({ error: 'Invalid JSON content' });
       }
 
-      // Path to save nl.json
-      const nlJsonPath = path.join(__dirname, '..', 'src', 'locales', 'nl.json');
-      
-      // Write the file
-      fs.writeFileSync(nlJsonPath, JSON.stringify(jsonContent, null, 2), 'utf-8');
+      // Path to save translation file
+      const translationPath = path.join(__dirname, '..', 'src', 'locales', targetFilename);
 
-      console.log('✅ nl.json saved successfully to:', nlJsonPath);
+      // Write the file
+      fs.writeFileSync(translationPath, JSON.stringify(jsonContent, null, 2), 'utf-8');
+
+      console.log(`✅ ${targetFilename} saved successfully to:`, translationPath);
       messages.push('Translation file saved successfully');
-      paths.content = nlJsonPath;
+      paths.content = translationPath;
     }
 
-    return res.status(200).json({ 
-      success: true, 
+    return res.status(200).json({
+      success: true,
       message: messages.join(' & '),
-      paths 
+      paths
     });
 
   } catch (error) {
     console.error('❌ Error saving translation file:', error);
-    return res.status(500).json({ 
+    return res.status(500).json({
       error: 'Failed to save translation file',
-      details: error.message 
+      details: error.message
     });
   }
 }

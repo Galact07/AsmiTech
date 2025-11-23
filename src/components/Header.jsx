@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, Phone } from 'lucide-react';
-import asmiLogo from '../assets/logos/asmi logo.png';
+import asmiLogo from '../assets/logos/asmi_new_logo.png';
 import { supabase } from '@/integrations/supabase/client';
 import { SimpleLanguageSwitcher } from './SimpleLanguageSwitcher';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -34,7 +34,7 @@ const Header = () => {
       try {
         const { data, error } = await supabase
           .from('service_pages')
-          .select('slug, title, hero_image_url, content_nl')
+          .select('slug, title, hero_image_url, content_nl, content_de')
           .eq('status', 'published')
           .order('display_order', { ascending: true });
 
@@ -42,6 +42,7 @@ const Header = () => {
           setServices(data.map(service => ({
             name: service.title,
             name_nl: service.content_nl?.hero_headline || service.content_nl?.title || service.title,
+            name_de: service.content_de?.hero_headline || service.content_de?.title || service.title,
             href: `/services/${service.slug}`,
             image: service.hero_image_url || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop'
           })));
@@ -100,7 +101,7 @@ const Header = () => {
           {/* Brand */}
           <Link to="/" className="inline-flex items-center gap-3" aria-label="Asmi Home">
             <div className="flex items-center justify-center h-12 w-32 rounded-none bg-transparent px-2">
-              <img 
+              <img
                 src={asmiLogo}
                 alt="ASMI Technology Consulting logo"
                 className="h-full w-full object-contain"
@@ -120,17 +121,16 @@ const Header = () => {
                 >
                   <Link
                     to={item.href}
-                    className={`px-3 py-2 text-base font-normal transition-all duration-200 border-b-[3px] flex items-center gap-1 ${
-                      isActive(item.href) || (location.pathname.startsWith('/services/'))
-                        ? 'text-primary border-primary'
-                        : 'text-slate-600 border-transparent hover:text-primary hover:border-primary'
-                    }`}
+                    className={`px-3 py-2 text-base font-normal transition-all duration-200 border-b-[3px] flex items-center gap-1 ${isActive(item.href) || (location.pathname.startsWith('/services/'))
+                      ? 'text-primary border-primary'
+                      : 'text-slate-600 border-transparent hover:text-primary hover:border-primary'
+                      }`}
                   >
                     {item.name}
                     {item.hasDropdown && <ChevronDown className="h-4 w-4" />}
                   </Link>
                   {showServicesDropdown && (
-                    <div 
+                    <div
                       className="absolute top-full left-0 mt-2 w-[600px] max-w-[calc(100vw-2rem)] bg-slate-100 backdrop-blur-[10px] shadow-2xl rounded-none border border-slate-200 overflow-hidden"
                       onMouseEnter={handleDropdownEnter}
                       onMouseLeave={handleDropdownLeave}
@@ -147,24 +147,24 @@ const Header = () => {
                               onClick={() => setShowServicesDropdown(false)}
                             >
                               <div className="flex-shrink-0 w-12 h-12 rounded-none overflow-hidden">
-                                <img 
-                                  src={service.image} 
+                                <img
+                                  src={service.image}
                                   alt={service.name}
                                   className="w-full h-full object-cover"
                                 />
                               </div>
                               <span className="text-sm font-medium text-slate-700 group-hover:text-white leading-snug">
-                                {service.name_nl ? tDb(service.name, service.name_nl) : service.name}
+                                {service.name_nl || service.name_de ? tDb(service.name, service.name_nl, service.name_de) : service.name}
                               </span>
                             </Link>
                           );
                         })}
                       </div>
-                      
+
                       {/* Footer */}
                       <div className="border-t border-slate-200 bg-slate-50 px-6 py-3">
-                        <Link 
-                          to="/services" 
+                        <Link
+                          to="/services"
                           className="text-sm text-primary font-medium hover:underline inline-flex items-center gap-1"
                           onClick={() => setShowServicesDropdown(false)}
                         >
@@ -181,11 +181,10 @@ const Header = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`px-3 py-2 text-base font-normal transition-all duration-200 border-b-[3px] ${
-                    isActive(item.href)
-                      ? 'text-primary border-primary'
-                      : 'text-slate-600 border-transparent hover:text-primary hover:border-primary'
-                  }`}
+                  className={`px-3 py-2 text-base font-normal transition-all duration-200 border-b-[3px] ${isActive(item.href)
+                    ? 'text-primary border-primary'
+                    : 'text-slate-600 border-transparent hover:text-primary hover:border-primary'
+                    }`}
                 >
                   {item.name}
                 </Link>
@@ -244,7 +243,7 @@ const Header = () => {
               </div>
             </a>
           </div>
-          
+
           <nav className="max-w-7xl mx-auto px-5 md:px-8 py-3 grid grid-cols-1 gap-1" aria-label="Mobile navigation">
             {navigation.map((item) => {
               if (item.hasDropdown) {
@@ -254,11 +253,10 @@ const Header = () => {
                       <Link
                         to={item.href}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className={`px-3 py-2 text-base font-normal transition-all duration-200 flex-1 inline-block ${
-                          isActive(item.href) || location.pathname.startsWith('/services/')
-                            ? 'text-primary'
-                            : 'text-slate-600'
-                        }`}
+                        className={`px-3 py-2 text-base font-normal transition-all duration-200 flex-1 inline-block ${isActive(item.href) || location.pathname.startsWith('/services/')
+                          ? 'text-primary'
+                          : 'text-slate-600'
+                          }`}
                       >
                         {item.name}
                       </Link>
@@ -279,10 +277,10 @@ const Header = () => {
                               setIsMobileMenuOpen(false);
                               setShowServicesDropdown(false);
                             }}
-                          className="block px-3 py-2 text-base text-slate-600 hover:text-primary hover:bg-slate-50 rounded-none break-words"
-                        >
-                          {service.name_nl ? tDb(service.name, service.name_nl) : service.name}
-                        </Link>
+                            className="block px-3 py-2 text-base text-slate-600 hover:text-primary hover:bg-slate-50 rounded-none break-words"
+                          >
+                            {service.name_nl || service.name_de ? tDb(service.name, service.name_nl, service.name_de) : service.name}
+                          </Link>
                         ))}
                         <Link
                           to="/services"
@@ -304,11 +302,10 @@ const Header = () => {
                   key={item.name}
                   to={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`px-3 py-2 text-base font-normal inline-block ${
-                    isActive(item.href)
-                      ? 'text-primary'
-                      : 'text-slate-600'
-                  }`}
+                  className={`px-3 py-2 text-base font-normal inline-block ${isActive(item.href)
+                    ? 'text-primary'
+                    : 'text-slate-600'
+                    }`}
                 >
                   {item.name}
                 </Link>

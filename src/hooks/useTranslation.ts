@@ -5,8 +5,8 @@ import enTranslations from '@/locales/en.json';
 // Type for nested object access
 type NestedKeyOf<ObjectType extends object> = {
   [Key in keyof ObjectType & (string | number)]: ObjectType[Key] extends object
-    ? `${Key}` | `${Key}.${NestedKeyOf<ObjectType[Key]>}`
-    : `${Key}`;
+  ? `${Key}` | `${Key}.${NestedKeyOf<ObjectType[Key]>}`
+  : `${Key}`;
 }[keyof ObjectType & (string | number)];
 
 export type TranslationKey = NestedKeyOf<typeof enTranslations>;
@@ -33,6 +33,18 @@ export function useTranslation() {
           setTranslations(nlModule.default || enTranslations);
         } catch (error) {
           console.warn('Dutch translations not found, falling back to English');
+          setTranslations(enTranslations);
+        } finally {
+          setIsLoading(false);
+        }
+      } else if (language === 'de') {
+        setIsLoading(true);
+        try {
+          // Try to load German translations
+          const deModule = await import('@/locales/de.json');
+          setTranslations(deModule.default || enTranslations);
+        } catch (error) {
+          console.warn('German translations not found, falling back to English');
           setTranslations(enTranslations);
         } finally {
           setIsLoading(false);
@@ -169,4 +181,3 @@ export function useTranslation() {
     isLoading
   };
 }
-

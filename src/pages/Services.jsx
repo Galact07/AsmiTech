@@ -35,17 +35,30 @@ const Services = () => {
   };
 
   const getLocalizedValue = (service, field) => {
+    // Check for German
+    if (language === 'de' && service.content_de) {
+      const deContent = typeof service.content_de === 'string'
+        ? JSON.parse(service.content_de)
+        : service.content_de;
+      if (deContent && deContent[field]) {
+        return deContent[field];
+      }
+    }
+
+    // Check for Dutch
     if (language === 'nl' && service.content_nl) {
-      const nlContent = typeof service.content_nl === 'string' 
-        ? JSON.parse(service.content_nl) 
+      const nlContent = typeof service.content_nl === 'string'
+        ? JSON.parse(service.content_nl)
         : service.content_nl;
       if (nlContent && nlContent[field]) {
         return nlContent[field];
       }
     }
+
+    // Fallback to English
     return service[field];
   };
-  
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -115,7 +128,7 @@ const Services = () => {
         <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <div className="flex items-center justify-between gap-3">
             <h2 id="partners-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">
-            {t('services.clients.title')}
+              {t('services.clients.title')}
             </h2>
           </div>
           <div className="mt-5">
@@ -131,7 +144,7 @@ const Services = () => {
               ].map((client, index) => (
                 <div key={index} className="flex-shrink-0 mx-6 flex items-center justify-center h-28 w-64">
                   <div className="flex items-center justify-center h-24 w-60 bg-white rounded-none px-4 hover:bg-slate-50 transition-colors">
-                    <img 
+                    <img
                       src={`/logos/${client.logoFile}`}
                       alt={`${client.name} logo`}
                       className="max-h-20 max-w-48 object-contain"
@@ -168,7 +181,7 @@ const Services = () => {
               {services.map((service) => (
                 <article key={service.id} className="bg-white hover:shadow-md transition h-full rounded-none overflow-hidden flex flex-col">
                   {service.hero_image_url && (
-                    <img 
+                    <img
                       src={service.hero_image_url}
                       alt={getLocalizedValue(service, 'title')}
                       className="w-full h-48 object-cover"
@@ -182,7 +195,7 @@ const Services = () => {
                     <p className="mt-2 text-slate-700/80 mb-4 text-sm">
                       {getLocalizedValue(service, 'hero_subheadline') || getLocalizedValue(service, 'meta_description') || ''}
                     </p>
-                    <Link 
+                    <Link
                       to={`/services/${service.slug}`}
                       className="mt-auto inline-flex items-center gap-2 text-primary hover:text-primary/80 transition text-sm font-bold hover:underline"
                     >
@@ -216,11 +229,11 @@ const Services = () => {
               { name: 'SAP Business Technology Platform', logo: 'SAP Business Technology Platform.png' }
             ].map((tech, index) => (
               <div key={index} className="flex items-center justify-center p-4 bg-white hover:bg-slate-50 transition rounded-none">
-                <div className={`w-full flex items-center justify-center bg-slate-50 rounded-none ${tech.name === 'SAP S/4HANA' ? 'h-20' : 'h-24'}`}>
+                <div className={`w-full flex items-center justify-center bg-slate-50 rounded-none ${tech.name === 'SAP S/4HANA' ? 'h-28' : 'h-32'}`}>
                   <img
                     src={`/logos/${tech.logo}`}
                     alt={`${tech.name} logo`}
-                    className={`max-w-full object-contain ${tech.name === 'SAP S/4HANA' ? 'max-h-16' : 'max-h-20'}`}
+                    className={`max-w-full object-contain ${tech.name === 'SAP S/4HANA' ? 'max-h-24' : 'max-h-28'}`}
                     loading="lazy"
                   />
                 </div>
@@ -245,7 +258,7 @@ const Services = () => {
                 <div key={idx} className="flex-shrink-0 mx-4 w-96">
                   <div className="bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6 rounded-none">
                     <div className="flex-shrink-0 w-32 h-28 bg-white rounded-none flex items-center justify-center p-3">
-                      <img 
+                      <img
                         src={`/logos/${testimonial.logoFile}`}
                         alt={`${testimonial.logoFile.split(' ')[0]} logo`}
                         className="max-h-24 max-w-28 object-contain"

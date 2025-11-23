@@ -116,18 +116,45 @@ const JobsListing = () => {
   const filteredJobs = useMemo(() => {
     return parsedJobs.filter(job => {
       // Get translated title and description for search
-      const title = tDb(job.title, job.content_nl?.title);
-      const specialization = job.specialization ? tDb(job.specialization, job.content_nl?.specialization) : '';
-      const description = job.description ? tDb(job.description, job.content_nl?.description) : '';
-      
-      const matchesSearch = searchTerm === '' || 
+      // Determine which content field to use based on language
+      let localizedContent = job.content_nl;
+      // @ts-ignore
+      if (tDb('en', 'nl') === 'nl' && job.content_nl) { // Hacky check for language, better to use useLanguage directly
+        localizedContent = job.content_nl;
+      }
+
+      // We need to access the current language from context to pick the right field
+      // tDb handles the string return, but here we need the object for fields
+      // Let's use a more direct approach
+      let title = job.title;
+      let specialization = job.specialization || '';
+      let description = job.description || '';
+
+      // Check for German content
+      // Note: We need to access the language state directly or pass it down
+      // Since we can't easily change the hook signature here without refactoring, 
+      // we'll rely on tDb which we updated to handle 'de' if passed 'deText'
+      // But tDb signature is (enText, nlText, deText?)
+
+      // Let's try to get the raw content object based on the current language
+      // We can infer the language by checking what tDb returns for a test string, 
+      // or better, just use the tDb function as intended with the new signature
+
+      const deContent = job.content_de || {};
+      const nlContent = job.content_nl || {};
+
+      title = tDb(job.title, nlContent.title, deContent.title);
+      specialization = job.specialization ? tDb(job.specialization, nlContent.specialization, deContent.specialization) : '';
+      description = job.description ? tDb(job.description, nlContent.description, deContent.description) : '';
+
+      const matchesSearch = searchTerm === '' ||
         title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         specialization.toLowerCase().includes(searchTerm.toLowerCase()) ||
         description.toLowerCase().includes(searchTerm.toLowerCase());
-      
+
       const matchesType = typeFilter === 'all' || job.type === typeFilter;
       const matchesLocation = locationFilter === 'all' || job.location === locationFilter;
-      
+
       return matchesSearch && matchesType && matchesLocation;
     });
   }, [parsedJobs, searchTerm, typeFilter, locationFilter, tDb]);
@@ -273,8 +300,8 @@ const JobsListing = () => {
         <section className="md:px-8 md:pt-20 max-w-7xl mr-auto ml-auto pt-14 pr-5 pl-5">
           <div className="bg-white/70 backdrop-blur-[10px] shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] transition duration-500 ease-in">
             <div className="pt-0 pr-6 pb-6 pl-6 md:pr-12 md:pb-12 md:pl-12">
-              <Link 
-                to="/careers" 
+              <Link
+                to="/careers"
                 className="inline-flex items-center gap-2 text-sm text-slate-600 hover:text-primary mb-6 transition"
               >
                 <ArrowLeft className="h-4 w-4" />
@@ -373,7 +400,7 @@ const JobsListing = () => {
               <div className="rounded-none bg-slate-800 p-12">
                 <div className="text-center">
                   <h3 className="text-lg font-medium text-slate-900">
-                    {searchTerm || typeFilter !== 'all' || locationFilter !== 'all' 
+                    {searchTerm || typeFilter !== 'all' || locationFilter !== 'all'
                       ? t('jobs.status.noResults')
                       : t('jobs.status.noOpenings')}
                   </h3>
@@ -405,10 +432,10 @@ const JobsListing = () => {
               </div>
             ) : (
               filteredJobs.map((job, index) => (
-                <div 
-                  key={job.id} 
+                <div
+                  key={job.id}
                   className="rounded-none bg-white/70 backdrop-blur-[10px] border border-slate-200 p-6 md:p-8 hover:shadow-lg transition duration-300"
-                  style={{ 
+                  style={{
                     animationDelay: `${index * 50}ms`,
                     animation: 'fadeInUp 0.5s ease-out forwards',
                   }}
@@ -416,12 +443,12 @@ const JobsListing = () => {
                   <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
                     <div className="flex-1 space-y-4">
                       <div>
-                        <h3 className="text-2xl font-medium text-slate-900 mb-2">{tDb(job.title, job.content_nl?.title)}</h3>
+                        <h3 className="text-2xl font-medium text-slate-900 mb-2">{tDb(job.title, job.content_nl?.title, job.content_de?.title)}</h3>
                         {job.specialization && (
-                          <p className="text-base text-primary/90 font-medium">{tDb(job.specialization, job.content_nl?.specialization)}</p>
+                          <p className="text-base text-primary/90 font-medium">{tDb(job.specialization, job.content_nl?.specialization, job.content_de?.specialization)}</p>
                         )}
                       </div>
-                      
+
                       <div className="flex flex-wrap items-center gap-4 text-sm text-slate-600">
                         {job.location && (
                           <div className="flex items-center gap-1.5">
@@ -449,7 +476,7 @@ const JobsListing = () => {
 
                       {job.description && (
                         <p className="text-slate-700/80 leading-relaxed whitespace-pre-line">
-                          {tDb(job.description, job.content_nl?.description)}
+                          {tDb(job.description, job.content_nl?.description, job.content_de?.description)}
                         </p>
                       )}
 
@@ -488,7 +515,7 @@ const JobsListing = () => {
       <Dialog open={applyDialogOpen} onOpenChange={handleDialogChange}>
         <DialogContent className="max-w-xl border border-slate-200 bg-white shadow-2xl p-6 rounded-none">
           <DialogHeader>
-            <DialogTitle>{t('jobs.apply.title')} {selectedJob && tDb(selectedJob.title, selectedJob.content_nl?.title)}</DialogTitle>
+            <DialogTitle>{t('jobs.apply.title')} {selectedJob && tDb(selectedJob.title, selectedJob.content_nl?.title, selectedJob.content_de?.title)}</DialogTitle>
             <DialogDescription>
               {t('jobs.apply.description')}
             </DialogDescription>
@@ -523,7 +550,7 @@ const JobsListing = () => {
                 </div>
                 {selectedJob.specialization && (
                   <p className="text-sm text-slate-600">
-                    {t('jobs.details.specialization')} <span className="font-medium text-slate-800">{tDb(selectedJob.specialization, selectedJob.content_nl?.specialization)}</span>
+                    {t('jobs.details.specialization')} <span className="font-medium text-slate-800">{tDb(selectedJob.specialization, selectedJob.content_nl?.specialization, selectedJob.content_de?.specialization)}</span>
                   </p>
                 )}
               </div>

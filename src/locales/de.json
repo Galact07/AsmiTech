@@ -1,0 +1,672 @@
+{
+  "header": {
+    "nav": {
+      "home": "Startseite",
+      "about": "Über uns",
+      "services": "Dienstleistungen",
+      "industries": "Branchen",
+      "careers": "Karriere",
+      "jobs": "Stellen",
+      "contact": "Kontakt",
+      "resources": "Ressourcen"
+    },
+    "viewAllServices": "Alle Dienstleistungen ansehen",
+    "getInTouch": "Kontakt aufnehmen"
+  },
+  "buttons": {
+    "getStarted": "Loslegen",
+    "learnMore": "Mehr erfahren",
+    "contactUs": "Kontaktieren Sie uns",
+    "readMore": "Weiterlesen",
+    "apply": "Bewerben",
+    "applyNow": "Jetzt bewerben",
+    "submit": "Absenden",
+    "requestConsultation": "Eine Beratung anfordern",
+    "contactUsNow": "Jetzt kontaktieren",
+    "backToCareers": "Zurück zur Karriere",
+    "clearFilters": "Filter löschen",
+    "clearAllFilters": "Alle Filter löschen",
+    "applyForPosition": "Für diese Position bewerben",
+    "cancel": "Abbrechen",
+    "submitApplication": "Bewerbung absenden",
+    "ourServices": "Unsere Dienstleistungen",
+    "ourStory": "Unsere Geschichte",
+    "viewIndustries": "Branchen ansehen",
+    "openPositions": "Offene Positionen",
+    "viewJobs": "Stellenanzeigen ansehen",
+    "viewAllJobs": "Alle Stellenanzeigen ansehen",
+    "sendMessage": "Nachricht senden",
+    "visitUs": "Besuchen Sie uns",
+    "sending": "Senden...",
+    "subscribeToUpdates": "Updates abonnieren",
+    "registerNow": "Jetzt registrieren",
+    "subscribe": "Abonnieren",
+    "browseAllJobs": "Alle Stellenanzeigen durchsuchen",
+    "callUsNow": "Jetzt anrufen",
+    "getInTouch": "Kontakt aufnehmen",
+    "getStartedToday": "Heute starten",
+    "download": "Herunterladen",
+    "viewOnline": "Online ansehen"
+  },
+  "home": {
+    "hero": {
+      "tagline": "Premium SAP Beratung",
+      "title": "ASMI: Ihre SAP-Experten",
+      "description": "Bei ASMI helfen wir Unternehmen, das Beste aus SAP herauszuholen. Von der Einrichtung bis zur Optimierung machen unsere Experten Ihre Systeme intelligenter, schneller und auf Ihre Ziele ausgerichtet, damit Sie heute effizient arbeiten und morgen selbstbewusst skalieren können."
+    },
+    "whoWeAre": {
+      "title": "Wer wir sind",
+      "paragraph1": "Bei ASMI helfen wir Unternehmen, mit SAP intelligenter zu arbeiten. Unser Team vereint praktische Erfahrung und realweltliches Verständnis, um Lösungen zu entwickeln, die die Abläufe vereinfachen, beschleunigen und für das nächste Kapitel bereit sind.",
+      "paragraph2": "Mit Wurzeln in den Niederlanden und Indien unterstützen wir Kunden weltweit und liefern SAP-Systeme, die wirklich zu ihren Zielen passen. Jedes Projekt, das wir annehmen, wird von einem Ziel angetrieben – unseren Kunden zu helfen, mit Klarheit und Zuversicht zu wachsen."
+    },
+    "clients": {
+      "title": "Kunden, die wir betreut haben"
+    },
+    "services": {
+      "title": "Unsere Dienstleistungen",
+      "description": "Wir bieten SAP-Lösungen, die auf Ihr Unternehmen zugeschnitten sind. Von der Einrichtung bis zum Support machen wir Ihre Systeme reibungsloser, intelligenter und bereit, mit Ihnen zu wachsen.",
+      "list": {
+        "sapPublicCloud": {
+          "title": "SAP Public Cloud",
+          "description": "Sichern, skalierbare SAP-Cloud-Lösungen bereitstellen für optimierte Abläufe und Agilität."
+        },
+        "sapImplementations": {
+          "title": "SAP-Implementierungen und Rollouts",
+          "description": "Führen Sie maßgeschneiderte SAP-Implementierungen mit bewährten Greenfield-, Brownfield- oder Bluefield-Strategien durch."
+        },
+        "sapDocumentCompliance": {
+          "title": "SAP-Dokumenten- und Berichtskompatibilität",
+          "description": "Vereinfachen Sie E-Rechnungen und Steuerberichte mit nahtlosen, konformen SAP-Lösungen."
+        },
+        "sapConsulting": {
+          "title": "SAP-Beratung & Advisory",
+          "description": "Entfesseln Sie strategischen Wert mit fachkundiger SAP-Beratung, die auf Ihre Geschäftsziele zugeschnitten ist."
+        },
+        "dataMigration": {
+          "title": "Daten- & Migrationsdienste",
+          "description": "Sichern Sie eine reibungslose, sichere Datenmigration für optimierte SAP-Leistung."
+        },
+        "supportManaged": {
+          "title": "Support & Managed Services",
+          "description": "Erhalten Sie Spitzen-SAP-Leistung mit proaktivem Support und Management."
+        },
+        "training": {
+          "title": "Schulung & Change Management",
+          "description": "Stärken Sie Teams mit gezielter Schulung für nahtlose SAP-Implementierung."
+        },
+        "projectManagement": {
+          "title": "SAP-Projektmanagement & Governance",
+          "description": "Steuern Sie Projekterfolg mit fachkundiger Aufsicht und disziplinierter Governance."
+        }
+      }
+    },
+    "industries": {
+      "title": "Branchen, die wir bedienen",
+      "retail": {
+        "title": "Einzelhandel & Konsumgüter",
+        "description": "Integrieren Sie Vertrieb, Inventar und Kundenerkenntnisse für intelligentere Entscheidungen und nahtlose Einkaufserlebnisse über alle Kanäle hinweg.",
+        "features": [
+          "Reduzieren Sie Inventarverschwendung und Fehlbestände mit intelligenter SAP-Planung",
+          "Beschleunigen Sie Lieferkettenprozesse, um Produkte schneller zu Kunden zu bringen",
+          "Nutzen Sie Echtzeitdaten, um Verkaufsentscheidungen und Kundenzufriedenheit zu verbessern"
+        ]
+      },
+      "oilGas": {
+        "title": "Öl, Gas & Energie",
+        "description": "Verbinden Sie Betrieb, Wartung und Compliance-Systeme, um Effizienz zu steigern, Ausfallzeiten zu reduzieren und die höchsten Sicherheitsstandards einzuhalten.",
+        "features": [
+          "Halten Sie kritische Ausrüstung länger in Betrieb mit vorausschauender Wartung",
+          "Bleiben Sie vollständig konform mit Sicherheits- und Umweltvorschriften",
+          "Verwandeln Sie Betriebsdaten in kostensparende, umsetzbare Erkenntnisse"
+        ]
+      },
+      "pharma": {
+        "title": "Pharmazeutika & Life Sciences",
+        "description": "Verknüpfen Sie Forschung, Produktion und regulatorische Prozesse, um Produktqualität sicherzustellen, die Lieferung zu beschleunigen und vollständig konform zu bleiben.",
+        "features": [
+          "Beschleunigen Sie die Fertigung, ohne Qualität oder Compliance zu beeinträchtigen",
+          "Verfolgen Sie jede Charge, um regulatorische Standards einzuhalten",
+          "Koordinieren Sie die Distribution, um Nachfrage effizient und zuverlässig zu erfüllen"
+        ]
+      },
+      "chemicals": {
+        "title": "Chemikalien & Petrochemikalien",
+        "description": "Koordinieren Sie Produktion, Sicherheit und Lieferkettenbetrieb, um Effizienz zu steigern, Risiken zu minimieren und schnell auf Marktbedürfnisse zu reagieren.",
+        "features": [
+          "Optimieren Sie die Produktion, um Abfall und Energieverbrauch zu reduzieren",
+          "Vereinfachen Sie Compliance-Berichterstattung mit automatisierten SAP-Prozessen",
+          "Reagieren Sie schnell auf Lieferkettenunterbrechungen oder Marktveränderungen"
+        ]
+      },
+      "publicSector": {
+        "title": "Öffentlicher Sektor & Regierung",
+        "description": "Optimieren Sie Finanz-, Betriebs- und Bürgerdienste, um Transparenz, Verantwortlichkeit und Servicebereitstellung über Abteilungen hinweg zu verbessern.",
+        "features": [
+          "Automatisieren Sie Budgetierung und Mittelverwaltung für Klarheit und Kontrolle",
+          "Erhöhen Sie die Transparenz über Abteilungen und Operationen hinweg",
+          "Liefern Sie Bürgerdienste effizienter mithilfe von Echtzeit-Einblicken"
+        ]
+      },
+      "logistics": {
+        "title": "Logistik & Lieferkette",
+        "description": "Vereinigen Sie Beschaffung, Lagerhaltung und Distribution mit Echtzeit-Einblicken, um schnellere, zuverlässigere und kostengünstigere Operationen sicherzustellen.",
+        "features": [
+          "Optimieren Sie Lagerhaltung, Versand und Inventarverfolgung",
+          "Erhalten Sie vollständige Sichtbarkeit über Lieferanten und Lieferungen",
+          "Lösen Sie Engpässe schnell, um einen reibungslosen Ablauf aufrechtzuerhalten"
+        ]
+      }
+    },
+    "testimonials": {
+      "title": "Was Kunden sagen",
+      "list": [
+        "\"Ihre SAP-Expertise hat unsere Prozesse transformiert, effizient, zuverlässig und nahtlose Implementierung!\" – Cargill Corporation",
+        "\"Ein vertrauenswürdiger Partner für SAP-Lösungen. Sie haben unsere Geschäftsbedürfnisse perfekt verstanden.\" – Hitachi Energy",
+        "\"Professionell, proaktiv und ergebnisorientiert. Unser SAP-System läuft noch nie so reibungslos.\" – Sucafina",
+        "\"Ausgezeichneter Support und Anleitung während unserer SAP-Reise. Sehr empfehlenswert!\" – Johnson & Johnson"
+      ]
+    },
+    "faq": {
+      "title": "Häufig gestellte Fragen",
+      "questions": [
+        {
+          "q": "Wie stellt ASMI eine reibungslose SAP-Implementierung sicher?",
+          "a": "Wir folgen einem strukturierten Rollout-Plan mit klaren Meilensteinen, gründlichen Tests und enger Zusammenarbeit mit Ihrem Team, um Ausfallzeiten zu vermeiden und sicherzustellen, dass das System ab dem ersten Tag funktioniert."
+        },
+        {
+          "q": "Können wir SAP-Lösungen an unsere einzigartigen Geschäftsbedürfnisse anpassen?",
+          "a": "Ja, wir konfigurieren SAP-Workflows, Berichte und Dashboards, um genau Ihren betrieblichen Anforderungen zu entsprechen, sodass das System perfekt zu Ihren Geschäftsprozessen passt."
+        },
+        {
+          "q": "Können wir SAP mit unseren bestehenden Systemen integrieren?",
+          "a": "Absolut. Wir verbinden SAP mit Ihrem ERP, CRM und anderer Software, um einen nahtlosen Datenfluss und ein einheitliches Reporting ohne Unterbrechung laufender Operationen zu ermöglichen."
+        },
+        {
+          "q": "Bietet ASMI Schulungen für unser Team zu SAP-Systemen an?",
+          "a": "Ja, wir bieten maßgeschneiderte Schulungen, Benutzerhandbücher und praktische Unterstützung, um sicherzustellen, dass Ihr Personal SAP selbstbewusst und unabhängig nutzen kann."
+        },
+        {
+          "q": "Wie schnell können wir Verbesserungen nach der Implementierung von SAP mit ASMI sehen?",
+          "a": "Kunden bemerken typischerweise innerhalb der ersten Wochen eine bessere Prozesseffizienz und genaue Berichterstattung, mit messbaren betrieblichen Verbesserungen und Kosteneinsparungen, die innerhalb von 2–3 Monaten sichtbar werden."
+        }
+      ]
+    },
+    "finalCTA": {
+      "title": "Machen Sie Ihr SAP mit ASMI besser",
+      "description": "Erhalten Sie Systeme, die richtig laufen und mit Ihrem Unternehmen wachsen."
+    }
+  },
+  "about": {
+    "hero": {
+      "tagline": "Über uns",
+      "title": "Mehr über ASMI erfahren",
+      "description": "Entdecken Sie, wie ASMI Unternehmen mit SAP besser arbeiten lässt. Wir bringen praktische Expertise, praxisnahe Lösungen und einen klaren Fokus auf Ergebnisse, die Ihr Unternehmen voranbringen."
+    },
+    "story": {
+      "title": "Unsere Geschichte",
+      "paragraph1": "Bei ASMI haben wir unsere Arbeit um einen Glauben aufgebaut – Technologie sollte das Geschäft vereinfachen, nicht erschweren. Aus unserem Sitz in Utrecht helfen wir Unternehmen, SAP auf Weise zu nutzen, die wirklich zählt: reibungslosere Abläufe, intelligentere Entscheidungen und stärkere Ergebnisse. Unser Team verbindet tiefes Know-how mit realweltlichem Einblick, um Lösungen zu schaffen, die zu Ihrem tatsächlichen Geschäftsablauf passen.",
+      "paragraph2": "Wir haben das Vertrauen globaler Namen wie Hitachi, Cargill und Deloitte gewonnen, indem wir praktisch, ehrlich und auf nachhaltige Wirkung fokussiert bleiben. Für uns geht nie um schnelle Lösungen – es geht darum, Systeme zu bauen, die die Zeit überdauern und Unternehmen mit Zuversicht wachsen lassen."
+    },
+    "vision": {
+      "title": "Unsere Vision",
+      "paragraph1": "Wir streben danach, eine Zukunft zu gestalten, in der Unternehmen mit Klarheit, Agilität und Zweck durch die Kraft von SAP arbeiten. Unsere Vision ist es, Organisationen dabei zu helfen, über Komplexität hinauszugehen, indem wir intelligente Systeme bauen, die Arbeit vereinfachen, Entscheidungen stärken und nachhaltiges Wachstum ermöglichen.",
+      "paragraph2": "Wir sehen Technologie als Treiber wirklichen Fortschritts. Durch die Kombination tiefgreifender Expertise mit einer partnerschaftlichen Denkweise arbeiten wir daran, nachhaltigen Wert zu schaffen – Unternehmen befähigen, intelligenter zu arbeiten, schneller zu innovieren und in einer sich verändernden Welt voraus zu sein."
+    },
+    "mission": {
+      "title": "Unsere Mission",
+      "paragraph1": "Unsere Mission ist es, SAP-Lösungen zu liefern, die Herausforderungen in Chancen und Strategien in Ergebnisse verwandeln. Wir helfen Unternehmen, Leistung zu optimieren, Abläufe zu rationalisieren und das volle Potenzial ihrer Systeme durch durchdachte, präzise Implementierung freizusetzen.",
+      "paragraph2": "Jedes Projekt spiegelt unser Engagement für Exzellenz, Zusammenarbeit und messbare Ergebnisse wider. Wir konzentrieren uns darauf, zuverlässige Lösungen zu bauen, die sich an Veränderungen anpassen, von Tag eins Wirkung zeigen und langfristigen Erfolg für jeden Kunden unterstützen, mit dem wir arbeiten."
+    },
+    "team": {
+      "title": "Unser Team kennenlernen",
+      "description": "Unser Team vereint echte Erfahrung mit dem gemeinsamen Antrieb, SAP für Sie besser zu machen.",
+      "members": {
+        "basavaraj": {
+          "name": "Basavaraj K M",
+          "role": "Geschäftsführer",
+          "bio": "Mit über 20 Jahren SAP-Beratung spezialisiert er sich auf S/4HANA Finance, Central Finance und Group Reporting. Er hat mehrere globale Implementierungen und Migrationen mit nachgewiesenen Ergebnissen geleitet. Als zertifizierter S/4HANA-Experte konzentriert er sich darauf, praxisnahe, hochwirksame Digitalisierungs-Lösungen zu liefern."
+        },
+        "asha": {
+          "name": "Asha M",
+          "role": "Geschäftsführende Partnerin",
+          "bio": "Als Geschäftsführende Partnerin leitet sie die Strategie und den Betrieb des Unternehmens. Sie konzentriert sich darauf, messbare Ergebnisse zu liefern und starke Kundenbeziehungen aufzubauen. Ihre Führung vereint Vision, Verantwortlichkeit und ein Engagement für Exzellenz."
+        }
+      }
+    },
+    "finalCTA": {
+      "title": "Verbessern Sie SAP-Ergebnisse mit ASMI",
+      "description": "Starten Sie Ihre SAP-Reise mit dem richtigen Partner."
+    }
+  },
+  "services": {
+    "hero": {
+      "tagline": "Unsere Dienstleistungen",
+      "title": "SAP-Dienstleistungen, die wir anbieten",
+      "description": "Wir bieten ein komplettes Spektrum an SAP-Dienstleistungen, die darauf ausgelegt sind, Prozesse zu verbessern, Systeme zu integrieren und die betriebliche Effizienz zu steigern."
+    },
+    "clients": {
+      "title": "Kunden, die wir betreut haben"
+    },
+    "servicesSection": {
+      "title": "Unsere Dienstleistungen",
+      "description": "Wir bieten SAP-Lösungen, die auf Ihr Unternehmen zugeschnitten sind. Von der Einrichtung bis zum Support machen wir Ihre Systeme reibungsloser, intelligenter und bereit, mit Ihnen zu wachsen.",
+      "list": {
+        "sapPublicCloud": {
+          "title": "SAP Public Cloud",
+          "description": "Sichern, skalierbare SAP-Cloud-Lösungen bereitstellen für optimierte Abläufe und Agilität.",
+          "features": [
+            "Schnelle Bereitstellung mit minimalen Unterbrechungen laufender Operationen",
+            "Flexible, skalierbare Infrastruktur zur Unterstützung wachsender Geschäftsbedürfnisse",
+            "Integration mit bestehenden Systemen für nahtlosen Datenfluss"
+          ]
+        },
+        "sapImplementations": {
+          "title": "SAP-Implementierungen und Rollouts",
+          "description": "Führen Sie maßgeschneiderte SAP-Implementierungen mit bewährten Greenfield-, Brownfield- oder Bluefield-Strategien durch.",
+          "features": [
+            "Vollständiges Lebenszyklusmanagement von Planung bis Go-Live",
+            "Anpassung, um spezifische Geschäftsprozesse und Berichtserfordernisse zu erfüllen",
+            "Risikominderung und Qualitätssicherung während der gesamten Bereitstellung"
+          ]
+        },
+        "sapDocumentCompliance": {
+          "title": "SAP-Dokumenten- und Berichtskompatibilität",
+          "description": "Vereinfachen Sie E-Rechnungen und Steuerberichte mit nahtlosen, konformen SAP-Lösungen.",
+          "features": [
+            "Automatisieren Sie Rechnungsstellung und Berichterstattung, um Fehler und Verzögerungen zu reduzieren",
+            "Sicherstellen der Einhaltung lokaler und internationaler Vorschriften",
+            "Bereitstellung audit-fertiger Dokumentation und Berichtsfähigkeiten"
+          ]
+        },
+        "sapConsulting": {
+          "title": "SAP-Beratung & Advisory",
+          "description": "Entfesseln Sie strategischen Wert mit fachkundiger SAP-Beratung, die auf Ihre Geschäftsziele zugeschnitten ist.",
+          "features": [
+            "Prozessanalyse zur Identifizierung von Engpässen und Optimierungsmöglichkeiten",
+            "Empfehlungen zu Systemverbesserungen und Best Practices",
+            "Strategische Planung für SAP-Einführung, Upgrades und Transformation"
+          ]
+        },
+        "dataMigration": {
+          "title": "Daten- & Migrationsdienste",
+          "description": "Sichern Sie eine reibungslose, sichere Datenmigration für optimierte SAP-Leistung.",
+          "features": [
+            "Datenbereinigung, Validierung und Zuordnung für Genauigkeit",
+            "Minimierte Ausfallzeiten während der Migration mit phasenweisen Ansätzen",
+            "Integration mit Altsystemen und neuen SAP-Modulen"
+          ]
+        },
+        "supportManaged": {
+          "title": "Support & Managed Services",
+          "description": "Erhalten Sie Spitzen-SAP-Leistung mit proaktivem Support und Management.",
+          "features": [
+            "24/7 Überwachung und Problemlösung, um Unterbrechungen zu vermeiden",
+            "Systemoptimierung zur Aufrechterhaltung von Effizienz und Zuverlässigkeit",
+            "Regelmäßige Updates, Patches und präventive Wartung"
+          ]
+        },
+        "training": {
+          "title": "Schulung & Change Management",
+          "description": "Stärken Sie Teams mit gezielter Schulung für nahtlose SAP-Implementierung.",
+          "features": [
+            "Individuelle Schulungen für verschiedene Benutzerrollen",
+            "Unterstützung bei der Akzeptanz von Veränderungen und Prozessstandardisierung",
+            "Dokumentation und Ressourcen, um langfristige Kompetenz sicherzustellen"
+          ]
+        },
+        "projectManagement": {
+          "title": "SAP-Projektmanagement & Governance",
+          "description": "Steuern Sie Projekterfolg mit fachkundiger Aufsicht und disziplinierter Governance.",
+          "features": [
+            "Klare Projektplanung, Zeitpläne und Meilensteinverfolgung",
+            "Risikomanagement und -minderung während des gesamten Projektlebenszyklus",
+            "Kommunikation und Berichterstattung an Stakeholder für Transparenz und Verantwortlichkeit"
+          ]
+        }
+      }
+    },
+    "technology": {
+      "title": "Technologie-Stack",
+      "description": "Wir arbeiten mit den neuesten SAP-Technologien und ergänzenden Lösungen, um umfassenden Geschäftswert zu liefern."
+    },
+    "finalCTA": {
+      "title": "Bewegen Sie Ihr Geschäft mit ASMI voran",
+      "description": "Fördern Sie Wachstum durch intelligentere SAP-Lösungen."
+    }
+  },
+  "industries": {
+    "hero": {
+      "tagline": "Branchen",
+      "title": "Branchen, die wir bedienen",
+      "description": "Wir verstehen, dass jede Branche anders arbeitet. Unsere SAP-Dienstleistungen sind auf die Bedürfnisse jedes Sektors zugeschnitten, um reale Herausforderungen zu lösen und solide Ergebnisse zu liefern."
+    },
+    "industriesSection": {
+      "title": "Branchen, die wir bedienen",
+      "retail": {
+        "title": "Einzelhandel & Konsumgüter",
+        "description": "Integrieren Sie Vertrieb, Inventar und Kundenerkenntnisse für intelligentere Entscheidungen und nahtlose Einkaufserlebnisse über alle Kanäle hinweg.",
+        "features": [
+          "Reduzieren Sie Inventarverschwendung und Fehlbestände mit intelligenter SAP-Planung",
+          "Beschleunigen Sie Lieferkettenprozesse, um Produkte schneller zu Kunden zu bringen",
+          "Nutzen Sie Echtzeitdaten, um Verkaufsentscheidungen und Kundenzufriedenheit zu verbessern"
+        ]
+      },
+      "oilGas": {
+        "title": "Öl, Gas & Energie",
+        "description": "Verbinden Sie Betrieb, Wartung und Compliance-Systeme, um Effizienz zu steigern, Ausfallzeiten zu reduzieren und die höchsten Sicherheitsstandards einzuhalten.",
+        "features": [
+          "Halten Sie kritische Ausrüstung länger in Betrieb mit vorausschauender Wartung",
+          "Bleiben Sie vollständig konform mit Sicherheits- und Umweltvorschriften",
+          "Verwandeln Sie Betriebsdaten in kostensparende, umsetzbare Erkenntnisse"
+        ]
+      },
+      "pharma": {
+        "title": "Pharmazeutika & Life Sciences",
+        "description": "Verknüpfen Sie Forschung, Produktion und regulatorische Prozesse, um Produktqualität sicherzustellen, die Lieferung zu beschleunigen und vollständig konform zu bleiben.",
+        "features": [
+          "Beschleunigen Sie die Fertigung, ohne Qualität oder Compliance zu beeinträchtigen",
+          "Verfolgen Sie jede Charge, um regulatorische Standards einzuhalten",
+          "Koordinieren Sie die Distribution, um Nachfrage effizient und zuverlässig zu erfüllen"
+        ]
+      },
+      "chemicals": {
+        "title": "Chemikalien & Petrochemikalien",
+        "description": "Koordinieren Sie Produktion, Sicherheit und Lieferkettenbetrieb, um Effizienz zu steigern, Risiken zu minimieren und schnell auf Marktbedürfnisse zu reagieren.",
+        "features": [
+          "Optimieren Sie die Produktion, um Abfall und Energieverbrauch zu reduzieren",
+          "Vereinfachen Sie Compliance-Berichterstattung mit automatisierten SAP-Prozessen",
+          "Reagieren Sie schnell auf Lieferkettenunterbrechungen oder Marktveränderungen"
+        ]
+      },
+      "publicSector": {
+        "title": "Öffentlicher Sektor & Regierung",
+        "description": "Optimieren Sie Finanz-, Betriebs- und Bürgerdienste, um Transparenz, Verantwortlichkeit und Servicebereitstellung über Abteilungen hinweg zu verbessern.",
+        "features": [
+          "Automatisieren Sie Budgetierung und Mittelverwaltung für Klarheit und Kontrolle",
+          "Erhöhen Sie die Transparenz über Abteilungen und Operationen hinweg",
+          "Liefern Sie Bürgerdienste effizienter mithilfe von Echtzeit-Einblicken"
+        ]
+      },
+      "logistics": {
+        "title": "Logistik & Lieferkette",
+        "description": "Vereinigen Sie Beschaffung, Lagerhaltung und Distribution mit Echtzeit-Einblicken, um schnellere, zuverlässigere und kostengünstigere Operationen sicherzustellen.",
+        "features": [
+          "Optimieren Sie Lagerhaltung, Versand und Inventarverfolgung",
+          "Erhalten Sie vollständige Sichtbarkeit über Lieferanten und Lieferungen",
+          "Lösen Sie Engpässe schnell, um einen reibungslosen Ablauf aufrechtzuerhalten"
+        ]
+      }
+    },
+    "finalCTA": {
+      "title": "Vereinfachen Sie Ihre SAP-Reise mit ASMI",
+      "description": "Zuverlässiger Support für nachhaltige Geschäftsergebnisse."
+    }
+  },
+  "careers": {
+    "hero": {
+      "tagline": "Karriere",
+      "title": "Treten Sie unserem Team bei",
+      "description": "Treten Sie einem Team bei, das Ihre Fähigkeiten und Ambitionen schätzt. Bei ASMI wachsen wir gemeinsam und schaffen echte Wirkung."
+    },
+    "positions": {
+      "title": "Offene Positionen",
+      "description": "Entdecken Sie unsere aktuellen Stellenangebote und finden Sie die perfekte Position, um Ihre SAP-Karriere voranzutreiben.",
+      "noOpenings": {
+        "title": "Derzeit keine offenen Positionen",
+        "description": "Wir stellen derzeit keine neuen Positionen ein. Bitte schauen Sie bald wieder vorbei oder senden Sie uns Ihren Lebenslauf, damit wir Sie kontaktieren können, sobald sich eine passende Gelegenheit ergibt.",
+        "shareResume": "Teilen Sie Ihren Lebenslauf"
+      },
+      "loading": "Offene Positionen werden geladen...",
+      "viewAllPositions": "Alle {count} offenen Positionen anzeigen",
+      "responsibilities": "Aufgaben:",
+      "requirements": "Anforderungen:",
+      "posted": "Veröffentlicht"
+    },
+    "process": {
+      "title": "Bewerbungsprozess",
+      "description": "Treten Sie unserem globalen Team bei ASMI Technologies",
+      "steps": [
+        {
+          "step": "01",
+          "title": "Stellen finden",
+          "description": "Durchsuchen Sie aktuelle Stellenangebote auf unserer ASMI-Karriere-Seite und finden Sie Positionen, die zu Ihren Fähigkeiten und Interessen passen."
+        },
+        {
+          "step": "02",
+          "title": "Bewerben",
+          "description": "Reichen Sie Ihre Online-Bewerbung ein und erhalten Sie sofortige Bestätigung."
+        },
+        {
+          "step": "03",
+          "title": "Vor-Auswahl",
+          "description": "Wir prüfen Ihre Fähigkeiten und Erfahrungen, um die Eignung festzustellen, und berücksichtigen Sie möglicherweise für andere relevante Positionen."
+        },
+        {
+          "step": "04",
+          "title": "Interview",
+          "description": "Ausgewählte Kandidaten treffen sich mit dem Recruiting Manager und HR. Weitere Runden oder Bewertungen können gelten. Virtuelle oder persönliche Interviews verfügbar."
+        },
+        {
+          "step": "05",
+          "title": "Auswahl",
+          "description": "Referenzen können überprüft werden. Wenn Sie ausgewählt werden, erhalten Sie ein Angebot mit einem wettbewerbsfähigen Paket. Alle anderen Bewerber werden benachrichtigt."
+        },
+        {
+          "step": "06",
+          "title": "Onboarding",
+          "description": "Neue Mitarbeiter durchlaufen ein Einführungsprogramm, um sich schnell zu integrieren und effektiv beizutragen."
+        }
+      ]
+    },
+    "apply": {
+      "title": "Bewerben für {job}",
+      "description": "Reichen Sie Ihre Daten ein und wir werden uns melden, wenn Ihr Profil gut passt.",
+      "fullName": "Vollständiger Name",
+      "email": "E-Mail",
+      "phoneNumber": "Telefonnummer",
+      "resume": "Lebenslauf (nur PDF) *",
+      "coverLetter": "Anschreiben (nur PDF, optional)",
+      "submitting": "Einreichen"
+    },
+    "finalCTA": {
+      "title": "Bereit, dem ASMI-Team beizutreten?",
+      "description": "Treten Sie einem Team bei, in dem Sie wachsen, lernen und Ihre Karriere aufbauen können."
+    }
+  },
+  "contact": {
+    "hero": {
+      "tagline": "Kontaktieren Sie uns",
+      "title": "Kontaktieren Sie uns",
+      "description": "Diskutieren Sie Ihre SAP-Bedürfnisse mit unseren Experten und sehen Sie, wie wir helfen können. Unser Team steht bereit, Sie zur richtigen Lösung zu führen."
+    },
+    "form": {
+      "title": "Senden Sie uns eine Nachricht",
+      "description": "Füllen Sie das untenstehende Formular aus und wir melden uns innerhalb von 24 Stunden bei Ihnen.",
+      "name": "Name",
+      "namePlaceholder": "Ihr vollständiger Name",
+      "email": "E-Mail",
+      "emailPlaceholder": "your.email@company.com",
+      "location": "Ort",
+      "locationPlaceholder": "Ihre Stadt, Land",
+      "company": "Firma",
+      "companyPlaceholder": "Ihr Firmenname",
+      "phone": "Telefon",
+      "phonePlaceholder": "+31 (0)30 123 4567",
+      "attachment": "Anhang (optional)",
+      "attached": "Angehängt",
+      "message": "Nachricht",
+      "messagePlaceholder": "Erzählen Sie uns von Ihrem Projekt und wie wir helfen können...",
+      "sending": "Senden...",
+      "successMessage": "Danke! Ihre Nachricht wurde erfolgreich gesendet. Wir melden uns in Kürze bei Ihnen.",
+      "errorMessage": "Entschuldigung, beim Senden Ihrer Nachricht ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+    },
+    "offices": {
+      "title": "Besuchen Sie uns in unseren Büros",
+      "netherlands": {
+        "title": "Hauptsitz – Niederlande",
+        "address": "Asmi Technology Consulting B.V\n#10, Boudewijn Buchstraat\n3544HJ Utrecht"
+      },
+      "india": {
+        "title": "Indien Büro",
+        "address": "Asmi Technology Consulting Pvt. Ltd.\n#136, Meenakshi Layout,\nKalena Agrahara, Bannerghatta Main Road,\nBengaluru - 560076"
+      }
+    },
+    "finalCTA": {
+      "title": "Sprechen Sie noch heute mit unseren SAP-Experten",
+      "description": "Kontaktieren Sie uns, um Ihre Bedürfnisse zu besprechen und zu sehen, wie wir helfen können."
+    }
+  },
+  "resources": {
+    "hero": {
+      "tagline": "Ressourcen & Einblicke",
+      "title": "Wissenszentrum für SAP-Exzellenz.",
+      "description": "Greifen Sie auf unsere Bibliothek mit Whitepapers, Fallstudien, Webinaren und Best Practices zu, um Ihre SAP-Reise zu beschleunigen und der Branche voraus zu sein."
+    },
+    "featured": {
+      "title": "Hervorgehobene Ressourcen",
+      "items": [
+        {
+          "title": "S/4HANA-Migrationsleitfaden für den Mittelstand",
+          "description": "Ein umfassender Leitfaden zur Planung und Durchführung Ihrer S/4HANA-Migration mit minimalen Geschäftsstörungen.",
+          "type": "Whitepaper"
+        },
+        {
+          "title": "Herstellungsexzellenz mit SAP",
+          "description": "Wie führende Hersteller SAP nutzen, um Produktion zu optimieren, Kosten zu senken und Qualität zu verbessern.",
+          "type": "Case Study"
+        },
+        {
+          "title": "Digitale Transformation im Einzelhandel",
+          "description": "Best Practices für die Implementierung von Omni-Channel-Einzelhandelslösungen mit SAP Commerce und ERP-Integration.",
+          "type": "Webinar"
+        },
+        {
+          "title": "SAP-Sicherheitsbest Practices",
+          "description": "Wesentliche Sicherheitsmaßnahmen zum Schutz Ihrer SAP-Landschaft und zur Gewährleistung der Einhaltung von Branchenstandards.",
+          "type": "Guide"
+        },
+        {
+          "title": "Cloud-Migrationsstrategien",
+          "description": "Planung und Durchführung Ihrer Migration zur SAP Cloud mit minimalem Risiko und maximalem Geschäftswert.",
+          "type": "Whitepaper"
+        },
+        {
+          "title": "SAP Analytics für Business Intelligence",
+          "description": "Nutzung von SAP Analytics Cloud, um Daten in umsetzbare Geschäftseinblicke zu verwandeln.",
+          "type": "Case Study"
+        }
+      ]
+    },
+    "webinars": {
+      "title": "Bevorstehende Webinare",
+      "description": "Nehmen Sie an Live-Sitzungen mit unseren Experten zu den neuesten SAP-Trends, Best Practices und Brancheneinblicken teil.",
+      "items": [
+        {
+          "title": "S/4HANA 2024: Was ist neu für den Mittelstand",
+          "date": "March 15, 2024",
+          "time": "2:00 PM CET",
+          "speaker": "Sarah van der Berg",
+          "description": "Entdecken Sie die neuesten S/4HANA-Funktionen und wie sie Ihrem Mittelstandsunternehmen zugutekommen können."
+        },
+        {
+          "title": "KI und maschinelles Lernen in SAP",
+          "date": "March 22, 2024",
+          "time": "2:00 PM CET",
+          "speaker": "Michael Chen",
+          "description": "Erkunden Sie, wie KI- und ML-Funktionen in SAP Ihre Geschäftsprozesse transformieren können."
+        },
+        {
+          "title": "Manufacturing 4.0 mit SAP",
+          "date": "March 29, 2024",
+          "time": "2:00 PM CET",
+          "speaker": "Elena Rodriguez",
+          "description": "Erfahren Sie, wie Sie Industrie 4.0-Lösungen mit der Fertigungssuite von SAP implementieren."
+        }
+      ]
+    },
+    "newsletter": {
+      "title": "Bleiben Sie mit SAP-Einblicken auf dem Laufenden",
+      "description": "Erhalten Sie die neuesten SAP-Nachrichten, Best Practices und Brancheneinblicke monatlich in Ihren Posteingang.",
+      "emailPlaceholder": "Geben Sie Ihre E-Mail ein",
+      "privacyNote": "Wir respektieren Ihre Privatsphäre. Sie können sich jederzeit abmelden."
+    }
+  },
+  "jobs": {
+    "header": {
+      "tagline": "Karrierechancen",
+      "title": "Offene Positionen",
+      "description": "Durchsuchen Sie alle unsere aktuellen Stellenangebote und finden Sie Ihre nächste Karrieremöglichkeit bei ASMI BV."
+    },
+    "search": {
+      "placeholder": "Suche nach Stellenbezeichnung oder Spezialisierung...",
+      "employmentType": "Beschäftigungsart",
+      "location": "Ort",
+      "allTypes": "Alle Arten",
+      "allLocations": "Alle Standorte",
+      "showing": "Anzeigen",
+      "of": "of",
+      "positions": "Positionen"
+    },
+    "status": {
+      "loading": "Offene Positionen werden geladen...",
+      "noResults": "Keine Positionen entsprechen Ihren Kriterien",
+      "noOpenings": "Derzeit keine offenen Positionen",
+      "noResultsDescription": "Versuchen Sie, Ihre Suche oder Filter anzupassen, um mehr Möglichkeiten zu finden.",
+      "noOpeningsDescription": "Wir stellen derzeit keine neuen Positionen ein. Bitte schauen Sie bald wieder vorbei oder senden Sie uns Ihren Lebenslauf."
+    },
+    "details": {
+      "keyRequirements": "Wichtige Anforderungen:",
+      "posted": "Veröffentlicht",
+      "specialization": "Spezialisierung:"
+    },
+    "apply": {
+      "title": "Bewerben für",
+      "description": "Reichen Sie Ihre Daten ein und wir werden uns melden, wenn Ihr Profil gut passt.",
+      "fullName": "Vollständiger Name",
+      "email": "E-Mail",
+      "phone": "Telefonnummer",
+      "resume": "Lebenslauf (nur PDF) *",
+      "coverLetter": "Anschreiben (nur PDF, optional)",
+      "submitting": "Einreichen"
+    },
+    "employmentTypes": {
+      "fullTime": "Vollzeit",
+      "partTime": "Teilzeit",
+      "contract": "Vertrag",
+      "freelance": "Freiberuflich"
+    }
+  },
+  "footer": {
+    "companyName": "ASMI Technology Consulting B.V.",
+    "about": "Über ASMI",
+    "quickLinks": "Schnelllinks",
+    "contact": "Kontaktieren Sie uns",
+    "linkedin": "LinkedIn",
+    "email": "info@asmitechconsulting.com",
+    "allRightsReserved": "Alle Rechte vorbehalten.",
+    "netherlands": {
+      "title": "Hauptsitz – Niederlande",
+      "address": "Asmi Technology Consulting B.V\n#10, Boudewijn Buchstraat\n3544HJ Utrecht\nPh No: +31-622098973"
+    },
+    "india": {
+      "title": "Indien Büro",
+      "address": "Asmi Technology Consulting Pvt. Ltd.\n#136, Meenakshi Layout,\nKalena Agrahara, Bannerghatta Main Road,\nBengaluru - 560076\nPh No: +91 98862 00035"
+    }
+  },
+  "common": {
+    "loading": "Laden...",
+    "error": "Fehler",
+    "success": "Erfolg",
+    "close": "Schließen",
+    "save": "Speichern",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "view": "Ansehen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "previous": "Zurück",
+    "search": "Suchen",
+    "filter": "Filter",
+    "clear": "Löschen"
+  }
+}

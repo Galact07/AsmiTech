@@ -161,27 +161,32 @@ export default function DynamicServicePage() {
   const [notFound, setNotFound] = useState(false);
 
   // Helper function to get localized content
-  const getLocalizedValue = (enValue: string, nlKey: string) => {
-    if (language === 'nl' && dutchContent && dutchContent[nlKey]) {
-      return dutchContent[nlKey];
+  const getLocalizedValue = (enValue: string, key: string) => {
+    // Check for German content
+    if (language === 'de' && dutchContent && dutchContent[key]) {
+      return dutchContent[key];
+    }
+    // Check for Dutch content (legacy variable name dutchContent used for both)
+    if (language === 'nl' && dutchContent && dutchContent[key]) {
+      return dutchContent[key];
     }
     return enValue;
   };
 
-  const getLocalizedArray = (enArray: any[], nlKey: string) => {
-    if (language === 'nl' && dutchContent && Array.isArray(dutchContent[nlKey]) && dutchContent[nlKey].length > 0) {
-      return dutchContent[nlKey];
+  const getLocalizedArray = (enArray: any[], key: string) => {
+    if ((language === 'nl' || language === 'de') && dutchContent && Array.isArray(dutchContent[key]) && dutchContent[key].length > 0) {
+      return dutchContent[key];
     }
-    // Debug: Log when Dutch content is missing or empty
-    if (language === 'nl' && enArray && enArray.length > 0) {
+    // Debug: Log when localized content is missing or empty
+    if ((language === 'nl' || language === 'de') && enArray && enArray.length > 0) {
       if (!dutchContent) {
-        console.warn(`⚠️  No Dutch content available for page (dutchContent is null/undefined)`);
-      } else if (!dutchContent[nlKey]) {
-        console.warn(`⚠️  Missing Dutch translation for array field: "${nlKey}"`);
-      } else if (!Array.isArray(dutchContent[nlKey])) {
-        console.warn(`⚠️  Dutch content for "${nlKey}" is not an array:`, typeof dutchContent[nlKey]);
-      } else if (dutchContent[nlKey].length === 0) {
-        console.warn(`⚠️  Dutch translation for "${nlKey}" is an empty array`);
+        console.warn(`⚠️  No ${language} content available for page`);
+      } else if (!dutchContent[key]) {
+        console.warn(`⚠️  Missing ${language} translation for array field: "${key}"`);
+      } else if (!Array.isArray(dutchContent[key])) {
+        console.warn(`⚠️  ${language} content for "${key}" is not an array:`, typeof dutchContent[key]);
+      } else if (dutchContent[key].length === 0) {
+        console.warn(`⚠️  ${language} translation for "${key}" is an empty array`);
       }
     }
     return enArray || [];
@@ -222,18 +227,18 @@ export default function DynamicServicePage() {
         core_offerings: Array.isArray(data.core_offerings) ? data.core_offerings : [],
         benefits: Array.isArray(data.benefits)
           ? data.benefits.map((benefit: BenefitItem) => ({
-              ...benefit,
-              icon: benefit?.icon || 'check-circle',
-            }))
+            ...benefit,
+            icon: benefit?.icon || 'check-circle',
+          }))
           : [],
         process_steps: Array.isArray(data.process_steps) ? data.process_steps : [],
         case_studies: Array.isArray(data.case_studies) ? data.case_studies : [],
         tech_stack: Array.isArray(data.tech_stack) ? data.tech_stack : [],
         why_choose_us: Array.isArray(data.why_choose_us)
           ? data.why_choose_us.map((item: WhyChooseItem) => ({
-              ...item,
-              icon: item?.icon || 'check-circle',
-            }))
+            ...item,
+            icon: item?.icon || 'check-circle',
+          }))
           : [],
         social_proof_logos: Array.isArray(data.social_proof_logos) ? data.social_proof_logos : [],
         testimonials: Array.isArray(data.testimonials) ? data.testimonials : [],
@@ -243,31 +248,41 @@ export default function DynamicServicePage() {
       } as ServicePageData;
 
       setPageData(normalizedData);
-      
-      // Parse content_nl if it's a string, otherwise use as-is
-      const nlContent = typeof data.content_nl === 'string' 
-        ? JSON.parse(data.content_nl) 
-        : (data.content_nl || {});
-      
-      // Debug logging for Dutch content
+
+      // Determine which content field to use based on language
+      // We reuse the 'dutchContent' state variable to hold ANY localized content (nl or de)
+      let localizedContentRaw = null;
+      if (language === 'nl') {
+        localizedContentRaw = data.content_nl;
+      } else if (language === 'de') {
+        // @ts-ignore - content_de might not be in the types yet
+        localizedContentRaw = data.content_de;
+      }
+
+      // Parse content if it's a string, otherwise use as-is
+      const localizedContent = typeof localizedContentRaw === 'string'
+        ? JSON.parse(localizedContentRaw)
+        : (localizedContentRaw || {});
+
+      // Debug logging for localized content
       console.log(`📖 Loaded service page: ${data.title}`);
-      console.log(`🌐 Translation status: ${data.translation_status || 'not translated'}`);
-      if (nlContent && Object.keys(nlContent).length > 0) {
-        console.log(`✅ Dutch content available with ${Object.keys(nlContent).length} fields`);
-        
+      console.log(`🌐 Language: ${language}`);
+      if (localizedContent && Object.keys(localizedContent).length > 0) {
+        console.log(`✅ Localized content available with ${Object.keys(localizedContent).length} fields`);
+
         // Log array field counts
         ['process_steps', 'tech_stack', 'why_choose_us', 'core_offerings', 'benefits'].forEach(field => {
-          if (Array.isArray(nlContent[field])) {
-            console.log(`  - ${field}: ${nlContent[field].length} items`);
-          } else if (nlContent[field]) {
-            console.log(`  - ${field}: exists but not an array (${typeof nlContent[field]})`);
+          if (Array.isArray(localizedContent[field])) {
+            console.log(`  - ${field}: ${localizedContent[field].length} items`);
+          } else if (localizedContent[field]) {
+            console.log(`  - ${field}: exists but not an array (${typeof localizedContent[field]})`);
           }
         });
       } else {
-        console.log(`⚠️  No Dutch content available for this page`);
+        console.log(`⚠️  No localized content available for this page in ${language}`);
       }
-      
-      setDutchContent(nlContent);
+
+      setDutchContent(localizedContent);
     } catch (error) {
       console.error('Error fetching service page:', error);
       setNotFound(true);
@@ -355,7 +370,7 @@ export default function DynamicServicePage() {
               <div className="flex items-stretch gap-6 md:gap-10 flex-col md:flex-row min-h-[240px] md:min-h-[280px]">
                 <div className="flex-1">
                   <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em] mt-0 pt-2">
-                    {language === 'nl' ? 'Onze Diensten' : 'Our Services'}
+                    {language === 'nl' ? 'Onze Diensten' : language === 'de' ? 'Unsere Dienstleistungen' : 'Our Services'}
                   </p>
                   <h1 id="service-title" className="sm:text-4xl md:text-5xl text-3xl font-bold text-slate-700 tracking-tight mt-2">
                     {getLocalizedValue(pageData.hero_headline || pageData.title, 'hero_headline') ||
@@ -378,7 +393,7 @@ export default function DynamicServicePage() {
                       to="/services"
                       className="inline-flex items-center gap-2 rounded-none px-5 py-3 text-sm font-bold text-primary bg-white border border-secondary hover:bg-slate-50 hover:border-primary transition cursor-pointer"
                     >
-                      {language === 'nl' ? 'Al onze diensten' : 'All Services'}
+                      {language === 'nl' ? 'Al onze diensten' : language === 'de' ? 'Alle Dienstleistungen' : 'All Services'}
                       <ArrowRight className="h-4 w-4" />
                     </Link>
                   </div>
@@ -419,7 +434,7 @@ export default function DynamicServicePage() {
                   const isExternal = href.startsWith('http');
                   const content = (
                     <span className="inline-flex items-center gap-2">
-                      {language === 'nl' ? 'Plan een gesprek' : 'Schedule now'}
+                      {language === 'nl' ? 'Plan een gesprek' : language === 'de' ? 'Jetzt planen' : 'Schedule now'}
                       <ArrowUpRight className="h-4 w-4" />
                     </span>
                   );
@@ -501,12 +516,14 @@ export default function DynamicServicePage() {
             <div className="bg-dark-blue p-6 md:p-8 transition duration-500 ease-in rounded-none">
               <div className="text-center mb-8">
                 <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-3">
-                  {language === 'nl' ? 'Kernaanbiedingen' : 'Core Offerings'}
+                  {language === 'nl' ? 'Kernaanbiedingen' : language === 'de' ? 'Kernangebote' : 'Core Offerings'}
                 </h2>
                 <p className="text-white/90 text-lg max-w-2xl mx-auto">
                   {language === 'nl'
                     ? 'Ontdek de bouwstenen van deze dienst, elk ontworpen voor voorspelbare waarde.'
-                    : 'Explore the pillars of this service, each crafted to deliver measurable value.'}
+                    : language === 'de'
+                      ? 'Entdecken Sie die Säulen dieses Services, die jeweils darauf ausgelegt sind, messbaren Wert zu liefern.'
+                      : 'Explore the pillars of this service, each crafted to deliver measurable value.'}
                 </p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -514,7 +531,7 @@ export default function DynamicServicePage() {
                   // Cycle through icons for variety
                   const icons = [Rocket, Zap, ShieldCheck, TrendingUp, Star, BarChart3];
                   const OfferingIcon = icons[index % icons.length];
-                  
+
                   return (
                     <article
                       key={`${offering.title}-${index}`}
@@ -533,7 +550,7 @@ export default function DynamicServicePage() {
                             to={offering.link}
                             className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition text-sm font-bold hover:underline"
                           >
-                            {language === 'nl' ? 'Meer weten' : 'Learn More'}
+                            {language === 'nl' ? 'Meer weten' : language === 'de' ? 'Mehr erfahren' : 'Learn More'}
                             <ArrowRight className="h-4 w-4" />
                           </Link>
                         )}
@@ -552,12 +569,14 @@ export default function DynamicServicePage() {
             <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
               <div className="text-center mb-8">
                 <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-3">
-                  {language === 'nl' ? 'Voordelen' : 'Key Benefits'}
+                  {language === 'nl' ? 'Voordelen' : language === 'de' ? 'Hauptvorteile' : 'Key Benefits'}
                 </h2>
                 <p className="text-slate-700/80 text-lg max-w-2xl mx-auto">
                   {language === 'nl'
                     ? 'Samengevatte waardeproposities die laten zien hoe wij efficiëntie, snelheid en zekerheid leveren.'
-                    : 'Curated value propositions that show how we drive efficiency, velocity, and assurance.'}
+                    : language === 'de'
+                      ? 'Kuratierte Wertversprechen, die zeigen, wie wir Effizienz, Geschwindigkeit und Sicherheit vorantreiben.'
+                      : 'Curated value propositions that show how we drive efficiency, velocity, and assurance.'}
                 </p>
               </div>
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -589,18 +608,20 @@ export default function DynamicServicePage() {
             <div className="bg-blue-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
               <div className="text-center mb-8">
                 <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-3">
-                  {language === 'nl' ? 'Ons Proces' : 'Our Process'}
+                  {language === 'nl' ? 'Ons Proces' : language === 'de' ? 'Unser Prozess' : 'Our Process'}
                 </h2>
                 <p className="text-slate-700/80 text-lg max-w-2xl mx-auto">
                   {language === 'nl'
                     ? 'Een bewezen leveringsmodel met duidelijke stappen van afstemming tot optimalisatie.'
-                    : 'A proven delivery model with explicit stages from alignment to optimization.'}
+                    : language === 'de'
+                      ? 'Ein bewährtes Liefermodell mit expliziten Phasen von der Abstimmung bis zur Optimierung.'
+                      : 'A proven delivery model with explicit stages from alignment to optimization.'}
                 </p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {localizedProcess.map((step, index) => (
-                  <div 
-                    key={index} 
+                  <div
+                    key={index}
                     className="bg-white p-6 rounded-none transition-all hover:shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] relative group"
                   >
                     <div className="absolute -top-3 -left-3 flex h-12 w-12 items-center justify-center rounded-none bg-primary text-white text-xl font-bold shadow-lg">
@@ -623,12 +644,14 @@ export default function DynamicServicePage() {
             <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
               <div className="text-center mb-8">
                 <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-3">
-                  {language === 'nl' ? 'Succesverhalen' : 'Success Stories'}
+                  {language === 'nl' ? 'Succesverhalen' : language === 'de' ? 'Erfolgsgeschichten' : 'Success Stories'}
                 </h2>
                 <p className="text-slate-700/80 text-lg max-w-2xl mx-auto">
                   {language === 'nl'
                     ? 'Concrete voorbeelden van projecten waarin we meetbare bedrijfsresultaten realiseerden.'
-                    : 'Real client outcomes demonstrating how we deliver tangible business impact.'}
+                    : language === 'de'
+                      ? 'Echte Kundenergebnisse, die zeigen, wie wir greifbare Geschäftsauswirkungen liefern.'
+                      : 'Real client outcomes demonstrating how we deliver tangible business impact.'}
                 </p>
               </div>
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -643,7 +666,7 @@ export default function DynamicServicePage() {
                     <div className="space-y-4 flex-1">
                       <div>
                         <p className="text-xs uppercase font-bold text-primary mb-1">
-                          {language === 'nl' ? 'Probleem' : 'Problem'}
+                          {language === 'nl' ? 'Probleem' : language === 'de' ? 'Problem' : 'Problem'}
                         </p>
                         <p className="text-sm text-slate-700/80 leading-relaxed">
                           {caseStudy.problem}
@@ -651,7 +674,7 @@ export default function DynamicServicePage() {
                       </div>
                       <div>
                         <p className="text-xs uppercase font-bold text-primary mb-1">
-                          {language === 'nl' ? 'Oplossing' : 'Solution'}
+                          {language === 'nl' ? 'Oplossing' : language === 'de' ? 'Lösung' : 'Solution'}
                         </p>
                         <p className="text-sm text-slate-700/80 leading-relaxed">
                           {caseStudy.solution}
@@ -659,7 +682,7 @@ export default function DynamicServicePage() {
                       </div>
                       <div>
                         <p className="text-xs uppercase font-bold text-primary mb-1">
-                          {language === 'nl' ? 'Resultaat' : 'Result'}
+                          {language === 'nl' ? 'Resultaat' : language === 'de' ? 'Ergebnis' : 'Result'}
                         </p>
                         <p className="text-sm text-slate-700/80 leading-relaxed">
                           {caseStudy.result}
@@ -671,7 +694,7 @@ export default function DynamicServicePage() {
                         to={caseStudy.link}
                         className="mt-4 inline-flex items-center gap-2 text-primary hover:text-primary/80 transition text-sm font-bold hover:underline"
                       >
-                        {language === 'nl' ? 'Lees meer' : 'Read More'}
+                        {language === 'nl' ? 'Lees meer' : language === 'de' ? 'Mehr lesen' : 'Read More'}
                         <ArrowRight className="h-4 w-4" />
                       </Link>
                     )}
@@ -688,30 +711,31 @@ export default function DynamicServicePage() {
             <div className="bg-blue-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
               <div className="text-center mb-8">
                 <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-3">
-                  {language === 'nl' ? 'Technologie Stack' : 'Technology Stack'}
+                  {language === 'nl' ? 'Technologie Stack' : language === 'de' ? 'Technologie-Stack' : 'Technology Stack'}
                 </h2>
                 <p className="text-slate-700/80 text-lg max-w-2xl mx-auto">
                   {language === 'nl'
                     ? 'Platforms, frameworks en tools die wij inzetten om duurzame resultaten te behalen.'
-                    : 'Platforms, frameworks, and accelerators we leverage to produce sustainable outcomes.'}
+                    : language === 'de'
+                      ? 'Plattformen, Frameworks und Beschleuniger, die wir nutzen, um nachhaltige Ergebnisse zu erzielen.'
+                      : 'Platforms, frameworks, and accelerators we leverage to produce sustainable outcomes.'}
                 </p>
               </div>
-              <div 
-                className={`grid gap-6 ${
-                  localizedTechStack.length === 1 
-                    ? 'grid-cols-1 max-w-sm mx-auto' 
-                    : localizedTechStack.length === 2 
-                    ? 'grid-cols-1 md:grid-cols-2' 
-                    : localizedTechStack.length === 3 
-                    ? 'grid-cols-1 md:grid-cols-3' 
-                    : localizedTechStack.length === 4 
-                    ? 'grid-cols-2 md:grid-cols-4'
-                    : localizedTechStack.length <= 6
-                    ? 'grid-cols-2 md:grid-cols-3'
-                    : localizedTechStack.length <= 8
-                    ? 'grid-cols-2 md:grid-cols-4'
-                    : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
-                }`}
+              <div
+                className={`grid gap-6 ${localizedTechStack.length === 1
+                  ? 'grid-cols-1 max-w-sm mx-auto'
+                  : localizedTechStack.length === 2
+                    ? 'grid-cols-1 md:grid-cols-2'
+                    : localizedTechStack.length === 3
+                      ? 'grid-cols-1 md:grid-cols-3'
+                      : localizedTechStack.length === 4
+                        ? 'grid-cols-2 md:grid-cols-4'
+                        : localizedTechStack.length <= 6
+                          ? 'grid-cols-2 md:grid-cols-3'
+                          : localizedTechStack.length <= 8
+                            ? 'grid-cols-2 md:grid-cols-4'
+                            : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
+                  }`}
               >
                 {localizedTechStack.map((tech, index) => (
                   <div
@@ -719,12 +743,12 @@ export default function DynamicServicePage() {
                     className="bg-white p-8 text-center rounded-none transition-all hover:shadow-[0_30px_80px_-40px_rgba(2,6,23,0.15)] hover:-translate-y-1 group"
                   >
                     {tech.logo && (
-                      <div className="mx-auto mb-5 flex h-28 w-28 items-center justify-center overflow-hidden rounded-none bg-slate-50 group-hover:bg-primary/5 transition-all">
-                        <img src={tech.logo} alt={tech.name} className="h-24 w-24 object-contain" />
+                      <div className="mx-auto mb-5 flex h-32 w-48 items-center justify-center overflow-hidden rounded-none bg-slate-50 group-hover:bg-primary/5 transition-all">
+                        <img src={tech.logo} alt={tech.name} className="h-28 w-44 object-contain" />
                       </div>
                     )}
                     {!tech.logo && (
-                      <div className="mx-auto mb-5 flex h-28 w-28 items-center justify-center rounded-none bg-primary/10 group-hover:bg-primary transition-all">
+                      <div className="mx-auto mb-5 flex h-32 w-48 items-center justify-center rounded-none bg-primary/10 group-hover:bg-primary transition-all">
                         <Layers className="h-14 w-14 text-primary group-hover:text-white transition-all" />
                       </div>
                     )}
@@ -737,7 +761,7 @@ export default function DynamicServicePage() {
                         to={tech.link}
                         className="mt-4 inline-flex items-center gap-2 text-primary hover:text-primary/80 transition text-sm font-bold hover:underline"
                       >
-                        {language === 'nl' ? 'Bekijk' : 'View'}
+                        {language === 'nl' ? 'Bekijk' : language === 'de' ? 'Ansehen' : 'View'}
                         <ArrowRight className="h-4 w-4" />
                       </Link>
                     )}
@@ -754,12 +778,14 @@ export default function DynamicServicePage() {
             <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
               <div className="text-center mb-8">
                 <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-700 mb-3">
-                  {language === 'nl' ? 'Waarom Kiezen Voor Ons' : 'Why Choose Us'}
+                  {language === 'nl' ? 'Waarom Kiezen Voor Ons' : language === 'de' ? 'Warum uns wählen' : 'Why Choose Us'}
                 </h2>
                 <p className="text-slate-700/80 text-lg max-w-2xl mx-auto">
                   {language === 'nl'
                     ? 'Onze bewezen staat van dienst, certificeringen en wereldwijde bereik onderscheiden ons.'
-                    : 'Our proven delivery record, certifications, and global reach set us apart.'}
+                    : language === 'de'
+                      ? 'Unsere bewährte Erfolgsbilanz, Zertifizierungen und globale Reichweite zeichnen uns aus.'
+                      : 'Our proven delivery record, certifications, and global reach set us apart.'}
                 </p>
               </div>
               <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">

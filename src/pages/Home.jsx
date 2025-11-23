@@ -49,67 +49,80 @@ const Home = () => {
   };
 
   const getLocalizedValue = (service, field) => {
+    // Check for German
+    if (language === 'de' && service.content_de) {
+      const deContent = typeof service.content_de === 'string'
+        ? JSON.parse(service.content_de)
+        : service.content_de;
+      if (deContent && deContent[field]) {
+        return deContent[field];
+      }
+    }
+
+    // Check for Dutch
     if (language === 'nl' && service.content_nl) {
-      const nlContent = typeof service.content_nl === 'string' 
-        ? JSON.parse(service.content_nl) 
+      const nlContent = typeof service.content_nl === 'string'
+        ? JSON.parse(service.content_nl)
         : service.content_nl;
       if (nlContent && nlContent[field]) {
         return nlContent[field];
       }
     }
+
+    // Fallback to English
     return service[field];
   };
-  
+
   // Get translated industries data
   const industriesData = [
-              {
-                icon: ShoppingBag,
-                title: t('home.industries.retail.title'),
-                description: t('home.industries.retail.description'),
-                features: tArray('home.industries.retail.features'),
-                image: 'https://i.pinimg.com/736x/ec/be/ba/ecbeba29212ecb314faf2760a9b200a3.jpg',
-                alt: t('home.industries.retail.title')
-              },
-              {
-                icon: Flame,
-                title: t('home.industries.oilGas.title'),
-                description: t('home.industries.oilGas.description'),
-                features: tArray('home.industries.oilGas.features'),
-                image: 'https://i.pinimg.com/736x/56/c4/ec/56c4ec50629e9b8c7082b86bd1fe5332.jpg',
-                alt: t('home.industries.oilGas.title')
-              },
-              {
-                icon: Pill,
-                title: t('home.industries.pharma.title'),
-                description: t('home.industries.pharma.description'),
-                features: tArray('home.industries.pharma.features'),
-                image: 'https://i.pinimg.com/1200x/b7/56/19/b7561971cb6257a1e6b99b1c1fdf795d.jpg',
-                alt: t('home.industries.pharma.title')
-              },
-              {
-                icon: FlaskConical,
-                title: t('home.industries.chemicals.title'),
-                description: t('home.industries.chemicals.description'),
-                features: tArray('home.industries.chemicals.features'),
-                image: 'https://images.unsplash.com/photo-1757912666361-8c226b7279b9?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=870',
-                alt: t('home.industries.chemicals.title')
-              },
-              {
-                icon: Landmark,
-                title: t('home.industries.publicSector.title'),
-                description: t('home.industries.publicSector.description'),
-                features: tArray('home.industries.publicSector.features'),
-                image: 'https://images.pexels.com/photos/20432166/pexels-photo-20432166.jpeg?_gl=1*ydoi7k*_ga*MTU5Njc0NzgwOS4xNzU5ODE5NDIw*_ga_8JE65Q40S6*czE3NjEwNTc3MDYkbzMkZzEkdDE3NjEwNTgyNzEkajQzJGwwJGgw',
-                alt: t('home.industries.publicSector.title')
-              },
-              {
-                icon: Truck,
-                title: t('home.industries.logistics.title'),
-                description: t('home.industries.logistics.description'),
-                features: tArray('home.industries.logistics.features'),
-                image: 'https://i.pinimg.com/736x/94/b0/ed/94b0ed2a49f4452f0b4930f7c9ef09c1.jpg',
-                alt: t('home.industries.logistics.title')
-              }
+    {
+      icon: ShoppingBag,
+      title: t('home.industries.retail.title'),
+      description: t('home.industries.retail.description'),
+      features: tArray('home.industries.retail.features'),
+      image: 'https://i.pinimg.com/736x/ec/be/ba/ecbeba29212ecb314faf2760a9b200a3.jpg',
+      alt: t('home.industries.retail.title')
+    },
+    {
+      icon: Flame,
+      title: t('home.industries.oilGas.title'),
+      description: t('home.industries.oilGas.description'),
+      features: tArray('home.industries.oilGas.features'),
+      image: 'https://i.pinimg.com/736x/56/c4/ec/56c4ec50629e9b8c7082b86bd1fe5332.jpg',
+      alt: t('home.industries.oilGas.title')
+    },
+    {
+      icon: Pill,
+      title: t('home.industries.pharma.title'),
+      description: t('home.industries.pharma.description'),
+      features: tArray('home.industries.pharma.features'),
+      image: 'https://i.pinimg.com/1200x/b7/56/19/b7561971cb6257a1e6b99b1c1fdf795d.jpg',
+      alt: t('home.industries.pharma.title')
+    },
+    {
+      icon: FlaskConical,
+      title: t('home.industries.chemicals.title'),
+      description: t('home.industries.chemicals.description'),
+      features: tArray('home.industries.chemicals.features'),
+      image: 'https://images.unsplash.com/photo-1757912666361-8c226b7279b9?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=870',
+      alt: t('home.industries.chemicals.title')
+    },
+    {
+      icon: Landmark,
+      title: t('home.industries.publicSector.title'),
+      description: t('home.industries.publicSector.description'),
+      features: tArray('home.industries.publicSector.features'),
+      image: 'https://images.pexels.com/photos/20432166/pexels-photo-20432166.jpeg?_gl=1*ydoi7k*_ga*MTU5Njc0NzgwOS4xNzU5ODE5NDIw*_ga_8JE65Q40S6*czE3NjEwNTc3MDYkbzMkZzEkdDE3NjEwNTgyNzEkajQzJGwwJGgw',
+      alt: t('home.industries.publicSector.title')
+    },
+    {
+      icon: Truck,
+      title: t('home.industries.logistics.title'),
+      description: t('home.industries.logistics.description'),
+      features: tArray('home.industries.logistics.features'),
+      image: 'https://i.pinimg.com/736x/94/b0/ed/94b0ed2a49f4452f0b4930f7c9ef09c1.jpg',
+      alt: t('home.industries.logistics.title')
+    }
   ];
 
   const nextIndustry = () => {
@@ -132,13 +145,13 @@ const Home = () => {
             <div className="flex items-stretch gap-6 md:gap-10 flex-col md:flex-row min-h-[240px] md:min-h-[280px]">
               <div className="flex-1">
                 <p className="text-[11px] uppercase font-bold text-slate-500 tracking-[0.18em] mt-0 pt-2">
-                {t('home.hero.tagline')}
+                  {t('home.hero.tagline')}
                 </p>
                 <h1 id="home-title" className="sm:text-4xl md:text-5xl text-3xl font-bold text-slate-700 tracking-tight mt-2">
-                {t('home.hero.title')}
+                  {t('home.hero.title')}
                 </h1>
                 <p className="mt-4 max-w-2xl text-slate-700/80 sm:text-lg">
-                {t('home.hero.description')}
+                  {t('home.hero.description')}
                 </p>
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <Link
@@ -238,7 +251,7 @@ const Home = () => {
         <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <div className="flex items-center justify-between gap-3">
             <h2 id="partners-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">
-            {t('home.clients.title')}
+              {t('home.clients.title')}
             </h2>
           </div>
           <div className="mt-5">
@@ -254,14 +267,14 @@ const Home = () => {
               ].map((client, index) => (
                 <div key={index} className="flex-shrink-0 mx-6 flex items-center justify-center h-28 w-64">
                   <div className="flex items-center justify-center h-24 w-60 bg-white rounded-none px-4 hover:bg-slate-50 transition-colors">
-                    <img 
+                    <img
                       src={`/logos/${client.logoFile}`}
                       alt={`${client.name} logo`}
                       className="max-h-20 max-w-48 object-contain"
                     />
-          </div>
-              </div>
-            ))}
+                  </div>
+                </div>
+              ))}
             </Carousel>
           </div>
         </div>
@@ -293,7 +306,7 @@ const Home = () => {
                 to="/services"
                 className="inline-flex items-center gap-2 hover:bg-slate-50 transition text-sm font-bold text-primary bg-white border-secondary border rounded-none pt-2 pr-4 pb-2 pl-4"
               >
-                  {t('buttons.learnMore')}
+                {t('buttons.learnMore')}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -311,7 +324,7 @@ const Home = () => {
               {services.map((service) => (
                 <article key={service.id} className="bg-white hover:shadow-md transition h-full rounded-none overflow-hidden flex flex-col">
                   {service.hero_image_url && (
-                    <img 
+                    <img
                       src={service.hero_image_url}
                       alt={getLocalizedValue(service, 'title')}
                       className="w-full h-48 object-cover"
@@ -325,7 +338,7 @@ const Home = () => {
                     <p className="mt-2 text-slate-700/80 mb-4 text-sm">
                       {getLocalizedValue(service, 'hero_subheadline') || getLocalizedValue(service, 'meta_description') || ''}
                     </p>
-                    <Link 
+                    <Link
                       to={`/services/${service.slug}`}
                       className="mt-auto inline-flex items-center gap-2 text-primary hover:text-primary/80 transition text-sm font-bold hover:underline"
                     >
@@ -345,14 +358,14 @@ const Home = () => {
         <div className="bg-blue-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between">
             <h2 className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700" id="sectors">
-            {t('home.industries.title')}
+              {t('home.industries.title')}
             </h2>
             <div className="mt-3 md:hidden">
               <Link
                 to="/industries"
                 className="inline-flex items-center gap-2 hover:bg-slate-50 transition text-sm font-bold text-primary bg-white border-secondary border rounded-none pt-2 pr-4 pb-2 pl-4"
               >
-                  {t('buttons.learnMore')}
+                {t('buttons.learnMore')}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -361,7 +374,7 @@ const Home = () => {
                 to="/industries"
                 className="inline-flex items-center gap-2 hover:bg-slate-50 transition text-sm font-bold text-primary bg-white border-secondary border rounded-none pt-2 pr-4 pb-2 pl-4"
               >
-                  {t('buttons.learnMore')}
+                {t('buttons.learnMore')}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -377,9 +390,9 @@ const Home = () => {
                 <ChevronLeft className="h-5 w-5 text-primary" />
               </button>
             )}
-            
+
             <div className="overflow-hidden mx-16">
-              <div 
+              <div
                 className="flex gap-6 transition-transform duration-300 ease-in-out"
                 style={{ transform: `translateX(calc(-${industryIndex} * (50% + 12px)))` }}
               >
@@ -388,20 +401,20 @@ const Home = () => {
                   return (
                     <div key={index} className="flex-shrink-0 w-[calc(50%-12px)]">
                       <article className="bg-white p-5 rounded-none h-full flex flex-col">
-                <div className="flex text-sm text-slate-700/80 gap-x-2 gap-y-2 items-center">
+                        <div className="flex text-sm text-slate-700/80 gap-x-2 gap-y-2 items-center">
                           <IconComponent className="h-5 w-5 text-primary" />
-                </div>
-                <h3 className="mt-3 text-base md:text-lg tracking-tight font-bold text-slate-700">
-                  {sector.title}
-                </h3>
-                <p className="mt-2 text-sm text-slate-700/90">{sector.description}</p>
-                <img
-                  src={sector.image}
-                  alt={sector.alt}
-                  loading="lazy"
+                        </div>
+                        <h3 className="mt-3 text-base md:text-lg tracking-tight font-bold text-slate-700">
+                          {sector.title}
+                        </h3>
+                        <p className="mt-2 text-sm text-slate-700/90">{sector.description}</p>
+                        <img
+                          src={sector.image}
+                          alt={sector.alt}
+                          loading="lazy"
                           className="mt-4 w-full h-64 object-cover rounded-none"
-                />
-              </article>
+                        />
+                      </article>
                     </div>
                   );
                 })}
@@ -418,7 +431,7 @@ const Home = () => {
               </button>
             )}
           </div>
-          
+
           {/* Mobile vertical list */}
           <div className="mt-5 block md:hidden space-y-4">
             {industriesData.map((sector, index) => {
@@ -457,7 +470,7 @@ const Home = () => {
                   <div key={idx} className="flex-shrink-0 mx-4 w-96">
                     <div className="bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6 rounded-none">
                       <div className="flex-shrink-0 w-32 h-28 bg-white rounded-none flex items-center justify-center p-3">
-                        <img 
+                        <img
                           src={`/logos/${logoFiles[idx] || 'sap logo.jpg'}`}
                           alt={`${logoFiles[idx]?.split(' ')[0] || 'Client'} logo`}
                           className="max-h-24 max-w-28 object-contain"
@@ -489,19 +502,19 @@ const Home = () => {
           <div className="flex justify-center">
             <div className="text-center max-w-2xl">
               <h2 id="final-cta-title" className="text-3xl md:text-4xl font-bold tracking-tight">
-            {t('home.finalCTA.title')}
-          </h2>
+                {t('home.finalCTA.title')}
+              </h2>
               <p className="mt-4 text-slate-600 max-w-2xl">
-            {t('home.finalCTA.description')}
-          </p>
+                {t('home.finalCTA.description')}
+              </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/contact"
+                <Link
+                  to="/contact"
                   className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 transition px-6 py-3 rounded-none font-bold"
-            >
-              {t('buttons.requestConsultation')}
-              <ArrowUpRight className="h-4 w-4" />
-            </Link>
+                >
+                  {t('buttons.requestConsultation')}
+                  <ArrowUpRight className="h-4 w-4" />
+                </Link>
               </div>
             </div>
           </div>
@@ -546,9 +559,8 @@ function FAQ() {
               id={panelId}
               role="region"
               aria-labelledby={buttonId}
-              className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-              }`}
+              className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                }`}
             >
               <div className="px-5 pb-4 text-slate-600">
                 {item.a}

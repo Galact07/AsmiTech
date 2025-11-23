@@ -9,7 +9,8 @@ import {
 
 const languages = [
   { code: 'en', name: 'English', flag: '🇬🇧' },
-  { code: 'nl', name: 'Nederlands', flag: '🇳🇱' }
+  { code: 'nl', name: 'Nederlands', flag: '🇳🇱' },
+  { code: 'de', name: 'Deutsch', flag: '🇩🇪' }
 ];
 
 export function LanguageSwitcher() {
@@ -33,9 +34,8 @@ export function LanguageSwitcher() {
           <DropdownMenuItem
             key={lang.code}
             onClick={() => changeLanguage(lang.code)}
-            className={`cursor-pointer ${
-              i18n.language === lang.code ? 'bg-primary/10 text-primary' : ''
-            }`}
+            className={`cursor-pointer ${i18n.language === lang.code ? 'bg-primary/10 text-primary' : ''
+              }`}
           >
             <span className="mr-2">{lang.flag}</span>
             {lang.name}

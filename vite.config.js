@@ -22,7 +22,7 @@ const saveTranslationPlugin = () => {
 
         req.on('end', () => {
           try {
-            const { content, rawContent } = JSON.parse(body);
+            const { content, rawContent, filename } = JSON.parse(body);
 
             if (!content && !rawContent) {
               res.writeHead(400, { 'Content-Type': 'application/json' });
@@ -33,11 +33,15 @@ const saveTranslationPlugin = () => {
             const responses = [];
             const savedPaths = {};
 
+            // Determine filename from parameter or default to nl.json
+            const targetFilename = filename || 'nl.json';
+            const baseFilename = targetFilename.replace('.json', '');
+
             if (typeof rawContent !== 'undefined') {
-              const rawPath = path.resolve(__dirname, 'src', 'locales', 'nl.raw.json');
+              const rawPath = path.resolve(__dirname, 'src', 'locales', `${baseFilename}.raw.json`);
               const rawData = typeof rawContent === 'string' ? rawContent : JSON.stringify(rawContent, null, 2);
               fs.writeFileSync(rawPath, rawData, 'utf-8');
-              console.log('✅ nl.raw.json saved successfully to:', rawPath);
+              console.log(`✅ ${baseFilename}.raw.json saved successfully to:`, rawPath);
               responses.push('Raw translation saved successfully');
               savedPaths.raw = rawPath;
             }
@@ -53,20 +57,20 @@ const saveTranslationPlugin = () => {
                 return;
               }
 
-              // Path to save nl.json
-              const nlJsonPath = path.resolve(__dirname, 'src', 'locales', 'nl.json');
-              
-              // Write the file
-              fs.writeFileSync(nlJsonPath, JSON.stringify(jsonContent, null, 2), 'utf-8');
+              // Path to save the translation file
+              const translationPath = path.resolve(__dirname, 'src', 'locales', targetFilename);
 
-              console.log('✅ nl.json saved successfully to:', nlJsonPath);
+              // Write the file
+              fs.writeFileSync(translationPath, JSON.stringify(jsonContent, null, 2), 'utf-8');
+
+              console.log(`✅ ${targetFilename} saved successfully to:`, translationPath);
               responses.push('Translation file saved successfully');
-              savedPaths.content = nlJsonPath;
+              savedPaths.content = translationPath;
             }
 
             res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ 
-              success: true, 
+            res.end(JSON.stringify({
+              success: true,
               message: responses.join(' & '),
               paths: savedPaths
             }));
@@ -74,9 +78,9 @@ const saveTranslationPlugin = () => {
           } catch (error) {
             console.error('❌ Error saving translation file:', error);
             res.writeHead(500, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ 
+            res.end(JSON.stringify({
               error: 'Failed to save translation file',
-              details: error.message 
+              details: error.message
             }));
           }
         });
