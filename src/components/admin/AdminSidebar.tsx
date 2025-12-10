@@ -11,7 +11,13 @@ import {
   Menu,
   FileText,
   Languages,
-  ClipboardCheck
+  ClipboardCheck,
+  UserCircle,
+  Building2,
+  HelpCircle,
+  Layers,
+  Factory,
+  Building
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
@@ -42,6 +48,41 @@ const sidebarItems = [
     title: 'Inquiries',
     href: '/admin/inquiries',
     icon: MessageSquare,
+  },
+  {
+    title: 'Company Info',
+    href: '/admin/company-info',
+    icon: Building,
+  },
+  {
+    title: 'Team Members',
+    href: '/admin/team-members',
+    icon: UserCircle,
+  },
+  {
+    title: 'Client Logos',
+    href: '/admin/client-logos',
+    icon: Building2,
+  },
+  {
+    title: 'Testimonials',
+    href: '/admin/testimonials',
+    icon: MessageSquare,
+  },
+  {
+    title: 'FAQs',
+    href: '/admin/faqs',
+    icon: HelpCircle,
+  },
+  {
+    title: 'Technology Stack',
+    href: '/admin/technology-stack',
+    icon: Layers,
+  },
+  {
+    title: 'Industries',
+    href: '/admin/industries-admin',
+    icon: Factory,
   },
   {
     title: 'Service Pages',

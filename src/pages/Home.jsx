@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, ArrowRight, ShoppingBag, Flame, Pill, FlaskConical, Landmark, Truck, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
+import { ArrowUpRight, ArrowRight, ShoppingBag, Flame, Pill, FlaskConical, Landmark, Truck, ChevronLeft, ChevronRight, Loader2, Factory } from 'lucide-react';
 import Carousel from '../components/ui/carousel';
 import { useTranslation } from '@/hooks/useTranslation';
 import { supabase } from '@/integrations/supabase/client';
@@ -12,10 +12,129 @@ const Home = () => {
   const [industryIndex, setIndustryIndex] = useState(0);
   const [services, setServices] = useState([]);
   const [servicesLoading, setServicesLoading] = useState(true);
+  const [clientLogos, setClientLogos] = useState([]);
+  const [clientLogosLoading, setClientLogosLoading] = useState(true);
+  const [testimonials, setTestimonials] = useState([]);
+  const [testimonialsLoading, setTestimonialsLoading] = useState(true);
+  const [faqs, setFaqs] = useState([]);
+  const [faqsLoading, setFaqsLoading] = useState(true);
+  const [industries, setIndustries] = useState([]);
+  const [industriesLoading, setIndustriesLoading] = useState(true);
 
   useEffect(() => {
     fetchServices();
+    fetchClientLogos();
+    fetchTestimonials();
+    fetchFAQs();
+    fetchIndustries();
   }, []);
+
+  const fetchTestimonials = async () => {
+    try {
+      setTestimonialsLoading(true);
+      // First try to fetch featured testimonials
+      let { data, error } = await supabase
+        .from('testimonials')
+        .select('id, quote, author_name, author_role, company_name, company_logo_url')
+        .eq('is_active', true)
+        .eq('is_featured', true)
+        .order('display_order', { ascending: true })
+        .order('created_at', { ascending: false });
+
+      // If no featured testimonials, fetch all active ones
+      if (!error && (!data || data.length === 0)) {
+        const result = await supabase
+          .from('testimonials')
+          .select('id, quote, author_name, author_role, company_name, company_logo_url')
+          .eq('is_active', true)
+          .order('display_order', { ascending: true })
+          .order('created_at', { ascending: false });
+        data = result.data;
+        error = result.error;
+      }
+
+      if (error) throw error;
+      // Remove duplicates by id
+      const uniqueTestimonials = (data || []).filter((testimonial, index, self) =>
+        index === self.findIndex((t) => t.id === testimonial.id)
+      );
+      setTestimonials(uniqueTestimonials);
+    } catch (error) {
+      console.error('Error fetching testimonials:', error);
+      setTestimonials([]);
+    } finally {
+      setTestimonialsLoading(false);
+    }
+  };
+
+  const fetchClientLogos = async () => {
+    try {
+      setClientLogosLoading(true);
+      const { data, error } = await supabase
+        .from('client_logos')
+        .select('id, company_name, logo_image_url, website_url')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true })
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      // Remove duplicates by id to ensure each logo appears only once
+      const uniqueLogos = (data || []).filter((logo, index, self) =>
+        index === self.findIndex((l) => l.id === logo.id)
+      );
+      setClientLogos(uniqueLogos);
+    } catch (error) {
+      console.error('Error fetching client logos:', error);
+      setClientLogos([]);
+    } finally {
+      setClientLogosLoading(false);
+    }
+  };
+
+  const fetchFAQs = async () => {
+    try {
+      setFaqsLoading(true);
+      const { data, error } = await supabase
+        .from('faqs')
+        .select('id, question, answer, display_order')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true })
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setFaqs(data || []);
+    } catch (error) {
+      console.error('Error fetching FAQs:', error);
+      setFaqs([]);
+    } finally {
+      setFaqsLoading(false);
+    }
+  };
+
+  const fetchIndustries = async () => {
+    try {
+      setIndustriesLoading(true);
+      const { data, error } = await supabase
+        .from('industries')
+        .select('id, name, description, icon_name, features, hero_image_url')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true })
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      // Ensure features is always an array
+      const industriesWithFeatures = (data || []).map(industry => ({
+        ...industry,
+        features: Array.isArray(industry.features) ? industry.features : [],
+      }));
+      setIndustries(industriesWithFeatures);
+    } catch (error) {
+      console.error('Error fetching industries:', error);
+      setIndustries([]);
+    } finally {
+      setIndustriesLoading(false);
+    }
+  };
 
   const fetchServices = async () => {
     try {
@@ -73,68 +192,31 @@ const Home = () => {
     return service[field];
   };
 
-  // Get translated industries data
-  const industriesData = [
-    {
-      icon: ShoppingBag,
-      title: t('home.industries.retail.title'),
-      description: t('home.industries.retail.description'),
-      features: tArray('home.industries.retail.features'),
-      image: 'https://i.pinimg.com/736x/ec/be/ba/ecbeba29212ecb314faf2760a9b200a3.jpg',
-      alt: t('home.industries.retail.title')
-    },
-    {
-      icon: Flame,
-      title: t('home.industries.oilGas.title'),
-      description: t('home.industries.oilGas.description'),
-      features: tArray('home.industries.oilGas.features'),
-      image: 'https://i.pinimg.com/736x/56/c4/ec/56c4ec50629e9b8c7082b86bd1fe5332.jpg',
-      alt: t('home.industries.oilGas.title')
-    },
-    {
-      icon: Pill,
-      title: t('home.industries.pharma.title'),
-      description: t('home.industries.pharma.description'),
-      features: tArray('home.industries.pharma.features'),
-      image: 'https://i.pinimg.com/1200x/b7/56/19/b7561971cb6257a1e6b99b1c1fdf795d.jpg',
-      alt: t('home.industries.pharma.title')
-    },
-    {
-      icon: FlaskConical,
-      title: t('home.industries.chemicals.title'),
-      description: t('home.industries.chemicals.description'),
-      features: tArray('home.industries.chemicals.features'),
-      image: 'https://images.unsplash.com/photo-1757912666361-8c226b7279b9?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=870',
-      alt: t('home.industries.chemicals.title')
-    },
-    {
-      icon: Landmark,
-      title: t('home.industries.publicSector.title'),
-      description: t('home.industries.publicSector.description'),
-      features: tArray('home.industries.publicSector.features'),
-      image: 'https://images.pexels.com/photos/20432166/pexels-photo-20432166.jpeg?_gl=1*ydoi7k*_ga*MTU5Njc0NzgwOS4xNzU5ODE5NDIw*_ga_8JE65Q40S6*czE3NjEwNTc3MDYkbzMkZzEkdDE3NjEwNTgyNzEkajQzJGwwJGgw',
-      alt: t('home.industries.publicSector.title')
-    },
-    {
-      icon: Truck,
-      title: t('home.industries.logistics.title'),
-      description: t('home.industries.logistics.description'),
-      features: tArray('home.industries.logistics.features'),
-      image: 'https://i.pinimg.com/736x/94/b0/ed/94b0ed2a49f4452f0b4930f7c9ef09c1.jpg',
-      alt: t('home.industries.logistics.title')
-    }
-  ];
+  // Icon mapping for dynamic icon rendering
+  const iconMap = {
+    ShoppingBag,
+    Flame,
+    Pill,
+    FlaskConical,
+    Landmark,
+    Truck,
+    Factory,
+  };
+
+  const getIconComponent = (iconName) => {
+    return iconMap[iconName] || Factory;
+  };
 
   const nextIndustry = () => {
-    setIndustryIndex((prev) => (prev + 1 >= industriesData.length - 1 ? 0 : prev + 1));
+    setIndustryIndex((prev) => (prev + 1 >= industries.length - 1 ? 0 : prev + 1));
   };
 
   const prevIndustry = () => {
-    setIndustryIndex((prev) => (prev - 1 < 0 ? industriesData.length - 2 : prev - 1));
+    setIndustryIndex((prev) => (prev - 1 < 0 ? industries.length - 2 : prev - 1));
   };
 
   const canGoPrev = industryIndex > 0;
-  const canGoNext = industryIndex < industriesData.length - 2;
+  const canGoNext = industryIndex < industries.length - 2;
 
   return (
     <div className="min-h-screen">
@@ -255,27 +337,53 @@ const Home = () => {
             </h2>
           </div>
           <div className="mt-5">
-            <Carousel speed="very-slow" className="py-4">
-              {[
-                { name: 'HITACHI', logoFile: 'hitachi logo.png' },
-                { name: 'CARGILL', logoFile: 'cargill logo.jpg' },
-                { name: 'DELOITTE', logoFile: 'deloitte logo.svg' },
-                { name: 'KPMG', logoFile: 'kpmg logo.png' },
-                { name: 'SUCAFINA', logoFile: 'sucafina logo.svg' },
-                { name: 'GREENWORKS', logoFile: 'greenworks logo.jpg' },
-                { name: 'SEGWAY-NINEBOT', logoFile: 'segway-ninebot logo.jpg' }
-              ].map((client, index) => (
-                <div key={index} className="flex-shrink-0 mx-6 flex items-center justify-center h-28 w-64">
-                  <div className="flex items-center justify-center h-24 w-60 bg-white rounded-none px-4 hover:bg-slate-50 transition-colors">
-                    <img
-                      src={`/logos/${client.logoFile}`}
-                      alt={`${client.name} logo`}
-                      className="max-h-20 max-w-48 object-contain"
-                    />
-                  </div>
+            {clientLogosLoading ? (
+              <div className="flex items-center justify-center py-8">
+                <div className="animate-pulse space-x-4 flex">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="h-24 w-60 bg-slate-200 rounded-none"></div>
+                  ))}
                 </div>
-              ))}
-            </Carousel>
+              </div>
+            ) : clientLogos.length === 0 ? (
+              <div className="text-center py-8 text-slate-500">
+                <p>No client logos available at the moment.</p>
+              </div>
+            ) : (
+              <Carousel speed="very-slow" className="py-4">
+                {clientLogos.map((client) => {
+                  const logoContent = (
+                    <div className="flex items-center justify-center h-24 w-60 bg-white rounded-none px-4 hover:bg-slate-50 transition-colors">
+                      <img
+                        src={client.logo_image_url || '/logos/sap logo.jpg'}
+                        alt={`${client.company_name} logo`}
+                        className="max-h-20 max-w-48 object-contain"
+                        onError={(e) => {
+                          e.target.src = '/logos/sap logo.jpg';
+                        }}
+                      />
+                    </div>
+                  );
+
+                  return (
+                    <div key={client.id} className="flex-shrink-0 mx-6 flex items-center justify-center h-28 w-64">
+                      {client.website_url ? (
+                        <a
+                          href={client.website_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full"
+                        >
+                          {logoContent}
+                        </a>
+                      ) : (
+                        logoContent
+                      )}
+                    </div>
+                  );
+                })}
+              </Carousel>
+            )}
           </div>
         </div>
       </section>
@@ -380,81 +488,113 @@ const Home = () => {
             </div>
           </div>
           {/* Desktop carousel */}
-          <div className="mt-5 relative py-4 hidden md:block">
-            {canGoPrev && (
-              <button
-                onClick={prevIndustry}
-                className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-slate-50 transition rounded-none p-2 shadow-lg"
-                aria-label="Previous industry"
-              >
-                <ChevronLeft className="h-5 w-5 text-primary" />
-              </button>
-            )}
-
-            <div className="overflow-hidden mx-16">
-              <div
-                className="flex gap-6 transition-transform duration-300 ease-in-out"
-                style={{ transform: `translateX(calc(-${industryIndex} * (50% + 12px)))` }}
-              >
-                {industriesData.map((sector, index) => {
-                  const IconComponent = sector.icon;
-                  return (
-                    <div key={index} className="flex-shrink-0 w-[calc(50%-12px)]">
-                      <article className="bg-white p-5 rounded-none h-full flex flex-col">
-                        <div className="flex text-sm text-slate-700/80 gap-x-2 gap-y-2 items-center">
-                          <IconComponent className="h-5 w-5 text-primary" />
-                        </div>
-                        <h3 className="mt-3 text-base md:text-lg tracking-tight font-bold text-slate-700">
-                          {sector.title}
-                        </h3>
-                        <p className="mt-2 text-sm text-slate-700/90">{sector.description}</p>
-                        <img
-                          src={sector.image}
-                          alt={sector.alt}
-                          loading="lazy"
-                          className="mt-4 w-full h-64 object-cover rounded-none"
-                        />
-                      </article>
-                    </div>
-                  );
-                })}
+          {industriesLoading ? (
+            <div className="mt-5 flex items-center justify-center py-8">
+              <div className="animate-pulse space-x-4 flex">
+                {[1, 2].map((i) => (
+                  <div key={i} className="h-96 w-[calc(50%-12px)] bg-slate-200 rounded-none"></div>
+                ))}
               </div>
             </div>
+          ) : industries.length === 0 ? (
+            <div className="mt-5 text-center py-8 text-slate-500">
+              <p>No industries available at the moment.</p>
+            </div>
+          ) : (
+            <div className="mt-5 relative py-4 hidden md:block">
+              {canGoPrev && (
+                <button
+                  onClick={prevIndustry}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-slate-50 transition rounded-none p-2 shadow-lg"
+                  aria-label="Previous industry"
+                >
+                  <ChevronLeft className="h-5 w-5 text-primary" />
+                </button>
+              )}
 
-            {canGoNext && (
-              <button
-                onClick={nextIndustry}
-                className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-slate-50 transition rounded-none p-2 shadow-lg"
-                aria-label="Next industry"
-              >
-                <ChevronRight className="h-5 w-5 text-primary" />
-              </button>
-            )}
-          </div>
+              <div className="overflow-hidden mx-16">
+                <div
+                  className="flex gap-6 transition-transform duration-300 ease-in-out"
+                  style={{ transform: `translateX(calc(-${industryIndex} * (50% + 12px)))` }}
+                >
+                  {industries.map((industry) => {
+                    const IconComponent = getIconComponent(industry.icon_name);
+                    return (
+                      <div key={industry.id} className="flex-shrink-0 w-[calc(50%-12px)]">
+                        <article className="bg-white p-5 rounded-none h-full flex flex-col">
+                          <div className="flex text-sm text-slate-700/80 gap-x-2 gap-y-2 items-center">
+                            <IconComponent className="h-5 w-5 text-primary" />
+                          </div>
+                          <h3 className="mt-3 text-base md:text-lg tracking-tight font-bold text-slate-700">
+                            {industry.name}
+                          </h3>
+                          <p className="mt-2 text-sm text-slate-700/90">{industry.description}</p>
+                          <img
+                            src={industry.hero_image_url || '/logos/sap logo.jpg'}
+                            alt={industry.name}
+                            loading="lazy"
+                            className="mt-4 w-full h-64 object-cover rounded-none"
+                            onError={(e) => {
+                              e.target.src = '/logos/sap logo.jpg';
+                            }}
+                          />
+                        </article>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {canGoNext && (
+                <button
+                  onClick={nextIndustry}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-slate-50 transition rounded-none p-2 shadow-lg"
+                  aria-label="Next industry"
+                >
+                  <ChevronRight className="h-5 w-5 text-primary" />
+                </button>
+              )}
+            </div>
+          )}
 
           {/* Mobile vertical list */}
-          <div className="mt-5 block md:hidden space-y-4">
-            {industriesData.map((sector, index) => {
-              const IconComponent = sector.icon;
-              return (
-                <article key={index} className="bg-white p-5 rounded-none flex flex-col">
-                  <div className="flex text-sm text-slate-700/80 gap-x-2 gap-y-2 items-center">
-                    <IconComponent className="h-5 w-5 text-primary" />
-                  </div>
-                  <h3 className="mt-3 text-base tracking-tight font-bold text-slate-700">
-                    {sector.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-slate-700/90">{sector.description}</p>
-                  <img
-                    src={sector.image}
-                    alt={sector.alt}
-                    loading="lazy"
-                    className="mt-4 w-full h-64 object-cover rounded-none"
-                  />
-                </article>
-              );
-            })}
-          </div>
+          {industriesLoading ? (
+            <div className="mt-5 block md:hidden space-y-4">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="h-96 bg-slate-200 rounded-none animate-pulse"></div>
+              ))}
+            </div>
+          ) : industries.length === 0 ? (
+            <div className="mt-5 block md:hidden text-center py-8 text-slate-500">
+              <p>No industries available at the moment.</p>
+            </div>
+          ) : (
+            <div className="mt-5 block md:hidden space-y-4">
+              {industries.map((industry) => {
+                const IconComponent = getIconComponent(industry.icon_name);
+                return (
+                  <article key={industry.id} className="bg-white p-5 rounded-none flex flex-col">
+                    <div className="flex text-sm text-slate-700/80 gap-x-2 gap-y-2 items-center">
+                      <IconComponent className="h-5 w-5 text-primary" />
+                    </div>
+                    <h3 className="mt-3 text-base tracking-tight font-bold text-slate-700">
+                      {industry.name}
+                    </h3>
+                    <p className="mt-2 text-sm text-slate-700/90">{industry.description}</p>
+                    <img
+                      src={industry.hero_image_url || '/logos/sap logo.jpg'}
+                      alt={industry.name}
+                      loading="lazy"
+                      className="mt-4 w-full h-64 object-cover rounded-none"
+                      onError={(e) => {
+                        e.target.src = '/logos/sap logo.jpg';
+                      }}
+                    />
+                  </article>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
 
@@ -463,27 +603,57 @@ const Home = () => {
         <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <h2 id="testimonials-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">{t('home.testimonials.title')}</h2>
           <div className="mt-5">
-            <Carousel speed="very-slow" className="py-4">
-              {tArray('home.testimonials.list').map((quote, idx) => {
-                const logoFiles = ['cargill logo.jpg', 'hitachi logo.png', 'sucafina logo.svg', 'johnson and johnson logo.png'];
-                return (
-                  <div key={idx} className="flex-shrink-0 mx-4 w-96">
-                    <div className="bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6 rounded-none">
-                      <div className="flex-shrink-0 w-32 h-28 bg-white rounded-none flex items-center justify-center p-3">
-                        <img
-                          src={`/logos/${logoFiles[idx] || 'sap logo.jpg'}`}
-                          alt={`${logoFiles[idx]?.split(' ')[0] || 'Client'} logo`}
-                          className="max-h-24 max-w-28 object-contain"
-                        />
+            {testimonialsLoading ? (
+              <div className="flex items-center justify-center py-8">
+                <div className="animate-pulse space-x-4 flex">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="h-36 w-96 bg-slate-200 rounded-none"></div>
+                  ))}
+                </div>
+              </div>
+            ) : testimonials.length === 0 ? (
+              <div className="text-center py-8 text-slate-500">
+                <p>No testimonials available at the moment.</p>
+              </div>
+            ) : (
+              <Carousel speed="very-slow" className="py-4">
+                {testimonials.map((testimonial) => {
+                  // Try to get logo from company_logo_url, or try to match company name with logo files
+                  const getLogoUrl = () => {
+                    if (testimonial.company_logo_url) {
+                      return testimonial.company_logo_url;
+                    }
+                    // Fallback: try to match company name with existing logo files
+                    const companyLower = testimonial.company_name.toLowerCase();
+                    if (companyLower.includes('cargill')) return '/logos/cargill logo.jpg';
+                    if (companyLower.includes('hitachi')) return '/logos/hitachi logo.png';
+                    if (companyLower.includes('sucafina')) return '/logos/sucafina logo.svg';
+                    if (companyLower.includes('johnson')) return '/logos/johnson and johnson logo.png';
+                    return '/logos/sap logo.jpg';
+                  };
+
+                  return (
+                    <div key={testimonial.id} className="flex-shrink-0 mx-4 w-96">
+                      <div className="bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6 rounded-none">
+                        <div className="flex-shrink-0 w-32 h-28 bg-white rounded-none flex items-center justify-center p-3">
+                          <img
+                            src={getLogoUrl()}
+                            alt={`${testimonial.company_name} logo`}
+                            className="max-h-24 max-w-28 object-contain"
+                            onError={(e) => {
+                              e.target.src = '/logos/sap logo.jpg';
+                            }}
+                          />
+                        </div>
+                        <blockquote className="text-slate-700/90 text-sm leading-relaxed flex-1">
+                          {testimonial.quote}
+                        </blockquote>
                       </div>
-                      <blockquote className="text-slate-700/90 text-sm leading-relaxed flex-1">
-                        {quote}
-                      </blockquote>
                     </div>
-                  </div>
-                );
-              })}
-            </Carousel>
+                  );
+                })}
+              </Carousel>
+            )}
           </div>
         </div>
       </section>
@@ -492,7 +662,7 @@ const Home = () => {
       <section className="md:px-8 md:pt-12 max-w-7xl mr-auto ml-auto pt-8 pr-5 pl-5" aria-labelledby="faq-title">
         <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <h2 id="faq-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">{t('home.faq.title')}</h2>
-          <FAQ />
+          <FAQ faqs={faqs} loading={faqsLoading} />
         </div>
       </section>
 
@@ -527,20 +697,37 @@ const Home = () => {
 export default Home;
 
 // Accessible FAQ accordion component
-function FAQ() {
-  const { tArray } = useTranslation();
-  const items = tArray('home.faq.questions');
-
+function FAQ({ faqs, loading }) {
   const [openIndex, setOpenIndex] = useState(null);
+
+  if (loading) {
+    return (
+      <div className="mt-4 divide-y divide-blue-200 rounded-none bg-blue-50">
+        <div className="px-5 py-4 text-center text-slate-600">
+          <Loader2 className="h-6 w-6 animate-spin mx-auto" />
+        </div>
+      </div>
+    );
+  }
+
+  if (!faqs || faqs.length === 0) {
+    return (
+      <div className="mt-4 divide-y divide-blue-200 rounded-none bg-blue-50">
+        <div className="px-5 py-4 text-center text-slate-600">
+          No FAQs available at the moment.
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-4 divide-y divide-blue-200 rounded-none bg-blue-50">
-      {items.map((item, index) => {
+      {faqs.map((faq, index) => {
         const isOpen = openIndex === index;
-        const panelId = `faq-panel-${index}`;
-        const buttonId = `faq-button-${index}`;
+        const panelId = `faq-panel-${faq.id}`;
+        const buttonId = `faq-button-${faq.id}`;
         return (
-          <div key={index} className="">
+          <div key={faq.id} className="">
             <h3>
               <button
                 id={buttonId}
@@ -549,7 +736,7 @@ function FAQ() {
                 aria-controls={panelId}
                 onClick={() => setOpenIndex(isOpen ? null : index)}
               >
-                <span className="text-slate-700 font-bold">{item.q}</span>
+                <span className="text-slate-700 font-bold">{faq.question}</span>
                 <span className="ml-4 text-slate-600 transition-transform duration-300 ease-in-out" aria-hidden="true">
                   {isOpen ? '−' : '+'}
                 </span>
@@ -562,8 +749,8 @@ function FAQ() {
               className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                 }`}
             >
-              <div className="px-5 pb-4 text-slate-600">
-                {item.a}
+              <div className="px-5 pb-4 text-slate-600 whitespace-pre-wrap">
+                {faq.answer}
               </div>
             </div>
           </div>

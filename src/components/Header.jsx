@@ -14,6 +14,7 @@ const Header = () => {
   const [showServicesDropdown, setShowServicesDropdown] = useState(false);
   const [dropdownTimer, setDropdownTimer] = useState(null);
   const [services, setServices] = useState([]);
+  const [companyInfo, setCompanyInfo] = useState(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -58,15 +59,45 @@ const Header = () => {
 
     fetchServices();
 
-    // Set up realtime subscription
+    // Fetch company info for phone number
+    const fetchCompanyInfo = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('company_info')
+          .select('phone_number')
+          .limit(1)
+          .single();
+
+        if (error && error.code !== 'PGRST116') { // PGRST116 is "not found"
+          throw error;
+        }
+
+        if (data) {
+          setCompanyInfo(data);
+        }
+      } catch (error) {
+        console.error('Error fetching company info:', error);
+        // Silently fail, will use fallback
+      }
+    };
+
+    fetchCompanyInfo();
+
+    // Set up realtime subscriptions
     const channel = supabase
       .channel('service-pages-header')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'service_pages' }, fetchServices)
       .subscribe();
 
+    const companyInfoChannel = supabase
+      .channel('company-info-header')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'company_info' }, fetchCompanyInfo)
+      .subscribe();
+
     return () => {
       try {
         supabase.removeChannel(channel);
+        supabase.removeChannel(companyInfoChannel);
       } catch (e) {
         // Ignore cleanup errors
       }
@@ -199,13 +230,13 @@ const Header = () => {
 
           {/* CTA */}
           <a
-            href="tel:+31622098973"
+            href={`tel:${companyInfo?.phone_number?.replace(/\s|-/g, '') || '+31622098973'}`}
             className="hidden items-center gap-3 transition-all focus:outline-none sm:inline-flex bg-blue-100 hover:bg-primary active:bg-primary font-bold rounded-none ml-4 px-4 py-2 group"
           >
             <Phone className="h-5 w-5 text-primary group-hover:text-white group-active:text-white transition-colors" />
             <div className="flex flex-col items-end">
               <span className="text-sm font-bold text-slate-900 group-hover:text-white group-active:text-white transition-colors">{t('header.getInTouch')}</span>
-              <span className="text-sm font-bold text-primary group-hover:text-white group-active:text-white transition-colors">+31-622098973</span>
+              <span className="text-sm font-bold text-primary group-hover:text-white group-active:text-white transition-colors">{companyInfo?.phone_number || '+31-622098973'}</span>
             </div>
           </a>
 
@@ -233,13 +264,13 @@ const Header = () => {
           {/* Mobile Get in Touch */}
           <div className="max-w-7xl mx-auto px-5 md:px-8 py-3 border-b border-slate-200">
             <a
-              href="tel:+31622098973"
+              href={`tel:${companyInfo?.phone_number?.replace(/\s|-/g, '') || '+31622098973'}`}
               className="flex items-center gap-3 hover:bg-slate-50 transition-all px-3 py-2"
             >
               <Phone className="h-5 w-5 text-primary" />
               <div className="flex flex-col">
                 <span className="text-sm font-bold text-slate-900">{t('header.getInTouch')}</span>
-                <span className="text-sm font-bold text-primary">+31-622098973</span>
+                <span className="text-sm font-bold text-primary">{companyInfo?.phone_number || '+31-622098973'}</span>
               </div>
             </a>
           </div>

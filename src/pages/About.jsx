@@ -1,10 +1,131 @@
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { ArrowUpRight, ArrowRight, Linkedin } from 'lucide-react';
 import Carousel from '../components/ui/carousel';
 import { useTranslation } from '@/hooks/useTranslation';
+import { supabase } from '@/integrations/supabase/client';
 
 const About = () => {
   const { t, tArray } = useTranslation();
+  const [teamMembers, setTeamMembers] = useState([]);
+  const [loadingTeamMembers, setLoadingTeamMembers] = useState(true);
+  const [currentCarouselIndex, setCurrentCarouselIndex] = useState(0);
+  const [testimonials, setTestimonials] = useState([]);
+  const [testimonialsLoading, setTestimonialsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTeamMembers = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('team_members')
+          .select('id, name, role, bio, profile_image_url, linkedin_url, display_order')
+          .eq('is_active', true)
+          .order('display_order', { ascending: true })
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        setTeamMembers(data || []);
+      } catch (error) {
+        console.error('Error fetching team members:', error);
+        // Fallback to empty array on error
+        setTeamMembers([]);
+      } finally {
+        setLoadingTeamMembers(false);
+      }
+    };
+
+    fetchTeamMembers();
+    fetchTestimonials();
+  }, []);
+
+  const fetchTestimonials = async () => {
+    try {
+      setTestimonialsLoading(true);
+      const { data, error } = await supabase
+        .from('testimonials')
+        .select('id, quote, author_name, author_role, company_name, company_logo_url')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true })
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      // Remove duplicates by id
+      const uniqueTestimonials = (data || []).filter((testimonial, index, self) =>
+        index === self.findIndex((t) => t.id === testimonial.id)
+      );
+      setTestimonials(uniqueTestimonials);
+    } catch (error) {
+      console.error('Error fetching testimonials:', error);
+      setTestimonials([]);
+    } finally {
+      setTestimonialsLoading(false);
+    }
+  };
+
+  // Auto-rotate carousel showing 2 members at a time
+  useEffect(() => {
+    if (teamMembers.length <= 2) return;
+
+    const interval = setInterval(() => {
+      setCurrentCarouselIndex((prev) => {
+        // Calculate how many pairs we have (showing 2 at a time)
+        const totalPairs = Math.ceil(teamMembers.length / 2);
+        return (prev + 1) % totalPairs;
+      });
+    }, 5000); // Change every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [teamMembers.length]);
+
+  const getInitials = (name) => {
+    return name
+      .split(' ')
+      .map(n => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
+  const renderTeamMemberCard = (member, index) => (
+    <div key={member.id || index} className="bg-slate-100 p-6 text-center rounded-none">
+      <div className="relative inline-block mb-4">
+        {member.profile_image_url ? (
+          <img
+            src={member.profile_image_url}
+            alt={`${member.name} headshot`}
+            className="w-36 h-36 rounded-full object-cover mx-auto"
+            onError={(e) => {
+              const target = e.target;
+              target.style.display = 'none';
+              const fallback = target.nextElementSibling;
+              if (fallback) fallback.style.display = 'flex';
+            }}
+          />
+        ) : null}
+        <div 
+          className="w-36 h-36 rounded-full bg-primary text-white flex items-center justify-center mx-auto text-xl font-semibold"
+          style={{ display: member.profile_image_url ? 'none' : 'flex' }}
+        >
+          {getInitials(member.name)}
+        </div>
+      </div>
+      <h3 className="text-lg font-medium text-slate-700 mb-1">{member.name}</h3>
+      <p className="text-primary text-sm font-medium mb-3">{member.role}</p>
+      {member.linkedin_url && (
+        <a
+          href={member.linkedin_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center w-8 h-8 bg-primary rounded-full hover:bg-primary/80 transition mb-4"
+        >
+          <Linkedin className="h-4 w-4 text-white" />
+        </a>
+      )}
+      {member.bio && (
+        <p className="text-slate-700/80 text-sm leading-relaxed">{member.bio}</p>
+      )}
+    </div>
+  );
   
   return (
     <div className="min-h-screen">
@@ -163,56 +284,47 @@ const About = () => {
             </div>
             
             {/* Right side - Team Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:col-span-2">
-              {[
-                {
-                  name: t('about.team.members.basavaraj.name'),
-                  role: t('about.team.members.basavaraj.role'),
-                  bio: t('about.team.members.basavaraj.bio'),
-                  image: '/logos/Basavaraj.png',
-                  initials: 'BK',
-                  linkedin: 'https://www.linkedin.com/in/basavaraj-km-192b9813/'
-                },
-                {
-                  name: t('about.team.members.asha.name'),
-                  role: t('about.team.members.asha.role'),
-                  bio: t('about.team.members.asha.bio'),
-                  image: '/logos/Asha.png',
-                  initials: 'AM',
-                  linkedin: 'https://www.linkedin.com/in/asha-mathada-42a522370/'
-                }
-              ].map((member, index) => (
-                <div key={index} className="bg-slate-100 p-6 text-center rounded-none">
-                  <div className="relative inline-block mb-4">
-                    <img
-                      src={member.image}
-                      alt={`${member.name} headshot`}
-                      className="w-36 h-36 rounded-full object-cover mx-auto"
-                      onError={(e) => {
-                        e.target.style.display = 'none';
-                        e.target.nextSibling.style.display = 'flex';
-                      }}
-                    />
-                    <div 
-                      className="w-36 h-36 rounded-full bg-primary text-white flex items-center justify-center mx-auto text-xl font-semibold"
-                      style={{ display: 'none' }}
-                    >
-                      {member.initials}
-                    </div>
+            <div className="lg:col-span-2">
+              {loadingTeamMembers ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-slate-100 p-6 text-center rounded-none animate-pulse">
+                    <div className="w-36 h-36 rounded-full bg-slate-300 mx-auto mb-4"></div>
+                    <div className="h-5 bg-slate-300 rounded w-32 mx-auto mb-2"></div>
+                    <div className="h-4 bg-slate-300 rounded w-24 mx-auto mb-4"></div>
+                    <div className="h-20 bg-slate-300 rounded mx-auto"></div>
                   </div>
-                  <h3 className="text-lg font-medium text-slate-700 mb-1">{member.name}</h3>
-                  <p className="text-primary text-sm font-medium mb-3">{member.role}</p>
-                  <a
-                    href={member.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center w-8 h-8 bg-primary rounded-full hover:bg-primary/80 transition mb-4"
-                  >
-                    <Linkedin className="h-4 w-4 text-white" />
-                  </a>
-                  <p className="text-slate-700/80 text-sm leading-relaxed">{member.bio}</p>
+                  <div className="bg-slate-100 p-6 text-center rounded-none animate-pulse">
+                    <div className="w-36 h-36 rounded-full bg-slate-300 mx-auto mb-4"></div>
+                    <div className="h-5 bg-slate-300 rounded w-32 mx-auto mb-2"></div>
+                    <div className="h-4 bg-slate-300 rounded w-24 mx-auto mb-4"></div>
+                    <div className="h-20 bg-slate-300 rounded mx-auto"></div>
+                  </div>
                 </div>
-              ))}
+              ) : teamMembers.length === 0 ? (
+                <div className="text-center py-8 text-white/60">
+                  <p>No team members available at the moment.</p>
+                </div>
+              ) : (
+                <div className="relative overflow-hidden">
+                  <div 
+                    className="flex transition-transform duration-500 ease-in-out"
+                    style={{
+                      transform: `translateX(-${currentCarouselIndex * 100}%)`
+                    }}
+                  >
+                    {Array.from({ length: Math.ceil(teamMembers.length / 2) }).map((_, pairIndex) => {
+                      const startIdx = pairIndex * 2;
+                      const pair = teamMembers.slice(startIdx, startIdx + 2);
+                      return (
+                        <div key={pairIndex} className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full flex-shrink-0">
+                          {pair.map((member, memberIndex) => renderTeamMemberCard(member, startIdx + memberIndex))}
+                          {pair.length === 1 && <div></div>} {/* Empty space if odd number */}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -223,29 +335,55 @@ const About = () => {
         <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <h2 id="testimonials-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">{t('home.testimonials.title')}</h2>
           <div className="mt-5">
-            <Carousel speed="very-slow" className="py-4">
-              {[
-                { quote: tArray('home.testimonials.list')[0], logoFile: 'cargill logo.jpg' },
-                { quote: tArray('home.testimonials.list')[1], logoFile: 'hitachi logo.png' },
-                { quote: tArray('home.testimonials.list')[2], logoFile: 'sucafina logo.svg' },
-                { quote: tArray('home.testimonials.list')[3], logoFile: 'johnson and johnson logo.png' }
-              ].map((testimonial, idx) => (
-                <div key={idx} className="flex-shrink-0 mx-4 w-96">
-                  <div className="bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6 rounded-none">
-                    <div className="flex-shrink-0 w-32 h-28 bg-white rounded-none flex items-center justify-center p-3">
-                      <img 
-                        src={`/logos/${testimonial.logoFile}`}
-                        alt={`${testimonial.logoFile.split(' ')[0]} logo`}
-                        className="max-h-24 max-w-28 object-contain"
-                      />
-                    </div>
-                    <blockquote className="text-slate-700/90 text-sm leading-relaxed flex-1">
-                      {testimonial.quote}
-                    </blockquote>
-                  </div>
+            {testimonialsLoading ? (
+              <div className="flex items-center justify-center py-8">
+                <div className="animate-pulse space-x-4 flex">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="h-36 w-96 bg-slate-200 rounded-none"></div>
+                  ))}
                 </div>
-              ))}
-            </Carousel>
+              </div>
+            ) : testimonials.length === 0 ? (
+              <div className="text-center py-8 text-slate-500">
+                <p>No testimonials available at the moment.</p>
+              </div>
+            ) : (
+              <Carousel speed="very-slow" className="py-4">
+                {testimonials.map((testimonial) => {
+                  const getLogoUrl = () => {
+                    if (testimonial.company_logo_url) {
+                      return testimonial.company_logo_url;
+                    }
+                    const companyLower = testimonial.company_name.toLowerCase();
+                    if (companyLower.includes('cargill')) return '/logos/cargill logo.jpg';
+                    if (companyLower.includes('hitachi')) return '/logos/hitachi logo.png';
+                    if (companyLower.includes('sucafina')) return '/logos/sucafina logo.svg';
+                    if (companyLower.includes('johnson')) return '/logos/johnson and johnson logo.png';
+                    return '/logos/sap logo.jpg';
+                  };
+
+                  return (
+                    <div key={testimonial.id} className="flex-shrink-0 mx-4 w-96">
+                      <div className="bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6 rounded-none">
+                        <div className="flex-shrink-0 w-32 h-28 bg-white rounded-none flex items-center justify-center p-3">
+                          <img 
+                            src={getLogoUrl()}
+                            alt={`${testimonial.company_name} logo`}
+                            className="max-h-24 max-w-28 object-contain"
+                            onError={(e) => {
+                              e.target.src = '/logos/sap logo.jpg';
+                            }}
+                          />
+                        </div>
+                        <blockquote className="text-slate-700/90 text-sm leading-relaxed flex-1">
+                          {testimonial.quote}
+                        </blockquote>
+                      </div>
+                    </div>
+                  );
+                })}
+              </Carousel>
+            )}
           </div>
         </div>
       </section>

@@ -8,13 +8,90 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 const Services = () => {
   const { t, tArray } = useTranslation();
+  const [clientLogos, setClientLogos] = useState([]);
+  const [clientLogosLoading, setClientLogosLoading] = useState(true);
+  const [testimonials, setTestimonials] = useState([]);
+  const [testimonialsLoading, setTestimonialsLoading] = useState(true);
   const { language } = useLanguage();
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [technologies, setTechnologies] = useState([]);
+  const [technologiesLoading, setTechnologiesLoading] = useState(true);
 
   useEffect(() => {
     fetchServices();
+    fetchClientLogos();
+    fetchTestimonials();
+    fetchTechnologies();
   }, []);
+
+  const fetchTestimonials = async () => {
+    try {
+      setTestimonialsLoading(true);
+      const { data, error } = await supabase
+        .from('testimonials')
+        .select('id, quote, author_name, author_role, company_name, company_logo_url')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true })
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      // Remove duplicates by id
+      const uniqueTestimonials = (data || []).filter((testimonial, index, self) =>
+        index === self.findIndex((t) => t.id === testimonial.id)
+      );
+      setTestimonials(uniqueTestimonials);
+    } catch (error) {
+      console.error('Error fetching testimonials:', error);
+      setTestimonials([]);
+    } finally {
+      setTestimonialsLoading(false);
+    }
+  };
+
+  const fetchClientLogos = async () => {
+    try {
+      setClientLogosLoading(true);
+      const { data, error } = await supabase
+        .from('client_logos')
+        .select('id, company_name, logo_image_url, website_url')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true })
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      // Remove duplicates by id to ensure each logo appears only once
+      const uniqueLogos = (data || []).filter((logo, index, self) =>
+        index === self.findIndex((l) => l.id === logo.id)
+      );
+      setClientLogos(uniqueLogos);
+    } catch (error) {
+      console.error('Error fetching client logos:', error);
+      setClientLogos([]);
+    } finally {
+      setClientLogosLoading(false);
+    }
+  };
+
+  const fetchTechnologies = async () => {
+    try {
+      setTechnologiesLoading(true);
+      const { data, error } = await supabase
+        .from('technology_stack')
+        .select('id, name, logo_image_url, link_url')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true })
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setTechnologies(data || []);
+    } catch (error) {
+      console.error('Error fetching technologies:', error);
+      setTechnologies([]);
+    } finally {
+      setTechnologiesLoading(false);
+    }
+  };
 
   const fetchServices = async () => {
     try {
@@ -132,27 +209,53 @@ const Services = () => {
             </h2>
           </div>
           <div className="mt-5">
-            <Carousel speed="very-slow" className="py-4">
-              {[
-                { name: 'HITACHI', logoFile: 'hitachi logo.png' },
-                { name: 'CARGILL', logoFile: 'cargill logo.jpg' },
-                { name: 'DELOITTE', logoFile: 'deloitte logo.svg' },
-                { name: 'KPMG', logoFile: 'kpmg logo.png' },
-                { name: 'SUCAFINA', logoFile: 'sucafina logo.svg' },
-                { name: 'GREENWORKS', logoFile: 'greenworks logo.jpg' },
-                { name: 'SEGWAY-NINEBOT', logoFile: 'segway-ninebot logo.jpg' }
-              ].map((client, index) => (
-                <div key={index} className="flex-shrink-0 mx-6 flex items-center justify-center h-28 w-64">
-                  <div className="flex items-center justify-center h-24 w-60 bg-white rounded-none px-4 hover:bg-slate-50 transition-colors">
-                    <img
-                      src={`/logos/${client.logoFile}`}
-                      alt={`${client.name} logo`}
-                      className="max-h-20 max-w-48 object-contain"
-                    />
-                  </div>
+            {clientLogosLoading ? (
+              <div className="flex items-center justify-center py-8">
+                <div className="animate-pulse space-x-4 flex">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="h-24 w-60 bg-slate-200 rounded-none"></div>
+                  ))}
                 </div>
-              ))}
-            </Carousel>
+              </div>
+            ) : clientLogos.length === 0 ? (
+              <div className="text-center py-8 text-slate-500">
+                <p>No client logos available at the moment.</p>
+              </div>
+            ) : (
+              <Carousel speed="very-slow" className="py-4">
+                {clientLogos.map((client) => {
+                  const logoContent = (
+                    <div className="flex items-center justify-center h-24 w-60 bg-white rounded-none px-4 hover:bg-slate-50 transition-colors">
+                      <img
+                        src={client.logo_image_url || '/logos/sap logo.jpg'}
+                        alt={`${client.company_name} logo`}
+                        className="max-h-20 max-w-48 object-contain"
+                        onError={(e) => {
+                          e.target.src = '/logos/sap logo.jpg';
+                        }}
+                      />
+                    </div>
+                  );
+
+                  return (
+                    <div key={client.id} className="flex-shrink-0 mx-6 flex items-center justify-center h-28 w-64">
+                      {client.website_url ? (
+                        <a
+                          href={client.website_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full"
+                        >
+                          {logoContent}
+                        </a>
+                      ) : (
+                        logoContent
+                      )}
+                    </div>
+                  );
+                })}
+              </Carousel>
+            )}
           </div>
         </div>
       </section>
@@ -220,25 +323,54 @@ const Services = () => {
             {t('services.technology.description')}
           </p>
           <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-            {[
-              { name: 'SAP S/4HANA', logo: 'SAP S4HANA.png' },
-              { name: 'SAP Fiori', logo: 'SAP Fiori.png' },
-              { name: 'SAP Analytics Cloud', logo: 'SAP Analytics Cloud.png' },
-              { name: 'SAP Ariba', logo: 'SAP Ariba.png' },
-              { name: 'SAP Integration Suite', logo: 'SAP Integration Suite.png' },
-              { name: 'SAP Business Technology Platform', logo: 'SAP Business Technology Platform.png' }
-            ].map((tech, index) => (
-              <div key={index} className="flex items-center justify-center p-4 bg-white hover:bg-slate-50 transition rounded-none">
-                <div className={`w-full flex items-center justify-center bg-slate-50 rounded-none ${tech.name === 'SAP S/4HANA' ? 'h-28' : 'h-32'}`}>
-                  <img
-                    src={`/logos/${tech.logo}`}
-                    alt={`${tech.name} logo`}
-                    className={`max-w-full object-contain ${tech.name === 'SAP S/4HANA' ? 'max-h-24' : 'max-h-28'}`}
-                    loading="lazy"
-                  />
+            {technologiesLoading ? (
+              <div className="col-span-3 flex items-center justify-center py-8">
+                <div className="animate-pulse space-x-4 flex flex-wrap gap-4">
+                  {[1, 2, 3, 4, 5, 6].map((i) => (
+                    <div key={i} className="h-32 w-full bg-slate-200 rounded-none"></div>
+                  ))}
                 </div>
               </div>
-            ))}
+            ) : technologies.length === 0 ? (
+              <div className="col-span-3 text-center py-8 text-slate-500">
+                <p>No technologies available at the moment.</p>
+              </div>
+            ) : (
+              technologies.map((tech) => {
+                const cardContent = (
+                  <div className="flex items-center justify-center p-4 bg-white hover:bg-slate-50 transition rounded-none">
+                    <div className="w-full flex items-center justify-center bg-slate-50 rounded-none h-32">
+                      <img
+                        src={tech.logo_image_url || '/logos/sap logo.jpg'}
+                        alt={`${tech.name} logo`}
+                        className="max-w-full object-contain max-h-28"
+                        loading="lazy"
+                        onError={(e) => {
+                          e.target.src = '/logos/sap logo.jpg';
+                        }}
+                      />
+                    </div>
+                  </div>
+                );
+
+                return (
+                  <div key={tech.id}>
+                    {tech.link_url ? (
+                      <a
+                        href={tech.link_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block"
+                      >
+                        {cardContent}
+                      </a>
+                    ) : (
+                      cardContent
+                    )}
+                  </div>
+                );
+              })
+            )}
           </div>
         </div>
       </section>
@@ -248,29 +380,55 @@ const Services = () => {
         <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <h2 id="testimonials-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">{t('home.testimonials.title')}</h2>
           <div className="mt-5">
-            <Carousel speed="very-slow" className="py-4">
-              {[
-                { quote: tArray('home.testimonials.list')[0], logoFile: 'cargill logo.jpg' },
-                { quote: tArray('home.testimonials.list')[1], logoFile: 'hitachi logo.png' },
-                { quote: tArray('home.testimonials.list')[2], logoFile: 'sucafina logo.svg' },
-                { quote: tArray('home.testimonials.list')[3], logoFile: 'johnson and johnson logo.png' }
-              ].map((testimonial, idx) => (
-                <div key={idx} className="flex-shrink-0 mx-4 w-96">
-                  <div className="bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6 rounded-none">
-                    <div className="flex-shrink-0 w-32 h-28 bg-white rounded-none flex items-center justify-center p-3">
-                      <img
-                        src={`/logos/${testimonial.logoFile}`}
-                        alt={`${testimonial.logoFile.split(' ')[0]} logo`}
-                        className="max-h-24 max-w-28 object-contain"
-                      />
-                    </div>
-                    <blockquote className="text-slate-700/90 text-sm leading-relaxed flex-1">
-                      {testimonial.quote}
-                    </blockquote>
-                  </div>
+            {testimonialsLoading ? (
+              <div className="flex items-center justify-center py-8">
+                <div className="animate-pulse space-x-4 flex">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="h-36 w-96 bg-slate-200 rounded-none"></div>
+                  ))}
                 </div>
-              ))}
-            </Carousel>
+              </div>
+            ) : testimonials.length === 0 ? (
+              <div className="text-center py-8 text-slate-500">
+                <p>No testimonials available at the moment.</p>
+              </div>
+            ) : (
+              <Carousel speed="very-slow" className="py-4">
+                {testimonials.map((testimonial) => {
+                  const getLogoUrl = () => {
+                    if (testimonial.company_logo_url) {
+                      return testimonial.company_logo_url;
+                    }
+                    const companyLower = testimonial.company_name.toLowerCase();
+                    if (companyLower.includes('cargill')) return '/logos/cargill logo.jpg';
+                    if (companyLower.includes('hitachi')) return '/logos/hitachi logo.png';
+                    if (companyLower.includes('sucafina')) return '/logos/sucafina logo.svg';
+                    if (companyLower.includes('johnson')) return '/logos/johnson and johnson logo.png';
+                    return '/logos/sap logo.jpg';
+                  };
+
+                  return (
+                    <div key={testimonial.id} className="flex-shrink-0 mx-4 w-96">
+                      <div className="bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6 rounded-none">
+                        <div className="flex-shrink-0 w-32 h-28 bg-white rounded-none flex items-center justify-center p-3">
+                          <img
+                            src={getLogoUrl()}
+                            alt={`${testimonial.company_name} logo`}
+                            className="max-h-24 max-w-28 object-contain"
+                            onError={(e) => {
+                              e.target.src = '/logos/sap logo.jpg';
+                            }}
+                          />
+                        </div>
+                        <blockquote className="text-slate-700/90 text-sm leading-relaxed flex-1">
+                          {testimonial.quote}
+                        </blockquote>
+                      </div>
+                    </div>
+                  );
+                })}
+              </Carousel>
+            )}
           </div>
         </div>
       </section>

@@ -1,10 +1,85 @@
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, ArrowRight, ShoppingCart, Flame, Pill, FlaskConical, Landmark, Truck, CheckCircle } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { ArrowUpRight, ArrowRight, ShoppingBag, Flame, Pill, FlaskConical, Landmark, Truck, CheckCircle, Factory, Loader2 } from 'lucide-react';
 import Carousel from '../components/ui/carousel';
 import { useTranslation } from '@/hooks/useTranslation';
+import { supabase } from '@/integrations/supabase/client';
 
 const Industries = () => {
   const { t, tArray } = useTranslation();
+  const [testimonials, setTestimonials] = useState([]);
+  const [testimonialsLoading, setTestimonialsLoading] = useState(true);
+  const [industries, setIndustries] = useState([]);
+  const [industriesLoading, setIndustriesLoading] = useState(true);
+
+  useEffect(() => {
+    fetchTestimonials();
+    fetchIndustries();
+  }, []);
+
+  const fetchTestimonials = async () => {
+    try {
+      setTestimonialsLoading(true);
+      const { data, error } = await supabase
+        .from('testimonials')
+        .select('id, quote, author_name, author_role, company_name, company_logo_url')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true })
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      // Remove duplicates by id
+      const uniqueTestimonials = (data || []).filter((testimonial, index, self) =>
+        index === self.findIndex((t) => t.id === testimonial.id)
+      );
+      setTestimonials(uniqueTestimonials);
+    } catch (error) {
+      console.error('Error fetching testimonials:', error);
+      setTestimonials([]);
+    } finally {
+      setTestimonialsLoading(false);
+    }
+  };
+
+  const fetchIndustries = async () => {
+    try {
+      setIndustriesLoading(true);
+      const { data, error } = await supabase
+        .from('industries')
+        .select('id, name, description, icon_name, features, hero_image_url')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true })
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      // Ensure features is always an array
+      const industriesWithFeatures = (data || []).map(industry => ({
+        ...industry,
+        features: Array.isArray(industry.features) ? industry.features : [],
+      }));
+      setIndustries(industriesWithFeatures);
+    } catch (error) {
+      console.error('Error fetching industries:', error);
+      setIndustries([]);
+    } finally {
+      setIndustriesLoading(false);
+    }
+  };
+
+  // Icon mapping for dynamic icon rendering
+  const iconMap = {
+    ShoppingBag,
+    Flame,
+    Pill,
+    FlaskConical,
+    Landmark,
+    Truck,
+    Factory,
+  };
+
+  const getIconComponent = (iconName) => {
+    return iconMap[iconName] || Factory;
+  };
   
   return (
     <div className="min-h-screen">
@@ -76,82 +151,51 @@ const Industries = () => {
           <h2 className="md:text-2xl text-xl font-bold text-white tracking-tight" id="industries">
             {t('industries.industriesSection.title')}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5 gap-x-6 gap-y-6">
-            {[
-              {
-                icon: ShoppingCart,
-                title: t('industries.industriesSection.retail.title'),
-                description: t('industries.industriesSection.retail.description'),
-                features: tArray('industries.industriesSection.retail.features'),
-                image: 'https://i.pinimg.com/736x/ec/be/ba/ecbeba29212ecb314faf2760a9b200a3.jpg',
-                alt: 'Retail & Consumer Goods'
-              },
-              {
-                icon: Flame,
-                title: t('industries.industriesSection.oilGas.title'),
-                description: t('industries.industriesSection.oilGas.description'),
-                features: tArray('industries.industriesSection.oilGas.features'),
-                image: 'https://i.pinimg.com/736x/56/c4/ec/56c4ec50629e9b8c7082b86bd1fe5332.jpg',
-                alt: 'Oil, Gas & Energy'
-              },
-              {
-                icon: Pill,
-                title: t('industries.industriesSection.pharma.title'),
-                description: t('industries.industriesSection.pharma.description'),
-                features: tArray('industries.industriesSection.pharma.features'),
-                image: 'https://i.pinimg.com/1200x/b7/56/19/b7561971cb6257a1e6b99b1c1fdf795d.jpg',
-                alt: 'Pharmaceuticals & Life Sciences'
-              },
-              {
-                icon: FlaskConical,
-                title: t('industries.industriesSection.chemicals.title'),
-                description: t('industries.industriesSection.chemicals.description'),
-                features: tArray('industries.industriesSection.chemicals.features'),
-                image: 'https://images.unsplash.com/photo-1757912666361-8c226b7279b9?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=870',
-                alt: 'Chemicals & Petrochemicals'
-              },
-              {
-                icon: Landmark,
-                title: t('industries.industriesSection.publicSector.title'),
-                description: t('industries.industriesSection.publicSector.description'),
-                features: tArray('industries.industriesSection.publicSector.features'),
-                image: 'https://images.pexels.com/photos/20432166/pexels-photo-20432166.jpeg?_gl=1*ydoi7k*_ga*MTU5Njc0NzgwOS4xNzU5ODE5NDIw*_ga_8JE65Q40S6*czE3NjEwNTc3MDYkbzMkZzEkdDE3NjEwNTgyNzEkajQzJGwwJGgw',
-                alt: 'Public Sector & Government'
-              },
-              {
-                icon: Truck,
-                title: t('industries.industriesSection.logistics.title'),
-                description: t('industries.industriesSection.logistics.description'),
-                features: tArray('industries.industriesSection.logistics.features'),
-                image: 'https://i.pinimg.com/736x/94/b0/ed/94b0ed2a49f4452f0b4930f7c9ef09c1.jpg',
-                alt: 'Logistics & Supply Chain'
-              }
-            ].map((industry, index) => (
-              <article key={index} className="bg-blue-50 p-6 hover:shadow-md transition rounded-none">
-                <div className="flex text-sm text-slate-700/80 gap-x-2 gap-y-2 items-center mb-4">
-                  <industry.icon className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="text-xl tracking-tight font-bold text-slate-700 mb-3">
-                  {industry.title}
-                </h3>
-                <p className="text-slate-700/90 mb-4">{industry.description}</p>
-                <ul className="space-y-2 mb-4">
-                  {industry.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-start gap-2 text-sm text-slate-700/80">
-                      <CheckCircle className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <img
-                  src={industry.image}
-                  alt={industry.alt}
-                  loading="lazy"
-                  className="w-full rounded-none"
-                />
-              </article>
-            ))}
-          </div>
+          {industriesLoading ? (
+            <div className="mt-5 flex items-center justify-center py-20">
+              <Loader2 className="h-12 w-12 animate-spin text-white" />
+            </div>
+          ) : industries.length === 0 ? (
+            <div className="mt-5 text-center py-20">
+              <p className="text-white/80 text-lg">No industries available at the moment.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5 gap-x-6 gap-y-6">
+              {industries.map((industry) => {
+                const IconComponent = getIconComponent(industry.icon_name);
+                return (
+                  <article key={industry.id} className="bg-blue-50 p-6 hover:shadow-md transition rounded-none">
+                    <div className="flex text-sm text-slate-700/80 gap-x-2 gap-y-2 items-center mb-4">
+                      <IconComponent className="h-6 w-6 text-primary" />
+                    </div>
+                    <h3 className="text-xl tracking-tight font-bold text-slate-700 mb-3">
+                      {industry.name}
+                    </h3>
+                    <p className="text-slate-700/90 mb-4">{industry.description}</p>
+                    {industry.features && industry.features.length > 0 && (
+                      <ul className="space-y-2 mb-4">
+                        {industry.features.map((feature, featureIndex) => (
+                          <li key={featureIndex} className="flex items-start gap-2 text-sm text-slate-700/80">
+                            <CheckCircle className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    <img
+                      src={industry.hero_image_url || '/logos/sap logo.jpg'}
+                      alt={industry.name}
+                      loading="lazy"
+                      className="w-full rounded-none"
+                      onError={(e) => {
+                        e.target.src = '/logos/sap logo.jpg';
+                      }}
+                    />
+                  </article>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
 
@@ -160,29 +204,55 @@ const Industries = () => {
         <div className="bg-slate-100 p-6 md:p-8 transition duration-500 ease-in rounded-none">
           <h2 id="testimonials-title" className="text-3xl md:text-4xl tracking-tight font-bold text-slate-700">{t('home.testimonials.title')}</h2>
           <div className="mt-5">
-            <Carousel speed="very-slow" className="py-4">
-              {[
-                { quote: tArray('home.testimonials.list')[0], logoFile: 'cargill logo.jpg' },
-                { quote: tArray('home.testimonials.list')[1], logoFile: 'hitachi logo.png' },
-                { quote: tArray('home.testimonials.list')[2], logoFile: 'sucafina logo.svg' },
-                { quote: tArray('home.testimonials.list')[3], logoFile: 'johnson and johnson logo.png' }
-              ].map((testimonial, idx) => (
-                <div key={idx} className="flex-shrink-0 mx-4 w-96">
-                  <div className="bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6 rounded-none">
-                    <div className="flex-shrink-0 w-32 h-28 bg-white rounded-none flex items-center justify-center p-3">
-                      <img 
-                        src={`/logos/${testimonial.logoFile}`}
-                        alt={`${testimonial.logoFile.split(' ')[0]} logo`}
-                        className="max-h-24 max-w-28 object-contain"
-                      />
-                    </div>
-                    <blockquote className="text-slate-700/90 text-sm leading-relaxed flex-1">
-                      {testimonial.quote}
-                    </blockquote>
-                  </div>
+            {testimonialsLoading ? (
+              <div className="flex items-center justify-center py-8">
+                <div className="animate-pulse space-x-4 flex">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="h-36 w-96 bg-slate-200 rounded-none"></div>
+                  ))}
                 </div>
-              ))}
-            </Carousel>
+              </div>
+            ) : testimonials.length === 0 ? (
+              <div className="text-center py-8 text-slate-500">
+                <p>No testimonials available at the moment.</p>
+              </div>
+            ) : (
+              <Carousel speed="very-slow" className="py-4">
+                {testimonials.map((testimonial) => {
+                  const getLogoUrl = () => {
+                    if (testimonial.company_logo_url) {
+                      return testimonial.company_logo_url;
+                    }
+                    const companyLower = testimonial.company_name.toLowerCase();
+                    if (companyLower.includes('cargill')) return '/logos/cargill logo.jpg';
+                    if (companyLower.includes('hitachi')) return '/logos/hitachi logo.png';
+                    if (companyLower.includes('sucafina')) return '/logos/sucafina logo.svg';
+                    if (companyLower.includes('johnson')) return '/logos/johnson and johnson logo.png';
+                    return '/logos/sap logo.jpg';
+                  };
+
+                  return (
+                    <div key={testimonial.id} className="flex-shrink-0 mx-4 w-96">
+                      <div className="bg-white/70 backdrop-blur-[10px] p-6 h-36 flex items-center gap-6 rounded-none">
+                        <div className="flex-shrink-0 w-32 h-28 bg-white rounded-none flex items-center justify-center p-3">
+                          <img 
+                            src={getLogoUrl()}
+                            alt={`${testimonial.company_name} logo`}
+                            className="max-h-24 max-w-28 object-contain"
+                            onError={(e) => {
+                              e.target.src = '/logos/sap logo.jpg';
+                            }}
+                          />
+                        </div>
+                        <blockquote className="text-slate-700/90 text-sm leading-relaxed flex-1">
+                          {testimonial.quote}
+                        </blockquote>
+                      </div>
+                    </div>
+                  );
+                })}
+              </Carousel>
+            )}
           </div>
         </div>
       </section>

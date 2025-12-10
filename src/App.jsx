@@ -25,6 +25,13 @@ import CaseStudiesAdmin from './pages/admin/CaseStudiesAdmin';
 import ServicePagesAdmin from './pages/admin/ServicePagesAdmin';
 import TranslateAllAdmin from './pages/admin/TranslateAllAdmin';
 import TranslationDiagnostics from './pages/admin/TranslationDiagnostics';
+import TeamMembersAdmin from './pages/admin/TeamMembersAdmin';
+import ClientLogosAdmin from './pages/admin/ClientLogosAdmin';
+import TestimonialsAdmin from './pages/admin/TestimonialsAdmin';
+import FAQsAdmin from './pages/admin/FAQsAdmin';
+import TechnologyStackAdmin from './pages/admin/TechnologyStackAdmin';
+import IndustriesAdmin from './pages/admin/IndustriesAdmin';
+import CompanyInfoAdmin from './pages/admin/CompanyInfoAdmin';
 
 function App() {
   return (
@@ -108,6 +115,13 @@ function App() {
           <Route path="jobs" element={<JobsAdmin />} />
           <Route path="applications" element={<ApplicationsAdmin />} />
           <Route path="inquiries" element={<InquiriesAdmin />} />
+          <Route path="team-members" element={<TeamMembersAdmin />} />
+          <Route path="client-logos" element={<ClientLogosAdmin />} />
+          <Route path="testimonials" element={<TestimonialsAdmin />} />
+          <Route path="faqs" element={<FAQsAdmin />} />
+          <Route path="technology-stack" element={<TechnologyStackAdmin />} />
+          <Route path="industries-admin" element={<IndustriesAdmin />} />
+          <Route path="company-info" element={<CompanyInfoAdmin />} />
           <Route path="case-studies" element={<CaseStudiesAdmin />} />
           <Route path="service-pages" element={<ServicePagesAdmin />} />
           <Route path="translations" element={<TranslateAllAdmin />} />
