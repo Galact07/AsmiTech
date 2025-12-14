@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export type Language = 'en' | 'nl' | 'de';
 
@@ -16,21 +16,44 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
  * 
  * This provider handles:
  * 1. Current language state (en/nl/de)
- * 2. Language persistence to localStorage
+ * 2. Language persistence to localStorage (synced with i18next)
  * 3. Simple inline translation for dynamic content from database
  * 
  * For static content translations, use the useTranslation hook instead.
  */
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(() => {
-    // Get from localStorage or default to English
+    // First check i18next's localStorage key for consistency
+    const i18nextLang = localStorage.getItem('i18nextLng');
+    if (i18nextLang === 'nl' || i18nextLang === 'de' || i18nextLang === 'en') {
+      return i18nextLang as Language;
+    }
+    // Fallback to our own localStorage key
     const saved = localStorage.getItem('language');
     return (saved === 'nl' || saved === 'de' ? saved : 'en') as Language;
   });
 
+  // Sync with i18next language on mount and when it changes externally
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'i18nextLng' && e.newValue) {
+        const newLang = e.newValue as Language;
+        if (newLang === 'en' || newLang === 'nl' || newLang === 'de') {
+          setLanguageState(newLang);
+          localStorage.setItem('language', newLang);
+        }
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
+
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
+    // Sync both localStorage keys
     localStorage.setItem('language', lang);
+    localStorage.setItem('i18nextLng', lang);
   };
 
   /**

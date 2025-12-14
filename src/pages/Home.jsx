@@ -32,10 +32,10 @@ const Home = () => {
   const fetchTestimonials = async () => {
     try {
       setTestimonialsLoading(true);
-      // First try to fetch featured testimonials
+      // First try to fetch featured testimonials with translation fields
       let { data, error } = await supabase
         .from('testimonials')
-        .select('id, quote, author_name, author_role, company_name, company_logo_url')
+        .select('id, quote, author_name, author_role, company_name, company_logo_url, content_nl, content_de')
         .eq('is_active', true)
         .eq('is_featured', true)
         .order('display_order', { ascending: true })
@@ -45,7 +45,7 @@ const Home = () => {
       if (!error && (!data || data.length === 0)) {
         const result = await supabase
           .from('testimonials')
-          .select('id, quote, author_name, author_role, company_name, company_logo_url')
+          .select('id, quote, author_name, author_role, company_name, company_logo_url, content_nl, content_de')
           .eq('is_active', true)
           .order('display_order', { ascending: true })
           .order('created_at', { ascending: false });
@@ -72,7 +72,7 @@ const Home = () => {
       setClientLogosLoading(true);
       const { data, error } = await supabase
         .from('client_logos')
-        .select('id, company_name, logo_image_url, website_url')
+        .select('id, company_name, logo_image_url, website_url, content_nl, content_de')
         .eq('is_active', true)
         .order('display_order', { ascending: true })
         .order('created_at', { ascending: false });
@@ -96,7 +96,7 @@ const Home = () => {
       setFaqsLoading(true);
       const { data, error } = await supabase
         .from('faqs')
-        .select('id, question, answer, display_order')
+        .select('id, question, answer, display_order, content_nl, content_de')
         .eq('is_active', true)
         .order('display_order', { ascending: true })
         .order('created_at', { ascending: false });
@@ -116,7 +116,7 @@ const Home = () => {
       setIndustriesLoading(true);
       const { data, error } = await supabase
         .from('industries')
-        .select('id, name, description, icon_name, features, hero_image_url')
+        .select('id, name, description, icon_name, features, hero_image_url, content_nl, content_de')
         .eq('is_active', true)
         .order('display_order', { ascending: true })
         .order('created_at', { ascending: false });
@@ -167,29 +167,60 @@ const Home = () => {
     }
   };
 
-  const getLocalizedValue = (service, field) => {
+  // Generic function to get translated field value from any dynamic content record
+  const getLocalizedValue = (record, field) => {
+    if (!record) return '';
+    
     // Check for German
-    if (language === 'de' && service.content_de) {
-      const deContent = typeof service.content_de === 'string'
-        ? JSON.parse(service.content_de)
-        : service.content_de;
-      if (deContent && deContent[field]) {
+    if (language === 'de' && record.content_de) {
+      const deContent = typeof record.content_de === 'string'
+        ? JSON.parse(record.content_de)
+        : record.content_de;
+      if (deContent && deContent[field] !== undefined && deContent[field] !== null && deContent[field] !== '') {
         return deContent[field];
       }
     }
 
     // Check for Dutch
-    if (language === 'nl' && service.content_nl) {
-      const nlContent = typeof service.content_nl === 'string'
-        ? JSON.parse(service.content_nl)
-        : service.content_nl;
-      if (nlContent && nlContent[field]) {
+    if (language === 'nl' && record.content_nl) {
+      const nlContent = typeof record.content_nl === 'string'
+        ? JSON.parse(record.content_nl)
+        : record.content_nl;
+      if (nlContent && nlContent[field] !== undefined && nlContent[field] !== null && nlContent[field] !== '') {
+        return nlContent[field];
+      }
+    }
+
+    // Fallback to English (original field value)
+    return record[field];
+  };
+  
+  // Helper for array fields (like features)
+  const getLocalizedArrayValue = (record, field) => {
+    if (!record) return [];
+    
+    // Check for German
+    if (language === 'de' && record.content_de) {
+      const deContent = typeof record.content_de === 'string'
+        ? JSON.parse(record.content_de)
+        : record.content_de;
+      if (deContent && Array.isArray(deContent[field]) && deContent[field].length > 0) {
+        return deContent[field];
+      }
+    }
+
+    // Check for Dutch
+    if (language === 'nl' && record.content_nl) {
+      const nlContent = typeof record.content_nl === 'string'
+        ? JSON.parse(record.content_nl)
+        : record.content_nl;
+      if (nlContent && Array.isArray(nlContent[field]) && nlContent[field].length > 0) {
         return nlContent[field];
       }
     }
 
     // Fallback to English
-    return service[field];
+    return Array.isArray(record[field]) ? record[field] : [];
   };
 
   // Icon mapping for dynamic icon rendering
@@ -526,12 +557,12 @@ const Home = () => {
                             <IconComponent className="h-5 w-5 text-primary" />
                           </div>
                           <h3 className="mt-3 text-base md:text-lg tracking-tight font-bold text-slate-700">
-                            {industry.name}
+                            {getLocalizedValue(industry, 'name')}
                           </h3>
-                          <p className="mt-2 text-sm text-slate-700/90">{industry.description}</p>
+                          <p className="mt-2 text-sm text-slate-700/90">{getLocalizedValue(industry, 'description')}</p>
                           <img
                             src={industry.hero_image_url || '/logos/sap logo.jpg'}
-                            alt={industry.name}
+                            alt={getLocalizedValue(industry, 'name')}
                             loading="lazy"
                             className="mt-4 w-full h-64 object-cover rounded-none"
                             onError={(e) => {
@@ -578,12 +609,12 @@ const Home = () => {
                       <IconComponent className="h-5 w-5 text-primary" />
                     </div>
                     <h3 className="mt-3 text-base tracking-tight font-bold text-slate-700">
-                      {industry.name}
+                      {getLocalizedValue(industry, 'name')}
                     </h3>
-                    <p className="mt-2 text-sm text-slate-700/90">{industry.description}</p>
+                    <p className="mt-2 text-sm text-slate-700/90">{getLocalizedValue(industry, 'description')}</p>
                     <img
                       src={industry.hero_image_url || '/logos/sap logo.jpg'}
-                      alt={industry.name}
+                      alt={getLocalizedValue(industry, 'name')}
                       loading="lazy"
                       className="mt-4 w-full h-64 object-cover rounded-none"
                       onError={(e) => {
@@ -619,12 +650,13 @@ const Home = () => {
               <Carousel speed="very-slow" className="py-4">
                 {testimonials.map((testimonial) => {
                   // Try to get logo from company_logo_url, or try to match company name with logo files
+                  const companyName = getLocalizedValue(testimonial, 'company_name');
                   const getLogoUrl = () => {
                     if (testimonial.company_logo_url) {
                       return testimonial.company_logo_url;
                     }
-                    // Fallback: try to match company name with existing logo files
-                    const companyLower = testimonial.company_name.toLowerCase();
+                    // Fallback: try to match company name with existing logo files (use original English for matching)
+                    const companyLower = (testimonial.company_name || companyName).toLowerCase();
                     if (companyLower.includes('cargill')) return '/logos/cargill logo.jpg';
                     if (companyLower.includes('hitachi')) return '/logos/hitachi logo.png';
                     if (companyLower.includes('sucafina')) return '/logos/sucafina logo.svg';
@@ -638,7 +670,7 @@ const Home = () => {
                         <div className="flex-shrink-0 w-32 h-28 bg-white rounded-none flex items-center justify-center p-3">
                           <img
                             src={getLogoUrl()}
-                            alt={`${testimonial.company_name} logo`}
+                            alt={`${companyName} logo`}
                             className="max-h-24 max-w-28 object-contain"
                             onError={(e) => {
                               e.target.src = '/logos/sap logo.jpg';
@@ -646,7 +678,7 @@ const Home = () => {
                           />
                         </div>
                         <blockquote className="text-slate-700/90 text-sm leading-relaxed flex-1">
-                          {testimonial.quote}
+                          {getLocalizedValue(testimonial, 'quote')}
                         </blockquote>
                       </div>
                     </div>
@@ -699,6 +731,32 @@ export default Home;
 // Accessible FAQ accordion component
 function FAQ({ faqs, loading }) {
   const [openIndex, setOpenIndex] = useState(null);
+  const { language } = useLanguage();
+  
+  // Helper to get localized FAQ field
+  const getLocalizedFaqField = (faq, field) => {
+    if (!faq) return '';
+    
+    if (language === 'de' && faq.content_de) {
+      const deContent = typeof faq.content_de === 'string'
+        ? JSON.parse(faq.content_de)
+        : faq.content_de;
+      if (deContent && deContent[field]) {
+        return deContent[field];
+      }
+    }
+
+    if (language === 'nl' && faq.content_nl) {
+      const nlContent = typeof faq.content_nl === 'string'
+        ? JSON.parse(faq.content_nl)
+        : faq.content_nl;
+      if (nlContent && nlContent[field]) {
+        return nlContent[field];
+      }
+    }
+
+    return faq[field];
+  };
 
   if (loading) {
     return (
@@ -736,7 +794,7 @@ function FAQ({ faqs, loading }) {
                 aria-controls={panelId}
                 onClick={() => setOpenIndex(isOpen ? null : index)}
               >
-                <span className="text-slate-700 font-bold">{faq.question}</span>
+                <span className="text-slate-700 font-bold">{getLocalizedFaqField(faq, 'question')}</span>
                 <span className="ml-4 text-slate-600 transition-transform duration-300 ease-in-out" aria-hidden="true">
                   {isOpen ? '−' : '+'}
                 </span>
@@ -750,7 +808,7 @@ function FAQ({ faqs, loading }) {
                 }`}
             >
               <div className="px-5 pb-4 text-slate-600 whitespace-pre-wrap">
-                {faq.answer}
+                {getLocalizedFaqField(faq, 'answer')}
               </div>
             </div>
           </div>

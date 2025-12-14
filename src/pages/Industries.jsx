@@ -4,9 +4,11 @@ import { ArrowUpRight, ArrowRight, ShoppingBag, Flame, Pill, FlaskConical, Landm
 import Carousel from '../components/ui/carousel';
 import { useTranslation } from '@/hooks/useTranslation';
 import { supabase } from '@/integrations/supabase/client';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Industries = () => {
   const { t, tArray } = useTranslation();
+  const { language } = useLanguage();
   const [testimonials, setTestimonials] = useState([]);
   const [testimonialsLoading, setTestimonialsLoading] = useState(true);
   const [industries, setIndustries] = useState([]);
@@ -22,7 +24,7 @@ const Industries = () => {
       setTestimonialsLoading(true);
       const { data, error } = await supabase
         .from('testimonials')
-        .select('id, quote, author_name, author_role, company_name, company_logo_url')
+        .select('id, quote, author_name, author_role, company_name, company_logo_url, content_nl, content_de')
         .eq('is_active', true)
         .order('display_order', { ascending: true })
         .order('created_at', { ascending: false });
@@ -46,7 +48,7 @@ const Industries = () => {
       setIndustriesLoading(true);
       const { data, error } = await supabase
         .from('industries')
-        .select('id, name, description, icon_name, features, hero_image_url')
+        .select('id, name, description, icon_name, features, hero_image_url, content_nl, content_de')
         .eq('is_active', true)
         .order('display_order', { ascending: true })
         .order('created_at', { ascending: false });
@@ -64,6 +66,62 @@ const Industries = () => {
     } finally {
       setIndustriesLoading(false);
     }
+  };
+
+  // Generic function to get translated field value from any dynamic content record
+  const getLocalizedValue = (record, field) => {
+    if (!record) return '';
+    
+    // Check for German
+    if (language === 'de' && record.content_de) {
+      const deContent = typeof record.content_de === 'string'
+        ? JSON.parse(record.content_de)
+        : record.content_de;
+      if (deContent && deContent[field] !== undefined && deContent[field] !== null && deContent[field] !== '') {
+        return deContent[field];
+      }
+    }
+
+    // Check for Dutch
+    if (language === 'nl' && record.content_nl) {
+      const nlContent = typeof record.content_nl === 'string'
+        ? JSON.parse(record.content_nl)
+        : record.content_nl;
+      if (nlContent && nlContent[field] !== undefined && nlContent[field] !== null && nlContent[field] !== '') {
+        return nlContent[field];
+      }
+    }
+
+    // Fallback to English (original field value)
+    return record[field];
+  };
+  
+  // Helper for array fields (like features)
+  const getLocalizedArrayValue = (record, field) => {
+    if (!record) return [];
+    
+    // Check for German
+    if (language === 'de' && record.content_de) {
+      const deContent = typeof record.content_de === 'string'
+        ? JSON.parse(record.content_de)
+        : record.content_de;
+      if (deContent && Array.isArray(deContent[field]) && deContent[field].length > 0) {
+        return deContent[field];
+      }
+    }
+
+    // Check for Dutch
+    if (language === 'nl' && record.content_nl) {
+      const nlContent = typeof record.content_nl === 'string'
+        ? JSON.parse(record.content_nl)
+        : record.content_nl;
+      if (nlContent && Array.isArray(nlContent[field]) && nlContent[field].length > 0) {
+        return nlContent[field];
+      }
+    }
+
+    // Fallback to English
+    return Array.isArray(record[field]) ? record[field] : [];
   };
 
   // Icon mapping for dynamic icon rendering
@@ -163,18 +221,19 @@ const Industries = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5 gap-x-6 gap-y-6">
               {industries.map((industry) => {
                 const IconComponent = getIconComponent(industry.icon_name);
+                const localizedFeatures = getLocalizedArrayValue(industry, 'features');
                 return (
                   <article key={industry.id} className="bg-blue-50 p-6 hover:shadow-md transition rounded-none">
                     <div className="flex text-sm text-slate-700/80 gap-x-2 gap-y-2 items-center mb-4">
                       <IconComponent className="h-6 w-6 text-primary" />
                     </div>
                     <h3 className="text-xl tracking-tight font-bold text-slate-700 mb-3">
-                      {industry.name}
+                      {getLocalizedValue(industry, 'name')}
                     </h3>
-                    <p className="text-slate-700/90 mb-4">{industry.description}</p>
-                    {industry.features && industry.features.length > 0 && (
+                    <p className="text-slate-700/90 mb-4">{getLocalizedValue(industry, 'description')}</p>
+                    {localizedFeatures && localizedFeatures.length > 0 && (
                       <ul className="space-y-2 mb-4">
-                        {industry.features.map((feature, featureIndex) => (
+                        {localizedFeatures.map((feature, featureIndex) => (
                           <li key={featureIndex} className="flex items-start gap-2 text-sm text-slate-700/80">
                             <CheckCircle className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
                             {feature}
@@ -184,7 +243,7 @@ const Industries = () => {
                     )}
                     <img
                       src={industry.hero_image_url || '/logos/sap logo.jpg'}
-                      alt={industry.name}
+                      alt={getLocalizedValue(industry, 'name')}
                       loading="lazy"
                       className="w-full rounded-none"
                       onError={(e) => {
@@ -219,11 +278,12 @@ const Industries = () => {
             ) : (
               <Carousel speed="very-slow" className="py-4">
                 {testimonials.map((testimonial) => {
+                  const companyName = getLocalizedValue(testimonial, 'company_name');
                   const getLogoUrl = () => {
                     if (testimonial.company_logo_url) {
                       return testimonial.company_logo_url;
                     }
-                    const companyLower = testimonial.company_name.toLowerCase();
+                    const companyLower = (testimonial.company_name || companyName).toLowerCase();
                     if (companyLower.includes('cargill')) return '/logos/cargill logo.jpg';
                     if (companyLower.includes('hitachi')) return '/logos/hitachi logo.png';
                     if (companyLower.includes('sucafina')) return '/logos/sucafina logo.svg';
@@ -237,7 +297,7 @@ const Industries = () => {
                         <div className="flex-shrink-0 w-32 h-28 bg-white rounded-none flex items-center justify-center p-3">
                           <img 
                             src={getLogoUrl()}
-                            alt={`${testimonial.company_name} logo`}
+                            alt={`${companyName} logo`}
                             className="max-h-24 max-w-28 object-contain"
                             onError={(e) => {
                               e.target.src = '/logos/sap logo.jpg';
@@ -245,7 +305,7 @@ const Industries = () => {
                           />
                         </div>
                         <blockquote className="text-slate-700/90 text-sm leading-relaxed flex-1">
-                          {testimonial.quote}
+                          {getLocalizedValue(testimonial, 'quote')}
                         </blockquote>
                       </div>
                     </div>

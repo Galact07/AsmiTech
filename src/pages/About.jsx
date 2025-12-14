@@ -3,10 +3,12 @@ import { useState, useEffect } from 'react';
 import { ArrowUpRight, ArrowRight, Linkedin } from 'lucide-react';
 import Carousel from '../components/ui/carousel';
 import { useTranslation } from '@/hooks/useTranslation';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { supabase } from '@/integrations/supabase/client';
 
 const About = () => {
   const { t, tArray } = useTranslation();
+  const { language } = useLanguage();
   const [teamMembers, setTeamMembers] = useState([]);
   const [loadingTeamMembers, setLoadingTeamMembers] = useState(true);
   const [currentCarouselIndex, setCurrentCarouselIndex] = useState(0);
@@ -18,7 +20,7 @@ const About = () => {
       try {
         const { data, error } = await supabase
           .from('team_members')
-          .select('id, name, role, bio, profile_image_url, linkedin_url, display_order')
+          .select('id, name, role, bio, profile_image_url, linkedin_url, display_order, content_nl, content_de')
           .eq('is_active', true)
           .order('display_order', { ascending: true })
           .order('created_at', { ascending: false });
@@ -43,7 +45,7 @@ const About = () => {
       setTestimonialsLoading(true);
       const { data, error } = await supabase
         .from('testimonials')
-        .select('id, quote, author_name, author_role, company_name, company_logo_url')
+        .select('id, quote, author_name, author_role, company_name, company_logo_url, content_nl, content_de')
         .eq('is_active', true)
         .order('display_order', { ascending: true })
         .order('created_at', { ascending: false });
@@ -60,6 +62,31 @@ const About = () => {
     } finally {
       setTestimonialsLoading(false);
     }
+  };
+
+  // Helper to get localized field value from any dynamic content record
+  const getLocalizedValue = (record, field) => {
+    if (!record) return '';
+    
+    if (language === 'de' && record.content_de) {
+      const deContent = typeof record.content_de === 'string'
+        ? JSON.parse(record.content_de)
+        : record.content_de;
+      if (deContent && deContent[field] !== undefined && deContent[field] !== null && deContent[field] !== '') {
+        return deContent[field];
+      }
+    }
+
+    if (language === 'nl' && record.content_nl) {
+      const nlContent = typeof record.content_nl === 'string'
+        ? JSON.parse(record.content_nl)
+        : record.content_nl;
+      if (nlContent && nlContent[field] !== undefined && nlContent[field] !== null && nlContent[field] !== '') {
+        return nlContent[field];
+      }
+    }
+
+    return record[field];
   };
 
   // Auto-rotate carousel showing 2 members at a time
@@ -86,46 +113,52 @@ const About = () => {
       .slice(0, 2);
   };
 
-  const renderTeamMemberCard = (member, index) => (
-    <div key={member.id || index} className="bg-slate-100 p-6 text-center rounded-none">
-      <div className="relative inline-block mb-4">
-        {member.profile_image_url ? (
-          <img
-            src={member.profile_image_url}
-            alt={`${member.name} headshot`}
-            className="w-36 h-36 rounded-full object-cover mx-auto"
-            onError={(e) => {
-              const target = e.target;
-              target.style.display = 'none';
-              const fallback = target.nextElementSibling;
-              if (fallback) fallback.style.display = 'flex';
-            }}
-          />
-        ) : null}
-        <div 
-          className="w-36 h-36 rounded-full bg-primary text-white flex items-center justify-center mx-auto text-xl font-semibold"
-          style={{ display: member.profile_image_url ? 'none' : 'flex' }}
-        >
-          {getInitials(member.name)}
+  const renderTeamMemberCard = (member, index) => {
+    const memberName = getLocalizedValue(member, 'name');
+    const memberRole = getLocalizedValue(member, 'role');
+    const memberBio = getLocalizedValue(member, 'bio');
+    
+    return (
+      <div key={member.id || index} className="bg-slate-100 p-6 text-center rounded-none">
+        <div className="relative inline-block mb-4">
+          {member.profile_image_url ? (
+            <img
+              src={member.profile_image_url}
+              alt={`${memberName} headshot`}
+              className="w-36 h-36 rounded-full object-cover mx-auto"
+              onError={(e) => {
+                const target = e.target;
+                target.style.display = 'none';
+                const fallback = target.nextElementSibling;
+                if (fallback) fallback.style.display = 'flex';
+              }}
+            />
+          ) : null}
+          <div 
+            className="w-36 h-36 rounded-full bg-primary text-white flex items-center justify-center mx-auto text-xl font-semibold"
+            style={{ display: member.profile_image_url ? 'none' : 'flex' }}
+          >
+            {getInitials(memberName)}
+          </div>
         </div>
+        <h3 className="text-lg font-medium text-slate-700 mb-1">{memberName}</h3>
+        <p className="text-primary text-sm font-medium mb-3">{memberRole}</p>
+        {member.linkedin_url && (
+          <a
+            href={member.linkedin_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center w-8 h-8 bg-primary rounded-full hover:bg-primary/80 transition mb-4"
+          >
+            <Linkedin className="h-4 w-4 text-white" />
+          </a>
+        )}
+        {memberBio && (
+          <p className="text-slate-700/80 text-sm leading-relaxed">{memberBio}</p>
+        )}
       </div>
-      <h3 className="text-lg font-medium text-slate-700 mb-1">{member.name}</h3>
-      <p className="text-primary text-sm font-medium mb-3">{member.role}</p>
-      {member.linkedin_url && (
-        <a
-          href={member.linkedin_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center justify-center w-8 h-8 bg-primary rounded-full hover:bg-primary/80 transition mb-4"
-        >
-          <Linkedin className="h-4 w-4 text-white" />
-        </a>
-      )}
-      {member.bio && (
-        <p className="text-slate-700/80 text-sm leading-relaxed">{member.bio}</p>
-      )}
-    </div>
-  );
+    );
+  };
   
   return (
     <div className="min-h-screen">
@@ -350,11 +383,13 @@ const About = () => {
             ) : (
               <Carousel speed="very-slow" className="py-4">
                 {testimonials.map((testimonial) => {
+                  const companyName = getLocalizedValue(testimonial, 'company_name');
                   const getLogoUrl = () => {
                     if (testimonial.company_logo_url) {
                       return testimonial.company_logo_url;
                     }
-                    const companyLower = testimonial.company_name.toLowerCase();
+                    // Fallback: try to match company name with existing logo files (use original English for matching)
+                    const companyLower = (testimonial.company_name || companyName).toLowerCase();
                     if (companyLower.includes('cargill')) return '/logos/cargill logo.jpg';
                     if (companyLower.includes('hitachi')) return '/logos/hitachi logo.png';
                     if (companyLower.includes('sucafina')) return '/logos/sucafina logo.svg';
@@ -368,7 +403,7 @@ const About = () => {
                         <div className="flex-shrink-0 w-32 h-28 bg-white rounded-none flex items-center justify-center p-3">
                           <img 
                             src={getLogoUrl()}
-                            alt={`${testimonial.company_name} logo`}
+                            alt={`${companyName} logo`}
                             className="max-h-24 max-w-28 object-contain"
                             onError={(e) => {
                               e.target.src = '/logos/sap logo.jpg';
@@ -376,7 +411,7 @@ const About = () => {
                           />
                         </div>
                         <blockquote className="text-slate-700/90 text-sm leading-relaxed flex-1">
-                          {testimonial.quote}
+                          {getLocalizedValue(testimonial, 'quote')}
                         </blockquote>
                       </div>
                     </div>

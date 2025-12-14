@@ -6,6 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useLanguage, Language } from '@/contexts/LanguageContext';
 
 const languages = [
   { code: 'en', name: 'English', flag: '🇬🇧' },
@@ -15,9 +16,12 @@ const languages = [
 
 export function LanguageSwitcher() {
   const { i18n } = useTranslation();
+  const { setLanguage } = useLanguage();
 
   const changeLanguage = (langCode: string) => {
+    // Update both i18n (for static content) and LanguageContext (for dynamic DB content)
     i18n.changeLanguage(langCode);
+    setLanguage(langCode as Language);
   };
 
   const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
