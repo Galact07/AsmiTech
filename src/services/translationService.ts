@@ -170,7 +170,15 @@ class TranslationService {
   }
 
   setApiKey(apiKey: string) {
-    const baseURL = `${window.location.origin}/api/hf/v1/`;
+    // IMPORTANT: Update this URL after deploying the Vercel microservice
+    // Replace 'YOUR_VERCEL_URL_HERE' with your actual Vercel deployment URL
+    // Example: 'https://translation-proxy-xxxxx.vercel.app/api/hf/v1/'
+    const VERCEL_PROXY_URL = 'https://asmi-hf-proxy-vercel.vercel.app/api/hf/v1/';
+    
+    // Use Vercel proxy if configured, otherwise fallback to local proxy (for development)
+    const baseURL = VERCEL_PROXY_URL
+      ? VERCEL_PROXY_URL 
+      : `${window.location.origin}/api/hf/v1/`;
 
     console.log('🔧 Using Hugging Face Router via proxy:', baseURL);
     console.log('🤖 Model:', this.MODEL_NAME);
