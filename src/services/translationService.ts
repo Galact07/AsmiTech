@@ -10,7 +10,6 @@ export type ModuleIdentifier =
   | 'industries' 
   | 'technology_stack' 
   | 'faqs' 
-  | 'client_logos' 
   | 'company_info';
 
 // Module configuration for translation
@@ -80,14 +79,6 @@ export const MODULE_CONFIGS: Record<ModuleIdentifier, ModuleConfig> = {
     activeValue: true,
     titleField: 'question',
     icon: 'HelpCircle'
-  },
-  client_logos: {
-    tableName: 'client_logos',
-    displayName: 'Client Logos',
-    activeField: 'is_active',
-    activeValue: true,
-    titleField: 'company_name',
-    icon: 'Building'
   },
   company_info: {
     tableName: 'company_info',
@@ -393,9 +384,6 @@ ${log.error_message ? `Error:        ${log.error_message}` : ''}
               break;
             case 'faqs':
               translateResult = await this.translateFAQ(item.id, targetLanguage);
-              break;
-            case 'client_logos':
-              translateResult = await this.translateClientLogo(item.id, targetLanguage);
               break;
             case 'company_info':
               translateResult = await this.translateCompanyInfo(item.id, targetLanguage);
@@ -1384,124 +1372,6 @@ Return the complete translated JSON starting with { and ending with }`
     }
   }
 
-  async translateClientLogo(logoId: string, targetLanguage: 'nl' | 'de'): Promise<TranslationResult> {
-    console.log(`\n🏢 Starting translation for client logo: ${logoId}`);
-
-    await this.logTranslation({
-      table_name: 'client_logos',
-      record_id: logoId,
-      status: 'started'
-    });
-
-    try {
-      // @ts-ignore
-      const { data: logo, error } = await supabase
-        .from('client_logos')
-        .select('*')
-        .eq('id', logoId)
-        .single();
-
-      if (error || !logo) {
-        throw new Error('Client logo not found');
-      }
-
-      console.log(`📋 Translating client logo: ${logo.company_name}`);
-
-      const contentToTranslate: any = {};
-      
-      if (logo.company_name) contentToTranslate.company_name = logo.company_name;
-
-      const targetLangFull = targetLanguage === 'nl' ? 'Dutch (Netherlands)' : 'German (Germany)';
-      const jsonString = JSON.stringify(contentToTranslate);
-
-      const chatCompletion = await this.client!.chat.completions.create({
-        model: this.MODEL_NAME,
-        messages: [
-          {
-            role: 'system',
-            content: `You are a professional translator. Translate this JSON from English to ${targetLangFull}.
-
-CRITICAL RULES:
-1. Keep ALL JSON keys EXACTLY as-is
-2. Keep company names in their original form (do not translate brand names)
-3. Only translate if there's a well-known local name
-4. Return ONLY valid, complete JSON with NO markdown, NO comments, NO extra text
-
-Return the complete translated JSON starting with { and ending with }`
-          },
-          {
-            role: 'user',
-            content: jsonString
-          }
-        ],
-        temperature: 0.1,
-        max_tokens: 2000,
-      });
-
-      let translatedText: string =
-        (chatCompletion as any).choices?.[0]?.message?.content ??
-        (chatCompletion as any).choices?.[0]?.text ??
-        (chatCompletion as any).generated_text ??
-        '';
-
-      const totalTokens = chatCompletion.usage?.total_tokens || 0;
-
-      let cleanedText = translatedText.trim();
-      if (cleanedText.startsWith('```')) {
-        cleanedText = cleanedText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-      }
-
-      const translatedContent = JSON.parse(cleanedText);
-
-      // IMPORTANT: Preserve the original updated_at so it only changes when actual content changes
-      const updatePayload: any = {
-        translation_status: 'translated',
-        updated_at: logo.updated_at // Preserve original updated_at
-      };
-      updatePayload[`content_${targetLanguage}`] = translatedContent;
-      updatePayload[`last_translated_at_${targetLanguage}`] = new Date().toISOString();
-
-      // @ts-ignore
-      const { error: updateError } = await supabase
-        .from('client_logos')
-        .update(updatePayload)
-        .eq('id', logoId);
-
-      if (updateError) throw updateError;
-
-      const costUSD = this.calculateCost(totalTokens);
-
-      await this.logTranslation({
-        table_name: 'client_logos',
-        record_id: logoId,
-        status: 'completed',
-        tokens_used: totalTokens,
-        cost_usd: costUSD
-      });
-
-      console.log(`✅ Client logo translation completed! Tokens: ${totalTokens}`);
-
-      return {
-        success: true,
-        translatedContent,
-        tokensUsed: totalTokens,
-        costUSD
-      };
-    } catch (error: any) {
-      await this.logTranslation({
-        table_name: 'client_logos',
-        record_id: logoId,
-        status: 'failed',
-        error_message: error.message
-      });
-
-      return {
-        success: false,
-        error: error.message
-      };
-    }
-  }
-
   async translateCompanyInfo(infoId: string, targetLanguage: 'nl' | 'de'): Promise<TranslationResult> {
     console.log(`\n🏛️ Starting translation for company info: ${infoId}`);
 
@@ -1851,36 +1721,6 @@ Return the complete translated JSON starting with { and ending with }`
       }
     }
 
-    // Translate client logos
-    if (dataToTranslate.client_logos && Object.keys(dataToTranslate.client_logos).length > 0) {
-      const logoIds = Object.keys(dataToTranslate.client_logos);
-      console.log(`\n🏢 Translating ${logoIds.length} client logos...\n`);
-
-      for (let i = 0; i < logoIds.length; i++) {
-        const logoId = logoIds[i];
-        const logoInfo = dataToTranslate.client_logos[logoId];
-
-        console.log(`[${i + 1}/${logoIds.length}] Translating: ${logoInfo.title}`);
-
-        try {
-          const result = await this.translateClientLogo(logoId, targetLanguage);
-          if (result.success) {
-            totalSuccess++;
-            totalTokens += result.tokensUsed || 0;
-            console.log(`✅ Completed: ${logoInfo.title}\n`);
-          } else {
-            totalFailed++;
-            console.error(`❌ Failed: ${logoInfo.title} - ${result.error}\n`);
-          }
-
-          await new Promise(resolve => setTimeout(resolve, 1000));
-        } catch (error: any) {
-          totalFailed++;
-          console.error(`❌ Error translating ${logoInfo.title}:`, error.message);
-        }
-      }
-    }
-
     // Translate company info
     if (dataToTranslate.company_info && Object.keys(dataToTranslate.company_info).length > 0) {
       const infoIds = Object.keys(dataToTranslate.company_info);
@@ -2017,15 +1857,6 @@ Return the complete translated JSON starting with { and ending with }`
 
       if (faqsError) console.warn('Could not fetch FAQs:', faqsError);
 
-      // Fetch client logos
-      // @ts-ignore
-      const { data: clientLogos, error: clientLogosError } = await supabase
-        .from('client_logos')
-        .select('*')
-        .eq('is_active', true);
-
-      if (clientLogosError) console.warn('Could not fetch client logos:', clientLogosError);
-
       // Fetch company info
       // @ts-ignore
       const { data: companyInfo, error: companyInfoError } = await supabase
@@ -2044,7 +1875,6 @@ Return the complete translated JSON starting with { and ending with }`
         (industries?.length || 0) + 
         (techStack?.length || 0) + 
         (faqs?.length || 0) + 
-        (clientLogos?.length || 0) + 
         (companyInfo?.length || 0);
 
       if (totalItems === 0) {
@@ -2060,7 +1890,6 @@ Return the complete translated JSON starting with { and ending with }`
       console.log(`   🏭 Industries: ${industries?.length || 0}`);
       console.log(`   🔧 Technologies: ${techStack?.length || 0}`);
       console.log(`   ❓ FAQs: ${faqs?.length || 0}`);
-      console.log(`   🏢 Client Logos: ${clientLogos?.length || 0}`);
       console.log(`   🏛️ Company Info: ${companyInfo?.length || 0}`);
       console.log(`   ─────────────────────`);
       console.log(`   📦 TOTAL ITEMS: ${totalItems}`);
@@ -2075,7 +1904,6 @@ Return the complete translated JSON starting with { and ending with }`
         industries: {},
         technology_stack: {},
         faqs: {},
-        client_logos: {},
         company_info: {}
       };
 
@@ -2145,16 +1973,6 @@ Return the complete translated JSON starting with { and ending with }`
           dataToTranslate.faqs[faq.id] = {
             title: faq.question.substring(0, 50) + '...',
             data: faq
-          };
-        });
-      }
-
-      // Add client logos
-      if (clientLogos && clientLogos.length > 0) {
-        clientLogos.forEach((logo: any) => {
-          dataToTranslate.client_logos[logo.id] = {
-            title: logo.company_name,
-            data: logo
           };
         });
       }

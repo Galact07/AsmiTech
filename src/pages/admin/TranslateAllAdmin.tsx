@@ -41,7 +41,6 @@ const MODULE_ICONS: Record<ModuleIdentifier, React.ElementType> = {
   industries: Factory,
   technology_stack: Layers,
   faqs: HelpCircle,
-  client_logos: Building,
   company_info: Info
 };
 
@@ -54,7 +53,6 @@ const MODULE_COLORS: Record<ModuleIdentifier, string> = {
   industries: 'text-red-600',
   technology_stack: 'text-cyan-600',
   faqs: 'text-yellow-600',
-  client_logos: 'text-pink-600',
   company_info: 'text-slate-600'
 };
 
@@ -66,7 +64,6 @@ interface ContentCounts {
   industries: number;
   technology_stack: number;
   faqs: number;
-  client_logos: number;
   company_info: number;
 }
 
@@ -93,7 +90,6 @@ export default function TranslateAllAdmin() {
     industries: 0,
     technology_stack: 0,
     faqs: 0,
-    client_logos: 0,
     company_info: 0
   });
   const [loadingCounts, setLoadingCounts] = useState(true);
@@ -107,7 +103,6 @@ export default function TranslateAllAdmin() {
     industries: { isTranslating: false, progress: 0, currentItem: '' },
     technology_stack: { isTranslating: false, progress: 0, currentItem: '' },
     faqs: { isTranslating: false, progress: 0, currentItem: '' },
-    client_logos: { isTranslating: false, progress: 0, currentItem: '' },
     company_info: { isTranslating: false, progress: 0, currentItem: '' }
   });
 
@@ -135,7 +130,6 @@ export default function TranslateAllAdmin() {
         { count: industries },
         { count: techStack },
         { count: faqs },
-        { count: clientLogos },
         { count: companyInfo }
       ] = await Promise.all([
         supabase.from('service_pages').select('*', { count: 'exact', head: true }).eq('status', 'published'),
@@ -151,8 +145,6 @@ export default function TranslateAllAdmin() {
         // @ts-ignore
         supabase.from('faqs').select('*', { count: 'exact', head: true }).eq('is_active', true),
         // @ts-ignore
-        supabase.from('client_logos').select('*', { count: 'exact', head: true }).eq('is_active', true),
-        // @ts-ignore
         supabase.from('company_info').select('*', { count: 'exact', head: true })
       ]);
 
@@ -164,7 +156,6 @@ export default function TranslateAllAdmin() {
         industries: industries || 0,
         technology_stack: techStack || 0,
         faqs: faqs || 0,
-        client_logos: clientLogos || 0,
         company_info: companyInfo || 0
       });
 

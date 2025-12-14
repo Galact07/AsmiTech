@@ -25,6 +25,7 @@ WHERE tgname LIKE '%updated_at%'
 ORDER BY tgrelid::regclass::text;
 
 -- 3. Check translation columns exist on all tables
+-- Note: client_logos excluded as logos don't require translation
 SELECT 
     table_name,
     column_name,
@@ -33,7 +34,7 @@ FROM information_schema.columns
 WHERE table_schema = 'public'
   AND table_name IN (
     'service_pages', 'jobs', 'team_members', 'testimonials', 
-    'industries', 'technology_stack', 'faqs', 'client_logos', 'company_info'
+    'industries', 'technology_stack', 'faqs', 'company_info'
   )
   AND (
     column_name LIKE 'content_%' 

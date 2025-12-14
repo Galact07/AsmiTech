@@ -72,7 +72,7 @@ const Home = () => {
       setClientLogosLoading(true);
       const { data, error } = await supabase
         .from('client_logos')
-        .select('id, company_name, logo_image_url, website_url, content_nl, content_de')
+        .select('id, company_name, logo_image_url, website_url')
         .eq('is_active', true)
         .order('display_order', { ascending: true })
         .order('created_at', { ascending: false });
